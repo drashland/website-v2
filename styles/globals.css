@@ -1,0 +1,111 @@
+/* Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,300;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+@font-face {
+  font-family: 'Menlo Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Menlo Regular'), url('./Menlo-Regular.woff') format('woff');
+}
+
+/* Tailwind CSS */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global CSS for the entire application */
+
+* {
+  margin-top: 0 !important;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  color: #222222; /* This color makes it easier on the eyes */
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 2;
+  height: 100%;
+}
+
+a {
+  color: #7dade2;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+code {
+  font-family: 'Menlo Regular', monospace !important;
+}
+
+ul {
+  margin-left: 4rem;
+  list-style-type: disc;
+  margin-bottom: 1rem;
+}
+
+ul ul {
+  margin-top: 1rem !important;
+}
+
+li {
+  margin-bottom: 1rem;
+}
+li:last-of-type {
+  margin-bottom: 0;
+}
+
+#__next {
+  height: 100%;
+}
+
+.btn-get-started {
+  text-align: center;
+}
+.btn-get-started a {
+  background: #000000;
+  font-weight: bold;
+  font-size: .8rem;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  transition-property: color;
+  transition-duration: .15s;
+  padding: 1rem 2rem;
+  border-radius: 3rem;
+}
+.btn-get-started a:hover {
+  color: #7dade2;
+}
+
+.pagination {
+  margin-top: 3rem !important;
+  display: flex;
+  justify-content: space-between;
+}
+.pagination .btn a {
+  background: #000000;
+  font-weight: bold;
+  font-size: .8rem;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  transition-property: color;
+  transition-duration: .15s;
+  padding: 1rem 2rem;
+  border-radius: 3rem;
+}
+
+.language-diff .token.inserted {
+  color: #68c968;
+}
