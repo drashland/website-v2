@@ -4,7 +4,7 @@ module.exports = {
     versions: {
       drash: {
         versions: [
-          "v1.x",
+          // "v1.x", // Uncomment when v1.x docs are migrated
           "v2.x",
         ]
       }
