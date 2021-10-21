@@ -85,9 +85,6 @@ const Main = styled.div`
   position: relative;
   z-index: 2;
   color: #333;
-  p {
-    margin-bottom: 2rem;
-  }
 `;
 
 const Section = styled.div`

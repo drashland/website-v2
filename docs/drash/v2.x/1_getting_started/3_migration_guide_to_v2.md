@@ -106,7 +106,7 @@ When using middleware, the difference is how you `import` the middleware. In v1,
 + import { SomeMiddleware } from "http://deno.land/x/drash/services.ts";
 ```
 
-You can learn more about using Drash services in the left sidebar under Tutorials > Services > Drash Approved Services.
+You can learn more about using Drash services in the left sidebar under Tutorials > Services.
 
 ## Example Application
 

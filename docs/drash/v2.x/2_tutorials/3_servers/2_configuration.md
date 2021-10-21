@@ -83,7 +83,7 @@ Below are the required configurations. You cannot create a Drash server without 
 
 ### resources: typeof Drash.Resource[]
 
-* This is the array of resources that the server will register so clients can target them.
+* This is the array of resources that the server will register so clients can target them. You can learn more about resources in the left sidebar under [Tutorials > Resources > Creating a Resource](/drash/v2.x/tutorials/resources/creating-a-resource).
 * Example Usage
 
   ```typescript
@@ -100,7 +100,7 @@ Below are the required configurations. You cannot create a Drash server without 
     port: 1447,
     protocol: "http",
     resources: [
-      MyResource,
+      MyResource, // <--- See here
     ],
   });
   ```
@@ -118,7 +118,7 @@ Below are the optional configurations. Drash servers can be created without thes
   import * as Drash from "./deps.ts";
 
   const server = new Drash.Server({
-    cert_file: "/path/to/cert/file.crt",
+    cert_file: "/path/to/cert/file.crt", // <--- See here (also notice key_file is present and protocol is "https")
     hostname: "0.0.0.0",
     key_file: "/path/to/cert/file.key",
     port: 1447,
@@ -137,7 +137,7 @@ Below are the optional configurations. Drash servers can be created without thes
   const server = new Drash.Server({
     cert_file: "/path/to/cert/file.crt",
     hostname: "0.0.0.0",
-    key_file: "/path/to/cert/file.key",
+    key_file: "/path/to/cert/file.key", // <--- See here (also notice cert_file is present and protocol is "https")
     port: 1447,
     protocol: "https",
     resources: [ ... ]
@@ -146,7 +146,7 @@ Below are the optional configurations. Drash servers can be created without thes
 
 ### services?: Drash.Service
 
-* This is the array of instantiated services that the server will use throughout the request-resource-response lifecycle.
+* This is the array of instantiated services that the server will use throughout the request-resource-response lifecycle. You can learn more about services in the left sidebar under [Tutorials > Services > Introduction](/drash/v2.x/tutorials/services/introduction).
 * Example Usage
 
   ```typescript
@@ -164,7 +164,7 @@ Below are the optional configurations. Drash servers can be created without thes
     protocol: "http",
     resources: [ ... ]
     services: [
-      new MyService(), // All services must be instantiated using the `new` keyword before being placed in this array
+      new MyService(), // <--- See here (all services must be instantiated using the `new` keyword before being placed in this array)
     ],
   });
   ```

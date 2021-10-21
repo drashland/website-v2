@@ -1,5 +1,7 @@
 # Setting the Body
 
+Drash comes with some methods on the `response` object to help you send some common responses to clients. Read further to learn more how you can set the body on a response and send that body to clients.
+
 ## Table of Contents
 
 * [Body Methods]()
@@ -13,7 +15,7 @@
 
 ## Body Methods
 
-Drash comes with some methods on the `response` object to help you send some common responses to clients. They are below.
+Below are the built-in body methods on the `response` object and examples of how to use each one in a resource.
 
 ### download()
 
@@ -83,14 +85,14 @@ Drash comes with some methods on the `response` object to help you send some com
 
 ## How Body Methods Work
 
-Under the hood, the built-in body methods above set the `response` object's body and `Content-Type` header based on the method being used. For example, if you use `response.json(someJson)`, then it will do the following ...
+Under the hood, the built-in body methods above set the `response` object's body and `Content-Type` header based on the method being used. For example, if you use `response.json(someJson)`, then the following will happen under the hood ...
 
 ```typescript
 this.body = JSON.stringify(someJson);
 this.headers.set("Content-Type", "application/json");
 ```
 
-... and if you use `response.html(someHtmlString)`, then it will do the following ...
+... and if you use `response.html(someHtmlString)`, then the following will happen under the hood ...
 
 ```typescript
 this.body = someHtmlString;

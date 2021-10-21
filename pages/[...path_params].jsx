@@ -90,14 +90,10 @@ const Pre = styled.pre`
 `;
 
 const OrderedList = styled.ol`
-  margin-left: 4rem;
-  list-style-type: decimal;
   ${MARGIN_BOTTOM};
 `;
 
 const UnorderedList = styled.ul`
-  margin-left: 4rem;
-  list-style-type: disc;
   ${MARGIN_BOTTOM};
 `;
 

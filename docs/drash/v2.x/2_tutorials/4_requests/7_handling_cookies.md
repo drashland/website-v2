@@ -37,9 +37,9 @@ Drash uses Deno Standard Modules for cookie handling.
   // Create your resource
 
   class HomeResource extends Drash.Resource {
-   
+
     public paths = ["/"];
-   
+
     public GET(request: Drash.Request, response: Drash.Response): void {
       const cookieValue = request.getCookie("my_cookie");
 
@@ -58,7 +58,7 @@ Drash uses Deno Standard Modules for cookie handling.
     port: 1447,
     protocol: "http",
     resources: [
-      UsersResource
+      HomeResource
     ],
   });
 

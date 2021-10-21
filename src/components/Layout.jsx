@@ -13,7 +13,7 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
-  padding-left: ${({ mobileViewport }) => (!mobileViewport ? '410px': '0')};
+  padding-left: ${({ mobileViewport }) => (!mobileViewport ? '350px': '0')};
   display: flex;
   justify-content: center;
   height: 100%;
