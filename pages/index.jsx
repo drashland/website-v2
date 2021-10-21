@@ -196,16 +196,6 @@ export default function Home() {
 
   const router = useRouter();
 
-  function navigateTo(module) {
-    switch(module) {
-      case "drash":
-        router.push("/drash")
-        break;
-      default:
-        break;
-    }
-  }
-
   return (
     <Container>
       <LayoutTopBar isLandingPage={true} />
@@ -227,21 +217,21 @@ export default function Home() {
           <InnerContainer>
             <SectionTitle>Deno Software</SectionTitle>
             <CardsContainer>
-              <Card onClick={() => navigateTo("drash")}>
+              <Card onClick={() => router.push("/drash")}>
                 <ImageContainer>
                   <img src="/logo-drash.svg"/>
                 </ImageContainer>
                 <CardTitle>Drash</CardTitle>
                 <CardDescription>A micro HTTP framework</CardDescription>
               </Card>
-              <Card>
+              <Card onClick={() => router.push("/wocket")}>
                 <ImageContainer>
                   <img src="/logo-wocket.svg"/>
                 </ImageContainer>
                 <CardTitle>Wocket</CardTitle>
                 <CardDescription>A WebSocket framework</CardDescription>
               </Card>
-              <Card>
+              <Card onClick={() => router.push("/dmm")}>
                 <ImageContainer>
                   <img src="/logo-dmm.svg"/>
                 </ImageContainer>
@@ -250,21 +240,21 @@ export default function Home() {
               </Card>
             </CardsContainer>
             <CardsContainer>
-              <Card>
+              <Card onClick={() => router.push("/rhum")}>
                 <ImageContainer>
                   <img src="/logo-rhum.svg"/>
                 </ImageContainer>
                 <CardTitle>Rhum</CardTitle>
                 <CardDescription>A unit test framework</CardDescription>
               </Card>
-              <Card>
+              <Card onClick={() => router.push("/sinco")}>
                 <ImageContainer>
                   <img src="/logo-sinco.svg"/>
                 </ImageContainer>
                 <CardTitle>Sinco</CardTitle>
                 <CardDescription>A browser automation and testing tool</CardDescription>
               </Card>
-              <Card>
+              <Card onClick={() => router.push("/line")}>
                 <ImageContainer>
                   <img src="/logo-line.svg"/>
                 </ImageContainer>
@@ -275,11 +265,11 @@ export default function Home() {
             <Hr />
             <SectionTitle>Node Software</SectionTitle>
             <CardsContainer>
-              <Card>
+              <Card onClick={() => router.push("https://github.com/drashland/moogle")}>
                 <CardTitle>Moogle</CardTitle>
                 <CardDescription>An easy way to "Google" your "Map" using search terms</CardDescription>
               </Card>
-              <Card>
+              <Card onClick={() => router.push("https://github.com/drashland/accio")}>
                 <CardTitle>Accio</CardTitle>
                 <CardDescription>An easy way to search for deeply nested data in large datasets</CardDescription>
               </Card>
@@ -289,19 +279,19 @@ export default function Home() {
         <Section>
           <InnerContainer>
             <SectionTitle>The Drash Land Team</SectionTitle>
-            <p>We are a small squad of software engineers who code a lot of really cool stuff. We focus heavily on the developer UX because we think coding should be fun.</p>
+            <p>We're a small squad of software engineers who code a lot of really cool stuff. We focus heavily on the developer UX because we think coding should be fun.</p>
             <p>When we release software in the Deno or Node ecosystem, you can count on these three things:</p>
             <ul>
               <li>Zero Dependencies: Every Drash Land project has zero dependencies (with the exception of Deno and Node, of course).</li>
-              <li>Extensive Documentation: We love a good challenge but working with Drash shouldn't be one of them. That's why we provide all of the documentation you'll need. Want to know how to set up a server? We got you. Need to know how to set up web sockets? We'll show you the way. And if you ever get stuck, just send us a message in our Discord and we'll gladly help you!</li>
-              <li>Thorough Testing: To put it bluntly, we test the shit out of our software. We know it works. Every example code block and every tutorial we write is tested end-to-end.</li>
+              <li>Extensive Documentation: We love a good challenge, but working with Drash shouldn't be one of them. That's why we provide all of the documentation you'll need. Want to know how to set up an HTTP server? We got you. Need to know how to set up WebSockets? We'll show you the way. And if you ever get stuck, just send us a message in our <a href="https://discord.gg/RFsCSaHRWK" target="_BLANK" noreferrer>Discord</a> and we'll gladly help you!</li>
+              <li>Thorough Testing: To put it bluntly, we test the shiz out of our software. We know it works. Every example code block and every tutorial we write is tested end-to-end.</li>
             </ul>
             <p>Drash Land is more than just a project to us here. We've invested our whole selves (and lots of energy drinks) into this. Does that make us nerds? We hope so. Because nerds make the best stuff.</p>
           </InnerContainer>
         </Section>
         <Section background="#2f343c" color="#ffffff">
           <InnerContainer>
-            <Copyright>&copy; 2019 - 2020 Drash Land</Copyright>
+            <Copyright>&copy; 2019 - 2021 Drash Land</Copyright>
           </InnerContainer>
         </Section>
       </Main>
