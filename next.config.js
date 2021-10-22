@@ -7,6 +7,11 @@ module.exports = {
           "v1.x",
           "v2.x",
         ]
+      },
+      sinco: {
+        versions: [
+          "v2.x"
+        ]
       }
     }
   },

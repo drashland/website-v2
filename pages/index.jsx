@@ -204,6 +204,8 @@ export default function Home() {
       case "drash":
         router.push("/drash")
         break;
+      case "sinco":
+        router.push("/sinco")
       default:
         break;
     }
@@ -260,7 +262,7 @@ export default function Home() {
                 <CardTitle>Rhum</CardTitle>
                 <CardDescription>A unit test framework</CardDescription>
               </Card>
-              <Card>
+              <Card onClick={() => navigateTo("sinco")}>
                 <ImageContainer>
                   <img src="/logo-sinco.svg"/>
                 </ImageContainer>
