@@ -13,6 +13,7 @@ module.exports = {
   reactStrictMode: false,
   async redirects() {
     return [
+      // Redirect pages without content to the nearest page with content
       {
         source: "/drash/v2.x/getting-started",
         destination: "/drash/v2.x/getting-started/introduction",

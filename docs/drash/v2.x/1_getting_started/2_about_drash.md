@@ -34,4 +34,4 @@ Its maintainers have taken concepts from the following ...
 * Documentation-driven development
 * Transparency
 
-This has made Drash a very approachable and one of the most well-documented frameworks in the Deno ecosystem.
+These concepts have made Drash very approachable and one of the most well-documented frameworks in the Deno ecosystem.

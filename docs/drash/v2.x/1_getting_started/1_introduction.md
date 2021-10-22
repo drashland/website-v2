@@ -69,13 +69,11 @@ Learn more about Drash [here](about-drash).
 
 * Zero third-party dependencies outside of Deno Standard Modules
 * Extensively documented
-* Static site generation (SSG)
 * Server-side rendering (SSR)
 * Single page application (SPA) support
-* Hot reloading for local development
 * Content negotiation
 * Dynamic paths
-* Services (e.g. middleware, caching, front-end TypeScript serving)
+* Services (e.g. middleware, caching, logging)
 * Request body parsing
 
 ## Badge

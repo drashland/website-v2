@@ -124,8 +124,10 @@ const Card = styled.div`
   cursor: pointer;
   background: #ffffff;
   border-radius: 2rem;
-  padding: 3rem;
+  padding: 1.5rem;
   color: #333333;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 0 1rem rgba(0, 0, 0, .5);
   text-align: center;
   width: 100%;
@@ -154,7 +156,7 @@ const CardTitle = styled.h3`
 
 const CardDescription = styled.p`
   font-size: 1rem;
-  margin-bottom: 0 !important;
+  margin-bottom: 1.5rem;
 `
 
 const Button = styled.a`
@@ -192,6 +194,26 @@ const ImageContainer = styled.div`
   justify-content: center;
 `;
 
+const TagsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  justify-items: flex-end;
+`;
+
+const Tag = styled.div`
+  background: #000000;
+  border-radius: 1rem;
+  color: #ffffff;
+  font-size: .75rem;
+  padding: .15rem .9rem;
+  text-align: center;
+  text-transform: uppercase;
+  margin-right: .25rem;
+  &:last-of-type {
+    margin-right: 0;
+  }
+`;
+
 export default function Home() {
 
   const router = useRouter();
@@ -215,7 +237,7 @@ export default function Home() {
         </Section>
         <Section background="#2f343c" color="#ffffff">
           <InnerContainer>
-            <SectionTitle>Deno Software</SectionTitle>
+            <SectionTitle>Our Software</SectionTitle>
             <CardsContainer>
               <Card onClick={() => router.push("/drash")}>
                 <ImageContainer>
@@ -223,6 +245,9 @@ export default function Home() {
                 </ImageContainer>
                 <CardTitle>Drash</CardTitle>
                 <CardDescription>A micro HTTP framework</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
               <Card onClick={() => router.push("/wocket")}>
                 <ImageContainer>
@@ -230,6 +255,9 @@ export default function Home() {
                 </ImageContainer>
                 <CardTitle>Wocket</CardTitle>
                 <CardDescription>A WebSocket framework</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
               <Card onClick={() => router.push("/dmm")}>
                 <ImageContainer>
@@ -237,6 +265,9 @@ export default function Home() {
                 </ImageContainer>
                 <CardTitle>dmm</CardTitle>
                 <CardDescription>A lightweight module manager</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
             </CardsContainer>
             <CardsContainer>
@@ -246,6 +277,9 @@ export default function Home() {
                 </ImageContainer>
                 <CardTitle>Rhum</CardTitle>
                 <CardDescription>A unit test framework</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
               <Card onClick={() => router.push("/sinco")}>
                 <ImageContainer>
@@ -253,6 +287,9 @@ export default function Home() {
                 </ImageContainer>
                 <CardTitle>Sinco</CardTitle>
                 <CardDescription>A browser automation and testing tool</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
               <Card onClick={() => router.push("/line")}>
                 <ImageContainer>
@@ -260,18 +297,27 @@ export default function Home() {
                 </ImageContainer>
                 <CardTitle>Line</CardTitle>
                 <CardDescription>A command-line framework</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
             </CardsContainer>
-            <Hr />
-            <SectionTitle>Node Software</SectionTitle>
             <CardsContainer>
               <Card onClick={() => router.push("https://github.com/drashland/moogle")}>
                 <CardTitle>Moogle</CardTitle>
                 <CardDescription>An easy way to "Google" your "Map" using search terms</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                  <Tag>Node</Tag>
+                </TagsContainer>
               </Card>
               <Card onClick={() => router.push("https://github.com/drashland/accio")}>
                 <CardTitle>Accio</CardTitle>
                 <CardDescription>An easy way to search for deeply nested data in large datasets</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                  <Tag>Node</Tag>
+                </TagsContainer>
               </Card>
             </CardsContainer>
           </InnerContainer>

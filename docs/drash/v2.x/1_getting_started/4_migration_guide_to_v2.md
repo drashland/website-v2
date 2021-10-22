@@ -7,6 +7,8 @@ Below are sections pertaining to parts of Drash that have changed. There are exa
 * [Drash Namespace](#drash-namespace)
 * [Resources](#resources)
 * [Middleware](#middleware)
+  * [Importing](#importing)
+  * [Resource-Level](#resource-level)
 * [Example Application](#example-application)
   * [Code](#code)
   * [Running the Application](#running-the-application)
@@ -99,14 +101,77 @@ Changes:
 
 Drash v2 uses the term "services" to encapsulate any software used in a Drash application that is not part of Drash's core functionality. This includes middleware. In Drash v1, the term "middleware" is used. During the course of v1 maintenance, it was found that the term "middleware" was restrictive about what kind of software could be plugged into a Drash application. Therefore, the term was changed to "services" to create a broader scope.
 
-When using middleware, the difference is how you `import` the middleware. In v1, you use the `deno-drash-middleware` repository. In v2, you use the `deno-drash` repository's `services.ts` file like so:
+When using services, there are quite a few differences:
+
+* `import` statements have changed
+* Decorators have been removed from resource-level services and a `tsconfig.json` file is not required
+* All services must follow the new `Drash.Service` syntax (see [Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services))
+
+You can learn more about using Drash services in the left sidebar under Tutorials > Services.
+
+### Importing
+ 
+In v1, you use the `deno-drash-middleware` repository to import middleware. In v2, you use the `deno-drash` repository's `services.ts` file like so:
 
 ```diff
 - import SomeMiddleware from "http://deno.land/x/deno-drash-middleware/some_middleware/mod.ts";
 + import { SomeMiddleware } from "http://deno.land/x/drash/services.ts";
 ```
 
-You can learn more about using Drash services in the left sidebar under Tutorials > Services.
+### Resource-Level
+
+Resource-level middleware in Drash v1 requires a `tsconfig.json` file with `experimentalDecorators` set to `true`. In Drash v2, decorators were removed so you do not need a `tsconfig.json` file (unless you use one for something other than Drash).
+
+```diff
+  // tsconfig.json
+
+- {
+-   "compilerOptions": {
+-     "experimentalDecorators": true
+-   }
+- }
+```
+
+To use a service in your resource, change to the following:
+
+```diff
+  // some_resource.ts
+
+- @Drash.Http.Middleware({
+-   before_request: [ SomethingA ],
+-   after_request: [ SomethingB ],
+- })
+- export default class SomeResource extends Drash.Http.Resource {
++ export default class SomeResource extends Drash.Resource {
+
+    // All services that used to be in decorators now go into this property
+    // To learn more about this property, view Tutorials > Services > Resource-Level Services
++   public services = {
++     ALL: [
++       SomethingA,
++       SomethingB,
++     ],
++     GET: [
++       SomethingC,
++       SomethingD,
++     ],
++   };
+
+-   @Drash.Http.Middleware({
+-     before_request: [ SomethingC ],
+-     after_request: [ SomethingD ],
+-   })
+    public GET() {
+      ...
+      ...
+      ...
+    }
+  }
+```
+
+If you have any custom middleware that you have plugged into your Drash application, they must be converted to the new `Drash.Services` syntax. To learn more about creating services, read [Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services).
+
+To learn more about resource-level services, see [Tutorials > Services > Adding Resource-Level Services](/drash/v2.x/tutorials/services/adding-resource-level-services).
 
 ## Example Application
 

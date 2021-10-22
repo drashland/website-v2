@@ -2,7 +2,7 @@
 
 Drash is an HTTP microframework for Deno's HTTP server.
 
-Learn more about Drash [here](about).
+Learn more about Drash [here](about-drash).
 
 ## Getting Started
 
