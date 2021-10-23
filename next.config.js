@@ -4,19 +4,26 @@ module.exports = {
     app: {
       env: process.APP_ENV || "production",
     },
+    docDenoLandUrls: {
+      dmm: "https://doc.deno.land/https/deno.land/x/dmm/mod.ts",
+      drash: "https://doc.deno.land/https/deno.land/x/drash/mod.ts",
+      line: "https://doc.deno.land/https/deno.land/x/line/mod.ts",
+      sinco: "https://doc.deno.land/https/deno.land/x/sinco/mod.ts",
+      wocket: "https://doc.deno.land/https/deno.land/x/wocket/mod.ts",
+    },
     versions: {
       drash: {
         versions: [
           "v1.x",
           "v2.x",
-        ]
+        ],
       },
       wocket: {
         versions: [
           "v0.x",
-        ]
-      }
-    }
+        ],
+      },
+    },
   },
   reactStrictMode: false,
   async redirects() {

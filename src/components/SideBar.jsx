@@ -1,6 +1,9 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig } = getConfig();
 
 const Container = styled.div`
   background: #f3f6f9;
@@ -146,6 +149,10 @@ export default function SideBar(props) {
     router.push(`/${props.moduleName.toLowerCase()}/${version}`);
   }
 
+  function getApiReferenceUrl(module) {
+    return publicRuntimeConfig.docDenoLandUrls[module.toLowerCase()];
+  }
+
   return (
     <Container
       mobileViewport={mobileViewport}
@@ -182,6 +189,19 @@ export default function SideBar(props) {
           />
         );
       })}
+      <RecursiveCategory
+        state={state}
+        category={{
+          label: "Links",
+          paths: [
+            {
+              is_external: true,
+              label: "API Reference",
+              path: getApiReferenceUrl(props.moduleName),
+            }
+          ],
+        }}
+      />
     </Container>
   );
 }
@@ -210,11 +230,22 @@ function RecursiveCategory(props) {
             isActive={path.path == router.asPath}
             onClick={() => state.setSideBarOpen(false)}
           >
-            <Link
-              href={path.path}
-            >
-              {path.label}
-            </Link>
+            {path.is_external && (
+              <a
+                href={path.path}
+                rel="noreferrer"
+                target="_BLANK"
+              >
+                {path.label}
+              </a>
+            )}
+            {!path.is_external && (
+              <Link
+                href={path.path}
+              >
+                {path.label}
+              </Link>
+            )}
           </LinkContainer>
         );
       })}
