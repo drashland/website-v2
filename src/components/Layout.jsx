@@ -58,13 +58,11 @@ const Copyright = styled.div`
 `;
 
 const Breadcrumbs = styled.div`
-  display: flex;
-  flex-direction: row;
   margin-top: 6rem !important;
   margin-bottom: 3rem;
 
-  @media screen and (max-width: 500px) {
-    flex-direction: column;
+  @media screen and (max-width: 768px) {
+    font-size: .8rem;
   }
 `;
 
@@ -77,9 +75,10 @@ const Pill = styled.div`
     padding: 0 1rem;
     display: inline-block;
   }
-
-  .ndash {
-    display: none;
+  @media screen and (max-width: 768px) {
+    .slash {
+      padding: 0 .5rem;
+    }
   }
 
   &.active {
@@ -90,26 +89,6 @@ const Pill = styled.div`
   &:last-of-type {
     .slash {
       display: none;
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    margin-left: ${({ index }) => `${index * 1.25}rem`};
-
-    .slash {
-      display: none;
-    }
-
-    .ndash {
-      display: inline-block;
-      margin-right: .5rem;
-    }
-
-
-    &:first-of-type {
-      .ndash {
-        display: none;
-      }
     }
   }
 `;
@@ -294,7 +273,6 @@ export default function Layout(props) {
                       index={index}
                       key={`${JSON.stringify(breadcrumb)}_${index}`}
                     >
-                      <span class="ndash">&ndash;</span>
                       <span class="label">{formatLabel(titleCase(breadcrumb))}</span>
                       <span class="slash">/</span>
                     </Pill>
