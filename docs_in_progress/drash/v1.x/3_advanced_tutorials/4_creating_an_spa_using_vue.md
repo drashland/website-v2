@@ -1,4 +1,4 @@
-# Creating an SPA Using Vue v2
+# Creating an SPA Using Vue
 
 ## Table of Contents
 

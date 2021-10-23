@@ -192,6 +192,7 @@ export async function getStaticProps({ params }) {
   const { publicRuntimeConfig } = getConfig();
   const versions = publicRuntimeConfig.versions[module].versions;
   let version = params.path_params[1];
+  console.log(module, versions);
 
   if (!version) {
     version = versions[versions.length - 1];

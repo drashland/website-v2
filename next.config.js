@@ -4,8 +4,13 @@ module.exports = {
     versions: {
       drash: {
         versions: [
-          // "v1.x", // Uncomment when v1.x docs are migrated
+          "v1.x",
           "v2.x",
+        ]
+      },
+      wocket: {
+        versions: [
+          "v0.x",
         ]
       }
     }
@@ -44,6 +49,23 @@ module.exports = {
         destination: "/drash/v2.x/tutorials/services/introduction",
         permanent: false,
       },
-    ]
+      // Remove the below /drash/v1.x object when its migrated
+      {
+        source: "/drash/v1.x",
+        destination: "/drash/v1.x/index.html",
+        permanent: false,
+      },
+      // Remove the below /wocket object when the its migrated
+      {
+        source: "/wocket",
+        destination: "/wocket/v0.x/index.html",
+        permanent: false,
+      },
+      {
+        source: "/wocket/v0.x",
+        destination: "/wocket/v0.x/index.html",
+        permanent: false,
+      },
+    ];
   },
 };
