@@ -20,6 +20,7 @@ const FILES = {};
 const Heading1 = styled.h1`
   font-size: 3rem;
   font-weight: bold;
+  line-height: 1.2;
   ${MARGIN_BOTTOM};
 `;
 
@@ -29,6 +30,7 @@ const Heading2 = styled.h2`
   padding-top: 2rem;
   font-size: 2rem;
   font-weight: bold;
+  line-height: 1.2;
   ${MARGIN_BOTTOM};
 `;
 
@@ -36,6 +38,7 @@ const Heading3 = styled.h3`
   margin-top: 1.6rem !important;
   font-size: 1.5rem;
   font-weight: bold;
+  line-height: 1.2;
   ${MARGIN_BOTTOM};
 `;
 
