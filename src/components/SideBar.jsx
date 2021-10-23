@@ -130,6 +130,7 @@ const VersionsSelectorInnerContainer = styled.div`
 `;
 
 const VersionsSelector = styled.select`
+  background: transparent;
   width: 100%;
   padding: .5rem .25rem;
 `;
