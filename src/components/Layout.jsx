@@ -5,6 +5,7 @@ import SideBar from "./SideBar";
 import LayoutTopBar from "./LayoutTopBar";
 import { titleCase } from "title-case";
 import { formatLabel } from "../string_service";
+import { CornerDownRightOutline } from "@styled-icons/evaicons-outline/CornerDownRightOutline";
 
 const Container = styled.div`
   width: 100%;
@@ -24,7 +25,7 @@ const Main = styled.div`
 const MakeBetter = styled.div`
   background-color: #f3f6f9;
   border-radius: 1rem;
-  padding: 4rem;
+  padding: 2rem;
 `;
 
 const MakeBetterHeading = styled.h2`
@@ -60,23 +61,63 @@ const Copyright = styled.div`
 const Breadcrumbs = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 8rem !important;
+  margin-top: 6rem !important;
   margin-bottom: 3rem;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 
 const Pill = styled.div`
   //color: #7dade2;
   display: inline-block;
 
-  span {
+  .slash {
     color: #333333;
     padding: 0 1rem;
+    display: inline-block;
+  }
+
+  .ndash {
+    display: none;
   }
 
   &.active {
     color: #333333;
     font-weight: bold;
   }
+
+  &:last-of-type {
+    .slash {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    margin-left: ${({ index }) => `${index * 1.25}rem`};
+
+    .slash {
+      display: none;
+    }
+
+    .ndash {
+      display: inline-block;
+      margin-right: .5rem;
+    }
+
+
+    &:first-of-type {
+      .ndash {
+        display: none;
+      }
+    }
+  }
+`;
+
+const CornerDownRightOutlineIcon = styled(CornerDownRightOutline)`
+  height: 1rem;
+  margin-right: .5rem;
 `;
 
 const MiddleMessage = styled.div`
@@ -221,7 +262,12 @@ export default function Layout(props) {
       >
         <Bar sideBarOpen={sideBarOpen} />
       </ButtonOpenSideBar>
-      <LayoutTopBar moduleName={props.topBarModuleName}/>
+      <LayoutTopBar
+        moduleName={props.topBarModuleName}
+        state={{
+          mobileViewport,
+        }}
+      />
       <SideBarContainer>
         <SideBar
           categories={props.sideBarCategories}
@@ -230,6 +276,9 @@ export default function Layout(props) {
           moduleVersions={props.moduleVersions}
           mobileViewport={mobileViewport}
           isOpen={mobileViewport ? sideBarOpen : true}
+          state={{
+            setSideBarOpen,
+          }}
         />
       </SideBarContainer>
       <Main
@@ -243,23 +292,17 @@ export default function Layout(props) {
             <>
               <Breadcrumbs>
                 {breadcrumbs.map((breadcrumb, index) => {
-                  if ((index + 1) == breadcrumbs.length) {
-                    return (
-                      <Pill
-                        className="active"
-                        key={`${JSON.stringify(breadcrumb)}_${index}`}
-                      >
-                        {formatLabel(titleCase(breadcrumb)).replace(/-/g, " ")}
-                      </Pill>
-                    );
-                  }
+                  const isActive = (index + 1) == breadcrumbs.length;
 
                   return (
                     <Pill
+                      className={isActive && "active"}
+                      index={index}
                       key={`${JSON.stringify(breadcrumb)}_${index}`}
                     >
-                      {formatLabel(titleCase(breadcrumb))}
-                      <span>/</span>
+                      <span class="ndash">&ndash;</span>
+                      <span class="label">{formatLabel(titleCase(breadcrumb))}</span>
+                      <span class="slash">/</span>
                     </Pill>
                   );
                 })}

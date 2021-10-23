@@ -136,13 +136,13 @@ const VersionsSelector = styled.select`
 `;
 
 export default function SideBar(props) {
-  const { mobileViewport } = props;
+  const { mobileViewport, state } = props;
 
   const router = useRouter();
 
   function handleVersionSelect(e) {
     const version = e.target.value;
-    console.log(props);
+    state.setSideBarOpen(false);
     router.push(`/${props.moduleName.toLowerCase()}/${version}`);
   }
 
@@ -176,6 +176,7 @@ export default function SideBar(props) {
       {props.categories.map((category, index) => {
         return (
           <RecursiveCategory
+            state={state}
             key={`${JSON.stringify(category)}_${index}`}
             category={category}
           />
@@ -186,6 +187,7 @@ export default function SideBar(props) {
 }
 
 function RecursiveCategory(props) {
+  const { state } = props;
   const router = useRouter();
 
   return (
@@ -195,6 +197,7 @@ function RecursiveCategory(props) {
         if (path.is_directory) {
           return (
             <RecursiveCategory
+              state={state}
               key={`${JSON.stringify(path)}_${index}`}
               category={path}
             />
@@ -205,6 +208,7 @@ function RecursiveCategory(props) {
           <LinkContainer
             key={`${JSON.stringify(path)}_${index}`}
             isActive={path.path == router.asPath}
+            onClick={() => state.setSideBarOpen(false)}
           >
             <Link
               href={path.path}
