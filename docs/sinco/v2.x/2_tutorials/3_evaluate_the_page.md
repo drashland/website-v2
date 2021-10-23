@@ -102,7 +102,7 @@ A tsconfig.json file is required when targeting the DOM (using document syntax) 
 1. Run your test.
 
   ```shell
-  $ deno test --allow-run=chrome --allow-net --config tsconfig.json app_test.ts
+  $ deno test --allow-run --allow-read --allow-net --config tsconfig.json app_test.ts
   ```
 
 2. All of your tests should pass

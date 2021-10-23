@@ -59,7 +59,7 @@ Here you are going to create your headless browser instance, and navigate to htt
 1. Run your test.
 
   ```shell
-  $ deno test --allow-run --allow-net app_test.ts
+  $ deno test --allow-run --allow-read --allow-net app_test.ts
   ```
 
 2. All of your tests should pass

@@ -20,8 +20,7 @@ Learn more about Sinco [here](about-sinco).
   ```typescript
   // app_test.ts
 
-  import { buildFor } from "https://deno.land/x/sinco@v2.0.0/mod.ts";
-  import { assertEquals } from "https://deno.land/std@0.100.0/testing/asserts.ts";
+  import { buildFor } from "./deps.ts";
 
   Deno.test("My test", async () => {
     // Setup
@@ -29,8 +28,8 @@ Learn more about Sinco [here](about-sinco).
     await Sinco.goTo("https://drash.land"); // Go to this page
 
     // Do any actions and assertions, in any order
-    await Sinco.assertUrlIs("https://drash.land");
-    await Sinco.click('img[src="/logo-sinco.png"]'); // This element will take the user to Sinco's documentation
+    await Sinco.assertUrlIs("https://drash.land/");
+    await Sinco.click('img[src="/logo-sinco.svg"]'); // This element will take the user to Sinco's documentation
     await Sinco.waitForPageChange();
     await Sinco.assertUrlIs("https://drash.land/sinco");
     await Sinco.assertSee("Sinco is a browser testing and automation tool for Deno");
@@ -43,7 +42,7 @@ Learn more about Sinco [here](about-sinco).
 4. Run your `app_test.ts` file.
 
   ```shell
-  $ deno test --allow-net --allow-run=chrome app.ts
+  $ deno test --allow-net --allow-run --allow-read app.ts
   ```
 
 5. In the output it provides, you should see that all tests pass!

@@ -27,7 +27,6 @@ Its maintainers have taken concepts from the following ...
 
 * [Puppeteer](https://pptr.dev/) — following a similar API and used as inspriration
 
-
 ... and mixed in their own concepts and practices such as ...
 
 * Developer UX
