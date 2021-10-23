@@ -69,6 +69,17 @@ module.exports = {
         destination: "/wocket/v0.x/index.html",
         permanent: false,
       },
+      // Remove the below /dmm object when the its migrated
+      {
+        source: "/dmm",
+        destination: "/dmm/v1.x/index.html",
+        permanent: false,
+      },
+      {
+        source: "/dmm/v1.x",
+        destination: "/dmm/v1.x/index.html",
+        permanent: false,
+      },
     ];
   },
 };
