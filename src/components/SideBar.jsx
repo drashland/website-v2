@@ -138,7 +138,7 @@ const VersionsSelector = styled.select`
 export default function SideBar(props) {
   const { mobileViewport, state } = props;
 
-  const logoName = `/logo-${props.moduleName}.svg`
+  const logoName = `/logo-${props.moduleName.toLowerCase()}.svg`
 
   const router = useRouter();
 
