@@ -9,6 +9,8 @@ import { useRouter } from "next/router";
 import { formatLabel } from '../src/string_service';
 import getConfig from "next/config";
 
+const { publicRuntimeConfig } = getConfig();
+
 const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
 const MODULES = [
@@ -185,14 +187,14 @@ export async function getStaticProps({ params }) {
     const filepath = "/" + params.path_params.join("/");
     markdown = fs.readFileSync(FILES[filepath], "utf-8");
   } catch (error) {
-    console.log(`\nMarkdown Error\n`, error);
+    if (publicRuntimeConfig.app.env !== "production") {
+      console.log(`\nMarkdown Error\n`, error);
+    }
   }
 
   const module = params.path_params[0];
-  const { publicRuntimeConfig } = getConfig();
   const versions = publicRuntimeConfig.versions[module].versions;
   let version = params.path_params[1];
-  console.log(module, versions);
 
   if (!version) {
     version = versions[versions.length - 1];

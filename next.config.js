@@ -1,6 +1,9 @@
 // next.config.js
 module.exports = {
   publicRuntimeConfig: {
+    app: {
+      env: process.APP_ENV || "production",
+    },
     versions: {
       drash: {
         versions: [
