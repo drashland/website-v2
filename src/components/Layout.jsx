@@ -5,7 +5,6 @@ import SideBar from "./SideBar";
 import LayoutTopBar from "./LayoutTopBar";
 import { titleCase } from "title-case";
 import { formatLabel } from "../string_service";
-import { CornerDownRightOutline } from "@styled-icons/evaicons-outline/CornerDownRightOutline";
 
 const Container = styled.div`
   width: 100%;
@@ -113,11 +112,6 @@ const Pill = styled.div`
       }
     }
   }
-`;
-
-const CornerDownRightOutlineIcon = styled(CornerDownRightOutline)`
-  height: 1rem;
-  margin-right: .5rem;
 `;
 
 const MiddleMessage = styled.div`
