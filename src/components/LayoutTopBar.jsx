@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { MarkGithub } from "@styled-icons/octicons";
 
-const ContainerTopBar = styled.div`
-  font-size: .8rem;
+const Container = styled.div`
+  font-size: ${({ mobileViewport }) => (mobileViewport ? ".6rem" : ".8rem")};
   font-weight: bold;
   letter-spacing: .1rem;
   text-transform: uppercase;
@@ -14,10 +14,10 @@ const ContainerTopBar = styled.div`
   width: 100%;
   background: #2f343c;
   color: #ffffff;
-  padding: 1rem 2rem;
+  padding: 1rem;
 `;
 
-const TitleTopBar = styled.div`
+const Title = styled.div`
   display: flex;
   flex: 1;
 
@@ -45,9 +45,13 @@ const GitHubIcon = styled(MarkGithub)`
 `;
 
 export default function TopBar(props) {
+  const { state } = props;
+
   return (
-    <ContainerTopBar>
-      <TitleTopBar>
+    <Container
+      mobileViewport={state.mobileViewport}
+    >
+      <Title>
         {props.moduleName && (
           <>
             <a href="/">Drash Land</a>
@@ -55,13 +59,13 @@ export default function TopBar(props) {
             {props.moduleName}
           </>
       )}
-      </TitleTopBar>
+      </Title>
       <Icons>
         <a href={getGitHubHref(props.moduleName ? props.moduleName : 'https://github.com/drashland')} target="_BLANK">
           <GitHubIcon />
         </a>
       </Icons>
-    </ContainerTopBar>
+    </Container>
   );
 }
 

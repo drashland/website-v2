@@ -57,7 +57,6 @@ const LinkContainer = styled.div`
     color: ${({ isActive }) => (isActive ? "#7dade2" : "#333333")};
     border-left: 4px solid;
     border-color: ${({ isActive }) => (isActive ? "#7dade2" : "transparent")};
-    display: block;
     transition-property: border, color;
     padding-left: 1rem;
     transition-duration: 0.15s;
@@ -131,12 +130,13 @@ const VersionsSelectorInnerContainer = styled.div`
 `;
 
 const VersionsSelector = styled.select`
+  background: transparent;
   width: 100%;
   padding: .5rem .25rem;
 `;
 
 export default function SideBar(props) {
-  const { mobileViewport } = props;
+  const { mobileViewport, state } = props;
 
   const logoName = `/logo-${props.moduleName}.svg`
 
@@ -144,7 +144,7 @@ export default function SideBar(props) {
 
   function handleVersionSelect(e) {
     const version = e.target.value;
-    console.log(props);
+    state.setSideBarOpen(false);
     router.push(`/${props.moduleName.toLowerCase()}/${version}`);
   }
 
@@ -178,6 +178,7 @@ export default function SideBar(props) {
       {props.categories.map((category, index) => {
         return (
           <RecursiveCategory
+            state={state}
             key={`${JSON.stringify(category)}_${index}`}
             category={category}
           />
@@ -188,6 +189,7 @@ export default function SideBar(props) {
 }
 
 function RecursiveCategory(props) {
+  const { state } = props;
   const router = useRouter();
 
   return (
@@ -197,6 +199,7 @@ function RecursiveCategory(props) {
         if (path.is_directory) {
           return (
             <RecursiveCategory
+              state={state}
               key={`${JSON.stringify(path)}_${index}`}
               category={path}
             />
@@ -207,6 +210,7 @@ function RecursiveCategory(props) {
           <LinkContainer
             key={`${JSON.stringify(path)}_${index}`}
             isActive={path.path == router.asPath}
+            onClick={() => state.setSideBarOpen(false)}
           >
             <Link
               href={path.path}

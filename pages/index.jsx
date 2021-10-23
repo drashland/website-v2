@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutTopBar from "../src/components/LayoutTopBar";
@@ -116,6 +117,7 @@ const CardsContainer = styled.div`
   gap: 2rem;
   margin-bottom: 2rem;
   justify-content: center;
+  flex-wrap: wrap;
 `;
 
 const LOGO_SIZE = 100;
@@ -130,12 +132,12 @@ const Card = styled.div`
   flex-direction: column;
   box-shadow: 0 0 1rem rgba(0, 0, 0, .5);
   text-align: center;
-  width: 100%;
-  max-width: 33%;
   transition-property: bottom, position;
   transition-duration: .25s;
   bottom: 0;
   position: relative;
+  max-width: 30%;
+  width: 100%;
 
   &:hover {
     bottom: .5rem;
@@ -146,6 +148,14 @@ const Card = styled.div`
     width: ${LOGO_SIZE}px;
     z-index: 2;
     margin-bottom: 1rem;
+  }
+
+  @media screen and (max-width: 800px) {
+    max-width: 40%;
+  }
+
+  @media screen and (max-width: 700px) {
+    max-width: 100%;
   }
 `;
 
@@ -217,10 +227,34 @@ const Tag = styled.div`
 export default function Home() {
 
   const router = useRouter();
+  const [mobileViewport, setMobileViewport] = useState(null);
+
+  // TODO(crookse) This is duplicate code. We should switch to using contexts or something else.
+  useEffect(() => {
+    // Support mobile views, desktop views, and window resizing
+    window.addEventListener("resize", handleWindowSizeChange);
+    if (mobileViewport === null) {
+      handleWindowSizeChange();
+    }
+  }, [mobileViewport]);
+
+  // TODO(crookse) This is duplicate code. We should switch to using contexts or something else.
+  function handleWindowSizeChange() {
+    if (window.innerWidth >= 900) {
+      setMobileViewport(false);
+    } else {
+      setMobileViewport(true);
+    }
+  }
 
   return (
     <Container>
-      <LayoutTopBar isLandingPage={true} />
+      <LayoutTopBar
+        isLandingPage={true}
+        state={{
+          mobileViewport,
+        }}
+      />
       <Hero>
         <img src="https://drash.land/assets/common/img/logo_drash.svg" width="175" />
         <Org>Drash Land</Org>
@@ -269,8 +303,6 @@ export default function Home() {
                   <Tag>Deno</Tag>
                 </TagsContainer>
               </Card>
-            </CardsContainer>
-            <CardsContainer>
               <Card onClick={() => router.push("/rhum")}>
                 <ImageContainer>
                   <img src="/logo-rhum.svg"/>
@@ -301,8 +333,6 @@ export default function Home() {
                   <Tag>Deno</Tag>
                 </TagsContainer>
               </Card>
-            </CardsContainer>
-            <CardsContainer>
               <Card onClick={() => router.push("https://github.com/drashland/moogle")}>
                 <CardTitle>Moogle</CardTitle>
                 <CardDescription>An easy way to "Google" your "Map" using search terms</CardDescription>
