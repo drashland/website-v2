@@ -273,8 +273,8 @@ export default function Layout(props) {
                       index={index}
                       key={`${JSON.stringify(breadcrumb)}_${index}`}
                     >
-                      <span class="label">{formatLabel(titleCase(breadcrumb))}</span>
-                      <span class="slash">/</span>
+                      <span className="label">{formatLabel(titleCase(breadcrumb))}</span>
+                      <span className="slash">/</span>
                     </Pill>
                   );
                 })}
