@@ -57,7 +57,6 @@ const LinkContainer = styled.div`
     color: ${({ isActive }) => (isActive ? "#7dade2" : "#333333")};
     border-left: 4px solid;
     border-color: ${({ isActive }) => (isActive ? "#7dade2" : "transparent")};
-    display: block;
     transition-property: border, color;
     padding-left: 1rem;
     transition-duration: 0.15s;
