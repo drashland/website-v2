@@ -87,6 +87,34 @@ module.exports = {
         destination: "/dmm/v1.x/index.html",
         permanent: false,
       },
+      // Remove the below /rhum object when the its migrated
+      {
+        source: "/rhum",
+        destination: "/rhum/v1.x/index.html",
+        permanent: false,
+      },
+      {
+        source: "/rhum/v1.x",
+        destination: "/rhum/v1.x/index.html",
+        permanent: false,
+      },
+      // Remove the below /line object when the its migrated
+      {
+        source: "/line",
+        destination: "/line/v0.x/index.html",
+        permanent: false,
+      },
+      {
+        source: "/line/v0.x",
+        destination: "/line/v0.x/index.html",
+        permanent: false,
+      },
+      // Remove the below /sinco object when the its migrated
+      {
+        source: "/sinco/v1.x",
+        destination: "/sinco/v1.x/index.html",
+        permanent: false,
+      },
     ];
   },
 };
