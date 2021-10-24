@@ -1,15 +1,31 @@
 import { useEffect, useState } from "react";
 import { useRouter }  from "next/router";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import SideBar from "./SideBar";
 import LayoutTopBar from "./LayoutTopBar";
 import { titleCase } from "title-case";
-import { formatLabel } from "../string_service";
+import { formatLabel } from "../services/string_service";
+import { lightTheme, darkTheme } from "../../styles/theme";
+
+const LOCAL_STORAGE_DARK_MODE = "drash_land_dark_mode";
+const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
 const Container = styled.div`
+  background: ${({ theme }) => theme.layout.background};
+  color: ${({ theme }) => theme.layout.color};
   width: 100%;
-  height: 100%;
+  height: auto;
   min-width: 375px; // iPhone X width
+  transition-duration: 0.25s;
+  transition-property: background;
+
+  &.container-loading {
+    height: 100% !important;
+  }
+
+  .container-loading {
+    height: 100% !important;
+  }
 `;
 
 const Main = styled.div`
@@ -22,9 +38,11 @@ const Main = styled.div`
 `;
 
 const MakeBetter = styled.div`
-  background-color: #f3f6f9;
+  background-color: ${({ theme }) => theme.layout.makeBetter.background};
   border-radius: 1rem;
   padding: 2rem;
+  transition-duration: 0.25s;
+  transition-property: background;
 `;
 
 const MakeBetterHeading = styled.h2`
@@ -33,13 +51,15 @@ const MakeBetterHeading = styled.h2`
   margin-bottom: 1.5rem;
 `;
 
-const HorizontalRule = styled.div`
-  background: #f4f4f4;
+export const HorizontalRule = styled.div`
+  background: ${({ theme }) => theme.layout.horizontalRule.background};
   height: .25rem;
   width: 100%;
   margin-top: 4rem !important;
   margin-bottom: 4rem;
   box-shadow: none;
+  transition-duration: 0.25s;
+  transition-property: background;
 `;
 
 const InnerContainer = styled.div`
@@ -67,11 +87,10 @@ const Breadcrumbs = styled.div`
 `;
 
 const Pill = styled.div`
-  //color: #7dade2;
+  color: ${({ theme }) => theme.breadcrumbs.color};
   display: inline-block;
 
   .slash {
-    color: #333333;
     padding: 0 1rem;
     display: inline-block;
   }
@@ -82,7 +101,6 @@ const Pill = styled.div`
   }
 
   &.active {
-    color: #333333;
     font-weight: bold;
   }
 
@@ -271,10 +289,15 @@ export default function Layout(props) {
 
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [mobileViewport, setMobileViewport] = useState(null);
+  const [darkMode, setDarkMode] = useState(null);
 
   useEffect(() => {
     // Make sure all code blocks are highlighted
     window.Prism.highlightAll();
+
+    // Make sure to set the user's theme mode preference
+    const userSettingsDarkMode = window.localStorage.getItem(LOCAL_STORAGE_DARK_MODE);
+    setDarkMode(userSettingsDarkMode && userSettingsDarkMode === "true");
 
     // Support mobile views, desktop views, and window resizing
     window.addEventListener("resize", handleWindowSizeChange);
@@ -293,6 +316,11 @@ export default function Layout(props) {
     }
   }
 
+  function toggleDarkMode() {
+    window.localStorage.setItem(LOCAL_STORAGE_DARK_MODE, !darkMode);
+    setDarkMode(!darkMode);
+  }
+
   function toggleSideBar() {
     if (mobileViewport) {
       setSideBarOpen(!sideBarOpen);
@@ -301,89 +329,90 @@ export default function Layout(props) {
     }
   }
 
-  if (mobileViewport === null) {
+  if (
+    mobileViewport === null
+  ) {
     return (
-      <Container>
-        <Main mobileViewport={true}>
-          <InnerContainer>
-            <MiddleMessage>Loading...</MiddleMessage>
-          </InnerContainer>
-        </Main>
-      </Container>
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+        <Container className="container-loading">
+          <Main mobileViewport={true}>
+            <InnerContainer>
+              <MiddleMessage>Loading...</MiddleMessage>
+            </InnerContainer>
+          </Main>
+        </Container>
+      </ThemeProvider>
     );
   }
 
   return (
-    <Container>
-      <ButtonOpenSideBar
-        show={mobileViewport}
-        sideBarOpen={sideBarOpen}
-        onClick={() => {
-          toggleSideBar();
-        }}
-      >
-        <Bar sideBarOpen={sideBarOpen} />
-      </ButtonOpenSideBar>
-      <LayoutTopBar
-        moduleName={props.topBarModuleName}
-        state={{
-          mobileViewport,
-        }}
-      />
-      <SideBarContainer>
-        <SideBar
-          categories={props.sideBarCategories}
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <Container>
+        <ButtonOpenSideBar
+          show={mobileViewport}
+          sideBarOpen={sideBarOpen}
+          onClick={() => {
+            toggleSideBar();
+          }}
+        >
+          <Bar sideBarOpen={sideBarOpen} />
+        </ButtonOpenSideBar>
+        <LayoutTopBar
           moduleName={props.topBarModuleName}
-          moduleVersion={props.moduleVersion}
-          moduleVersions={props.moduleVersions}
-          mobileViewport={mobileViewport}
-          isOpen={mobileViewport ? sideBarOpen : true}
           state={{
-            setSideBarOpen,
+            darkMode,
+            mobileViewport,
+            toggleDarkMode,
           }}
         />
-      </SideBarContainer>
-      <Main
-        mobileViewport={mobileViewport}
-      >
-        <InnerContainer>
-          {loading && (
-            <MiddleMessage>Loading...</MiddleMessage>
-          )}
-          {!loading && (
-            <>
-              <Breadcrumbs>
-                {breadcrumbs.map((breadcrumb, index) => {
-                  const isActive = (index + 1) == breadcrumbs.length;
+        <SideBarContainer>
+          <SideBar
+            categories={props.sideBarCategories}
+            moduleName={props.topBarModuleName}
+            moduleVersion={props.moduleVersion}
+            moduleVersions={props.moduleVersions}
+            mobileViewport={mobileViewport}
+            isOpen={mobileViewport ? sideBarOpen : true}
+            state={{
+              setSideBarOpen,
+            }}
+          />
+        </SideBarContainer>
+        <Main
+          mobileViewport={mobileViewport}
+        >
+          <InnerContainer>
+            <Breadcrumbs>
+              {breadcrumbs.map((breadcrumb, index) => {
+                const isActive = (index + 1) == breadcrumbs.length;
 
-                  return (
-                    <Pill
-                      className={isActive && "active"}
-                      index={index}
-                      key={`${JSON.stringify(breadcrumb)}_${index}`}
-                    >
-                      <span className="label">{formatLabel(titleCase(breadcrumb))}</span>
-                      <span className="slash">/</span>
-                    </Pill>
-                  );
-                })}
-              </Breadcrumbs>
-              {props.children}
-              <HorizontalRule/>
-              <MakeBetter>
-                <MakeBetterHeading>
-                  Help Improve This Page
-                </MakeBetterHeading>
-                If you are having issues with this page (e.g., parts of this page are not loading, documentation does not make sense, etc.), please let us know by filing an issue <a href={getIssueUrl(pageUri)} target="_BLANK">here</a>. We want to make sure these documentation pages cater the best developer experience possible.
-              </MakeBetter>
-              <Copyright>
-                &copy; 2019 - 2021 Drash Land
-              </Copyright>
-            </>
-        )}
-        </InnerContainer>
-      </Main>
-    </Container>
+                return (
+                  <Pill
+                    className={isActive && "active"}
+                    index={index}
+                    key={`${JSON.stringify(breadcrumb)}_${index}`}
+                  >
+                    <span className="label">{formatLabel(titleCase(breadcrumb))}</span>
+                    <span className="slash">/</span>
+                  </Pill>
+                );
+              })}
+            </Breadcrumbs>
+            {props.children}
+            <HorizontalRule/>
+            <MakeBetter>
+              <MakeBetterHeading>
+                Help Improve This Page
+              </MakeBetterHeading>
+              If you are having issues with this page (e.g., parts of this page are not loading, documentation does not make sense, etc.), please let us know by filing an issue <a href={getIssueUrl(pageUri)} target="_BLANK">here</a>. We want to make sure these documentation pages cater the best developer experience possible.
+            </MakeBetter>
+            <Copyright>
+              &copy; 2019 - 2021 Drash Land
+            </Copyright>
+          </InnerContainer>
+        </Main>
+      </Container>
+    </ThemeProvider>
   );
 }
 

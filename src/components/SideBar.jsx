@@ -6,13 +6,13 @@ import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
 const Container = styled.div`
-  background: #f3f6f9;
+  background: ${({ theme }) => theme.sideBar.background};
   padding: 4rem 0 4rem 0;
   min-width: ${({ mobileViewport }) => (mobileViewport ? '100%' : '350px')};
   overflow: auto;
   position: fixed;
   height: 100%;
-  transition-property: left;
+  transition-property: background, left;
   transition-duration: 0.25s;
   left: ${({ isOpen, mobileViewport }) => {
     if (mobileViewport) {
@@ -26,9 +26,15 @@ const Container = styled.div`
 const Category = styled.div`
   padding: 1rem 2rem .25rem 2rem;
 
+  .category-heading {
+    transition-duration: .25s;
+    transition-property: color;
+  }
+
   .category {
     padding: 0 0 1rem 1.25rem;
     .category-heading {
+      color: ${({ theme }) => theme.sideBar.categoryHeading.color};
       border: none;
       padding: 0;
       margin-bottom: .5rem;
@@ -36,6 +42,7 @@ const Category = styled.div`
 
     .category {
       .category-heading {
+        color: ${({ theme }) => theme.sideBar.categoryHeading.color};
         border: none;
         padding-top: 1rem;
         margin: 1rem 0 .5rem 0;
@@ -45,24 +52,31 @@ const Category = styled.div`
 `;
 
 const CategoryHeading = styled.div`
-  border-bottom: 1px solid #dfdfdf;
+  color: ${({theme}) => theme.sideBar.categoryHeading.color};
+  border-bottom: 1px solid ${({theme}) => theme.sideBar.categoryHeading.borderBottomColor};
   font-size: .8rem;
   font-weight: bold;
   letter-spacing: .1rem;
   margin-bottom: 1rem;
   padding: 0 0 .1rem 0;
   text-transform: uppercase;
+  transition-duration: .25s;
+  transition-property: border, color;
 `;
 
 const LinkContainer = styled.div`
   display: block;
   a {
-    color: ${({ isActive }) => (isActive ? "#7dade2" : "#333333")};
+    color: ${({ isActive, theme }) => {
+      return isActive
+        ? theme.sideBar.link.colorActive
+        : theme.sideBar.link.colorInactive;
+    }};
     border-left: 4px solid;
     border-color: ${({ isActive }) => (isActive ? "#7dade2" : "transparent")};
+    transition-duration: 0.25s;
     transition-property: border, color;
     padding-left: 1rem;
-    transition-duration: 0.15s;
     margin: .1rem 0;
 
     &:hover {

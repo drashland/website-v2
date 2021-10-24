@@ -69,6 +69,9 @@ export default function Page(props) {
             h4: {
               component: Heading4
             },
+            hr: {
+              component: HorizontalRule
+            },
             p: {
               component: Paragraph
             },
@@ -112,7 +115,6 @@ export async function getStaticProps({ params }) {
 
   try {
     const filepath = "/" + params.path_params.join("/");
-    console.log(filepath)
     markdown = fs.readFileSync(FILES[filepath], "utf-8");
   } catch (error) {
     if (publicRuntimeConfig.app.env !== "production") {
