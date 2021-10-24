@@ -29,10 +29,9 @@ Learn more about Sinco [here](about-sinco).
 
     // Do any actions and assertions, in any order
     await Sinco.assertUrlIs("https://drash.land/");
-    await Sinco.click('img[src="/logo-sinco.svg"]'); // This element will take the user to Sinco's documentation
+    await Sinco.click('a[href="https://discord.gg/RFsCSaHRWK"]'); // This element will take the user to Sinco's documentation
     await Sinco.waitForPageChange();
-    await Sinco.assertUrlIs("https://drash.land/sinco");
-    await Sinco.assertSee("Sinco is a browser testing and automation tool for Deno");
+    await Sinco.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
 
     // Once finished, close to clean up any processes
     await Sinco.done();

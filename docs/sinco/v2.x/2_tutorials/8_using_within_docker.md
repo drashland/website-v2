@@ -104,15 +104,15 @@ Here, you are creating your docker-compose file, which will start/run your conta
   Deno.test("My web app works as expected", async () => {
     const Chrome = await buildFor("chrome");
     await Chrome.goTo("https://drash.land");
-    await Chrome.click('img[src="/logo-sinco.svg"]');
+    await Chrome.click('a[href="https://discord.gg/RFsCSaHRWK"]');
     await Chrome.waitForPageChange();
-    await Chrome.assertUrlIs("https://drash.land/sinco");
+    await Chrome.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
     await Chrome.done();
     const Firefox = await buildFor("chrome");
     await Firefox.goTo("https://drash.land");
-    await Firefox.click('img[src="/logo-sinco"]');
+    await Firefox.click('a[href="https://discord.gg/RFsCSaHRWK"]');
     await Firefox.waitForPageChange();
-    await Firefox.assertUrlIs("https://drash.land/sinco");
+    await Firefox.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
     await Firefox.done();
   })
   ```
