@@ -41,7 +41,7 @@ Drash uses Deno Standard Modules for cookie handling.
 1. Create your `app.ts` file. Your resource in this file will set the `my_cookie` value on the `response` object.
 
   ```typescript
-  import * as Drash from "./deps.ts";
+  import { Drash } from "./deps.ts";
 
   // Create your resource
 
