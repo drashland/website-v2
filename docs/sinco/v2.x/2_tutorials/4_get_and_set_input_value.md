@@ -9,21 +9,16 @@
 
 ## Before You Get Started
 
-Sinco provides the method `.click()` that will allow you to click any element on the page by the given selector.
+Sinco provides a method to get the value associated with an input element that is present on the page.
 
-Example selectors could be:
-
-* `.click('a[href="/user"]');`
-* `.click('button#submit');`
-The `.click()` method will take any valid selector.
-
-If there is any problem with clicking an element by the selector, such as the element not existing, Sinco will throw an error for you.
+Sinco provides another method for setting the value of an input element by a selector.
 
 In this tutorial, you will:
 
-* Create a headless browser instance; and
-* Click a link;
-* Assert the page was changed.
+* Create a headless browser instance;
+* Set the value for an input element;
+* Get the value associated with a specific input element; and
+* Assert that value is correct.
 
 ## Folder Structure End State
 
@@ -40,19 +35,20 @@ In this tutorial, you will:
   ```typescript
   // app.ts
 
-  import { buildFor } from "./deps.ts";
+  // Note that you will need to import assertEquals from https://deno.land/std/testing/asserts.ts
+  import { buildFor, assertEquals } from "./deps.ts";
 
   Deno.test("My web app works as expected", async () => {
     const Sinco = await buildFor("chrome");
-    await Sinco.goTo("https://drash.land");
-    await Sinco.click('a[href="https://discord.gg/RFsCSaHRWK"]');
-    await Sinco.waitForPageChange();
-    await Sinco.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
+    await Sinco.goTo("https://chromestatus.com");
+    await Sinco.type('input[placeholder="Filter"]', "hello world");
+    const val = await Sinco.getInputValue('input[placeholder="Filter"]');
+    assertEquals(val, "hello world");
     await Sinco.done();
   })
   ```
 
-Here you are going to create your headless browser instance, and navigate to https://drash.land. Once the page has loaded, you will click an element matching the `img[src="/logo-sinco.svg"]` selector, which will send you to a different page. To assert this, you are going to use `.assertUrlIs()` to assert the page you are currently on, has now changed.
+In this tutorial, you are creating a new browser instance that is pointing to https://chromestatus.com, then you will type a value into an input field, just so the field is populated with a value. After, you will get the value from that input field and assert it equals the value you typed.
 
 ## Verification
 

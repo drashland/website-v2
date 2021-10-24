@@ -41,7 +41,7 @@ Learn more about Sinco [here](about-sinco).
 4. Run your `app_test.ts` file.
 
   ```shell
-  $ deno test --allow-net --allow-run --allow-read app.ts
+  $ deno test --allow-net --allow-run --allow-read app_test.ts
   ```
 
 5. In the output it provides, you should see that all tests pass!

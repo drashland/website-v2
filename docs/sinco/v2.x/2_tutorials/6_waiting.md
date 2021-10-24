@@ -42,7 +42,7 @@ In this tutorial, you will:
   Deno.test("My web app works as expected", async function () {
     const Sinco = await buildFor("chrome");
     await Sinco.goTo("https://drash.land");
-    await Sinco.assertUrlIs("https://drash.land");
+    await Sinco.assertUrlIs("https://drash.land/");
     await Sinco.click('a[href="https://discord.gg/RFsCSaHRWK"]');
     await Sinco.waitForPageChange();
     await Sinco.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");

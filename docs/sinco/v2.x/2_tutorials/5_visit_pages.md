@@ -44,7 +44,7 @@ In this tutorial, you will:
   Deno.test("My web app works as expected", async () => {
     const Sinco = await buildFor("chrome");
     await Sinco.goTo("https://drash.land");
-    await Sinco.assertUrlIs("https://drash.land");
+    await Sinco.assertUrlIs("https://drash.land/");
     await Sinco.done();
   })
   ```
