@@ -114,7 +114,7 @@ export default function Page(props) {
 
   useEffect(() => {
     if (redirectUri) {
-      return router.push(redirectUri);
+      return router.replace(redirectUri);
     }
 
     // Make sure all code blocks are highlighted
@@ -123,6 +123,7 @@ export default function Page(props) {
 
   return (
     <Layout
+      willRedirect={redirectUri}
       topBarModuleName={props.topBarModuleName}
       sideBarCategories={props.sideBarCategories}
       moduleVersion={props.moduleVersion}

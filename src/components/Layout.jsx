@@ -170,6 +170,7 @@ const Bar = styled.div`
 `;
 
 export default function Layout(props) {
+  const { willRedirect } = props;
 
   const router = useRouter();
   const pageUri = router.asPath;
@@ -212,7 +213,10 @@ export default function Layout(props) {
     }
   }
 
-  if (mobileViewport === null) {
+  if (
+    mobileViewport === null
+    || willRedirect
+  ) {
     return (
       <Container>
         <Main mobileViewport={true}>
