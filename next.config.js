@@ -4,12 +4,19 @@ module.exports = {
     app: {
       env: process.APP_ENV || "production",
     },
+    docDenoLandUrls: {
+      dmm: "https://doc.deno.land/https/deno.land/x/dmm/mod.ts",
+      drash: "https://doc.deno.land/https/deno.land/x/drash/mod.ts",
+      line: "https://doc.deno.land/https/deno.land/x/line/mod.ts",
+      sinco: "https://doc.deno.land/https/deno.land/x/sinco/mod.ts",
+      wocket: "https://doc.deno.land/https/deno.land/x/wocket/mod.ts",
+    },
     versions: {
       drash: {
         versions: [
           "v1.x",
           "v2.x",
-        ]
+        ],
       },
       sinco: {
         versions: [
@@ -20,9 +27,9 @@ module.exports = {
       wocket: {
         versions: [
           "v0.x",
-        ]
-      }
-    }
+        ],
+      },
+    },
   },
   reactStrictMode: false,
   async redirects() {
@@ -84,6 +91,34 @@ module.exports = {
       {
         source: "/dmm/v1.x",
         destination: "/dmm/v1.x/index.html",
+        permanent: false,
+      },
+      // Remove the below /rhum object when the its migrated
+      {
+        source: "/rhum",
+        destination: "/rhum/v1.x/index.html",
+        permanent: false,
+      },
+      {
+        source: "/rhum/v1.x",
+        destination: "/rhum/v1.x/index.html",
+        permanent: false,
+      },
+      // Remove the below /line object when the its migrated
+      {
+        source: "/line",
+        destination: "/line/v0.x/index.html",
+        permanent: false,
+      },
+      {
+        source: "/line/v0.x",
+        destination: "/line/v0.x/index.html",
+        permanent: false,
+      },
+      // Remove the below /sinco object when the its migrated
+      {
+        source: "/sinco/v1.x",
+        destination: "/sinco/v1.x/index.html",
         permanent: false,
       },
     ];
