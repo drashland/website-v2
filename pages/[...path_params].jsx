@@ -15,6 +15,7 @@ const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
 const MODULES = [
   "drash",
+  "sinco",
 ];
 
 const FILES = {};
@@ -185,6 +186,7 @@ export async function getStaticProps({ params }) {
 
   try {
     const filepath = "/" + params.path_params.join("/");
+    console.log(filepath)
     markdown = fs.readFileSync(FILES[filepath], "utf-8");
   } catch (error) {
     if (publicRuntimeConfig.app.env !== "production") {

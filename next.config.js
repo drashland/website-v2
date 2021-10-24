@@ -18,6 +18,12 @@ module.exports = {
           "v2.x",
         ],
       },
+      sinco: {
+        versions: [
+          "v1.x",
+          "v2.x"
+        ]
+      },
       wocket: {
         versions: [
           "v0.x",

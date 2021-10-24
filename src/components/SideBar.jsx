@@ -141,6 +141,8 @@ const VersionsSelector = styled.select`
 export default function SideBar(props) {
   const { mobileViewport, state } = props;
 
+  const logoName = `/logo-${props.moduleName.toLowerCase()}.svg`
+
   const router = useRouter();
 
   function handleVersionSelect(e) {
@@ -159,7 +161,7 @@ export default function SideBar(props) {
       isOpen={props.isOpen}
     >
       <ImageContainer>
-        <img src="/logo-drash.svg"/>
+        <img src={logoName}/>
       </ImageContainer>
       <VersionsSelectorContainer>
         <VersionsSelectorInnerContainer>

@@ -77,6 +77,8 @@ function getGitHubHref(module) {
   switch (module.toLowerCase()) {
     case "drash":
       return "https://github.com/drashland/deno-drash";
+    case "sinco":
+      return "https://github.com/drashland/sinco";
     default:
       break;
   }
