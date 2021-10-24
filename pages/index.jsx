@@ -59,6 +59,7 @@ const Org = styled.p`
   letter-spacing: .1rem;
   color: #7dade2;
   text-transform: uppercase;
+  margin-bottom: 0.25rem;
 `;
 
 const Motto = styled.p`
@@ -256,8 +257,9 @@ export default function Home() {
         }}
       />
       <Hero>
-        <img src="https://drash.land/assets/common/img/logo_drash.svg" width="175" />
+        <img src="/assets/common/img/logo_drash.svg" width="175" />
         <Org>Drash Land</Org>
+        Develop With Confidence
       </Hero>
       <Main>
         <Section>
