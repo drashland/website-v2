@@ -12,7 +12,7 @@ Most tutorials will follow the format below:
 
 **Steps**
 
-* A list of steps to get you from start to finish -- meeting the Folder Structure En-* This section has key things we feel you should know before you get started with the tutorial.
+* A list of steps to get you from start to finish -- meeting the Folder Structure End State.
 
 **Folder Structure End State**
 
