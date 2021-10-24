@@ -24,7 +24,7 @@ Below are the required configurations. You cannot create a Drash server without 
 * Example Usage
 
   ```typescript
-  import * as Drash from "./deps.ts";
+  import { Drash } from "./deps.ts";
 
   const server = new Drash.Server({
     hostname: "0.0.0.0", // <--- See here
@@ -40,7 +40,7 @@ Below are the required configurations. You cannot create a Drash server without 
 * Example Usage
 
   ```typescript
-  import * as Drash from "./deps.ts";
+  import { Drash } from "./deps.ts";
 
   const server = new Drash.Server({
     hostname: "0.0.0.0",
@@ -56,7 +56,7 @@ Below are the required configurations. You cannot create a Drash server without 
 * Example Usage (if using `http`)
 
   ```typescript
-  import * as Drash from "./deps.ts";
+  import { Drash } from "./deps.ts";
 
   const server = new Drash.Server({
     hostname: "0.0.0.0",
@@ -69,7 +69,7 @@ Below are the required configurations. You cannot create a Drash server without 
 * Example Usage (if using `https`)
 
   ```typescript
-  import * as Drash from "./deps.ts";
+  import { Drash } from "./deps.ts";
 
   const server = new Drash.Server({
     cert_file: "/path/to/cert/file.crt", // <--- Required if using protocol is "https"
@@ -87,7 +87,7 @@ Below are the required configurations. You cannot create a Drash server without 
 * Example Usage
 
   ```typescript
-  import * as Drash from "./deps.ts";
+  import { Drash } from "./deps.ts";
 
   class MyResource extends Drash.Resource {
     ...
@@ -115,7 +115,7 @@ Below are the optional configurations. Drash servers can be created without thes
 * Example Usage
 
   ```typescript
-  import * as Drash from "./deps.ts";
+  import { Drash } from "./deps.ts";
 
   const server = new Drash.Server({
     cert_file: "/path/to/cert/file.crt", // <--- See here (also notice key_file is present and protocol is "https")
@@ -132,7 +132,7 @@ Below are the optional configurations. Drash servers can be created without thes
 * Example Usage
 
   ```typescript
-  import * as Drash from "./deps.ts";
+  import { Drash } from "./deps.ts";
 
   const server = new Drash.Server({
     cert_file: "/path/to/cert/file.crt",
@@ -150,7 +150,7 @@ Below are the optional configurations. Drash servers can be created without thes
 * Example Usage
 
   ```typescript
-  import * as Drash from "./deps.ts";
+  import { Drash } from "./deps.ts";
 
   class MyService extends Drash.Service {
     ...
