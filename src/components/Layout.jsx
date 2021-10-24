@@ -13,7 +13,7 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
-  padding-left: ${({ mobileViewport }) => (!mobileViewport ? '410px': '0')};
+  padding-left: ${({ mobileViewport }) => (!mobileViewport ? '350px': '0')};
   display: flex;
   justify-content: center;
   height: 100%;
@@ -24,7 +24,7 @@ const Main = styled.div`
 const MakeBetter = styled.div`
   background-color: #f3f6f9;
   border-radius: 1rem;
-  padding: 4rem;
+  padding: 2rem;
 `;
 
 const MakeBetterHeading = styled.h2`
@@ -58,24 +58,38 @@ const Copyright = styled.div`
 `;
 
 const Breadcrumbs = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 8rem !important;
+  margin-top: 6rem !important;
   margin-bottom: 3rem;
+
+  @media screen and (max-width: 768px) {
+    font-size: .8rem;
+  }
 `;
 
 const Pill = styled.div`
   //color: #7dade2;
   display: inline-block;
 
-  span {
+  .slash {
     color: #333333;
     padding: 0 1rem;
+    display: inline-block;
+  }
+  @media screen and (max-width: 768px) {
+    .slash {
+      padding: 0 .5rem;
+    }
   }
 
   &.active {
     color: #333333;
     font-weight: bold;
+  }
+
+  &:last-of-type {
+    .slash {
+      display: none;
+    }
   }
 `;
 
@@ -221,7 +235,12 @@ export default function Layout(props) {
       >
         <Bar sideBarOpen={sideBarOpen} />
       </ButtonOpenSideBar>
-      <LayoutTopBar moduleName={props.topBarModuleName}/>
+      <LayoutTopBar
+        moduleName={props.topBarModuleName}
+        state={{
+          mobileViewport,
+        }}
+      />
       <SideBarContainer>
         <SideBar
           categories={props.sideBarCategories}
@@ -230,6 +249,9 @@ export default function Layout(props) {
           moduleVersions={props.moduleVersions}
           mobileViewport={mobileViewport}
           isOpen={mobileViewport ? sideBarOpen : true}
+          state={{
+            setSideBarOpen,
+          }}
         />
       </SideBarContainer>
       <Main
@@ -243,23 +265,16 @@ export default function Layout(props) {
             <>
               <Breadcrumbs>
                 {breadcrumbs.map((breadcrumb, index) => {
-                  if ((index + 1) == breadcrumbs.length) {
-                    return (
-                      <Pill
-                        className="active"
-                        key={`${JSON.stringify(breadcrumb)}_${index}`}
-                      >
-                        {formatLabel(titleCase(breadcrumb)).replace(/-/g, " ")}
-                      </Pill>
-                    );
-                  }
+                  const isActive = (index + 1) == breadcrumbs.length;
 
                   return (
                     <Pill
+                      className={isActive && "active"}
+                      index={index}
                       key={`${JSON.stringify(breadcrumb)}_${index}`}
                     >
-                      {formatLabel(titleCase(breadcrumb))}
-                      <span>/</span>
+                      <span className="label">{formatLabel(titleCase(breadcrumb))}</span>
+                      <span className="slash">/</span>
                     </Pill>
                   );
                 })}

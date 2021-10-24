@@ -1,6 +1,9 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig } = getConfig();
 
 const Container = styled.div`
   background: #f3f6f9;
@@ -57,7 +60,6 @@ const LinkContainer = styled.div`
     color: ${({ isActive }) => (isActive ? "#7dade2" : "#333333")};
     border-left: 4px solid;
     border-color: ${({ isActive }) => (isActive ? "#7dade2" : "transparent")};
-    display: block;
     transition-property: border, color;
     padding-left: 1rem;
     transition-duration: 0.15s;
@@ -131,19 +133,26 @@ const VersionsSelectorInnerContainer = styled.div`
 `;
 
 const VersionsSelector = styled.select`
+  background: transparent;
   width: 100%;
   padding: .5rem .25rem;
 `;
 
 export default function SideBar(props) {
-  const { mobileViewport } = props;
+  const { mobileViewport, state } = props;
+
+  const logoName = `/logo-${props.moduleName.toLowerCase()}.svg`
 
   const router = useRouter();
 
   function handleVersionSelect(e) {
     const version = e.target.value;
-    console.log(props);
+    state.setSideBarOpen(false);
     router.push(`/${props.moduleName.toLowerCase()}/${version}`);
+  }
+
+  function getApiReferenceUrl(module) {
+    return publicRuntimeConfig.docDenoLandUrls[module.toLowerCase()];
   }
 
   return (
@@ -152,7 +161,7 @@ export default function SideBar(props) {
       isOpen={props.isOpen}
     >
       <ImageContainer>
-        <img src="/logo-drash.svg"/>
+        <img src={logoName}/>
       </ImageContainer>
       <VersionsSelectorContainer>
         <VersionsSelectorInnerContainer>
@@ -176,16 +185,31 @@ export default function SideBar(props) {
       {props.categories.map((category, index) => {
         return (
           <RecursiveCategory
+            state={state}
             key={`${JSON.stringify(category)}_${index}`}
             category={category}
           />
         );
       })}
+      <RecursiveCategory
+        state={state}
+        category={{
+          label: "Links",
+          paths: [
+            {
+              is_external: true,
+              label: "API Reference",
+              path: getApiReferenceUrl(props.moduleName),
+            }
+          ],
+        }}
+      />
     </Container>
   );
 }
 
 function RecursiveCategory(props) {
+  const { state } = props;
   const router = useRouter();
 
   return (
@@ -195,6 +219,7 @@ function RecursiveCategory(props) {
         if (path.is_directory) {
           return (
             <RecursiveCategory
+              state={state}
               key={`${JSON.stringify(path)}_${index}`}
               category={path}
             />
@@ -205,12 +230,24 @@ function RecursiveCategory(props) {
           <LinkContainer
             key={`${JSON.stringify(path)}_${index}`}
             isActive={path.path == router.asPath}
+            onClick={() => state.setSideBarOpen(false)}
           >
-            <Link
-              href={path.path}
-            >
-              {path.label}
-            </Link>
+            {path.is_external && (
+              <a
+                href={path.path}
+                rel="noreferrer"
+                target="_BLANK"
+              >
+                {path.label}
+              </a>
+            )}
+            {!path.is_external && (
+              <Link
+                href={path.path}
+              >
+                {path.label}
+              </Link>
+            )}
           </LinkContainer>
         );
       })}

@@ -15,6 +15,8 @@ In the example code below, the `HomeResource` class is the only resource that wi
 
 import { Drash } from "./deps.ts";
 
+// Create your resource
+
 class HomeResource extends Drash.Resource {
   public paths = ["/"];
 
@@ -22,6 +24,8 @@ class HomeResource extends Drash.Resource {
     return response.json({hello: "world"});
   }
 }
+
+// Create and run your server
 
 const server = new Drash.Server({
   hostname: "0.0.0.0",
@@ -37,8 +41,8 @@ server.run();
 console.log(`Server running at ${server.address}.`);
 ```
 
-When Drash servers register resources, they also register their paths as accessible URIs. An accessible URI is a URI that a client can target. In other words, if a resource specifies `/my-resource` in its `paths` property, then clients can go to `{http|https}://{server-adress.tld}/my-resource`.
+When Drash servers register resources, they also register their paths as accessible URIs. An accessible URI is a URI that clients can target. In other words, if a resource specifies `/my-resource` in its `paths` property, then clients can go to `{your-site.com}/my-resource`.
 
 Any URI that does not exist in any resource is a non-accessible URI. Non-accessible URIs ultimately lead to a `404 Not Found` error response.
 
-You can add as many resources as you want to your server.
+You can add as many resources as you want to your server and your server will register them.

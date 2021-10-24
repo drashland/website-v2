@@ -14,7 +14,6 @@ Some examples of what you can build are:
 * Application programming interfaces (APIs)
 * Single page applications (SPAs)
 * Server-side rendered (SSR) pages
-* Statically generated HTML sites (through Drash's SSG feature)
 
 ## Concepts
 
@@ -34,3 +33,5 @@ Its maintainers have taken concepts from the following ...
 * Test-driven development
 * Documentation-driven development
 * Transparency
+
+These concepts have made Drash very approachable and one of the most well-documented frameworks in the Deno ecosystem.

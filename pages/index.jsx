@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutTopBar from "../src/components/LayoutTopBar";
@@ -85,9 +86,6 @@ const Main = styled.div`
   position: relative;
   z-index: 2;
   color: #333;
-  p {
-    margin-bottom: 2rem;
-  }
 `;
 
 const Section = styled.div`
@@ -119,6 +117,7 @@ const CardsContainer = styled.div`
   gap: 2rem;
   margin-bottom: 2rem;
   justify-content: center;
+  flex-wrap: wrap;
 `;
 
 const LOGO_SIZE = 100;
@@ -127,16 +126,18 @@ const Card = styled.div`
   cursor: pointer;
   background: #ffffff;
   border-radius: 2rem;
-  padding: 3rem;
+  padding: 1.5rem;
   color: #333333;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 0 1rem rgba(0, 0, 0, .5);
   text-align: center;
-  width: 100%;
-  max-width: 33%;
   transition-property: bottom, position;
   transition-duration: .25s;
   bottom: 0;
   position: relative;
+  max-width: 30%;
+  width: 100%;
 
   &:hover {
     bottom: .5rem;
@@ -148,6 +149,14 @@ const Card = styled.div`
     z-index: 2;
     margin-bottom: 1rem;
   }
+
+  @media screen and (max-width: 800px) {
+    max-width: 40%;
+  }
+
+  @media screen and (max-width: 700px) {
+    max-width: 100%;
+  }
 `;
 
 const CardTitle = styled.h3`
@@ -157,7 +166,7 @@ const CardTitle = styled.h3`
 
 const CardDescription = styled.p`
   font-size: 1rem;
-  margin-bottom: 0 !important;
+  margin-bottom: 1.5rem;
 `
 
 const Button = styled.a`
@@ -195,23 +204,57 @@ const ImageContainer = styled.div`
   justify-content: center;
 `;
 
+const TagsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  justify-items: flex-end;
+`;
+
+const Tag = styled.div`
+  background: #000000;
+  border-radius: 1rem;
+  color: #ffffff;
+  font-size: .75rem;
+  padding: .15rem .9rem;
+  text-align: center;
+  text-transform: uppercase;
+  margin-right: .25rem;
+  &:last-of-type {
+    margin-right: 0;
+  }
+`;
+
 export default function Home() {
 
   const router = useRouter();
+  const [mobileViewport, setMobileViewport] = useState(null);
 
-  function navigateTo(module) {
-    switch(module) {
-      case "drash":
-        router.push("/drash")
-        break;
-      default:
-        break;
+  // TODO(crookse) This is duplicate code. We should switch to using contexts or something else.
+  useEffect(() => {
+    // Support mobile views, desktop views, and window resizing
+    window.addEventListener("resize", handleWindowSizeChange);
+    if (mobileViewport === null) {
+      handleWindowSizeChange();
+    }
+  }, [mobileViewport]);
+
+  // TODO(crookse) This is duplicate code. We should switch to using contexts or something else.
+  function handleWindowSizeChange() {
+    if (window.innerWidth >= 900) {
+      setMobileViewport(false);
+    } else {
+      setMobileViewport(true);
     }
   }
 
   return (
     <Container>
-      <LayoutTopBar isLandingPage={true} />
+      <LayoutTopBar
+        isLandingPage={true}
+        state={{
+          mobileViewport,
+        }}
+      />
       <Hero>
         <img src="https://drash.land/assets/common/img/logo_drash.svg" width="175" />
         <Org>Drash Land</Org>
@@ -228,63 +271,83 @@ export default function Home() {
         </Section>
         <Section background="#2f343c" color="#ffffff">
           <InnerContainer>
-            <SectionTitle>Deno Software</SectionTitle>
+            <SectionTitle>Our Software</SectionTitle>
             <CardsContainer>
-              <Card onClick={() => navigateTo("drash")}>
+              <Card onClick={() => router.push("/drash")}>
                 <ImageContainer>
                   <img src="/logo-drash.svg"/>
                 </ImageContainer>
                 <CardTitle>Drash</CardTitle>
                 <CardDescription>A micro HTTP framework</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
-              <Card>
+              <Card onClick={() => router.push("/wocket")}>
                 <ImageContainer>
                   <img src="/logo-wocket.svg"/>
                 </ImageContainer>
                 <CardTitle>Wocket</CardTitle>
                 <CardDescription>A WebSocket framework</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
-              <Card>
+              <Card onClick={() => router.push("/dmm")}>
                 <ImageContainer>
                   <img src="/logo-dmm.svg"/>
                 </ImageContainer>
                 <CardTitle>dmm</CardTitle>
                 <CardDescription>A lightweight module manager</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
-            </CardsContainer>
-            <CardsContainer>
-              <Card>
+              <Card onClick={() => router.push("/rhum")}>
                 <ImageContainer>
                   <img src="/logo-rhum.svg"/>
                 </ImageContainer>
                 <CardTitle>Rhum</CardTitle>
                 <CardDescription>A unit test framework</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
-              <Card>
+              <Card onClick={() => router.push("/sinco")}>
                 <ImageContainer>
                   <img src="/logo-sinco.svg"/>
                 </ImageContainer>
                 <CardTitle>Sinco</CardTitle>
                 <CardDescription>A browser automation and testing tool</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
-              <Card>
+              <Card onClick={() => router.push("/line")}>
                 <ImageContainer>
                   <img src="/logo-line.svg"/>
                 </ImageContainer>
                 <CardTitle>Line</CardTitle>
                 <CardDescription>A command-line framework</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                </TagsContainer>
               </Card>
-            </CardsContainer>
-            <Hr />
-            <SectionTitle>Node Software</SectionTitle>
-            <CardsContainer>
-              <Card>
+              <Card onClick={() => router.push("https://github.com/drashland/moogle")}>
                 <CardTitle>Moogle</CardTitle>
                 <CardDescription>An easy way to "Google" your "Map" using search terms</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                  <Tag>Node</Tag>
+                </TagsContainer>
               </Card>
-              <Card>
+              <Card onClick={() => router.push("https://github.com/drashland/accio")}>
                 <CardTitle>Accio</CardTitle>
                 <CardDescription>An easy way to search for deeply nested data in large datasets</CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
+                  <Tag>Node</Tag>
+                </TagsContainer>
               </Card>
             </CardsContainer>
           </InnerContainer>
@@ -292,19 +355,19 @@ export default function Home() {
         <Section>
           <InnerContainer>
             <SectionTitle>The Drash Land Team</SectionTitle>
-            <p>We are a small squad of software engineers who code a lot of really cool stuff. We focus heavily on the developer UX because we think coding should be fun.</p>
+            <p>We're a small squad of software engineers who code a lot of really cool stuff. We focus heavily on the developer UX because we think coding should be fun.</p>
             <p>When we release software in the Deno or Node ecosystem, you can count on these three things:</p>
             <ul>
               <li>Zero Dependencies: Every Drash Land project has zero dependencies (with the exception of Deno and Node, of course).</li>
-              <li>Extensive Documentation: We love a good challenge but working with Drash shouldn't be one of them. That's why we provide all of the documentation you'll need. Want to know how to set up a server? We got you. Need to know how to set up web sockets? We'll show you the way. And if you ever get stuck, just send us a message in our Discord and we'll gladly help you!</li>
-              <li>Thorough Testing: To put it bluntly, we test the shit out of our software. We know it works. Every example code block and every tutorial we write is tested end-to-end.</li>
+              <li>Extensive Documentation: We love a good challenge, but working with Drash Land software shouldn't be one of them. That's why we provide all of the documentation you'll need. Want to know how to set up an HTTP server? We got you. Need to know how to set up WebSockets? We'll show you the way. And if you ever get stuck, just send us a message in our <a href="https://discord.gg/RFsCSaHRWK" target="_BLANK" rel="noreferrer">Discord</a> and we'll gladly help you!</li>
+              <li>Thorough Testing: To put it bluntly, we test the shiz out of our software. We know it works. Every example code block and every tutorial we write is tested end-to-end.</li>
             </ul>
             <p>Drash Land is more than just a project to us here. We've invested our whole selves (and lots of energy drinks) into this. Does that make us nerds? We hope so. Because nerds make the best stuff.</p>
           </InnerContainer>
         </Section>
         <Section background="#2f343c" color="#ffffff">
           <InnerContainer>
-            <Copyright>&copy; 2019 - 2020 Drash Land</Copyright>
+            <Copyright>&copy; 2019 - 2021 Drash Land</Copyright>
           </InnerContainer>
         </Section>
       </Main>

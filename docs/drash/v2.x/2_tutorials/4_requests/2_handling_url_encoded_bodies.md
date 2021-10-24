@@ -26,7 +26,7 @@ const param = request.bodyParam("param_name");
 
 ## Steps
 
-1. Create your `app.ts` file. Your resource in this file will check for the `name` param in the request's body. If it exists, then it will return what was passed in. If it does not exist, then it will throw a `400 Bad Request` response.
+1. Create your `app.ts` file.
 
   ```typescript
   // app.ts
@@ -34,24 +34,25 @@ const param = request.bodyParam("param_name");
   import { Drash } from "./deps.ts";
 
   // Create your resource
-   
+
   class HomeResource extends Drash.Resource {
-   
+
     public paths = ["/"];
-   
+
     public POST(request: Drash.Request, response: Drash.Response): void {
+      // Check for the param
       const param = request.bodyParam("name");
-   
+
+      // No param passed in? Get out.
       if (!param) {
         throw new Drash.Errors.HttpError(
           400,
           "This resource requires the `name` body param."
         );
       }
-   
+
       return response.text(`You passed in the following body param: ${param}`);
     }
-   
   }
 
   // Create and run your server

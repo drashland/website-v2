@@ -2,7 +2,7 @@
 
 Giving a resource the ability to handle different types of requests is as easy as adding the HTTP method to handle those requests. In the code below, the resource can handle `GET`, `POST`, `PUT`, and `DELETE` requests.
 
-The HTTP methods you add in a resource are the HTTP methods clients are allowed to call. If a client tries to make a `PATCH` request to the below resource, it would receive a `405 Method Not Allowed` error because this resource does not have `public PATCH() { ... }` defined.
+The HTTP methods you add in a resource are the request methods clients are allowed to perform. If a client tries to perform a `PATCH` request to the below resource, the client will receive a `405 Method Not Allowed` error because the resource does not have a `PATCH` method defined.
 
 ```typescript
 // home_resource.ts
@@ -30,7 +30,7 @@ export default class HomeResource extends Drash.Resource {
 }
 ```
 
-Resources can handle the following HTTP methods:
+Resources can handle the following HTTP verbs as methods:
 
 * `GET`
 * `HEAD`
@@ -41,3 +41,9 @@ Resources can handle the following HTTP methods:
 * `OPTIONS`
 * `TRACE`
 * `PATCH`
+
+Taking the above example code, you can add more HTTP methods by following the below syntax and replacing `{HTTP VERB}` with the HTTP verb you want to add:
+
+```typescript
+public {HTTP VERB}(request: Drash.Request, response: Drash.Response): void { ... }
+```

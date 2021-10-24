@@ -14,7 +14,7 @@ Just like other frameworks, Drash resources have the ability to parse paths like
 
 ## Regular Path Params
 
-Resources are able to specify path params in their paths to allow them to cover multiple endpoints.
+Resources are able to specify path params in their paths to allow them to cover multiple endpoints. For example:
 
 ```typescript
 import { Drash } from "./deps.ts";
@@ -29,7 +29,7 @@ export default class HomeResource extends Drash.Resource {
     const param = request.pathParam("my_param");
 
     if (param) {
-      return response.text(`You passed in the following path param: ${myParam}`);
+      return response.text(myParam);
     }
 
     return response.text("No param passed in!");
@@ -39,21 +39,25 @@ export default class HomeResource extends Drash.Resource {
 Examples of URIs that this resource would handle:
 
 * `GET /hello`
-  * Responds with: Get request received! You passed in the following path param: `hello`
+  * Responds with: `hello`
 * `GET /world`
-  * Responds with: Get request received! You passed in the following path param: `world`
+  * Responds with: `world`
 * `GET /something`
-  * Responds with: Get request received! You passed in the following path param: `something`
+  * Responds with: `something`
 
 ## Optional Path Params
 
-Path params can also be optional. This allows a resource to accept a URI that does not depend on path params, but still wishes to accept the request.
+Path params can also be optional. This allows a resource to accept a request with a URI that does not depend on path params. For example:
 
 ```typescript
 import { Drash } from "./deps.ts";
  
 export default class UsersResource extends Drash.Resource {
 
+  // id = required
+  // name = optional
+  // age = optional
+  // city = optional
   public paths = [
     "/users/:id/:name?/:age?/:city?",
   ];
@@ -82,31 +86,31 @@ export default class UsersResource extends Drash.Resource {
       body += ` | ${city}`;
     }
 
-    return response.text(`You passed in the following: ${body}`);
+    return response.text(body);
   }
 }
 ```
 
-You can have as many optional params as you wish, but required params _MUST PRECEDE_ optional params.
+You can have as many optional params as you wish, but required params _MUST COME BEFORE_ optional params (notice how the `id` param is required and comes before the optional params).
 
 Examples of URIs that this resource would handle:
 
 * `GET /users/1`
-  * Responds with: Get request received! You passed in the following path params: `GOT | 1`
+  * Responds with: `GOT | 1`
 * `GET /users/1/`
-  * Responds with: Get request received! You passed in the following path params: `GOT | 1`
+  * Responds with: `GOT | 1`
 * `GET /users/1/John`
-  * Responds with: Get request received! You passed in the following path params: `GOT | 1 | John`
+  * Responds with: `GOT | 1 | John`
 * `GET /users/1/John/`
-  * Responds with: Get request received! You passed in the following path params: `GOT | 1 | John`
+  * Responds with: `GOT | 1 | John`
 * `GET /users/1/John/54`
-  * Responds with: Get request received! You passed in the following path params: `GOT | 1 | John | 54`
+  * Responds with: `GOT | 1 | John | 54`
 * `GET /users/1/John/54/`
-  * Responds with: Get request received! You passed in the following path params: `GOT | 1 | John | 54`
+  * Responds with: `GOT | 1 | John | 54`
 * `GET /users/1/John/54/UK`
-  * Responds with: Get request received! You passed in the following path params: `GOT | 1 | John | 54 | UK`
+  * Responds with: `GOT | 1 | John | 54 | UK`
 * `GET /users/1/John/54/UK/`
-  * Responds with: Get request received! You passed in the following path params: `GOT | 1 | John | 54 | UK`
+  * Responds with: `GOT | 1 | John | 54 | UK`
 
 ## Regular Expression Paths
 
