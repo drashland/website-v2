@@ -230,7 +230,6 @@ function RecursiveCategory(props) {
           <LinkContainer
             key={`${JSON.stringify(path)}_${index}`}
             isActive={path.path == router.asPath}
-            onClick={() => state.setSideBarOpen(false)}
           >
             {path.is_external && (
               <a
@@ -244,8 +243,11 @@ function RecursiveCategory(props) {
             {!path.is_external && (
               <Link
                 href={path.path}
+                passHref
               >
+                <a onClick={() => state.setSideBarOpen(false)}>
                 {path.label}
+                </a>
               </Link>
             )}
           </LinkContainer>
