@@ -364,7 +364,7 @@ export default function Home() {
               <li>Extensive Documentation: We love a good challenge, but working with Drash Land software shouldn't be one of them. That's why we provide all of the documentation you'll need. Want to know how to set up an HTTP server? We got you. Need to know how to set up WebSockets? We'll show you the way. And if you ever get stuck, just send us a message in our <a href="https://discord.gg/RFsCSaHRWK" target="_BLANK" rel="noreferrer">Discord</a> and we'll gladly help you!</li>
               <li>Thorough Testing: To put it bluntly, we test the shiz out of our software. We know it works. Every example code block and every tutorial we write is tested end-to-end.</li>
             </ul>
-            <p>Drash Land is more than just a project to us here. We've invested our whole selves (and lots of energy drinks) into this. Does that make us nerds? We hope so. Because nerds make the best stuff.</p>
+            <p>Drash Land is more than just a project to us. We've invested our whole selves (and lots of energy drinks) into this. Does that make us nerds? We hope so. Because nerds make the best stuff.</p>
           </InnerContainer>
         </Section>
         <Section background="#2f343c" color="#ffffff">
