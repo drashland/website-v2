@@ -1,17 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as fs from "fs";
 import path from "path";
 import Markdown from 'markdown-to-jsx';
 import Layout from "../src/components/Layout";
-import styled from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
-import { formatLabel } from '../src/string_service';
+import { formatLabel } from '../src/services/string_service';
 import getConfig from "next/config";
+import {
+  Code,
+  Heading1,
+  Heading2,
+  Heading3,
+  Heading4,
+  HorizontalRule,
+  Image,
+  ListItem,
+  OrderedList,
+  Paragraph,
+  Pre,
+  RestyledCode,
+  UnorderedList,
+} from "../src/components/Layout";
 
 const { publicRuntimeConfig } = getConfig();
-
-const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
 const MODULES = [
   "drash",
@@ -19,93 +32,6 @@ const MODULES = [
 ];
 
 const FILES = {};
-
-const Heading1 = styled.h1`
-  font-size: 3rem;
-  font-weight: bold;
-  line-height: 1.2;
-  ${MARGIN_BOTTOM};
-`;
-
-const Heading2 = styled.h2`
-  border-top: .25rem solid #f4f4f4;
-  margin-top: 2.5rem !important;
-  padding-top: 2rem;
-  font-size: 2rem;
-  font-weight: bold;
-  line-height: 1.2;
-  ${MARGIN_BOTTOM};
-`;
-
-const Heading3 = styled.h3`
-  margin-top: 1.6rem !important;
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: 1.2;
-  ${MARGIN_BOTTOM};
-`;
-
-const Heading4 = styled.h3`
-  margin-top: 1.6rem !important;
-  font-size: 1.3rem;
-  font-weight: bold;
-  ${MARGIN_BOTTOM};
-`;
-
-const ListItem = styled.li`
-`;
-
-const Code = function({ className, children }) {
-  return (
-    <code
-      className={className && className.replace("lang-", " language-")}
-    >
-      {children}
-    </code>
-  );
-}
-
-const Paragraph = styled.p`
-  ${MARGIN_BOTTOM};
-`;
-
-const RestyledCode = styled(Code)`
-  font-size: .85rem;
-  background-color: #f4f4f4;
-  border-radius: 1rem;
-  color: #d43790;
-  font-weight: 500;
-  padding: .25rem .5rem;
-`;
-
-const Pre = styled.pre`
-  background: #2f343c !important;
-  border-radius: 1rem;
-  ${MARGIN_BOTTOM};
-
-  &[class*=language-] {
-    ${MARGIN_BOTTOM};
-  }
-
-  code {
-    font-size: .85rem;
-    background-color: transparent;
-    padding: 0;
-    color: inherit;
-  }
-`;
-
-const OrderedList = styled.ol`
-  ${MARGIN_BOTTOM};
-`;
-
-const UnorderedList = styled.ul`
-  ${MARGIN_BOTTOM};
-`;
-
-const Image = styled.img`
-  border: 1px solid #dfdfdf;
-`;
 
 export default function Page(props) {
   const { redirectUri } = props;
