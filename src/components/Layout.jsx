@@ -162,6 +162,7 @@ export default function Layout(props) {
     moduleVersions,
     sideBarCategories,
     topBarModuleName,
+    willRedirect,
   } = props;
 
   const router = useRouter();
@@ -244,7 +245,7 @@ export default function Layout(props) {
   // mobile or mobile to desktop. That would look jank to the user.
   if (
     mobileViewport === null
-  ) {
+    || willRedirect
     return (
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <Container className="container-loading">

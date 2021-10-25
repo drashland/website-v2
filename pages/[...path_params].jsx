@@ -53,12 +53,12 @@ const FILES = {};
 
 export default function Page(props) {
   const {
-    redirectUri,
-    topBarModuleName,
-    sideBarCategories,
     markdown,
     moduleVersion,
     moduleVersions,
+    redirectUri,
+    sideBarCategories,
+    topBarModuleName,
   } = props;
 
   const router = useRouter();
@@ -66,7 +66,7 @@ export default function Page(props) {
   useEffect(() => {
     // If we are redirecting, then we need to do that as soon as possible
     if (redirectUri) {
-      return router.push(redirectUri);
+      return router.replace(redirectUri);
     }
 
     // Make sure all code blocks are highlighted
@@ -75,6 +75,7 @@ export default function Page(props) {
 
   return (
     <Layout
+      willRedirect={redirectUri}
       topBarModuleName={topBarModuleName}
       sideBarCategories={sideBarCategories}
       moduleVersion={moduleVersion}
