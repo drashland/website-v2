@@ -3,12 +3,13 @@ import { useRouter }  from "next/router";
 import styled, { ThemeProvider } from "styled-components";
 import SideBar from "./SideBar";
 import LayoutTopBar from "./LayoutTopBar";
-import { titleCase } from "title-case";
-import { formatLabel } from "../services/string_service";
+import Breadcrumbs from "./Breadcrumbs";
 import { lightTheme, darkTheme } from "../../styles/theme";
+import { publicRuntimeConfig, getGitHubCreateIssueUrl } from "../services/config_service";
 
-const LOCAL_STORAGE_DARK_MODE = "drash_land_dark_mode";
-const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 const Container = styled.div`
   background: ${({ theme }) => theme.layout.background};
@@ -77,40 +78,6 @@ const Copyright = styled.div`
   text-align: center;
 `;
 
-const Breadcrumbs = styled.div`
-  margin-top: 6rem !important;
-  margin-bottom: 3rem;
-
-  @media screen and (max-width: 768px) {
-    font-size: .8rem;
-  }
-`;
-
-const Pill = styled.div`
-  color: ${({ theme }) => theme.breadcrumbs.color};
-  display: inline-block;
-
-  .slash {
-    padding: 0 1rem;
-    display: inline-block;
-  }
-  @media screen and (max-width: 768px) {
-    .slash {
-      padding: 0 .5rem;
-    }
-  }
-
-  &.active {
-    font-weight: bold;
-  }
-
-  &:last-of-type {
-    .slash {
-      display: none;
-    }
-  }
-`;
-
 const MiddleMessage = styled.div`
   font-size: .8rem;
   font-weight: bold;
@@ -121,9 +88,6 @@ const MiddleMessage = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
-`;
-
-const SideBarContainer = styled.div`
 `;
 
 const ButtonOpenSideBar = styled.button`
@@ -173,7 +137,7 @@ const ButtonOpenSideBar = styled.button`
   }
 `;
 
-const Bar = styled.div`
+const ButtonOpenSidebarMiddleBar = styled.div`
   background: #ffffff;
   clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
   position: absolute;
@@ -187,118 +151,21 @@ const Bar = styled.div`
   z-index: 1;
 `;
 
-export const Heading1 = styled.h1`
-  font-size: 3rem;
-  font-weight: bold;
-  line-height: 1.2;
-  ${MARGIN_BOTTOM};
-  transition-duration: 0.25s;
-  transition-property: color;
-`;
-
-export const Heading2 = styled.h2`
-  border-top: .25rem solid ${({ theme }) => theme.markdown.heading2.borderTopColor};
-  margin-top: 2.5rem !important;
-  padding-top: 2rem;
-  font-size: 2rem;
-  font-weight: bold;
-  line-height: 1.2;
-  ${MARGIN_BOTTOM};
-  transition-duration: 0.25s;
-  transition-property: border-top, color;
-`;
-
-export const Heading3 = styled.h3`
-  margin-top: 1.6rem !important;
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: 1.2;
-  ${MARGIN_BOTTOM};
-  transition-duration: 0.25s;
-  transition-property: color;
-`;
-
-export const Heading4 = styled.h3`
-  margin-top: 1.6rem !important;
-  font-size: 1.3rem;
-  font-weight: bold;
-  ${MARGIN_BOTTOM};
-  transition-duration: 0.25s;
-  transition-property: color;
-`;
-
-export const ListItem = styled.li`
-  transition-duration: 0.25s;
-  transition-property: color;
-`;
-
-export const Code = function({ className, children }) {
-  return (
-    <code
-      className={className && className.replace("lang-", " language-")}
-    >
-      {children}
-    </code>
-  );
-}
-
-export const Paragraph = styled.p`
-  ${MARGIN_BOTTOM};
-  transition-duration: 0.25s;
-  transition-property: color;
-`;
-
-export const RestyledCode = styled(Code)`
-  font-size: .85rem;
-  background: ${({ theme }) => theme.markdown.code.backgroundColor};
-  border-radius: 1rem;
-  color: ${({ theme }) => theme.markdown.code.color};
-  font-weight: 500;
-  padding: .25rem .5rem;
-  transition-duration: 0.25s;
-  transition-property: background, color;
-`;
-
-export const Pre = styled.pre`
-  background: #2f343c !important;
-  border-radius: 1rem;
-  ${MARGIN_BOTTOM};
-
-  &[class*=language-] {
-    ${MARGIN_BOTTOM};
-  }
-
-  code {
-    font-size: .85rem;
-    background-color: transparent;
-    padding: 0;
-    color: inherit;
-  }
-`;
-
-export const OrderedList = styled.ol`
-  ${MARGIN_BOTTOM};
-`;
-
-export const UnorderedList = styled.ul`
-  ${MARGIN_BOTTOM};
-`;
-
-export const Image = styled.img`
-  border: 1px solid #dfdfdf;
-`;
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - COMPONENT /////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 export default function Layout(props) {
+  const {
+    children,
+    moduleVersion,
+    moduleVersions,
+    sideBarCategories,
+    topBarModuleName,
+  } = props;
 
   const router = useRouter();
   const pageUri = router.asPath;
-
-  let breadcrumbs = router.asPath.split("#")[0];
-  breadcrumbs = breadcrumbs.split("/");
-  breadcrumbs.shift(); // The first element is an empty string so take it out
-
-  let loading = breadcrumbs.length <= 2;
-
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [mobileViewport, setMobileViewport] = useState(null);
   const [darkMode, setDarkMode] = useState(null);
@@ -308,16 +175,24 @@ export default function Layout(props) {
     window.Prism.highlightAll();
 
     // Make sure to set the user's theme mode preference
-    const userSettingsDarkMode = window.localStorage.getItem(LOCAL_STORAGE_DARK_MODE);
+    const userSettingsDarkMode = window.localStorage.getItem(
+      publicRuntimeConfig.localStorageKeys.darkMode
+    );
     setDarkMode(userSettingsDarkMode && userSettingsDarkMode === "true");
 
     // Support mobile views, desktop views, and window resizing
     window.addEventListener("resize", handleWindowSizeChange);
+    // If the `mobileViewport` variable hasn't been set yet, then we need to
+    // perform the `handleWindowSizeChange()` to see if we're in a mobile
+    // viewport or not.
     if (mobileViewport === null) {
       handleWindowSizeChange();
     }
   }, [mobileViewport]);
 
+  /**
+   * Handle when the window size is changed.
+   */
   function handleWindowSizeChange() {
     if (window.innerWidth >= 900) {
       setMobileViewport(false);
@@ -328,11 +203,34 @@ export default function Layout(props) {
     }
   }
 
+  /**
+   * Get the breadcrumbs that go at the top of every page.
+   *
+   * @returns {string[]} - An array of breadcrumbs.
+   */
+  function getBreadcrumbs() {
+    let breadcrumbs = router.asPath.split("#")[0];
+    breadcrumbs = breadcrumbs.split("/");
+    // The first element is an empty string so take it out
+    breadcrumbs.shift();
+
+    return breadcrumbs;
+  }
+
+  /**
+   * Toggle dark mode by setting the state appropriately.
+   */
   function toggleDarkMode() {
-    window.localStorage.setItem(LOCAL_STORAGE_DARK_MODE, !darkMode);
+    window.localStorage.setItem(
+      publicRuntimeConfig.localStorageKeys.darkMode,
+      !darkMode
+    );
     setDarkMode(!darkMode);
   }
 
+  /**
+   * Toggle the side bar by setting the state appropriately.
+   */
   function toggleSideBar() {
     if (mobileViewport) {
       setSideBarOpen(!sideBarOpen);
@@ -341,6 +239,9 @@ export default function Layout(props) {
     }
   }
 
+  // If we haven't finished checking that we're in a mobile viewport yet, then
+  // show a loading screen so that the page doesn't transition from desktop to
+  // mobile or mobile to desktop. That would look jank to the user.
   if (
     mobileViewport === null
   ) {
@@ -367,56 +268,39 @@ export default function Layout(props) {
             toggleSideBar();
           }}
         >
-          <Bar sideBarOpen={sideBarOpen} />
+          <ButtonOpenSidebarMiddleBar sideBarOpen={sideBarOpen} />
         </ButtonOpenSideBar>
         <LayoutTopBar
-          moduleName={props.topBarModuleName}
+          moduleName={topBarModuleName}
           state={{
             darkMode,
             mobileViewport,
             toggleDarkMode,
           }}
         />
-        <SideBarContainer>
-          <SideBar
-            categories={props.sideBarCategories}
-            moduleName={props.topBarModuleName}
-            moduleVersion={props.moduleVersion}
-            moduleVersions={props.moduleVersions}
-            mobileViewport={mobileViewport}
-            isOpen={mobileViewport ? sideBarOpen : true}
-            state={{
-              setSideBarOpen,
-            }}
-          />
-        </SideBarContainer>
+        <SideBar
+          categories={sideBarCategories}
+          moduleName={topBarModuleName}
+          moduleVersion={moduleVersion}
+          moduleVersions={moduleVersions}
+          mobileViewport={mobileViewport}
+          isOpen={mobileViewport ? sideBarOpen : true}
+          state={{
+            setSideBarOpen,
+          }}
+        />
         <Main
           mobileViewport={mobileViewport}
         >
           <InnerContainer>
-            <Breadcrumbs>
-              {breadcrumbs.map((breadcrumb, index) => {
-                const isActive = (index + 1) == breadcrumbs.length;
-
-                return (
-                  <Pill
-                    className={isActive && "active"}
-                    index={index}
-                    key={`${JSON.stringify(breadcrumb)}_${index}`}
-                  >
-                    <span className="label">{formatLabel(titleCase(breadcrumb))}</span>
-                    <span className="slash">/</span>
-                  </Pill>
-                );
-              })}
-            </Breadcrumbs>
-            {props.children}
+            <Breadcrumbs breadcrumbs={getBreadcrumbs()} />
+            {children}
             <HorizontalRule/>
             <MakeBetter>
               <MakeBetterHeading>
                 Help Improve This Page
               </MakeBetterHeading>
-              If you are having issues with this page (e.g., parts of this page are not loading, documentation does not make sense, etc.), please let us know by filing an issue <a href={getIssueUrl(pageUri)} target="_BLANK">here</a>. We want to make sure these documentation pages cater the best developer experience possible.
+              If you are having issues with this page (e.g., parts of this page are not loading, documentation does not make sense, etc.), please let us know by filing an issue <a href={getGitHubCreateIssueUrl(pageUri)} target="_BLANK">here</a>. We want to make sure these documentation pages cater the best developer experience possible.
             </MakeBetter>
             <Copyright>
               &copy; 2019 - 2021 Drash Land
@@ -426,8 +310,4 @@ export default function Layout(props) {
       </Container>
     </ThemeProvider>
   );
-}
-
-function getIssueUrl(pageUri) {
-  return `https://github.com/drashland/website-v2/issues/new?assignees=&labels=Priority:%20Medium,%20Remark:%20Investigation%20Needed%2C+documentation&template=documentation_page_issue.md&title=Issue%20on%20${pageUri}page`
 }

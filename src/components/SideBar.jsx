@@ -1,9 +1,11 @@
-import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import getConfig from "next/config";
+import RecursiveCategory from "./RecursiveCategory";
+import { getApiReferenceUrl } from "../services/config_service";
 
-const { publicRuntimeConfig } = getConfig();
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 const Container = styled.div`
   background: ${({ theme }) => theme.sideBar.background};
@@ -23,72 +25,6 @@ const Container = styled.div`
   }};
 `;
 
-const Category = styled.div`
-  padding: 1rem 2rem .25rem 2rem;
-
-  .category-heading {
-    transition-duration: .25s;
-    transition-property: color;
-  }
-
-  .category {
-    padding: 0 0 1rem 1.25rem;
-    .category-heading {
-      color: ${({ theme }) => theme.sideBar.categoryHeading.color};
-      border: none;
-      padding: 0;
-      margin-bottom: .5rem;
-    }
-
-    .category {
-      .category-heading {
-        color: ${({ theme }) => theme.sideBar.categoryHeading.color};
-        border: none;
-        padding-top: 1rem;
-        margin: 1rem 0 .5rem 0;
-      }
-    }
-  }
-`;
-
-const CategoryHeading = styled.div`
-  color: ${({theme}) => theme.sideBar.categoryHeading.color};
-  border-bottom: 1px solid ${({theme}) => theme.sideBar.categoryHeading.borderBottomColor};
-  font-size: .8rem;
-  font-weight: bold;
-  letter-spacing: .1rem;
-  margin-bottom: 1rem;
-  padding: 0 0 .1rem 0;
-  text-transform: uppercase;
-  transition-duration: .25s;
-  transition-property: border, color;
-`;
-
-const LinkContainer = styled.div`
-  display: block;
-  a {
-    color: ${({ isActive, theme }) => {
-      return isActive
-        ? theme.sideBar.link.colorActive
-        : theme.sideBar.link.colorInactive;
-    }};
-    border-left: 4px solid;
-    border-color: ${({ isActive }) => (isActive ? "#7dade2" : "transparent")};
-    transition-duration: 0.25s;
-    transition-property: border, color;
-    padding-left: 1rem;
-    margin: .1rem 0;
-
-    &:hover {
-      color: #7dade2;
-      border-left: 4px solid #7dade2;
-      text-decoration: none !important;
-    }
-  }
-`;
-
-const LOGO_SIZE = 100;
-
 const ImageContainer = styled.div`
   padding: 7rem 0 6rem 0;
   text-align: center;
@@ -101,36 +37,11 @@ const ImageContainer = styled.div`
 
   img {
     position: absolute;
-    height: ${LOGO_SIZE}px;
-    width: ${LOGO_SIZE}px;
+    height: ${({ theme }) => theme.module.logo.size};
+    width: ${({ theme }) => theme.module.logo.size};
     z-index: 2;
   }
 `;
-
-const Background = styled.div`
-  overflow: hidden;
-  border: 5px solid #000000;
-  height: ${LOGO_SIZE * .8}px;
-  width: ${LOGO_SIZE * .8}px;
-  position: absolute;
-  border-radius: 50%;
-  z-index: 1;
-
-
-  &:before {
-    opacity: .25;
-    content: "";
-    position: absolute;
-    background-image: url("/bg-polygons.jpg");
-    background-size: 400%;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1;
-  }
-`;
-
 
 const VersionsSelectorContainer = styled.div`
   width: 100%;
@@ -152,27 +63,39 @@ const VersionsSelector = styled.select`
   padding: .5rem .25rem;
 `;
 
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - COMPONENT /////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
 export default function SideBar(props) {
-  const { mobileViewport, state } = props;
+  const {
+    categories,
+    isOpen,
+    mobileViewport,
+    moduleName,
+    moduleVersion,
+    moduleVersions,
+    state,
+  } = props;
 
-  const logoName = `/logo-${props.moduleName.toLowerCase()}.svg`
-
+  const logoName = `/logo-${moduleName.toLowerCase()}.svg`
   const router = useRouter();
 
+  /**
+   * Handle when the version `select` element value is changed.
+   *
+   * @param e - The event object passed in from the `onChange` handler.
+   */
   function handleVersionSelect(e) {
     const version = e.target.value;
     state.setSideBarOpen(false);
-    router.push(`/${props.moduleName.toLowerCase()}/${version}`);
-  }
-
-  function getApiReferenceUrl(module) {
-    return publicRuntimeConfig.docDenoLandUrls[module.toLowerCase()];
+    router.push(`/${moduleName.toLowerCase()}/${version}`);
   }
 
   return (
     <Container
       mobileViewport={mobileViewport}
-      isOpen={props.isOpen}
+      isOpen={isOpen}
     >
       <ImageContainer>
         <img src={logoName}/>
@@ -181,9 +104,9 @@ export default function SideBar(props) {
         <VersionsSelectorInnerContainer>
           <VersionsSelector
             onChange={(e) => handleVersionSelect(e)}
-            defaultValue={props.moduleVersion}
+            defaultValue={moduleVersion}
           >
-            {props.moduleVersions.map((version, index) => {
+            {moduleVersions.map((version, index) => {
               return (
                 <option
                   key={`${JSON.stringify(version)}_${index}}`}
@@ -196,7 +119,7 @@ export default function SideBar(props) {
           </VersionsSelector>
         </VersionsSelectorInnerContainer>
       </VersionsSelectorContainer>
-      {props.categories.map((category, index) => {
+      {categories.map((category, index) => {
         return (
           <RecursiveCategory
             state={state}
@@ -213,7 +136,7 @@ export default function SideBar(props) {
             {
               is_external: true,
               label: "API Reference",
-              path: getApiReferenceUrl(props.moduleName),
+              path: getApiReferenceUrl(moduleName),
             }
           ],
         }}
@@ -222,51 +145,3 @@ export default function SideBar(props) {
   );
 }
 
-function RecursiveCategory(props) {
-  const { state } = props;
-  const router = useRouter();
-
-  return (
-    <Category className="category">
-      <CategoryHeading className="category-heading">{props.category.label}</CategoryHeading>
-      {props.category.paths.map((path, index) => {
-        if (path.is_directory) {
-          return (
-            <RecursiveCategory
-              state={state}
-              key={`${JSON.stringify(path)}_${index}`}
-              category={path}
-            />
-          );
-        }
-
-        return (
-          <LinkContainer
-            key={`${JSON.stringify(path)}_${index}`}
-            isActive={path.path == router.asPath}
-          >
-            {path.is_external && (
-              <a
-                href={path.path}
-                rel="noreferrer"
-                target="_BLANK"
-              >
-                {path.label}
-              </a>
-            )}
-            {!path.is_external && (
-              <Link
-                href={path.path}
-                passHref
-              >
-                <a onClick={() => state.setSideBarOpen(false)}>
-                {path.label}
-                </a>
-              </Link>
-            )}
-          </LinkContainer>
-        );
-      })}
-    </Category>
-  );
-}

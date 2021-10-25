@@ -1,4 +1,22 @@
+const common = {
+  module: {
+    logo: {
+      size: "100px",
+    }
+  },
+  themeSwitch: {
+    icon: {
+      height: "13px",
+    }
+  },
+};
+
+/**
+ * Light theme colors go here. This is used by `ThemeProvider` in the `Layout`
+ * component.
+ */
 export const lightTheme = {
+  ...common,
   breadcrumbs: {
     color: "#333333",
   },
@@ -36,7 +54,12 @@ export const lightTheme = {
   },
 }
 
+/**
+ * Dark theme colors go here. This is used by `ThemeProvider` in the `Layout`
+ * component.
+ */
 export const darkTheme = {
+  ...common,
   breadcrumbs: {
     color: "#efefef",
   },

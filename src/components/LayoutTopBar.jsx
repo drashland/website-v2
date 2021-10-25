@@ -4,8 +4,11 @@ import { MarkGithub } from "@styled-icons/octicons";
 import Switch from "react-switch";
 import { Moon, Sun } from "@styled-icons/bootstrap";
 import { useRouter } from "next/router";
+import { getGitHubUrl } from "../services/config_service";
 
-const THEME_SWITCH_ICON_SIZE = "15px";
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 const Container = styled.div`
   font-size: ${({ mobileViewport }) => (mobileViewport ? ".6rem" : ".8rem")};
@@ -39,7 +42,7 @@ const Title = styled.div`
   }
 `;
 
-const Icons = styled.div`
+const RightSection = styled.div`
   display: flex;
   justify-content: flex-end;
   flex: 1;
@@ -52,12 +55,17 @@ const GitHubIcon = styled(MarkGithub)`
 `;
 
 const MoonIcon = styled(Moon)`
-  height: ${THEME_SWITCH_ICON_SIZE};
+  height: ${({ theme }) => theme.themeSwitch.icon.height};
 `;
 
 const SunIcon = styled(Sun)`
   color: #333333;
-  height: ${THEME_SWITCH_ICON_SIZE};
+  height: ${({ theme }) => theme.themeSwitch.icon.height};
+`;
+
+const ThemeSwitchContainer = styled.label`
+  align-items: center;
+  display: flex;
 `;
 
 const ThemeSwitch = styled(Switch)`
@@ -72,8 +80,16 @@ const ThemeSwitchIconContainer = styled.div`
   width: 100%;
 `;
 
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - COMPONENT /////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
 export default function TopBar(props) {
-  const { state } = props;
+  const {
+    moduleName,
+    state,
+  } = props;
+
   const router = useRouter();
 
   return (
@@ -81,24 +97,24 @@ export default function TopBar(props) {
       mobileViewport={state.mobileViewport}
     >
       <Title>
-        {props.moduleName && (
+        {moduleName && (
           <>
             <a href="/">Drash Land</a>
             <span className="middot">&middot;</span>
-            {props.moduleName}
+            {moduleName}
           </>
       )}
       </Title>
-      <Icons>
+      <RightSection>
         {router.asPath !== "/" && (
-          <label style={{display: "flex", alignItems: "center"}}>
+          <ThemeSwitchContainer>
             <span style={{marginRight: ".25rem"}}>Mode</span>
             <ThemeSwitch
-              onChange={state.toggleDarkMode} checked={state.darkMode}
+              onChange={state.toggleDarkMode}
+              checked={state.darkMode}
               onColor="#4e5767"
               offColor="#fce803"
-
-            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+              boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
               uncheckedIcon={
                 <ThemeSwitchIconContainer>
                   <SunIcon />
@@ -110,29 +126,15 @@ export default function TopBar(props) {
                 </ThemeSwitchIconContainer>
               }
             />
-          </label>
+          </ThemeSwitchContainer>
         )}
-        <a href={getGitHubHref(props.moduleName ? props.moduleName : 'https://github.com/drashland')} target="_BLANK">
+        <a
+          href={getGitHubUrl(moduleName)}
+          target="_BLANK"
+        >
           <GitHubIcon />
         </a>
-      </Icons>
+      </RightSection>
     </Container>
   );
-}
-
-function getGitHubHref(module) {
-  if (!module) {
-    return;
-  }
-
-  switch (module.toLowerCase()) {
-    case "drash":
-      return "https://github.com/drashland/deno-drash";
-    case "sinco":
-      return "https://github.com/drashland/sinco";
-    default:
-      break;
-  }
-
-  return "https://github.com/drashland";
 }

@@ -7,7 +7,7 @@ import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
 import { formatLabel } from '../src/services/string_service';
-import getConfig from "next/config";
+import { publicRuntimeConfig } from "../src/services/config_service";
 import {
   Code,
   Heading1,
@@ -22,23 +22,49 @@ import {
   Pre,
   RestyledCode,
   UnorderedList,
-} from "../src/components/Layout";
+} from "../src/components/Markdown";
 
-const { publicRuntimeConfig } = getConfig();
-
-const MODULES = [
-  "drash",
-  "sinco",
-];
-
+/**
+ * This constant is used for associating all markdown files with page URIs.
+ * For example, the object looks like this:
+ *
+ *     {
+ *       "/some/page/uri": "/docs/some/page/uri.md",
+ *       "/some/other-page/uri": "/docs/some/other_page/uri.md",
+ *     }
+ *
+ * The `getStaticProps()` function will use this constant to figure out what
+ * Markdown file to display to the user. If the user is on the following page...
+ *
+ *     https://drash.land/drash/v2.x/getting-started/introduction
+ *
+ * ... then the `getStaticProps()` function will see that the above page is
+ * associated with the following Markdown file ...
+ *
+ *     /docs/drash/v2.x/1_getting_started/1_introduction.md
+ *
+ * ... and it will read that file and send it to the client.
+ */
 const FILES = {};
 
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - COMPONENT /////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
 export default function Page(props) {
-  const { redirectUri } = props;
+  const {
+    redirectUri,
+    topBarModuleName,
+    sideBarCategories,
+    markdown,
+    moduleVersion,
+    moduleVersions,
+  } = props;
 
   const router = useRouter();
 
   useEffect(() => {
+    // If we are redirecting, then we need to do that as soon as possible
     if (redirectUri) {
       return router.push(redirectUri);
     }
@@ -49,10 +75,10 @@ export default function Page(props) {
 
   return (
     <Layout
-      topBarModuleName={props.topBarModuleName}
-      sideBarCategories={props.sideBarCategories}
-      moduleVersion={props.moduleVersion}
-      moduleVersions={props.moduleVersions}
+      topBarModuleName={topBarModuleName}
+      sideBarCategories={sideBarCategories}
+      moduleVersion={moduleVersion}
+      moduleVersions={moduleVersions}
     >
       <Markdown
         options={{
@@ -96,15 +122,15 @@ export default function Page(props) {
           }
         }}
       >
-        {props.markdown}
+        {markdown}
       </Markdown>
     </Layout>
   );
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// FILE MARKER - SERVER FUNCTIONS //////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - SERVER FUNCTIONS //////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 export async function getStaticProps({ params }) {
   const paths = getAllPaths("docs");
@@ -114,8 +140,8 @@ export async function getStaticProps({ params }) {
   let markdown = null;
 
   try {
-    const filepath = "/" + params.path_params.join("/");
-    markdown = fs.readFileSync(FILES[filepath], "utf-8");
+    const pageUri = "/" + params.path_params.join("/");
+    markdown = fs.readFileSync(FILES[pageUri], "utf-8");
   } catch (error) {
     if (publicRuntimeConfig.app.env !== "production") {
       console.log(`\nMarkdown Error\n`, error);
@@ -130,9 +156,15 @@ export async function getStaticProps({ params }) {
     version = versions[versions.length - 1];
   }
 
+  // Check if we need to redirect the user to the Introduction page. This code
+  // exists because users can go to https://drash.land/drash, but that page
+  // doesn't actually exist. So, we redirect them to the following URL:
+  //
+  //     https://drash.land/drash/getting-started/introduction
+  //
   let redirectUri = null;
   if (params.path_params.length <= 2) {
-    if (MODULES.indexOf(params.path_params[0]) != -1) {
+    if (publicRuntimeConfig.modules.indexOf(params.path_params[0]) != -1) {
       redirectUri = `${module}/${version}/getting-started/introduction`;
     }
   }
