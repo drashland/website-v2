@@ -96,7 +96,9 @@ export default function TopBar(props) {
             <ThemeSwitch
               onChange={state.toggleDarkMode} checked={state.darkMode}
               onColor="#4e5767"
-              offColor="#DBE541"
+              offColor="#fce803"
+
+            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
               uncheckedIcon={
                 <ThemeSwitchIconContainer>
                   <SunIcon />
