@@ -1,3 +1,6 @@
+/**
+ * Common styles that both light theme and dark theme use go here.
+ */
 const common = {
   module: {
     logo: {
