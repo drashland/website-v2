@@ -27,6 +27,7 @@ module.exports = {
       dmm: "https://doc.deno.land/https/deno.land/x/dmm/mod.ts",
       drash: "https://doc.deno.land/https/deno.land/x/drash/mod.ts",
       line: "https://doc.deno.land/https/deno.land/x/line/mod.ts",
+      rhum: "https://doc.deno.land/https/deno.land/x/rhum/mod.ts"
       sinco: "https://doc.deno.land/https/deno.land/x/sinco/mod.ts",
       wocket: "https://doc.deno.land/https/deno.land/x/wocket/mod.ts",
     },
@@ -35,6 +36,7 @@ module.exports = {
       drash: "https://github.com/drashland/drash",
       line: "https://github.com/drashland/line",
       sinco: "https://github.com/drashland/sinco",
+      rhum: "https://github.com/drashland/rhum",
       wocket: "https://github.com/drashland/wocket",
     },
     versions: {
