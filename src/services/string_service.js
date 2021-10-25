@@ -1,3 +1,11 @@
+/**
+ * Format a label to a user-friendly one -- ensuring all hyphens are in place,
+ * all acronyms are capitalized, etc.
+ * 
+ * @param {string} label - The label to format.
+ * 
+ * @returns {string} The formatted label.
+ */
 export function formatLabel(label) {
   const replacements = [
     {

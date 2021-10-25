@@ -4,12 +4,26 @@ module.exports = {
     app: {
       env: process.APP_ENV || "production",
     },
+    localStorageKeys: {
+      darkMode: "drash_land_dark_mode",
+    },
+    modules: [
+      "drash",
+      "sinco",
+    ],
     docDenoLandUrls: {
       dmm: "https://doc.deno.land/https/deno.land/x/dmm/mod.ts",
       drash: "https://doc.deno.land/https/deno.land/x/drash/mod.ts",
       line: "https://doc.deno.land/https/deno.land/x/line/mod.ts",
       sinco: "https://doc.deno.land/https/deno.land/x/sinco/mod.ts",
       wocket: "https://doc.deno.land/https/deno.land/x/wocket/mod.ts",
+    },
+    gitHubUrls: {
+      dmm: "https://github.com/drashland/dmm",
+      drash: "https://github.com/drashland/drash",
+      line: "https://github.com/drashland/line",
+      sinco: "https://github.com/drashland/sinco",
+      wocket: "https://github.com/drashland/wocket",
     },
     versions: {
       drash: {

@@ -1,15 +1,32 @@
 import { useEffect, useState } from "react";
 import { useRouter }  from "next/router";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import SideBar from "./SideBar";
 import LayoutTopBar from "./LayoutTopBar";
-import { titleCase } from "title-case";
-import { formatLabel } from "../string_service";
+import Breadcrumbs from "./Breadcrumbs";
+import { lightTheme, darkTheme } from "../../styles/theme";
+import { publicRuntimeConfig, getGitHubCreateIssueUrl } from "../services/config_service";
+
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 const Container = styled.div`
+  background: ${({ theme }) => theme.layout.background};
+  color: ${({ theme }) => theme.layout.color};
   width: 100%;
-  height: 100%;
+  height: auto;
   min-width: 375px; // iPhone X width
+  transition-duration: 0.25s;
+  transition-property: background;
+
+  &.container-loading {
+    height: 100% !important;
+  }
+
+  .container-loading {
+    height: 100% !important;
+  }
 `;
 
 const Main = styled.div`
@@ -22,9 +39,11 @@ const Main = styled.div`
 `;
 
 const MakeBetter = styled.div`
-  background-color: #f3f6f9;
+  background-color: ${({ theme }) => theme.layout.makeBetter.background};
   border-radius: 1rem;
   padding: 2rem;
+  transition-duration: 0.25s;
+  transition-property: background;
 `;
 
 const MakeBetterHeading = styled.h2`
@@ -33,13 +52,15 @@ const MakeBetterHeading = styled.h2`
   margin-bottom: 1.5rem;
 `;
 
-const HorizontalRule = styled.div`
-  background: #f4f4f4;
+export const HorizontalRule = styled.div`
+  background: ${({ theme }) => theme.layout.horizontalRule.background};
   height: .25rem;
   width: 100%;
   margin-top: 4rem !important;
   margin-bottom: 4rem;
   box-shadow: none;
+  transition-duration: 0.25s;
+  transition-property: background;
 `;
 
 const InnerContainer = styled.div`
@@ -57,42 +78,6 @@ const Copyright = styled.div`
   text-align: center;
 `;
 
-const Breadcrumbs = styled.div`
-  margin-top: 6rem !important;
-  margin-bottom: 3rem;
-
-  @media screen and (max-width: 768px) {
-    font-size: .8rem;
-  }
-`;
-
-const Pill = styled.div`
-  //color: #7dade2;
-  display: inline-block;
-
-  .slash {
-    color: #333333;
-    padding: 0 1rem;
-    display: inline-block;
-  }
-  @media screen and (max-width: 768px) {
-    .slash {
-      padding: 0 .5rem;
-    }
-  }
-
-  &.active {
-    color: #333333;
-    font-weight: bold;
-  }
-
-  &:last-of-type {
-    .slash {
-      display: none;
-    }
-  }
-`;
-
 const MiddleMessage = styled.div`
   font-size: .8rem;
   font-weight: bold;
@@ -103,9 +88,6 @@ const MiddleMessage = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
-`;
-
-const SideBarContainer = styled.div`
 `;
 
 const ButtonOpenSideBar = styled.button`
@@ -155,7 +137,7 @@ const ButtonOpenSideBar = styled.button`
   }
 `;
 
-const Bar = styled.div`
+const ButtonOpenSidebarMiddleBar = styled.div`
   background: #ffffff;
   clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
   position: absolute;
@@ -169,32 +151,49 @@ const Bar = styled.div`
   z-index: 1;
 `;
 
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - COMPONENT /////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
 export default function Layout(props) {
-  const { willRedirect } = props;
+  const {
+    children,
+    moduleVersion,
+    moduleVersions,
+    sideBarCategories,
+    topBarModuleName,
+    willRedirect,
+  } = props;
 
   const router = useRouter();
   const pageUri = router.asPath;
-
-  let breadcrumbs = router.asPath.split("#")[0];
-  breadcrumbs = breadcrumbs.split("/");
-  breadcrumbs.shift(); // The first element is an empty string so take it out
-
-  let loading = breadcrumbs.length <= 2;
-
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [mobileViewport, setMobileViewport] = useState(null);
+  const [darkMode, setDarkMode] = useState(null);
 
   useEffect(() => {
     // Make sure all code blocks are highlighted
     window.Prism.highlightAll();
 
+    // Make sure to set the user's theme mode preference
+    const userSettingsDarkMode = window.localStorage.getItem(
+      publicRuntimeConfig.localStorageKeys.darkMode
+    );
+    setDarkMode(userSettingsDarkMode && userSettingsDarkMode === "true");
+
     // Support mobile views, desktop views, and window resizing
     window.addEventListener("resize", handleWindowSizeChange);
+    // If the `mobileViewport` variable hasn't been set yet, then we need to
+    // perform the `handleWindowSizeChange()` to see if we're in a mobile
+    // viewport or not.
     if (mobileViewport === null) {
       handleWindowSizeChange();
     }
   }, [mobileViewport]);
 
+  /**
+   * Handle when the window size is changed.
+   */
   function handleWindowSizeChange() {
     if (window.innerWidth >= 900) {
       setMobileViewport(false);
@@ -205,6 +204,34 @@ export default function Layout(props) {
     }
   }
 
+  /**
+   * Get the breadcrumbs that go at the top of every page.
+   *
+   * @returns {string[]} - An array of breadcrumbs.
+   */
+  function getBreadcrumbs() {
+    let breadcrumbs = router.asPath.split("#")[0];
+    breadcrumbs = breadcrumbs.split("/");
+    // The first element is an empty string so take it out
+    breadcrumbs.shift();
+
+    return breadcrumbs;
+  }
+
+  /**
+   * Toggle dark mode by setting the state appropriately.
+   */
+  function toggleDarkMode() {
+    window.localStorage.setItem(
+      publicRuntimeConfig.localStorageKeys.darkMode,
+      !darkMode
+    );
+    setDarkMode(!darkMode);
+  }
+
+  /**
+   * Toggle the side bar by setting the state appropriately.
+   */
   function toggleSideBar() {
     if (mobileViewport) {
       setSideBarOpen(!sideBarOpen);
@@ -213,95 +240,75 @@ export default function Layout(props) {
     }
   }
 
+  // If we haven't finished checking that we're in a mobile viewport yet, then
+  // show a loading screen so that the page doesn't transition from desktop to
+  // mobile or mobile to desktop. That would look jank to the user.
   if (
     mobileViewport === null
     || willRedirect
-  ) {
     return (
-      <Container>
-        <Main mobileViewport={true}>
-          <InnerContainer>
-            <MiddleMessage>Loading...</MiddleMessage>
-          </InnerContainer>
-        </Main>
-      </Container>
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+        <Container className="container-loading">
+          <Main mobileViewport={true}>
+            <InnerContainer>
+              <MiddleMessage>Loading...</MiddleMessage>
+            </InnerContainer>
+          </Main>
+        </Container>
+      </ThemeProvider>
     );
   }
 
   return (
-    <Container>
-      <ButtonOpenSideBar
-        show={mobileViewport}
-        sideBarOpen={sideBarOpen}
-        onClick={() => {
-          toggleSideBar();
-        }}
-      >
-        <Bar sideBarOpen={sideBarOpen} />
-      </ButtonOpenSideBar>
-      <LayoutTopBar
-        moduleName={props.topBarModuleName}
-        state={{
-          mobileViewport,
-        }}
-      />
-      <SideBarContainer>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <Container>
+        <ButtonOpenSideBar
+          show={mobileViewport}
+          sideBarOpen={sideBarOpen}
+          onClick={() => {
+            toggleSideBar();
+          }}
+        >
+          <ButtonOpenSidebarMiddleBar sideBarOpen={sideBarOpen} />
+        </ButtonOpenSideBar>
+        <LayoutTopBar
+          moduleName={topBarModuleName}
+          state={{
+            darkMode,
+            mobileViewport,
+            toggleDarkMode,
+          }}
+        />
         <SideBar
-          categories={props.sideBarCategories}
-          moduleName={props.topBarModuleName}
-          moduleVersion={props.moduleVersion}
-          moduleVersions={props.moduleVersions}
+          categories={sideBarCategories}
+          moduleName={topBarModuleName}
+          moduleVersion={moduleVersion}
+          moduleVersions={moduleVersions}
           mobileViewport={mobileViewport}
           isOpen={mobileViewport ? sideBarOpen : true}
           state={{
             setSideBarOpen,
           }}
         />
-      </SideBarContainer>
-      <Main
-        mobileViewport={mobileViewport}
-      >
-        <InnerContainer>
-          {loading && (
-            <MiddleMessage>Loading...</MiddleMessage>
-          )}
-          {!loading && (
-            <>
-              <Breadcrumbs>
-                {breadcrumbs.map((breadcrumb, index) => {
-                  const isActive = (index + 1) == breadcrumbs.length;
-
-                  return (
-                    <Pill
-                      className={isActive && "active"}
-                      index={index}
-                      key={`${JSON.stringify(breadcrumb)}_${index}`}
-                    >
-                      <span className="label">{formatLabel(titleCase(breadcrumb))}</span>
-                      <span className="slash">/</span>
-                    </Pill>
-                  );
-                })}
-              </Breadcrumbs>
-              {props.children}
-              <HorizontalRule/>
-              <MakeBetter>
-                <MakeBetterHeading>
-                  Help Improve This Page
-                </MakeBetterHeading>
-                If you are having issues with this page (e.g., parts of this page are not loading, documentation does not make sense, etc.), please let us know by filing an issue <a href={getIssueUrl(pageUri)} target="_BLANK">here</a>. We want to make sure these documentation pages cater the best developer experience possible.
-              </MakeBetter>
-              <Copyright>
-                &copy; 2019 - 2021 Drash Land
-              </Copyright>
-            </>
-        )}
-        </InnerContainer>
-      </Main>
-    </Container>
+        <Main
+          mobileViewport={mobileViewport}
+        >
+          <InnerContainer>
+            <Breadcrumbs breadcrumbs={getBreadcrumbs()} />
+            {children}
+            <HorizontalRule/>
+            <MakeBetter>
+              <MakeBetterHeading>
+                Help Improve This Page
+              </MakeBetterHeading>
+              If you are having issues with this page (e.g., parts of this page are not loading, documentation does not make sense, etc.), please let us know by filing an issue <a href={getGitHubCreateIssueUrl(pageUri)} target="_BLANK">here</a>. We want to make sure these documentation pages cater the best developer experience possible.
+            </MakeBetter>
+            <Copyright>
+              &copy; 2019 - 2021 Drash Land
+            </Copyright>
+          </InnerContainer>
+        </Main>
+      </Container>
+    </ThemeProvider>
   );
-}
-
-function getIssueUrl(pageUri) {
-  return `https://github.com/drashland/website-v2/issues/new?assignees=&labels=Priority:%20Medium,%20Remark:%20Investigation%20Needed%2C+documentation&template=documentation_page_issue.md&title=Issue%20on%20${pageUri}page`
 }
