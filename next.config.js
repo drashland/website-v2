@@ -7,6 +7,18 @@ module.exports = {
     localStorageKeys: {
       darkMode: "drash_land_dark_mode",
     },
+    // A list of modules that have been migrated over to Next.js. This is used
+    // in the `[...path_params].js` file. If documentation pages for a module
+    // are requested, then `[...path_params].js` will check to see if that
+    // module is listed here and will do one of the following:
+    //
+    //   - If the module is not listed here, then Next.js will end up showing
+    //     the 404 page.
+    //   - If the module is listed here, then Next.js will redirect the user to:
+    //         /{module}/{version}/getting-started/introduction
+    //   - If a module is listed here AND is set to redirect (see the
+    //     `redirects` config down below), then Next.js will redirect the user
+    //     using the `destination` in the `redirects` config.
     modules: [
       "drash",
       "sinco",

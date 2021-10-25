@@ -161,7 +161,7 @@ export async function getStaticProps({ params }) {
   // exists because users can go to https://drash.land/drash, but that page
   // doesn't actually exist. So, we redirect them to the following URL:
   //
-  //     https://drash.land/drash/getting-started/introduction
+  //     https://drash.land/{module}/{version}/getting-started/introduction
   //
   let redirectUri = null;
   if (params.path_params.length <= 2) {
