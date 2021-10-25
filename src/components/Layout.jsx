@@ -192,6 +192,8 @@ export const Heading1 = styled.h1`
   font-weight: bold;
   line-height: 1.2;
   ${MARGIN_BOTTOM};
+  transition-duration: 0.25s;
+  transition-property: color;
 `;
 
 export const Heading2 = styled.h2`
@@ -203,7 +205,7 @@ export const Heading2 = styled.h2`
   line-height: 1.2;
   ${MARGIN_BOTTOM};
   transition-duration: 0.25s;
-  transition-property: border-top;
+  transition-property: border-top, color;
 `;
 
 export const Heading3 = styled.h3`
@@ -212,6 +214,8 @@ export const Heading3 = styled.h3`
   font-weight: bold;
   line-height: 1.2;
   ${MARGIN_BOTTOM};
+  transition-duration: 0.25s;
+  transition-property: color;
 `;
 
 export const Heading4 = styled.h3`
@@ -219,9 +223,13 @@ export const Heading4 = styled.h3`
   font-size: 1.3rem;
   font-weight: bold;
   ${MARGIN_BOTTOM};
+  transition-duration: 0.25s;
+  transition-property: color;
 `;
 
 export const ListItem = styled.li`
+  transition-duration: 0.25s;
+  transition-property: color;
 `;
 
 export const Code = function({ className, children }) {
@@ -236,6 +244,8 @@ export const Code = function({ className, children }) {
 
 export const Paragraph = styled.p`
   ${MARGIN_BOTTOM};
+  transition-duration: 0.25s;
+  transition-property: color;
 `;
 
 export const RestyledCode = styled(Code)`
