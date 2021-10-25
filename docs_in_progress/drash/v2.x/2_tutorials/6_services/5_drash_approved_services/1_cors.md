@@ -24,8 +24,10 @@ To use this service, edit your `deps.ts` file to include the service.
 ...
 ...
 ...
-import { CORSService } from "https://deno.land/drash@v2.0.0/services.ts";
+import { CORSService } from "https://deno.land/drash@<VERSION>/services.ts";
 ```
+
+Replace `<VERSION>` with the Drash version you want to use. All versions can be found [here](https://github.com/drashland/drash/releases).
 
 ## Folder Structure End State
 
