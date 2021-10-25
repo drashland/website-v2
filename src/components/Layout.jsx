@@ -246,6 +246,7 @@ export default function Layout(props) {
   if (
     mobileViewport === null
     || willRedirect
+  ) {
     return (
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <Container className="container-loading">
