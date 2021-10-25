@@ -240,11 +240,13 @@ export const Paragraph = styled.p`
 
 export const RestyledCode = styled(Code)`
   font-size: .85rem;
-  background-color: #f4f4f4;
+  background: ${({ theme }) => theme.markdown.code.backgroundColor};
   border-radius: 1rem;
-  color: #d43790;
+  color: ${({ theme }) => theme.markdown.code.color};
   font-weight: 500;
   padding: .25rem .5rem;
+  transition-duration: 0.25s;
+  transition-property: background, color;
 `;
 
 export const Pre = styled.pre`

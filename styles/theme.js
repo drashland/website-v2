@@ -6,6 +6,10 @@ export const lightTheme = {
     heading2: {
       borderTopColor: "#f4f4f4",
     },
+    code: {
+      color: "#d43790",
+      backgroundColor: "#f4f4f4",
+    },
   },
   layout: {
     background: "#ffffff",
@@ -52,7 +56,11 @@ export const darkTheme = {
   markdown: {
     heading2: {
       borderTopColor: "#494f58",
-    }
+    },
+    code: {
+      color: "#cc99cd",
+      backgroundColor: "#2f343c",
+    },
   },
   sideBar: {
     background: "#2f343c",
