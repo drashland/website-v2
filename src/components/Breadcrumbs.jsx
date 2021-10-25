@@ -1,0 +1,71 @@
+import styled from "styled-components";
+import { formatLabel } from "../services/string_service";
+import { titleCase } from "title-case";
+
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+const Container = styled.div`
+  margin-top: 6rem !important;
+  margin-bottom: 3rem;
+
+  @media screen and (max-width: 768px) {
+    font-size: .8rem;
+  }
+`;
+
+const Breadcrumb = styled.div`
+  color: ${({ theme }) => theme.breadcrumbs.color};
+  display: inline-block;
+
+  .slash {
+    padding: 0 1rem;
+    display: inline-block;
+  }
+  @media screen and (max-width: 768px) {
+    .slash {
+      padding: 0 .5rem;
+    }
+  }
+
+  &.active {
+    font-weight: bold;
+  }
+
+  &:last-of-type {
+    .slash {
+      display: none;
+    }
+  }
+`;
+
+
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - COMPONENT /////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+export default function Breadcrumbs(props) {
+  const {
+    breadcrumbs,
+  } = props;
+
+  return (
+    <Container>
+      {breadcrumbs.map((breadcrumb, index) => {
+        const isActive = (index + 1) == breadcrumbs.length;
+
+        return (
+          <Breadcrumb
+            className={isActive && "active"}
+            index={index}
+            key={`${JSON.stringify(breadcrumb)}_${index}`}
+          >
+            <span className="label">{formatLabel(titleCase(breadcrumb))}</span>
+            <span className="slash">/</span>
+          </Breadcrumb>
+        );
+      })}
+    </Container>
+  );
+}

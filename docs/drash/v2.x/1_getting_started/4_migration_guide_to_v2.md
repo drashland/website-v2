@@ -186,7 +186,12 @@ The below example application contains the following:
 * A server with a service that executes on all requests
 
 ```typescript
-import * as Drash from "http://deno.land/x/drash@v2.0.0/mod.ts";
+// app.ts
+
+
+// Replace `<VERSION>` with the Drash version you want to use.
+// All versions can be found at https://github.com/drashland/drash/releases.
+import * as Drash from "http://deno.land/x/drash@<VERSION>/mod.ts";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - SERVICES //////////////////////////////////////////////////////

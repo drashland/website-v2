@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutTopBar from "../src/components/LayoutTopBar";
 
-const HERO_HEIGHT = "600px";
-
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -13,7 +11,7 @@ const Container = styled.div`
 const Hero = styled.div`
   background: #2f343c;
   color: #ffffff;
-  height: ${HERO_HEIGHT};
+  height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -120,8 +118,6 @@ const CardsContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-const LOGO_SIZE = 100;
-
 const Card = styled.div`
   cursor: pointer;
   background: #ffffff;
@@ -144,8 +140,8 @@ const Card = styled.div`
   }
 
   img {
-    height: ${LOGO_SIZE}px;
-    width: ${LOGO_SIZE}px;
+    height: 100px;
+    width: 100px;
     z-index: 2;
     margin-bottom: 1rem;
   }
