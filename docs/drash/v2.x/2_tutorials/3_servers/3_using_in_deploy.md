@@ -20,6 +20,8 @@ The rest of this page is optional. You have all you need to write a Drash server
 Here is a basic Drash application. It defines a resource to handle requests to `/` and creates a server to listen on `http://localhost:3000`. It then runs the server `(server.run())` the same way as it would run if it were being developed without using Deno Deploy.
 
 ```typescript
+// app.ts
+
 import * as Drash from "./deps.ts"
 
 class HomeResource extends Drash.Resource {
