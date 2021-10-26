@@ -2,16 +2,21 @@
 
 ## Table of Contents
 
-* [Before You Get Started](#before-you-get-started)
-* [Folder Structure End State](#folder-structure-end-state)
-* [Steps](#steps)
-* [Verification](#verification)
+- [Before You Get Started](#before-you-get-started)
+- [Folder Structure End State](#folder-structure-end-state)
+- [Steps](#steps)
+- [Verification](#verification)
 
 ## Before You Get Started
 
-By default, Drash will send responses with a content type based on the requests `Accept` header. If the request accepts `*/*`, the response content type will be `application/json`. If the request accepts many types, Drash will grab the first one from the request's `Accept` header and use that. Otherwise, the default will be `application/json`.
+By default, Drash will send responses with a content type based on the requests
+`Accept` header. If the request accepts `*/*`, the response content type will be
+`application/json`. If the request accepts many types, Drash will grab the first
+one from the request's `Accept` header and use that. Otherwise, the default will
+be `application/json`.
 
-You can customize the default response content type when you create your server by using the `response_output` config:
+You can customize the default response content type when you create your server
+by using the `response_output` config:
 
 ```typescript
 const server = new Drash.Http.Server({
@@ -19,7 +24,8 @@ const server = new Drash.Http.Server({
 });
 ```
 
-You can also explicitly set the response content type on a per request basis using `this.response.headers.set()` inside your resource:
+You can also explicitly set the response content type on a per request basis
+using `this.response.headers.set()` inside your resource:
 
 ```typescript
 // This example uses text/html, but it can be any correct MIME type
@@ -37,51 +43,52 @@ this.response.headers.set("Content-Type", "text/html");
 
 1. Create your `app.ts` file.
 
-  ```typescript
-  // app.ts
+    ```typescript
+    // app.ts
 
-  import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
+    import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
 
-  class Resource extends Drash.Http.Resource {
+    class Resource extends Drash.Http.Resource {
+      static paths = ["/"];
 
-    static paths = ["/"];
-
-    public GET() {
-      // You can override the default content type on a per resource method basis.
-      // With the below, this method will now respond with "text/html" being the content type.
-      this.response.headers.set("Content-Type", "text/html");
-      this.response.body = `<p>Hello world</p>`;
-      return this.response
+      public GET() {
+        // You can override the default content type on a per resource method basis.
+        // With the below, this method will now respond with "text/html" being the content type.
+        this.response.headers.set("Content-Type", "text/html");
+        this.response.body = `<p>Hello world</p>`;
+        return this.response;
+      }
     }
 
-  }
+    const server = new Drash.Http.Server({
+      // This will be the default content type used for responses.
+      // If this config is not used, then Drash will default to
+      // application/json.
+      response_output: "application/json",
+      resources: [Resource],
+    });
 
-  const server = new Drash.Http.Server({
-    // This will be the default content type used for responses.
-    // If this config is not used, then Drash will default to
-    // application/json.
-    response_output: "application/json",
-    resources: [Resource],
-  });
-   
-  server.run({
-    hostname: "0.0.0.0",
-    port: 1447
-  });
+    server.run({
+      hostname: "0.0.0.0",
+      port: 1447,
+    });
 
-  console.log(`Server running. Go to http://${server.hostname}:${server.port}.`);
-  ```
+    console.log(`Server running. Go to http://${server.hostname}:${server.port}.`);
+    ```
 
 ## Verification
 
 1. Run your app.
 
-  ```shell
-  $ deno run --allow-net app.ts
-  ```
+    ```shell
+    $ deno run --allow-net app.ts
+    ```
 
-2. Go to `localhost:1447`. You will notice that even though your `repsonse_output` config is set to `application/json`, you received a `text/html` response. This is because your resource overrides the `response_output` config by calling the following:
+2. Go to `localhost:1447`. You will notice that even though your
+   `repsonse_output` config is set to `application/json`, you received a
+   `text/html` response. This is because your resource overrides the
+   `response_output` config by calling the following:
 
-  ```typescript
+    ```typescript
     this.response.headers.set("Content-Type", "text/html");
-  ```
+    ```

@@ -1,26 +1,29 @@
 # Setting the Body
 
-Drash comes with some methods on the `response` object to help you send some common responses to clients. Read further to learn more how you can set the body on a response and send that body to clients.
+Drash comes with some methods on the `response` object to help you send some
+common responses to clients. Read further to learn more how you can set the body
+on a response and send that body to clients.
 
 ## Table of Contents
 
-* [Body Methods]()
-  * [download()](#download)
-  * [file()](#file)
-  * [html()](#html)
-  * [json()](#json)
-  * [xml()](#xml)
-* [How Body Methods Work](#how-body-methods-work)
-* [Custom Response Bodies](#custom-response-bodies)
+- [Body Methods]()
+  - [download()](#download)
+  - [file()](#file)
+  - [html()](#html)
+  - [json()](#json)
+  - [xml()](#xml)
+- [How Body Methods Work](#how-body-methods-work)
+- [Custom Response Bodies](#custom-response-bodies)
 
 ## Body Methods
 
-Below are the built-in body methods on the `response` object and examples of how to use each one in a resource.
+Below are the built-in body methods on the `response` object and examples of how
+to use each one in a resource.
 
 ### download()
 
-* Use this method to send downloadable content types to clients.
-* Example Usage
+- Use this method to send downloadable content types to clients.
+- Example Usage
 
   ```typescript
   public GET(request: Drash.Request, response: Drash.Response): void {
@@ -33,8 +36,8 @@ Below are the built-in body methods on the `response` object and examples of how
 
 ### file()
 
-* Use this method to send files to client.
-* Example Usage
+- Use this method to send files to client.
+- Example Usage
 
   ```typescript
   public GET(request: Drash.Request, response: Drash.Response): void {
@@ -46,8 +49,8 @@ Below are the built-in body methods on the `response` object and examples of how
 
 ### html()
 
-* Use this method to send HTML to clients.
-* Example Usage
+- Use this method to send HTML to clients.
+- Example Usage
 
   ```typescript
   public GET(request: Drash.Request, response: Drash.Response): void {
@@ -59,8 +62,8 @@ Below are the built-in body methods on the `response` object and examples of how
 
 ### json()
 
-* Use this method to send JSON to clients.
-* Example Usage
+- Use this method to send JSON to clients.
+- Example Usage
 
   ```typescript
   public GET(request: Drash.Request, response: Drash.Response): void {
@@ -72,8 +75,8 @@ Below are the built-in body methods on the `response` object and examples of how
 
 ### xml()
 
-* Use this method to send XML to clients.
-* Example Usage
+- Use this method to send XML to clients.
+- Example Usage
 
   ```typescript
   public GET(request: Drash.Request, response: Drash.Response): void {
@@ -85,27 +88,35 @@ Below are the built-in body methods on the `response` object and examples of how
 
 ## How Body Methods Work
 
-Under the hood, the built-in body methods above set the `response` object's body and `Content-Type` header based on the method being used. For example, if you use `response.json(someJson)`, then the following will happen under the hood ...
+Under the hood, the built-in body methods above set the `response` object's body
+and `Content-Type` header based on the method being used. For example, if you
+use `response.json(someJson)`, then the following will happen under the hood ...
 
 ```typescript
 this.body = JSON.stringify(someJson);
 this.headers.set("Content-Type", "application/json");
 ```
 
-... and if you use `response.html(someHtmlString)`, then the following will happen under the hood ...
+... and if you use `response.html(someHtmlString)`, then the following will
+happen under the hood ...
 
 ```typescript
 this.body = someHtmlString;
 this.headers.set("Content-Type", "text/html");
 ```
 
-There is not much magic to these methods. All they do is set the response body and `Content-Type` header. They were implemented as convenience methods so you do not have to set the body and set the `Content-Type` header in your resources -- preventing code bloat.
+There is not much magic to these methods. All they do is set the response body
+and `Content-Type` header. They were implemented as convenience methods so you
+do not have to set the body and set the `Content-Type` header in your resources
+-- preventing code bloat.
 
 ## Custom Response Bodies
 
-The built-in body methods above are useful if you want to send common responses to clients. If you want more control over your response body and `Content-Type` header, then use the `.send()` method.
+The built-in body methods above are useful if you want to send common responses
+to clients. If you want more control over your response body and `Content-Type`
+header, then use the `.send()` method.
 
-* The `.send()` method's signature is as follows:
+- The `.send()` method's signature is as follows:
 
   ```typescript
   response.send<T extends BodyInit>(
@@ -118,7 +129,7 @@ The built-in body methods above are useful if you want to send common responses 
   }
   ```
 
-* Example Usage
+- Example Usage
 
   ```typescript
   public GET(request: Drash.Request, response: Drash.Response): void {

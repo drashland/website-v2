@@ -18,7 +18,8 @@ export const Heading1 = styled.h1`
 `;
 
 export const Heading2 = styled.h2`
-  border-top: .25rem solid ${({ theme }) => theme.markdown.heading2.borderTopColor};
+  border-top: .25rem solid ${({ theme }) =>
+  theme.markdown.heading2.borderTopColor};
   margin-top: 2.5rem !important;
   padding-top: 2rem;
   font-size: 2rem;
@@ -51,7 +52,7 @@ export const Heading4 = styled.h3`
 export const ListItem = styled.li`
 `;
 
-export const Code = function({ className, children }) {
+export const Code = function ({ className, children }) {
   return (
     <code
       className={className && className.replace("lang-", " language-")}
@@ -59,7 +60,7 @@ export const Code = function({ className, children }) {
       {children}
     </code>
   );
-}
+};
 
 export const Paragraph = styled.p`
   ${MARGIN_BOTTOM};

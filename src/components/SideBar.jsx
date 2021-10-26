@@ -10,19 +10,19 @@ import { getApiReferenceUrl } from "../services/config_service";
 const Container = styled.div`
   background: ${({ theme }) => theme.sideBar.background};
   padding: 4rem 0 4rem 0;
-  min-width: ${({ mobileViewport }) => (mobileViewport ? '100%' : '350px')};
+  min-width: ${({ mobileViewport }) => (mobileViewport ? "100%" : "350px")};
   overflow: auto;
   position: fixed;
   height: 100%;
   transition-property: background, left;
   transition-duration: 0.25s;
   left: ${({ isOpen, mobileViewport }) => {
-    if (mobileViewport) {
-      return isOpen ? '0' : '-125%';
-    } else {
-      return '0';
-    }
-  }};
+  if (mobileViewport) {
+    return isOpen ? "0" : "-125%";
+  } else {
+    return "0";
+  }
+}};
 `;
 
 const ImageContainer = styled.div`
@@ -78,7 +78,7 @@ export default function SideBar(props) {
     state,
   } = props;
 
-  const logoName = `/logo-${moduleName.toLowerCase()}.svg`
+  const logoName = `/logo-${moduleName.toLowerCase()}.svg`;
   const router = useRouter();
 
   /**
@@ -98,7 +98,7 @@ export default function SideBar(props) {
       isOpen={isOpen}
     >
       <ImageContainer>
-        <img src={logoName}/>
+        <img src={logoName} />
       </ImageContainer>
       <VersionsSelectorContainer>
         <VersionsSelectorInnerContainer>
@@ -137,11 +137,10 @@ export default function SideBar(props) {
               is_external: true,
               label: "API Reference",
               path: getApiReferenceUrl(moduleName),
-            }
+            },
           ],
         }}
       />
     </Container>
   );
 }
-

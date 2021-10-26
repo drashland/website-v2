@@ -2,7 +2,8 @@
 
 Server-level services execute on all requests.
 
-To add server-level services, use the `services` config when you create your `server` object. For example:
+To add server-level services, use the `services` config when you create your
+`server` object. For example:
 
 ```typescript
 import { Drash } from "./deps.ts";

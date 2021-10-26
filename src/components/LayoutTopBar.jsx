@@ -103,12 +103,12 @@ export default function TopBar(props) {
             <span className="middot">&middot;</span>
             {moduleName}
           </>
-      )}
+        )}
       </Title>
       <RightSection>
         {router.asPath !== "/" && (
           <ThemeSwitchContainer>
-            <span style={{marginRight: ".25rem"}}>Mode</span>
+            <span style={{ marginRight: ".25rem" }}>Mode</span>
             <ThemeSwitch
               onChange={state.toggleDarkMode}
               checked={state.darkMode}

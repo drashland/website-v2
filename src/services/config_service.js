@@ -2,9 +2,7 @@ import getConfig from "next/config";
 
 const { publicRuntimeConfig } = getConfig();
 
-export {
-  publicRuntimeConfig,
-};
+export { publicRuntimeConfig };
 
 /**
  * For the module being currently viewed, get the API reference URL associated
@@ -21,14 +19,14 @@ export function getApiReferenceUrl(moduleName) {
 
 /**
  * Get the URL to create a GitHub issue.
- * 
+ *
  * @param {string} pageUri - This URI is sent as a URL query param to the GitHub
  * issue URL. It ends up in the GitHub issue's title.
- * 
+ *
  * @returns {string} - The GitHub issue URL.
  */
 export function getGitHubCreateIssueUrl(pageUri) {
-  return `${publicRuntimeConfig.gitHubUrls.website}/issues/new?assignees=&labels=Priority:%20Medium,%20Remark:%20Investigation%20Needed%2C+documentation&template=documentation_page_issue.md&title=Issue%20on%20${pageUri} page`
+  return `${publicRuntimeConfig.gitHubUrls.website}/issues/new?assignees=&labels=Priority:%20Medium,%20Remark:%20Investigation%20Needed%2C+documentation&template=documentation_page_issue.md&title=Issue%20on%20${pageUri} page`;
 }
 
 /**

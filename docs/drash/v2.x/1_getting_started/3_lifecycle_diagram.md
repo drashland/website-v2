@@ -2,14 +2,14 @@
 
 ## Table of Contents
 
-* [Notes](#notes)
-* [Diagram](#diagram)
+- [Notes](#notes)
+- [Diagram](#diagram)
 
 ## Notes
 
-* All processes with a blue background are where services run
-* All processes with a red background are where HTTP errors are thrown
-* Click on the diagram to view the full image
+- All processes with a blue background are where services run
+- All processes with a red background are where HTTP errors are thrown
+- Click on the diagram to view the full image
 
 ## Diagram
 

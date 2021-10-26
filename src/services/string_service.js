@@ -1,60 +1,60 @@
 /**
  * Format a label to a user-friendly one -- ensuring all hyphens are in place,
  * all acronyms are capitalized, etc.
- * 
+ *
  * @param {string} label - The label to format.
- * 
+ *
  * @returns {string} The formatted label.
  */
 export function formatLabel(label) {
   const replacements = [
     {
       from: /Http/g,
-      to: "HTTP"
+      to: "HTTP",
     },
     {
       from: /Https|HTTPs/g,
-      to: "HTTPS"
+      to: "HTTPS",
     },
     {
       from: /Json/g,
-      to: "JSON"
+      to: "JSON",
     },
     {
       from: /Url/g,
-      to: "URL"
+      to: "URL",
     },
     {
       from: /(Server Level)/g,
-      to: "Server-Level"
+      to: "Server-Level",
     },
     {
       from: /Resource Level/g,
-      to: "Resource-Level"
+      to: "Resource-Level",
     },
     {
       from: /Cors/g,
-      to: "CORS"
+      to: "CORS",
     },
     {
       from: /Csrf/g,
-      to: "CSRF"
+      to: "CSRF",
     },
     {
       from: /Api/g,
-      to: "API"
+      to: "API",
     },
     {
       from: /Ssr/g,
-      to: "SSR"
+      to: "SSR",
     },
     {
       from: /Spa/g,
-      to: "SPA"
+      to: "SPA",
     },
     {
       from: /V2/g,
-      to: "v2"
+      to: "v2",
     },
   ];
 
