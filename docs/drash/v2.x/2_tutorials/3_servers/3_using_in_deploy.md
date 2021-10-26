@@ -47,16 +47,15 @@ server.run()
 To use this Drash application with Deno Deploy, all you need to do is change the value of `hostname` from `"localhost"` to `""`. For example:
 
 ```diff
-const server = new Drash.Server({
-  resources: [
-    HomeResource,
-  ],
-  protocol: "http",
-- hostname: "localhost",
-+ hostname: "",
-  port: 3000,
-});
-```
+  const server = new Drash.Server({
+    resources: [
+      HomeResource,
+    ],
+    protocol: "http",
+-   hostname: "localhost",
++   hostname: "",
+    port: 3000,
+  });
 
 Below is what you would end up with:
 
