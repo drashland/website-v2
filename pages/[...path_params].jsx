@@ -53,6 +53,7 @@ const FILES = {};
 
 export default function Page(props) {
   const {
+    editThisPageUrl,
     markdown,
     moduleVersion,
     moduleVersions,
@@ -75,6 +76,7 @@ export default function Page(props) {
 
   return (
     <Layout
+      editThisPageUrl={editThisPageUrl}
       willRedirect={redirectUri}
       topBarModuleName={topBarModuleName}
       sideBarCategories={sideBarCategories}
@@ -138,11 +140,13 @@ export async function getStaticProps({ params }) {
 
   const moduleName = params.path_params.slice().shift().replace("/", "");
 
+  const pageUri = "/" + params.path_params.join("/");
+  const markdownFile = FILES[pageUri];
+
   let markdown = null;
 
   try {
-    const pageUri = "/" + params.path_params.join("/");
-    markdown = fs.readFileSync(FILES[pageUri], "utf-8");
+    markdown = fs.readFileSync(markdownFile, "utf-8");
   } catch (error) {
     if (publicRuntimeConfig.app.env !== "production") {
       console.log(`\nMarkdown Error\n`, error);
@@ -156,6 +160,8 @@ export async function getStaticProps({ params }) {
   if (!version) {
     version = versions[versions.length - 1];
   }
+
+  const editThisPageUrl = `${publicRuntimeConfig.gitHubUrls.website}/edit/main/${markdownFile}`;
 
   // Check if we need to redirect the user to the Introduction page. This code
   // exists because users can go to https://drash.land/drash, but that page
@@ -172,6 +178,7 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
+      editThisPageUrl: markdown ? editThisPageUrl : null,
       markdown: markdown ? markdown : "",
       moduleVersion: version,
       moduleVersions: versions,
