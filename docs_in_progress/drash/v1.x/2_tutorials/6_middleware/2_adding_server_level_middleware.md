@@ -59,50 +59,50 @@ const server = new Drash.Http.Server({
 
 1. Create your `home_resource.ts` file.
 
-    ```typescript
-    import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
+   ```typescript
+   import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
 
-    export default class HomeResource extends Drash.Http.Resource {
-      static paths = ["/"];
+   export default class HomeResource extends Drash.Http.Resource {
+     static paths = ["/"];
 
-      public GET() {
-        this.response.body = {
-          method: "GET",
-          body: "Hello!",
-        };
+     public GET() {
+       this.response.body = {
+         method: "GET",
+         body: "Hello!",
+       };
 
-        return this.response;
-      }
-    }
-    ```
+       return this.response;
+     }
+   }
+   ```
 
 2. Create your `verify_token_middleware.ts` file. This file takes in the
    `request` and `response` params.
 
-    ```typescript
-    import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
+   ```typescript
+   import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
 
-    export default function VerifyTokenMiddleware(
-      request: Drash.Http.Request,
-      response?: Drash.Http.Response,
-    ): void {
-      let token = request.getUrlQueryParam("super_secret_token");
+   export default function VerifyTokenMiddleware(
+     request: Drash.Http.Request,
+     response?: Drash.Http.Response,
+   ): void {
+     let token = request.getUrlQueryParam("super_secret_token");
 
-      if (!token) {
-        throw new Drash.Exceptions.HttpMiddlewareException(
-          400,
-          "Where is the token?",
-        );
-      }
+     if (!token) {
+       throw new Drash.Exceptions.HttpMiddlewareException(
+         400,
+         "Where is the token?",
+       );
+     }
 
-      if (token != "AllYourBaseAreBelongToUs") {
-        throw new Drash.Exceptions.HttpMiddlewareException(
-          403,
-          `Mmm... "${token}" is a bad token.`,
-        );
-      }
-    }
-    ```
+     if (token != "AllYourBaseAreBelongToUs") {
+       throw new Drash.Exceptions.HttpMiddlewareException(
+         403,
+         `Mmm... "${token}" is a bad token.`,
+       );
+     }
+   }
+   ```
 
 Your middleware will check if `super_secret_token` was passed in the request's
 URL. If not, then a `400` error will be thrown. It will also check if the value
@@ -111,31 +111,33 @@ error will be thrown.
 
 3. Create your `app.ts` file.
 
-    ```typescript
-    import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
+   ```typescript
+   import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
 
-    import HomeResource from "./home_resource.ts";
-    import VerifyTokenMiddleware from "./verify_token_middleware.ts";
+   import HomeResource from "./home_resource.ts";
+   import VerifyTokenMiddleware from "./verify_token_middleware.ts";
 
-    const server = new Drash.Http.Server({
-      middleware: {
-        before_request: [
-          VerifyTokenMiddleware,
-        ],
-      },
-      resources: [
-        HomeResource,
-      ],
-      response_output: "application/json",
-    });
+   const server = new Drash.Http.Server({
+     middleware: {
+       before_request: [
+         VerifyTokenMiddleware,
+       ],
+     },
+     resources: [
+       HomeResource,
+     ],
+     response_output: "application/json",
+   });
 
-    server.run({
-      hostname: "0.0.0.0",
-      port: 1447,
-    });
+   server.run({
+     hostname: "0.0.0.0",
+     port: 1447,
+   });
 
-    console.log(`Server running. Go to http://${server.hostname}:${server.port}.`);
-    ```
+   console.log(
+     `Server running. Go to http://${server.hostname}:${server.port}.`,
+   );
+   ```
 
 ## Verification
 
@@ -145,15 +147,15 @@ the server responds to requests with JSON by default.
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Make a request using `curl` or go to `localhost:1447` in your web browser.
 
-    ```shell
-    $ curl localhost:1447
-    ```
+   ```shell
+   $ curl localhost:1447
+   ```
 
 `VerifyTokenMiddleware` is run on every request because it was specified as
 server-level middleware. This request is missing the `super_secret_token` query
@@ -165,9 +167,9 @@ param; therefore, you should receive the following response:
 
 3. Make the same request with a bad token.
 
-    ```shell
-    $ curl localhost:1447/?super_secret_token=IsThisIt
-    ```
+   ```shell
+   $ curl localhost:1447/?super_secret_token=IsThisIt
+   ```
 
 You should receive the following response:
 
@@ -177,9 +179,9 @@ You should receive the following response:
 
 4. Make the same request with the expected token.
 
-    ```shell
-    $ curl localhost:1447/?super_secret_token=AllYourBaseAreBelongToUs
-    ```
+   ```shell
+   $ curl localhost:1447/?super_secret_token=AllYourBaseAreBelongToUs
+   ```
 
 You should receive the following response (we pretty-printe the response for
 you):

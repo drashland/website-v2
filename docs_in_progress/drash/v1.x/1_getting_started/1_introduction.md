@@ -10,48 +10,50 @@ Learn more about Drash [here](about-drash).
 
 2. Create your project directory.
 
-    ```shell
-    $ mkdir my-project
-    $ cd my-project
-    ```
+   ```shell
+   $ mkdir my-project
+   $ cd my-project
+   ```
 
 3. Create your `app.ts` file.
 
-    ```typescript
-    // app.ts
+   ```typescript
+   // app.ts
 
-    import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
+   import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
 
-    // Create your resource
+   // Create your resource
 
-    class HomeResource extends Drash.Http.Resource {
-      static paths = ["/"];
-      public GET() {
-        this.response.body = `Hello World! (on ${new Date()})`;
-        return this.response;
-      }
-    }
+   class HomeResource extends Drash.Http.Resource {
+     static paths = ["/"];
+     public GET() {
+       this.response.body = `Hello World! (on ${new Date()})`;
+       return this.response;
+     }
+   }
 
-    // Create and run your server
+   // Create and run your server
 
-    const server = new Drash.Http.Server({
-      response_output: "text/html",
-      resources: [HomeResource],
-    });
+   const server = new Drash.Http.Server({
+     response_output: "text/html",
+     resources: [HomeResource],
+   });
 
-    server.run({
-      hostname: "0.0.0.0",
-      port: 1447,
-    });
+   server.run({
+     hostname: "0.0.0.0",
+     port: 1447,
+   });
 
-    console.log(`Server running. Go to http://${server.hostname}:${server.port}.`);
-    ```
+   console.log(
+     `Server running. Go to http://${server.hostname}:${server.port}.`,
+   );
+   ```
 
 4. Run your `app.ts` file.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 5. Go to `http://localhost:1447` in your web browser.
 

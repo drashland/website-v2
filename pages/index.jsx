@@ -342,7 +342,7 @@ export default function Home() {
               >
                 <CardTitle>Moogle</CardTitle>
                 <CardDescription>
-                An easy way to "Google" your "Map" using search terms
+                  An easy way to "Google" your "Map" using search terms
                 </CardDescription>
                 <TagsContainer>
                   <Tag>Deno</Tag>
@@ -355,7 +355,7 @@ export default function Home() {
               >
                 <CardTitle>Accio</CardTitle>
                 <CardDescription>
-                An easy way to search for deeply nested data in large datasets
+                  An easy way to search for deeply nested data in large datasets
                 </CardDescription>
                 <TagsContainer>
                   <Tag>Deno</Tag>
@@ -374,8 +374,9 @@ export default function Home() {
               coding should be fun.
             </p>
             <p>
-            When we release software in the Deno or Node ecosystem, you can
-            count on these three things:</p>
+              When we release software in the Deno or Node ecosystem, you can
+              count on these three things:
+            </p>
             <ul>
               <li>
                 Zero Dependencies: Every Drash Land project has zero

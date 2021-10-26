@@ -17,44 +17,44 @@ Learn more about Drash [here](about-drash).
 
 3. Create your `app.ts` file.
 
-    ```typescript
-    // app.ts
+   ```typescript
+   // app.ts
 
-    // Replace `<VERSION>` with the Drash v2.x version you want to use. // All
-    versions can be found at
-    https://github.com/drashland/drash/releases?q=v2&expanded=true. import * as
-    Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
+   // Replace `<VERSION>` with the Drash v2.x version you want to use. // All
+   versions can be found at
+   https://github.com/drashland/drash/releases?q=v2&expanded=true. import * as
+   Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
 
-    // Create your resource
+   // Create your resource
 
-    class HomeResource extends Drash.Resource { public paths = ["/"];
+   class HomeResource extends Drash.Resource { public paths = ["/"];
 
-      public GET(request: Drash.Request, response: Drash.Response): void {
-        return response.json({
-          hello: "world",
-          time: new Date(),
-        });
-      }
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       return response.json({
+         hello: "world",
+         time: new Date(),
+       });
+     }
 
-    }
+   }
 
-    // Create and run your server
+   // Create and run your server
 
-    const server = new Drash.Server({ hostname: "0.0.0.0", port: 1447, protocol:
-    "http", resources: [ HomeResource, ], });
+   const server = new Drash.Server({ hostname: "0.0.0.0", port: 1447, protocol:
+   "http", resources: [ HomeResource, ], });
 
-    server.run();
+   server.run();
 
-    console.log(`Server running at ${server.address}.`);
-    ```
+   console.log(`Server running at ${server.address}.`);
+   ```
 
-    4. Run your `app.ts` file.
+   4. Run your `app.ts` file.
 
-     ```shell
-     $ deno run --allow-net app.ts
-    ````
+      ```shell
+      $ deno run --allow-net app.ts
+      ```
 
-5. Go to `http://localhost:1447` in your web browser.
+4. Go to `http://localhost:1447` in your web browser.
 
 You should see something like the following:
 

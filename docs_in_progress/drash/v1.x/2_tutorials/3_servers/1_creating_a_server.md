@@ -81,13 +81,13 @@ type.
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Go to `http://localhost:1447` in your web browser. You should receive the
    following response:
 
-    ```text
-    GET request received!
-    ```
+   ```text
+   GET request received!
+   ```

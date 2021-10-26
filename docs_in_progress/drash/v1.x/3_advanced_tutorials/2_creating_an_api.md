@@ -41,47 +41,47 @@ JSON.
 
 1. Create your `coffee.json` file.
 
-    ```json
-    {
-      "17": {
-        "id": 17,
-        "name": "Light Roast: Breakfast Blend",
-        "price": 2.25
-      },
-      "28": {
-        "id": 28,
-        "name": "Medium Roast: Classico",
-        "price": 2.50
-      },
-      "32": {
-        "id": 32,
-        "name": "Medium Roast: Premium Single Origin (Sumatra)",
-        "price": 3.50
-      }
-    }
-    ```
+   ```json
+   {
+     "17": {
+       "id": 17,
+       "name": "Light Roast: Breakfast Blend",
+       "price": 2.25
+     },
+     "28": {
+       "id": 28,
+       "name": "Medium Roast: Classico",
+       "price": 2.50
+     },
+     "32": {
+       "id": 32,
+       "name": "Medium Roast: Premium Single Origin (Sumatra)",
+       "price": 3.50
+     }
+   }
+   ```
 
 2. Create your `tea.json` file.
 
-    ```json
-    {
-      "50": {
-        "id": 50,
-        "name": "Earl Gray",
-        "price": 4.00
-      },
-      "68": {
-        "id": 68,
-        "name": "Citrus Chamomile",
-        "price": 3.50
-      },
-      "83": {
-        "id": 83,
-        "name": "Imperial Blend",
-        "price": 4.50
-      }
-    }
-    ```
+   ```json
+   {
+     "50": {
+       "id": 50,
+       "name": "Earl Gray",
+       "price": 4.00
+     },
+     "68": {
+       "id": 68,
+       "name": "Citrus Chamomile",
+       "price": 3.50
+     },
+     "83": {
+       "id": 83,
+       "name": "Imperial Blend",
+       "price": 4.50
+     }
+   }
+   ```
 
 ### Create the Server
 
@@ -226,16 +226,16 @@ the response. If not, then an error response will be sent.
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Make a coffee request like below or go to `http://localhost:1447/coffee/17`
    in your web browser.
 
-    ```shell
-    $ curl http://localhost:1447/coffee/17
-    ```
+   ```shell
+   $ curl http://localhost:1447/coffee/17
+   ```
 
 You should receive the following response (we pretty-printed the response for
 you):
@@ -251,48 +251,48 @@ you):
 3. Make a coffee request to `http://localhost:1447/coffee/32`. You should
    receive the following response (we pretty-printed the response for you):
 
-    ```json
-    {
-      "id": 32,
-      "name": "Medium Roast: Premium Single Origin (Sumatra)",
-      "price": 3.5
-    }
-    ```
+   ```json
+   {
+     "id": 32,
+     "name": "Medium Roast: Premium Single Origin (Sumatra)",
+     "price": 3.5
+   }
+   ```
 
 4. Make a bad coffee request to `http://localhost:1447/coffee/9000`. You should
    receive the following response (we pretty-printed the response for you):
 
-    ```text
-    "Coffee with ID \"9000\" not found."
-    ```
+   ```text
+   "Coffee with ID \"9000\" not found."
+   ```
 
 5. Make a tea request to `http://localhost:1447/tea/50`. You should receive the
    following response (we pretty-printed the response for you):
 
-    ```json
-    {
-      "id": 50,
-      "name": "Earl Gray",
-      "price": 4
-    }
-    ```
+   ```json
+   {
+     "id": 50,
+     "name": "Earl Gray",
+     "price": 4
+   }
+   ```
 
 6. Make a tea request to `http://localhost:1447/tea/68`. You should receive the
    following response (we pretty-printed the response for you):
 
-    ```json
-    {
-      "id": 68,
-      "name": "Citrus Chamomile",
-      "price": 3.5
-    }
-    ```
+   ```json
+   {
+     "id": 68,
+     "name": "Citrus Chamomile",
+     "price": 3.5
+   }
+   ```
 
 7. Make a bad tea request to `http://localhost:1447/tea/2710`. You should
    receive the following response (we pretty-printed the response for you):
 
-    ```text
-    "Tea with ID \"2710\" not found."
-    ```
+   ```text
+   "Tea with ID \"2710\" not found."
+   ```
 
 **Congrats! You finished this tutorial!**

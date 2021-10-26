@@ -96,19 +96,19 @@ megabytes.
 
 2. Create your `my_file.txt` file so it can be passed in the request body.
 
-    ```text
-    Hello, world!
+   ```text
+   Hello, world!
 
-    I am a simple text file.
-    ```
+   I am a simple text file.
+   ```
 
 ## Verification
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net --allow-write app.ts
-    ```
+   ```shell
+   $ deno run --allow-net --allow-write app.ts
+   ```
 
 2. Create your `uploads` folder in your project's directory. This is where the
    output file will be stored. If you skip this step, you will get an error
@@ -119,9 +119,9 @@ megabytes.
    name of the file is before `=@`. This is the name your resource will check
    for when trying to get the file.
 
-    ```text
-    $ curl -F "my_file=@my_file.txt" localhost:1447/files
-    ```
+   ```text
+   $ curl -F "my_file=@my_file.txt" localhost:1447/files
+   ```
 
 You should receive the following response:
 
@@ -135,17 +135,17 @@ You should receive the following response:
 4. Check your `uploads` directory. You should see `my_uploaded_file.txt` with
    the following contents:
 
-    ```text
-    Hello, world!
+   ```text
+   Hello, world!
 
-    I am a simple text file.
-    ```
+   I am a simple text file.
+   ```
 
 5. Make the same request, but change the file's name to `hello`.
 
-    ```text
-    curl -F "hello=@my_file.txt" localhost:1447/files
-    ```
+   ```text
+   curl -F "hello=@my_file.txt" localhost:1447/files
+   ```
 
 You should receive the following response:
 

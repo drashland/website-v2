@@ -31,66 +31,68 @@ const param = this.request.getBodyParam("param_name");
    was passed in. If it does not exist, then it will throw a `400 Bad Request`
    response.
 
-    ```typescript
-    // app.ts
+   ```typescript
+   // app.ts
 
-    import { Drash } from "./deps.ts";
+   import { Drash } from "./deps.ts";
 
-    // Create your resource
+   // Create your resource
 
-    class HomeResource extends Drash.Http.Resource {
-      static paths = [
-        "/",
-      ];
+   class HomeResource extends Drash.Http.Resource {
+     static paths = [
+       "/",
+     ];
 
-      public POST() {
-        const param = this.request.getBodyParam("name");
+     public POST() {
+       const param = this.request.getBodyParam("name");
 
-        if (!param) {
-          throw new Drash.Exceptions.HttpException(
-            400,
-            "This resource requires the `name` body param.",
-          );
-        }
+       if (!param) {
+         throw new Drash.Exceptions.HttpException(
+           400,
+           "This resource requires the `name` body param.",
+         );
+       }
 
-        this.response.body = `You passed in the following body param: ${param}`;
+       this.response.body = `You passed in the following body param: ${param}`;
 
-        return this.response;
-      }
-    }
+       return this.response;
+     }
+   }
 
-    // Create your server
+   // Create your server
 
-    const server = new Drash.Http.Server({
-      response_output: "text/plain",
-      resources: [HomeResource],
-    });
+   const server = new Drash.Http.Server({
+     response_output: "text/plain",
+     resources: [HomeResource],
+   });
 
-    server.run({
-      hostname: "0.0.0.0",
-      port: 1447,
-    });
+   server.run({
+     hostname: "0.0.0.0",
+     port: 1447,
+   });
 
-    console.log(`Server running. Go to http://${server.hostname}:${server.port}.`);
-    ```
+   console.log(
+     `Server running. Go to http://${server.hostname}:${server.port}.`,
+   );
+   ```
 
 ## Verification
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Using `curl` (or similar command), make a `POST` request to `localhost:1447/`
    and pass in `{"name":"deno"}` in the request body.
 
-    ```text
-    $ curl --header "Content-Type: application/json" \
-    --request POST \
-    --data '{"name":"deno"}' \
-    localhost:1447
-    ```
+   ```text
+   $ curl --header "Content-Type: application/json" \
+   --request POST \
+   --data '{"name":"deno"}' \
+   localhost:1447
+   ```
 
 You should receive the following response:
 
@@ -101,12 +103,12 @@ You should receive the following response:
 2. Make the same request, but change the data to use `username` instead of
    `name`.
 
-    ```text
-    $ curl --header "Content-Type: application/json" \
-    --request POST \
-    --data '{"username":"deno"}' \
-    localhost:1447
-    ```
+   ```text
+   $ curl --header "Content-Type: application/json" \
+   --request POST \
+   --data '{"username":"deno"}' \
+   localhost:1447
+   ```
 
 You should receive the following response:
 

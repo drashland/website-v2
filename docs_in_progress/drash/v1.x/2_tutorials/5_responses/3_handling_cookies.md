@@ -40,69 +40,71 @@ Drash uses Deno Standard Modules for cookie handling.
 1. Create your `app.ts` file. Your resource in this file will set the
    `my_cookie` value on the response object.
 
-    ```typescript
-    import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
+   ```typescript
+   import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
 
-    // Create your resource
+   // Create your resource
 
-    class HomeResource extends Drash.Http.Resource {
-      static paths = ["/"];
+   class HomeResource extends Drash.Http.Resource {
+     static paths = ["/"];
 
-      public GET() {
-        // Set the cookie
-        this.response.setCookie({ name: "my_cookie", value: "chocolate" });
+     public GET() {
+       // Set the cookie
+       this.response.setCookie({ name: "my_cookie", value: "chocolate" });
 
-        // Tell the client the cookie was sent
-        this.response.body = "my_cookie cookie sent!";
+       // Tell the client the cookie was sent
+       this.response.body = "my_cookie cookie sent!";
 
-        return this.response;
-      }
+       return this.response;
+     }
 
-      public DELETE() {
-        // Set the cookie
-        this.response.setCookie({
-          name: "my_cookie",
-          value: "chocolate",
-        });
+     public DELETE() {
+       // Set the cookie
+       this.response.setCookie({
+         name: "my_cookie",
+         value: "chocolate",
+       });
 
-        // Delete the above cookie
-        this.response.delCookie("my_cookie");
+       // Delete the above cookie
+       this.response.delCookie("my_cookie");
 
-        // Tell the client the cookie was set/deleted
-        this.response.body = "my_cookie cookie was set and deleted!";
+       // Tell the client the cookie was set/deleted
+       this.response.body = "my_cookie cookie was set and deleted!";
 
-        return this.response;
-      }
-    }
+       return this.response;
+     }
+   }
 
-    // Create your server
+   // Create your server
 
-    const server = new Drash.Http.Server({
-      response_output: "text/plain",
-      resources: [HomeResource],
-    });
+   const server = new Drash.Http.Server({
+     response_output: "text/plain",
+     resources: [HomeResource],
+   });
 
-    server.run({
-      hostname: "0.0.0.0",
-      port: 1447,
-    });
+   server.run({
+     hostname: "0.0.0.0",
+     port: 1447,
+   });
 
-    console.log(`Server running. Go to http://${server.hostname}:${server.port}.`);
-    ```
+   console.log(
+     `Server running. Go to http://${server.hostname}:${server.port}.`,
+   );
+   ```
 
 ## Verification
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Using `curl` (or similar command), make a `GET` request to `localhost:1447`.
 
-    ```shell
-    $ curl --verbose localhost:1447
-    ```
+   ```shell
+   $ curl --verbose localhost:1447
+   ```
 
 You should receive a response similar to the following:
 
@@ -127,9 +129,9 @@ You should receive a response similar to the following:
 3. Using `curl` (or similar command), make a `DELETE` request to
    `localhost:1447`.
 
-    ```shell
-    $ curl --request DELETE --verbose localhost:1447
-    ```
+   ```shell
+   $ curl --request DELETE --verbose localhost:1447
+   ```
 
 You should receive a response similar to the following:
 

@@ -31,64 +31,66 @@ const param = this.request.getUrlQueryParam("param_name");
    was passed in. If it does not exist, then it will throw a `400 Bad Request`
    response.
 
-    ```typescript
-    // app.ts
+   ```typescript
+   // app.ts
 
-    import { Drash } from "./deps.ts";
+   import { Drash } from "./deps.ts";
 
-    // Create your resource
+   // Create your resource
 
-    class HomeResource extends Drash.Http.Resource {
-      static paths = [
-        "/",
-      ];
+   class HomeResource extends Drash.Http.Resource {
+     static paths = [
+       "/",
+     ];
 
-      public GET() {
-        const param = this.request.getBodyParam("name");
+     public GET() {
+       const param = this.request.getBodyParam("name");
 
-        if (!param) {
-          throw new Drash.Exceptions.HttpException(
-            400,
-            "This resource requires the `name` URL query param.",
-          );
-        }
+       if (!param) {
+         throw new Drash.Exceptions.HttpException(
+           400,
+           "This resource requires the `name` URL query param.",
+         );
+       }
 
-        this.response.body =
-          `You passed in the following URL query param: ${param}`;
+       this.response.body =
+         `You passed in the following URL query param: ${param}`;
 
-        return this.response;
-      }
-    }
+       return this.response;
+     }
+   }
 
-    // Create your server
+   // Create your server
 
-    const server = new Drash.Http.Server({
-      response_output: "text/plain",
-      resources: [HomeResource],
-    });
+   const server = new Drash.Http.Server({
+     response_output: "text/plain",
+     resources: [HomeResource],
+   });
 
-    server.run({
-      hostname: "0.0.0.0",
-      port: 1447,
-    });
+   server.run({
+     hostname: "0.0.0.0",
+     port: 1447,
+   });
 
-    console.log(`Server running. Go to http://${server.hostname}:${server.port}.`);
-    ```
+   console.log(
+     `Server running. Go to http://${server.hostname}:${server.port}.`,
+   );
+   ```
 
 ## Verification
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Using `curl` (or similar command), make a `GET` request to
    `localhost:1447?name=deno`.
 
-    ```text
-    $ curl localhost:1447?name=deno
-    ```
+   ```text
+   $ curl localhost:1447?name=deno
+   ```
 
 You should receive the following response:
 
@@ -99,9 +101,9 @@ You should receive the following response:
 2. Make the same request, but change the URL query param to use `username`
    instead of `name`.
 
-    ```text
-    $ curl localhost:1447?username=deno
-    ```
+   ```text
+   $ curl localhost:1447?username=deno
+   ```
 
 You should receive the following response:
 

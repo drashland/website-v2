@@ -31,49 +31,51 @@ const param = this.request.getPathParam("param_name");
    it will return what was passed in. If it is `NaN`, then it will throw a
    `400 Bad Request` response.
 
-    ```typescript
-    // app.ts
+   ```typescript
+   // app.ts
 
-    import { Drash } from "./deps.ts";
+   import { Drash } from "./deps.ts";
 
-    // Create your resource
+   // Create your resource
 
-    class UsersResource extends Drash.Http.Resource {
-      static paths = [
-        "/users/:id",
-      ];
+   class UsersResource extends Drash.Http.Resource {
+     static paths = [
+       "/users/:id",
+     ];
 
-      public GET() {
-        const userId = parseInt(this.request.getPathParam("id"));
+     public GET() {
+       const userId = parseInt(this.request.getPathParam("id"));
 
-        if (isNaN(userId)) {
-          throw new Drash.Exceptions.HttpException(
-            400,
-            "This resource requires the `:id` path param to be a number.",
-          );
-        }
+       if (isNaN(userId)) {
+         throw new Drash.Exceptions.HttpException(
+           400,
+           "This resource requires the `:id` path param to be a number.",
+         );
+       }
 
-        this.response.body =
-          `You passed in the following user ID as the path param: ${userId}`;
+       this.response.body =
+         `You passed in the following user ID as the path param: ${userId}`;
 
-        return this.response;
-      }
-    }
+       return this.response;
+     }
+   }
 
-    // Create your server
+   // Create your server
 
-    const server = new Drash.Http.Server({
-      response_output: "text/plain",
-      resources: [UsersResource],
-    });
+   const server = new Drash.Http.Server({
+     response_output: "text/plain",
+     resources: [UsersResource],
+   });
 
-    server.run({
-      hostname: "0.0.0.0",
-      port: 1447,
-    });
+   server.run({
+     hostname: "0.0.0.0",
+     port: 1447,
+   });
 
-    console.log(`Server running. Go to http://${server.hostname}:${server.port}.`);
-    ```
+   console.log(
+     `Server running. Go to http://${server.hostname}:${server.port}.`,
+   );
+   ```
 
 You can also specify optional path params by adding `?` to the end of path
 params. Your server would still match `/users` requests to your resource. For
@@ -98,16 +100,16 @@ example ...
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Using `curl` (or similar command), make a `GET` request to
    `localhost:1447/users/1`.
 
-    ```text
-    $ curl localhost:1447/users/1
-    ```
+   ```text
+   $ curl localhost:1447/users/1
+   ```
 
 You should receive the following response:
 
@@ -117,9 +119,9 @@ You should receive the following response:
 
 3. Make the same request, but change the `:id` path param to `one`.
 
-    ```text
-    $ curl localhost:1447/users/one
-    ```
+   ```text
+   $ curl localhost:1447/users/one
+   ```
 
 You should receive the following response:
 

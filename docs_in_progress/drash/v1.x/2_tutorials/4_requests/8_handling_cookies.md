@@ -32,53 +32,55 @@ Drash uses Deno Standard Modules for cookie handling.
 1. Create your `app.ts` file. Your resource in this file will get the
    `my_cookie` value and use it in the response body.
 
-    ```typescript
-    import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
+   ```typescript
+   import { Drash } from "https://deno.land/x/drash@v1.5.1/mod.ts";
 
-    // Create your resource
+   // Create your resource
 
-    class HomeResource extends Drash.Http.Resource {
-      static paths = ["/"];
+   class HomeResource extends Drash.Http.Resource {
+     static paths = ["/"];
 
-      public GET() {
-        const cookieValue = this.request.getCookie("my_cookie");
+     public GET() {
+       const cookieValue = this.request.getCookie("my_cookie");
 
-        this.response.body =
-          `You passed in the following cookie value: ${cookieValue}`;
+       this.response.body =
+         `You passed in the following cookie value: ${cookieValue}`;
 
-        return this.response;
-      }
-    }
+       return this.response;
+     }
+   }
 
-    // Create your server
+   // Create your server
 
-    const server = new Drash.Http.Server({
-      response_output: "text/plain",
-      resources: [HomeResource],
-    });
+   const server = new Drash.Http.Server({
+     response_output: "text/plain",
+     resources: [HomeResource],
+   });
 
-    server.run({
-      hostname: "0.0.0.0",
-      port: 1447,
-    });
+   server.run({
+     hostname: "0.0.0.0",
+     port: 1447,
+   });
 
-    console.log(`Server running. Go to http://${server.hostname}:${server.port}.`);
-    ```
+   console.log(
+     `Server running. Go to http://${server.hostname}:${server.port}.`,
+   );
+   ```
 
 ## Verification
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Using `curl` (or similar command), make a `GET` request to `localhost:1447`
    and pass the following cookie key-value pair: `my_cookie=chocolate`.
 
-    ```shell
-    $ curl --cookie my_cookie=chocolate localhost:1447
-    ```
+   ```shell
+   $ curl --cookie my_cookie=chocolate localhost:1447
+   ```
 
 You should receive the following response:
 
