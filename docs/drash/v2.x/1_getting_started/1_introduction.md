@@ -77,6 +77,7 @@ Learn more about Drash [here](about-drash).
 * Dynamic paths
 * Services (e.g. middleware, caching, logging)
 * Request body parsing
+* Deno Deploy support
 
 ## Badge
 
