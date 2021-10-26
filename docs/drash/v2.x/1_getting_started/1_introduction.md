@@ -20,7 +20,7 @@ Learn more about Drash [here](about-drash).
   ```typescript
   // app.ts
 
-  // Replace `<VERSION>` with the Drash version you want to use.
+  // Replace `<VERSION>` with the Drash v2.x version you want to use.
   // All versions can be found at https://github.com/drashland/drash/releases.
   import * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
 

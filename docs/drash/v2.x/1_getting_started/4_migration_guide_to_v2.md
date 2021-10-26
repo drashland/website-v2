@@ -189,7 +189,7 @@ The below example application contains the following:
 // app.ts
 
 
-// Replace `<VERSION>` with the Drash version you want to use.
+// Replace `<VERSION>` with the Drash v2.x version you want to use.
 // All versions can be found at https://github.com/drashland/drash/releases.
 import * as Drash from "http://deno.land/x/drash@<VERSION>/mod.ts";
 
