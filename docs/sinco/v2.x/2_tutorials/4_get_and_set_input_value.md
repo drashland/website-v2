@@ -34,21 +34,21 @@ In this tutorial, you will:
 
 1. Create your `app_test.ts` file.
 
-    ```typescript
-    // app.ts
+   ```typescript
+   // app.ts
 
-    // Note that you will need to import assertEquals from https://deno.land/std/testing/asserts.ts
-    import { assertEquals, buildFor } from "./deps.ts";
+   // Note that you will need to import assertEquals from https://deno.land/std/testing/asserts.ts
+   import { assertEquals, buildFor } from "./deps.ts";
 
-    Deno.test("My web app works as expected", async () => {
-      const Sinco = await buildFor("chrome");
-      await Sinco.goTo("https://chromestatus.com");
-      await Sinco.type('input[placeholder="Filter"]', "hello world");
-      const val = await Sinco.getInputValue('input[placeholder="Filter"]');
-      assertEquals(val, "hello world");
-      await Sinco.done();
-    });
-    ```
+   Deno.test("My web app works as expected", async () => {
+     const Sinco = await buildFor("chrome");
+     await Sinco.goTo("https://chromestatus.com");
+     await Sinco.type('input[placeholder="Filter"]', "hello world");
+     const val = await Sinco.getInputValue('input[placeholder="Filter"]');
+     assertEquals(val, "hello world");
+     await Sinco.done();
+   });
+   ```
 
 In this tutorial, you are creating a new browser instance that is pointing to
 https://chromestatus.com, then you will type a value into an input field, just
@@ -59,8 +59,8 @@ input field and assert it equals the value you typed.
 
 1. Run your test.
 
-    ```shell
-    $ deno test --allow-run --allow-net --allow-read app_test.ts
-    ```
+   ```shell
+   $ deno test --allow-run --allow-net --allow-read app_test.ts
+   ```
 
 2. All of your tests should pass

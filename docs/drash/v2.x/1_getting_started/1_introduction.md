@@ -10,19 +10,21 @@ Learn more about Drash [here](about-drash).
 
 2. Create your project directory.
 
-    ```shell
-    $ mkdir my-project
-    $ cd my-project
-    ```
+   ```shell
+   $ mkdir my-project
+   $ cd my-project
+   ```
 
 3. Create your `app.ts` file.
 
-    ```typescript
-    // app.ts
+   ```typescript
+   // app.ts
+   ```
 
-    // Replace `<VERSION>` with the Drash v2.x version you want to use.
-    // All versions can be found at https://github.com/drashland/drash/releases.
-    import * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the Drash v2.x version you want to use. // All
+versions can be found at
+https://github.com/drashland/drash/releases?q=v2&expanded=true. import * as
+Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
 
     // Create your resource
 
@@ -55,9 +57,9 @@ Learn more about Drash [here](about-drash).
 
 4. Run your `app.ts` file.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 5. Go to `http://localhost:1447` in your web browser.
 

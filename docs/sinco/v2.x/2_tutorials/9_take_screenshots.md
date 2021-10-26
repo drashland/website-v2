@@ -56,28 +56,28 @@ In this tutorial, you will:
 
 1. Create your test file.
 
-    ```typescript
-    // app_test.ts
+   ```typescript
+   // app_test.ts
 
-    import { buildFor } from "./deps.ts";
+   import { buildFor } from "./deps.ts";
 
-    Deno.test("My web app works as expected", async () => {
-      const Sinco = await buildFor("chrome");
-      await Sinco.goTo("https://drash.land");
-      const screenshotsFolder = "./screenshots";
-      Deno.mkdirSync(screenshotsFolder); // Ensure you create the directory your screenshots will be put within
-      await Sinco.takeScreenshot(screenshotsFolder); // Will take a screenshot of the whole page, and write it to `./screenshots/dd_mm_yyyy_hh_mm_ss.jpeg`
-      await Sinco.takeScreenshot(screenshotsFolder, {
-        fileName: "drash_land.png",
-        format: "png",
-      }); // Specify filename and format. Will be saved as `./screenshots/drash_land.png`
-      await Sinco.takeScreenshot(screenshotsFolder, {
-        fileName: "modules.jpeg",
-        selector: 'a[href="https://github.com/drashland"]',
-      }); // Will screenshot only the GitHub icon section, and write it to `./screenshots/dd_mm_yyyy_hh_mm_ss.jpeg`
-      await Sinco.done();
-    });
-    ```
+   Deno.test("My web app works as expected", async () => {
+     const Sinco = await buildFor("chrome");
+     await Sinco.goTo("https://drash.land");
+     const screenshotsFolder = "./screenshots";
+     Deno.mkdirSync(screenshotsFolder); // Ensure you create the directory your screenshots will be put within
+     await Sinco.takeScreenshot(screenshotsFolder); // Will take a screenshot of the whole page, and write it to `./screenshots/dd_mm_yyyy_hh_mm_ss.jpeg`
+     await Sinco.takeScreenshot(screenshotsFolder, {
+       fileName: "drash_land.png",
+       format: "png",
+     }); // Specify filename and format. Will be saved as `./screenshots/drash_land.png`
+     await Sinco.takeScreenshot(screenshotsFolder, {
+       fileName: "modules.jpeg",
+       selector: 'a[href="https://github.com/drashland"]',
+     }); // Will screenshot only the GitHub icon section, and write it to `./screenshots/dd_mm_yyyy_hh_mm_ss.jpeg`
+     await Sinco.done();
+   });
+   ```
 
 Here you are going to create your headless browser instance, and navigate to
 https://drash.land. Once the page has loaded, you will take a screenshot of the
@@ -87,20 +87,20 @@ a third screenshot with a custom selector.
 2. Create your `tsconfig.json`. You will need this because Sinco uses DOM types
    to aid in creating a screenshot
 
-    ```json
-    {
-      "compilerOptions": {
-        "lib": ["dom", "deno.ns"]
-      }
-    }
-    ```
+   ```json
+   {
+     "compilerOptions": {
+       "lib": ["dom", "deno.ns"]
+     }
+   }
+   ```
 
 ## Verification
 
 1. Run your test.
 
-    ```shell
-    $ deno test --config tsconfig.json --allow-run --allow-read --allow-write --allow-net app_test.ts
-    ```
+   ```shell
+   $ deno test --config tsconfig.json --allow-run --allow-read --allow-write --allow-net app_test.ts
+   ```
 
 2. Now check your screenshots folder!

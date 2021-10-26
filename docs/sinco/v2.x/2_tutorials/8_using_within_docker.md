@@ -44,39 +44,39 @@ In this tutorial, you will:
 
 1. Create your dockerfile.
 
-    ```dockerfile
-    # app.dockerfile
+   ```dockerfile
+   # app.dockerfile
 
-    FROM debian:stable-slim
+   FROM debian:stable-slim
 
-    # Install chrome driver
-    RUN apt update -y && apt clean -y
-    RUN apt install gnupg -y
-    ENV CHROME_VERSION "google-chrome-stable"
-    RUN sed -i -- 's&deb http://deb.debian.org/debian jessie-updates main&#deb http://deb.debian.org/debian jessie-updates main&g' /etc/apt/sources.list \
-      && apt-get update && apt-get install wget -y
-    RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-      && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list \
-      && apt-get update && apt-get -qqy install ${CHROME_VERSION:-google-chrome-stable}
+   # Install chrome driver
+   RUN apt update -y && apt clean -y
+   RUN apt install gnupg -y
+   ENV CHROME_VERSION "google-chrome-stable"
+   RUN sed -i -- 's&deb http://deb.debian.org/debian jessie-updates main&#deb http://deb.debian.org/debian jessie-updates main&g' /etc/apt/sources.list \
+     && apt-get update && apt-get install wget -y
+   RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+     && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list \
+     && apt-get update && apt-get -qqy install ${CHROME_VERSION:-google-chrome-stable}
 
-    # Install firefox driver
-    RUN apt update && apt install wget curl bzip2 -y
-    RUN apt-get remove iceweasel
-    ENV FILENAME "firefox-latest.tar.bz2"
-    RUN wget -O $FILENAME --content-disposition "https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US" \
-      && apt install bzip2
-    RUN tar -jxf $FILENAME -C /opt/
-    RUN ln -sf /opt/firefox/firefox  /usr/bin/firefox
-    RUN rm $FILENAME
-    RUN apt install libgtk-3-0 libx11-6 libx11-xcb1 libdbus-glib-1-2 xdg-utils -y
-    RUN apt clean
+   # Install firefox driver
+   RUN apt update && apt install wget curl bzip2 -y
+   RUN apt-get remove iceweasel
+   ENV FILENAME "firefox-latest.tar.bz2"
+   RUN wget -O $FILENAME --content-disposition "https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US" \
+     && apt install bzip2
+   RUN tar -jxf $FILENAME -C /opt/
+   RUN ln -sf /opt/firefox/firefox  /usr/bin/firefox
+   RUN rm $FILENAME
+   RUN apt install libgtk-3-0 libx11-6 libx11-xcb1 libdbus-glib-1-2 xdg-utils -y
+   RUN apt clean
 
-    # Install deno
-    RUN apt install curl unzip -y
-    RUN curl -fsSL https://deno.land/x/install/install.sh | DENO_INSTALL=/usr/local sh
-    RUN export DENO_INSTALL="/root/.local"
-    RUN export PATH="$DENO_INSTALL/bin:$PATH"
-    ```
+   # Install deno
+   RUN apt install curl unzip -y
+   RUN curl -fsSL https://deno.land/x/install/install.sh | DENO_INSTALL=/usr/local sh
+   RUN export DENO_INSTALL="/root/.local"
+   RUN export PATH="$DENO_INSTALL/bin:$PATH"
+   ```
 
 Here, you are using a very small image (debian-slim) as your baseline for your
 docker container. Then you install the chrome-driver and firefox-driver, which
@@ -86,48 +86,48 @@ it won't be from within docker unless you tell it to.
 
 2. Create your docker compose file
 
-    ```yml
-    # docker-compose.yml
+   ```yml
+   # docker-compose.yml
 
-    version: '3'
+   version: '3'
 
-    services:
-      app:
-        container_name: my_app
-        build:
-          context: .
-          dockerfile: app.dockerfile
-        volumes:
-          - ./src:/var/www/my-app
-        command: bash -c "deno test --allow-run --allow-net"
-        working_dir: /var/www/my-app
-    ```
+   services:
+     app:
+       container_name: my_app
+       build:
+         context: .
+         dockerfile: app.dockerfile
+       volumes:
+         - ./src:/var/www/my-app
+       command: bash -c "deno test --allow-run --allow-net"
+       working_dir: /var/www/my-app
+   ```
 
 Here, you are creating your docker-compose file, which will start/run your
 container, and execute your test file.
 
 3. Create your `app_test.ts` file.
 
-    ```typescript
-    // app_test.ts
+   ```typescript
+   // app_test.ts
 
-    import { buildFor } from "./deps.ts";
+   import { buildFor } from "./deps.ts";
 
-    Deno.test("My web app works as expected", async () => {
-      const Chrome = await buildFor("chrome");
-      await Chrome.goTo("https://drash.land");
-      await Chrome.click('a[href="https://discord.gg/RFsCSaHRWK"]');
-      await Chrome.waitForPageChange();
-      await Chrome.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
-      await Chrome.done();
-      const Firefox = await buildFor("chrome");
-      await Firefox.goTo("https://drash.land");
-      await Firefox.click('a[href="https://discord.gg/RFsCSaHRWK"]');
-      await Firefox.waitForPageChange();
-      await Firefox.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
-      await Firefox.done();
-    });
-    ```
+   Deno.test("My web app works as expected", async () => {
+     const Chrome = await buildFor("chrome");
+     await Chrome.goTo("https://drash.land");
+     await Chrome.click('a[href="https://discord.gg/RFsCSaHRWK"]');
+     await Chrome.waitForPageChange();
+     await Chrome.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
+     await Chrome.done();
+     const Firefox = await buildFor("chrome");
+     await Firefox.goTo("https://drash.land");
+     await Firefox.click('a[href="https://discord.gg/RFsCSaHRWK"]');
+     await Firefox.waitForPageChange();
+     await Firefox.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
+     await Firefox.done();
+   });
+   ```
 
 Here you are going to create your headless browser instance, and navigate to
 https://drash.land. Once the page has loaded, you will click an element matching
@@ -139,10 +139,10 @@ you are currently on, has now changed.
 
 1. Run your test.
 
-    ```shell
-    $ docker-compose build
-    $ docker-compose up
-    ```
+   ```shell
+   $ docker-compose build
+   $ docker-compose up
+   ```
 
 2. All of your tests should pass, and your docker container should exit
    successfully.

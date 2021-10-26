@@ -40,21 +40,21 @@ In this tutorial, you will:
 
 1. Create your `app_test.ts` file.
 
-    ```typescript
-    // app_test.ts
+   ```typescript
+   // app_test.ts
 
-    import { buildFor } from "./deps.ts";
+   import { buildFor } from "./deps.ts";
 
-    Deno.test("My web app works as expected", async function () {
-      const Sinco = await buildFor("chrome");
-      await Sinco.goTo("https://drash.land");
-      await Sinco.assertUrlIs("https://drash.land/");
-      await Sinco.click('a[href="https://discord.gg/RFsCSaHRWK"]');
-      await Sinco.waitForPageChange();
-      await Sinco.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
-      await Sinco.done();
-    });
-    ```
+   Deno.test("My web app works as expected", async function () {
+     const Sinco = await buildFor("chrome");
+     await Sinco.goTo("https://drash.land");
+     await Sinco.assertUrlIs("https://drash.land/");
+     await Sinco.click('a[href="https://discord.gg/RFsCSaHRWK"]');
+     await Sinco.waitForPageChange();
+     await Sinco.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
+     await Sinco.done();
+   });
+   ```
 
 Here you are going to create your headless browser instance, and navigate to
 https://drash.land. Once the page has loaded, you will assert that the url for
@@ -64,8 +64,8 @@ the page is as expected.
 
 1. Run your test.
 
-    ```shell
-    $ deno test --allow-run --allow-read --allow-net app_test.ts
-    ```
+   ```shell
+   $ deno test --allow-run --allow-read --allow-net app_test.ts
+   ```
 
 2. All of your tests should pass

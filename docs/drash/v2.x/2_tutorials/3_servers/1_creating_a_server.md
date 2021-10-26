@@ -25,63 +25,63 @@ common requests: `GET`, `POST`, `PUT`, and `DELETE`.
 1. Create your `app.ts` file. Your resource in this file will be able to handle
    `GET`, `POST`, `PUT`, and `DELETE` requests at the `/` URI.
 
-    ```typescript
-    // app.ts
+   ```typescript
+   // app.ts
 
-    import { Drash } from "./deps.ts";
+   import { Drash } from "./deps.ts";
 
-    // Create your resource
+   // Create your resource
 
-    class HomeResource extends Drash.Resource {
-      public paths = ["/"];
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
 
-      public GET(request: Drash.Request, response: Drash.Response): void {
-        return response.text("GET request received!");
-      }
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       return response.text("GET request received!");
+     }
 
-      public POST(request: Drash.Request, response: Drash.Response): void {
-        return response.text("POST request received!");
-      }
+     public POST(request: Drash.Request, response: Drash.Response): void {
+       return response.text("POST request received!");
+     }
 
-      public PUT(request: Drash.Request, response: Drash.Response): void {
-        return response.text("PUT request received!");
-      }
+     public PUT(request: Drash.Request, response: Drash.Response): void {
+       return response.text("PUT request received!");
+     }
 
-      public DELETE(request: Drash.Request, response: Drash.Response): void {
-        return response.text("DELETE request received!");
-      }
-    }
+     public DELETE(request: Drash.Request, response: Drash.Response): void {
+       return response.text("DELETE request received!");
+     }
+   }
 
-    // Create and run your server
+   // Create and run your server
 
-    const server = new Drash.Server({
-      hostname: "0.0.0.0",
-      port: 1447,
-      protocol: "http",
-      resources: [
-        HomeResource,
-      ],
-    });
+   const server = new Drash.Server({
+     hostname: "0.0.0.0",
+     port: 1447,
+     protocol: "http",
+     resources: [
+       HomeResource,
+     ],
+   });
 
-    server.run();
+   server.run();
 
-    console.log(`Server running at ${server.address}.`);
-    ```
+   console.log(`Server running at ${server.address}.`);
+   ```
 
 ## Verification
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Go to `http://localhost:1447` in your web browser. You should receive the
    following response:
 
-    ```text
-    GET request received!
-    ```
+   ```text
+   GET request received!
+   ```
 
 3. Try some other requests using `curl` (or similar command):
 

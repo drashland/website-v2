@@ -40,7 +40,8 @@ export { PaladinService } from "https://deno.land/x/drash@<VERSION>/src/services
 ```
 
 Replace `<VERSION>` with the **Drash v2.x** version you want to use. All
-versions can be found [here](https://github.com/drashland/drash/releases).
+versions can be found
+[here](https://github.com/drashland/drash/releases?q=v2&expanded=true).
 
 ## Folder Structure End State
 
@@ -92,16 +93,16 @@ console.log(`Server running at ${server.address}.`);
 
 1. Run your app.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Using `curl` (or similar command), make a `GET` request to
    `http://localhost:1447`.
 
-    ```shell
-    $ curl -v http://localhost:1447
-    ```
+   ```shell
+   $ curl -v http://localhost:1447
+   ```
 
 You should receive a response similar to the following:
 
