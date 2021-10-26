@@ -44,7 +44,7 @@ const server = new Drash.Server({
 server.run()
 ```
 
-What you need to do is change the value of `hostname`, from `"localhost"` to `""`, and example git diff would look like so:
+To use this Drash application with Deno Deploy, all you need to do is change the value of `hostname` from `"localhost"` to `""`. For example:
 
 ```diff
 const server = new Drash.Server({
