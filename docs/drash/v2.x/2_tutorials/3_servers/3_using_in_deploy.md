@@ -82,7 +82,7 @@ const server = new Drash.Server({
 server.run()
 ```
 
-Feel free to copy the above code and paste it into a deploy playground! Simply add a `fetch` request at the end of the file to check your server works:
+Feel free to copy the above code and paste it into a Deno Deploy playground! For a sanity check to make sure that your application is responding, add a `fetch` request at the end of the `app.ts` file:
 
 ```typescript
 const res = await fetch(server.address)
