@@ -49,8 +49,6 @@ export const Heading4 = styled.h3`
 `;
 
 export const ListItem = styled.li`
-  transition-duration: 0.25s;
-  transition-property: color;
 `;
 
 export const Code = function({ className, children }) {

@@ -38,6 +38,7 @@ module.exports = {
       sinco: "https://github.com/drashland/sinco",
       rhum: "https://github.com/drashland/rhum",
       wocket: "https://github.com/drashland/wocket",
+      website: "https://github.com/drashland/website-v2",
     },
     versions: {
       drash: {
