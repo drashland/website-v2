@@ -13,7 +13,7 @@ Creating a Drash server in Deploy is a very simple and easy process. All you hav
 
 Instead of defining your `hostname` property when passing in your options to a `Drash.Server`, you simply leave it blank, an empty string. That's it!
 
-The rest of this page is optional, you have all you need to write a Drash server in Deploy (assuming you read the rest of our documentation!). But feel free to read on for a visual representation of how you might create a Drash server in Deploy.
+The rest of this page is optional. You have all you need to write a Drash server in Deploy (assuming you read the rest of our documentation!), but feel free to read on for a visual representation of how you might create a Drash server in Deploy.
 
 ## Getting Started
 
