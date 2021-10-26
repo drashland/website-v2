@@ -56,11 +56,14 @@ To use this Drash application with Deno Deploy, all you need to do is change the
 +   hostname: "",
     port: 3000,
   });
+```
 
 Below is what you would end up with:
 
 ```typescript
-import * as Drash from "./deps,ts"
+// app.ts
+
+import * as Drash from "./deps.ts"
 
 class HomeResource extends Drash.Resource {
   paths = ["/"];
