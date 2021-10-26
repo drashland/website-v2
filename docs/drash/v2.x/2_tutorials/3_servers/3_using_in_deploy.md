@@ -15,11 +15,9 @@ Instead of defining your `hostname` property when passing in your options to a `
 
 The rest of this page is optional, you have all you need to write a Drash server in Deploy (assuming you read the rest of our documentation!). But feel free to read on for a visual representation of how you might create a Drash server in Deploy.
 
-Below are the required configurations. You cannot create a Drash server without these.
-
 ## Getting Started
 
-Here is a basic Drash server. It defines a resource to handle requests to `/`, and creates a server to listen on `localhost` and port `3000`.. It then `run`s the server just like you would if you're developing outside of Deploy:
+Here is a basic Drash server. It defines a resource to handle requests to `/`, and creates a server to listen on `localhost` and port `3000`. It then `run`s the server just like you would if you're developing outside of Deploy:
 
 ```typescript
 import * as Drash from "./deps.ts"
@@ -46,7 +44,7 @@ server.run()
 
 What you need to do is change the value of `hostname`, from `"localhost"` to `""`, and example git diff would look like so:
 
-```git
+```diff
 const server = new Drash.Server({
   resources: [
     HomeResource,
