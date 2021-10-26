@@ -52,9 +52,9 @@ Learn more about Drash [here](about-drash).
 
 4. Run your `app.ts` file.
 
-    ```shell
-    $ deno run --allow-net app.ts
-    ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 5. Go to `http://localhost:1447` in your web browser.
 
