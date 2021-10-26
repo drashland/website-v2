@@ -21,7 +21,7 @@ Learn more about Drash [here](about-drash).
   // app.ts
 
   // Replace `<VERSION>` with the Drash v2.x version you want to use.
-  // All versions can be found at https://github.com/drashland/drash/releases.
+  // All versions can be found at https://github.com/drashland/drash/releases?q=v2&expanded=true.
   import * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
 
   // Create your resource

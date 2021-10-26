@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { MarkGithub } from "@styled-icons/octicons";
 import Switch from "react-switch";
@@ -92,6 +92,12 @@ export default function TopBar(props) {
 
   const router = useRouter();
 
+  const [pageLoaded, setPageLoaded] = useState(false)
+
+  useEffect(() => {
+    setPageLoaded(true)
+  }, [])
+
   return (
     <Container
       mobileViewport={state.mobileViewport}
@@ -132,7 +138,9 @@ export default function TopBar(props) {
           href={getGitHubUrl(moduleName)}
           target="_BLANK"
         >
-          <GitHubIcon />
+         {pageLoaded === true && (
+           <GitHubIcon />
+         )}
         </a>
       </RightSection>
     </Container>
