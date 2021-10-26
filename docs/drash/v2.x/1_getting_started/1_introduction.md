@@ -40,21 +40,23 @@ Learn more about Drash [here](about-drash).
 
    // Create and run your server
 
-   const server = new Drash.Server({ hostname: "0.0.0.0", port: 1447, protocol:
-   "http", resources: [ HomeResource, ], });
+   const server = new Drash.Server({
+     hostname: "0.0.0.0", port: 1447, protocol:
+    "http", resources: [ HomeResource, ],
+   });
 
    server.run();
 
    console.log(`Server running at ${server.address}.`);
    ```
 
-   4. Run your `app.ts` file.
+4. Run your `app.ts` file.
 
-      ```shell
-      $ deno run --allow-net app.ts
-      ```
+  ```shell
+  $ deno run --allow-net app.ts
+  ```
 
-4. Go to `http://localhost:1447` in your web browser.
+5. Go to `http://localhost:1447` in your web browser.
 
 You should see something like the following:
 
