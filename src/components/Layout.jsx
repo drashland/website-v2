@@ -157,6 +157,7 @@ const ButtonOpenSidebarMiddleBar = styled.div`
 
 export default function Layout(props) {
   const {
+    editThisPageUrl,
     children,
     moduleVersion,
     moduleVersions,
@@ -302,7 +303,10 @@ export default function Layout(props) {
               <MakeBetterHeading>
                 Help Improve This Page
               </MakeBetterHeading>
-              If you are having issues with this page (e.g., parts of this page are not loading, documentation does not make sense, etc.), please let us know by filing an issue <a href={getGitHubCreateIssueUrl(pageUri)} target="_BLANK">here</a>. We want to make sure these documentation pages cater the best developer experience possible.
+              <p>If you are having issues with this page (e.g., parts of this page are not loading, documentation does not make sense, etc.), please let us know by filing an issue <a href={getGitHubCreateIssueUrl(pageUri)} target="_BLANK">here</a>. We want to make sure these documentation pages cater the best developer experience possible.</p>
+              {editThisPageUrl && (
+                <p>Alternatively, you can <a href={editThisPageUrl} target="_BLANK" rel="noreferrer">edit this page</a>.</p>
+              )}
             </MakeBetter>
             <Copyright>
               &copy; 2019 - 2021 Drash Land
