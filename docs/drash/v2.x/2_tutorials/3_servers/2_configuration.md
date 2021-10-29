@@ -126,6 +126,7 @@ Below are the optional configurations. Drash servers can be created without thes
     resources: [ ... ]
   });
   ```
+
 ### key_file?: string
 
 * This config is only required when the `protocol` config is set to `https`.
