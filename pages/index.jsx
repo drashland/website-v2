@@ -373,6 +373,27 @@ export default function Home() {
                 <CardTitle>crookse</CardTitle>
                 <CardDescription>Eric Crooks</CardDescription>
               </Card>
+              <Card onClick={() => handleTeamMemberClick("ebebbington")}>
+                <ImageContainer>
+                  <img src="https://github.com/ebebbington.png"/>
+                </ImageContainer>
+                <CardTitle>ebebbington</CardTitle>
+                <CardDescription>Edward Bebbington</CardDescription>
+              </Card>
+              <Card onClick={() => handleTeamMemberClick("Guergeiro")}>
+                <ImageContainer>
+                  <img src="https://github.com/Guergeiro.png"/>
+                </ImageContainer>
+                <CardTitle>Guergeiro</CardTitle>
+                <CardDescription>Breno Salles</CardDescription>
+              </Card>
+              <Card onClick={() => handleTeamMemberClick("saragee3")}>
+                <ImageContainer>
+                  <img src="https://github.com/saragee3.png"/>
+                </ImageContainer>
+                <CardTitle>saragee3</CardTitle>
+                <CardDescription>Sara Gee</CardDescription>
+              </Card>
             </CardsContainer>
           </InnerContainer>
         </Section>
