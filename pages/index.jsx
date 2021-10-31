@@ -244,6 +244,10 @@ export default function Home() {
     }
   }
 
+  const handleTeamMemberClick = (username) => {
+    window.open(`https://github.com/${username}`, "_blank").focus()
+  }
+
   return (
     <Container>
       <LayoutTopBar
@@ -361,6 +365,15 @@ export default function Home() {
               <li>Thorough Testing: To put it bluntly, we test the shiz out of our software. We know it works. Every example code block and every tutorial we write is tested end-to-end.</li>
             </ul>
             <p>Drash Land is more than just a project to us. We've invested our whole selves (and lots of energy drinks) into this. Does that make us nerds? We hope so. Because nerds make the best stuff.</p>
+            <CardsContainer>
+              <Card onClick={() => handleTeamMemberClick("crookse")}>
+                <ImageContainer>
+                  <img src="https://github.com/crookse.png"/>
+                </ImageContainer>
+                <CardTitle>crookse</CardTitle>
+                <CardDescription>Eric Crooks</CardDescription>
+              </Card>
+            </CardsContainer>
           </InnerContainer>
         </Section>
         <Section background="#2f343c" color="#ffffff">
