@@ -3,6 +3,36 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutTopBar from "../src/components/LayoutTopBar";
 
+const MAINTAINERS = [
+  {
+    github_username: "crookse",
+    image_src: "https://github.com/crookse.png",
+  },
+  {
+    github_username: "ebebbington",
+    image_src: "https://github.com/ebebbington.png",
+  },
+  {
+    github_username: "Guergeiro",
+    image_src: "https://github.com/Guergeiro.png",
+  },
+  {
+    github_username: "saragee3",
+    image_src: "https://github.com/saragee3.png",
+  },
+];
+
+const KEY_CONTRIBUTORS = [
+  {
+    github_username: "SnoCold",
+    image_src: "https://github.com/SnoCold.png",
+  },
+  {
+    github_username: "prisis",
+    image_src: "https://github.com/prisis.png",
+  },
+];
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -221,6 +251,24 @@ const Tag = styled.div`
   }
 `;
 
+const MaintainersContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+`;
+
+const Maintainer = styled.img`
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 1rem;
+  max-width: 110px;
+  &:last-of-type {
+    margin-right: 0;
+  }
+`;
+
 export default function Home() {
 
   const router = useRouter();
@@ -357,6 +405,16 @@ export default function Home() {
         <Section>
           <InnerContainer>
             <SectionTitle>The Drash Land Team</SectionTitle>
+            <MaintainersContainer>
+              {MAINTAINERS.map((maintainer) => {
+                return (
+                  <Maintainer
+                    onClick={() => handleTeamMemberClick(maintainer.github_username)}
+                    src={maintainer.image_src}
+                  />
+                );
+              })}
+            </MaintainersContainer>
             <p>We're a small squad of software engineers who code a lot of really cool stuff. We focus heavily on the developer UX because we think coding should be fun.</p>
             <p>When we release software in the Deno or Node ecosystem, you can count on these three things:</p>
             <ul>
@@ -364,37 +422,18 @@ export default function Home() {
               <li>Extensive Documentation: We love a good challenge, but working with Drash Land software shouldn't be one of them. That's why we provide all of the documentation you'll need. Want to know how to set up an HTTP server? We got you. Need to know how to set up WebSockets? We'll show you the way. And if you ever get stuck, just send us a message in our <a href="https://discord.gg/RFsCSaHRWK" target="_BLANK" rel="noreferrer">Discord</a> and we'll gladly help you!</li>
               <li>Thorough Testing: To put it bluntly, we test the shiz out of our software. We know it works. Every example code block and every tutorial we write is tested end-to-end.</li>
             </ul>
-            <p>Drash Land is more than just a project to us. We've invested our whole selves (and lots of energy drinks) into this. Does that make us nerds? We hope so. Because nerds make the best stuff.</p>
-            <CardsContainer>
-              <Card onClick={() => handleTeamMemberClick("crookse")}>
-                <ImageContainer>
-                  <img src="https://github.com/crookse.png"/>
-                </ImageContainer>
-                <CardTitle>crookse</CardTitle>
-                <CardDescription>Eric Crooks</CardDescription>
-              </Card>
-              <Card onClick={() => handleTeamMemberClick("ebebbington")}>
-                <ImageContainer>
-                  <img src="https://github.com/ebebbington.png"/>
-                </ImageContainer>
-                <CardTitle>ebebbington</CardTitle>
-                <CardDescription>Edward Bebbington</CardDescription>
-              </Card>
-              <Card onClick={() => handleTeamMemberClick("Guergeiro")}>
-                <ImageContainer>
-                  <img src="https://github.com/Guergeiro.png"/>
-                </ImageContainer>
-                <CardTitle>Guergeiro</CardTitle>
-                <CardDescription>Breno Salles</CardDescription>
-              </Card>
-              <Card onClick={() => handleTeamMemberClick("saragee3")}>
-                <ImageContainer>
-                  <img src="https://github.com/saragee3.png"/>
-                </ImageContainer>
-                <CardTitle>saragee3</CardTitle>
-                <CardDescription>Sara Gee</CardDescription>
-              </Card>
-            </CardsContainer>
+            <p style={{ marginBottom: "3rem" }}>Drash Land is more than just a project to us. We've invested our whole selves (and lots of energy drinks) into this. Does that make us nerds? We hope so. Because nerds make the best stuff.</p>
+            <SectionTitle>Key Contributors</SectionTitle>
+            <MaintainersContainer>
+              {KEY_CONTRIBUTORS.map((maintainer) => {
+                return (
+                  <Maintainer
+                    onClick={() => handleTeamMemberClick(maintainer.github_username)}
+                    src={maintainer.image_src}
+                  />
+                );
+              })}
+            </MaintainersContainer>
           </InnerContainer>
         </Section>
         <Section background="#2f343c" color="#ffffff">
