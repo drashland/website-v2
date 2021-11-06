@@ -56,6 +56,10 @@ export function formatLabel(label) {
       from: /V2/g,
       to: "v2"
     },
+    {
+      from: /Websocket/g,
+      to: "WebSocket"
+    },
   ];
 
   replacements.forEach((replacement) => {
