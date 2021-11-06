@@ -22,7 +22,7 @@ Here is a basic Drash application. It defines a resource to handle requests to `
 ```typescript
 // app.ts
 
-import * as Drash from "./deps.ts"
+import { Drash } from "./deps.ts"
 
 class HomeResource extends Drash.Resource {
   paths = ["/"];
