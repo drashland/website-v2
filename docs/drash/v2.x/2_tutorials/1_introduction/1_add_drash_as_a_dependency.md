@@ -15,7 +15,7 @@ Before you get started with any tutorial, make sure you create a `deps.ts` file 
 export * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts"
 ```
 
-Replace `<VERSION>` with the **Drash v2.x** version you want to use. All versions can be found [here](https://github.com/drashland/drash/releases?q=v2&expanded=true).
+Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest version can be found [here](https://github.com/drashland/drash/releases/latest).
 
 The `deps.ts` file is **_required_** for all tutorials. Tutorials will reference the `deps.ts` file in code blocks like so:
 
