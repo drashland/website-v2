@@ -1,6 +1,6 @@
 # Response Time
 
-This service will record how long a a response takes for any given request, by setting a `X-Response-Time` header on the response.
+This service will record how long a response takes for any given request, by setting a `X-Response-Time` header on the response.
 
 Simply add it to your Drash server's `services` config and you are all set!
 
@@ -57,7 +57,7 @@ class HomeResource extends Drash.Resource {
   }
 }
 
-// Create and run your server (with PaladinService instantiated)
+// Create and run your server (with ResponseTimeServer instantiated)
 
 const server = new Drash.Server({
   hostname: "localhost",
