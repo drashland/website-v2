@@ -10,16 +10,6 @@ Simply add it to your Drash server's `services` config and you are all set!
 - [Folder Structure End State](#folder-structure-end-state)
 - [Steps](#configuration)
 - [Verification](#verification)
-- [Configuration](#configuration)
-  - [Content-Security-Policy](#content-security-policy)
-  - [Expect-CT](#expect-ct)
-  - [Referrer-Policy](#referrer-policy)
-  - [Strict-Transport-Security](#strict-transport-security)
-  - [X-Content-Type-Options](#x-content-type-options)
-  - [X-DNS-Prefetch-Control](#x-dns-prefetch-control)
-  - [X-Frame-Options](#x-frame-options)
-  - [X-Powered-By](#x-powered-by)
-  - [X-XSS-Protection](#x-xss-protection)
 
 ## Before You Get Started
 
