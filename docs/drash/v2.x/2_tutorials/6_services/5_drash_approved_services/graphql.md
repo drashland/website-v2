@@ -142,7 +142,7 @@ console.log(`Server running at ${server.address}.`);
   }
   ```
 
-  You should receive the following response in the left pane of your playground:
+  You should receive the following response in the right pane of your playground:
 
   ```json
   {
