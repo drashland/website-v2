@@ -13,7 +13,7 @@ This service allows your Drash application to use [GraphQL](https://graphql.org/
 
 ## Before You Get Started
 
-This tutorial only shows you how to integrate your Drash application with GraphQL. To learn more about using GraphQL, please refer to [GraphQL docs](https://graphql.org/).
+This tutorial only shows you how to set up your Drash application to use GraphQL. To learn more about using GraphQL, please refer to the [GraphQL documentation](https://graphql.org/).
 
 To use this service, edit your `deps.ts` file to include the service.
 
