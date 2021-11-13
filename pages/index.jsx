@@ -418,7 +418,7 @@ export default function Home() {
             <p>We're a small squad of software engineers who code a lot of really cool stuff. We focus heavily on the developer UX because we think coding should be fun.</p>
             <p>When we release software in the Deno or Node ecosystem, you can count on these three things:</p>
             <ul>
-              <li>Zero Dependencies: Every Drash Land project has zero dependencies (with the exception of Deno and Node, of course).</li>
+              <li>Zero Dependencies: Every Drash Land project has zero dependencies (with the exception of Deno and Node, of course). There are some exceptions (e.g., using GraphQL in Drash), but all of Drash Land's core code has zero dependencies.</li>
               <li>Extensive Documentation: We love a good challenge, but working with Drash Land software shouldn't be one of them. That's why we provide all of the documentation you'll need. Want to know how to set up an HTTP server? We got you. Need to know how to set up WebSockets? We'll show you the way. And if you ever get stuck, just send us a message in our <a href="https://discord.gg/RFsCSaHRWK" target="_BLANK" rel="noreferrer">Discord</a> and we'll gladly help you!</li>
               <li>Thorough Testing: To put it bluntly, we test the shiz out of our software. We know it works. Every example code block and every tutorial we write is tested end-to-end.</li>
             </ul>
