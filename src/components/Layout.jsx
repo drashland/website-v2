@@ -160,9 +160,15 @@ export default function Layout(props) {
     window.Prism.highlightAll();
 
     // Make sure to set the user's theme mode preference
-    const userSettingsDarkMode = window.localStorage.getItem(
+    let userSettingsDarkMode = window.localStorage.getItem(
       publicRuntimeConfig.localStorageKeys.darkMode
     );
+    if (!userSettingsDarkMode) {
+      window.localStorage.setItem(
+        publicRuntimeConfig.localStorageKeys.darkMode,
+        "false"
+      );
+    }
     setDarkMode(userSettingsDarkMode && userSettingsDarkMode === "true");
 
     // Support mobile views, desktop views, and window resizing
