@@ -4,6 +4,8 @@ import styled, { ThemeProvider } from "styled-components";
 import SideBar from "./SideBar";
 import LayoutTopBar from "./LayoutTopBar";
 import Breadcrumbs from "./Breadcrumbs";
+import LoadingScreen from "./LoadingScreen";
+import InnerContainer from "./InnerContainer";
 import { lightTheme, darkTheme } from "../../styles/theme";
 import { publicRuntimeConfig, getGitHubCreateIssueUrl } from "../services/config_service";
 
@@ -63,31 +65,12 @@ export const HorizontalRule = styled.div`
   transition-property: background;
 `;
 
-const InnerContainer = styled.div`
-  padding: 0 20px;
-  width: 100%;
-  max-width: 900px;
-  height: 100%;
-`;
-
 const Copyright = styled.div`
   padding: 6rem 0 4rem 0;
   font-size: .7rem;
   text-transform: uppercase;
   letter-spacing: .1rem;
   text-align: center;
-`;
-
-const MiddleMessage = styled.div`
-  font-size: .8rem;
-  font-weight: bold;
-  letter-spacing: .1rem;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
 `;
 
 const ButtonOpenSideBar = styled.button`
@@ -177,9 +160,15 @@ export default function Layout(props) {
     window.Prism.highlightAll();
 
     // Make sure to set the user's theme mode preference
-    const userSettingsDarkMode = window.localStorage.getItem(
+    let userSettingsDarkMode = window.localStorage.getItem(
       publicRuntimeConfig.localStorageKeys.darkMode
     );
+    if (!userSettingsDarkMode) {
+      window.localStorage.setItem(
+        publicRuntimeConfig.localStorageKeys.darkMode,
+        "false"
+      );
+    }
     setDarkMode(userSettingsDarkMode && userSettingsDarkMode === "true");
 
     // Support mobile views, desktop views, and window resizing
@@ -245,19 +234,12 @@ export default function Layout(props) {
   // show a loading screen so that the page doesn't transition from desktop to
   // mobile or mobile to desktop. That would look jank to the user.
   if (
-    mobileViewport === null
+    (mobileViewport === null)
+    || (darkMode === null)
     || willRedirect
   ) {
     return (
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        <Container className="container-loading">
-          <Main mobileViewport={true}>
-            <InnerContainer>
-              <MiddleMessage>Loading...</MiddleMessage>
-            </InnerContainer>
-          </Main>
-        </Container>
-      </ThemeProvider>
+      <LoadingScreen theme={darkMode ? darkTheme : lightTheme} />
     );
   }
 
