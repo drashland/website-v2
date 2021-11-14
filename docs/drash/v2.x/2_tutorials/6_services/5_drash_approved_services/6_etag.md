@@ -62,7 +62,7 @@ class HomeResource extends Drash.Resource {
   public paths = ["/"];
 
   // Tell the resource what HTTP methods should have an Etag header set. In this
-  // case, we are telling the resource to set it on the POST method. This means
+  // case, we are telling the resource to set it on the GET method. This means
   // the GET method will response with a new "Etag" header.
   public services = {
     GET: [ etag ],
