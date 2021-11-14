@@ -150,7 +150,7 @@ This tutorial will go over the following:
 1. Run your app.
 
   ```shell
-  $ deno run --allow-net app.ts
+  $ deno run --allow-net --allow-read app.ts
   ```
 
 2. Open up your web browser and navigate to `http://localhost:1447`. You should see the following:
