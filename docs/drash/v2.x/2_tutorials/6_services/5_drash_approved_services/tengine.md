@@ -1,368 +1,145 @@
 # Tengine
 
-Tengine allows your Drash application to use a template engine.
+This service is allows your Drash application to render HTML using a template engine.
 
 ## Table of Contents
 
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Tutorial: Using Jae](#tutorial-using-jae)
-  - [Folder Structure End State](#jae-folder-structure-end-state)
-  - [Steps](#jae-steps)
-  - [Verification](#jae-verification)
-  - [Further Learning](#jae-further-learning)
-- [Tutorial: Using Eta](#tutorial-using-eta)
-  - [Disclaimer](#disclaimer-related-to-eta)
-  - [Folder Structure End State](#eta-folder-structure-end-state)
-  - [Steps](#eta-steps)
-  - [Verification](#eta-verification)
+- [Before You Get Started](#before-you-get-started)
+- [Folder Structure End State](#folder-structure-end-state)
+- [Steps](#steps)
+- [Verification](#verification)
 
-## Usage
+## Before You Get Started
 
-```typescript
-// Import the Tengine service class
-import { TengineService } from "./deps.ts"; // eg https://deno.land/x/drash@<VERSION>/src/services/tengine/tengine.ts
+This service can do the following:
 
-// Use the default template engine that comes with Tengine, known as Jae.
-// Returning false in the render method tells Tengine to use Jae. Specifying
-// the views_path config tells Jae where your HTML files are located. The
-// views_path config is required if Jae is being used.
-const tengine = Tengine({
-  render: (...args: unknown[]): boolean => {
-    return false;
-  },
-  views_path: "./views",
-});
-```
+* Render template variables
+* Render template partials
+* Render extended templates
+* Evaluate in-template JavaScript
 
-## Configuration
+This tutorial will go over the following:
 
-### `render`
+* Extending a template
+* Including a template partial
+* Writing a template
+* Writing in-template JavaScript (a `for` loop and `if/else` conditional)
 
-This config is required. Tengine uses this method to replace the `.render()`
-method in Drash's response object. The `...args` must always be of type
-`unknown[]` because you can use any template engine you want. You just have to
-specify that template engine's render method in this config so Tengine knows how
-to render templates.
+## Folder Structure End State
 
-```typescript
-const tengine = new TengineService({
-  render: (...args: unknown[]): boolean => {
-    return false;
-  },
-});
-```
-
-### `views_path`
-
-This config is optional. If you are using the default template engine that comes
-with Tengine (known as Jae), then this config is required. Otherwise, leave this
-config out if you are using a different template engine. This config tells Jae
-where your HTML files are located.
-
-_Note: This config value SHOULD NOT have a trailing slash._
-
-```typescript
-const tengine = new TengineService({
-  render: (...args: unknown[]): boolean => {
-    return false;
-  },
-  views_path: "./views",
-});
-```
-
-## Tutorial: Using Jae
-
-This tutorial teaches you how to use Jae (Tengine's default template engine).
-
-### Jae: Folder Structure End State
-
-```
+```text
 ▾ /path/to/your/project/
-    ▾ views/
-        index.html
-        template_engines.html
-    app.ts
-    home_resource.ts
+  ▾ views/
+    index.html
+    layout.html
+    user_details.html
+  app.ts
+  deps.ts
 ```
 
-### Jae: Steps
+## Steps
 
-1. Create your `app.ts` file.
+1. Create your `layout.html` template. This template will be extended by `index.html` via the `<% extends() %>` tag. When a template extends another template, the template that uses the `<% extends() %>` tag will be placed into the `<% yield %>` tag of the extended template.
 
-   ```typescript
-   import { Drash } from "./deps.ts";
-   import { HomeResource } from "./home_resource.ts";
-   import { TengineService } from "./deps.ts";
+  ```html
+  <!DOCTYPE html>
+  <html class="h-full w-full">
+    <head>
+      <title>Drash + Tengine</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+    </head>
+    <body style="background: #f4f4f4">
+      <% yield %>
+    </body>
+  </html>
+  ```
 
-   const tengine = new TengineService({
-     render: (...args: unknown[]): boolean => {
-       return false; // This render method returns false to tell Tengine to use Jae
-     },
-     views_path: "./views",
-   });
+2. Create your `user_details.html` template partial. This will be included in `index.html`. As you can see, this template partial uses in-template JavaScript (`for` loop and `if/else` conditional). All in-template JavaScript will be evaluated by Tengine at runtime and rendered appropriately.
 
-   const server = new Drash.Server({
-     resources: [
-       HomeResource,
-     ],
-     services: [
-        tengine,
-     ],
-     hostname: "localhost",
-     port: 1447,
-     protocol: "http"
-   });
+  ```html
+  <ul>
+    <% for (let field in user.details) { %>
+      <!-- Do not show the Phone field -->
+      <% if (field !== "Phone") { %>
+    <li><% field %>: <% user.details[field] %></li>
+      <% } %>
+    <% } %>
+  </ul>
+  ```
 
-   server.run();
+3. Create your `index.html` template. This template will extend `layout.html` via the `<% extends() %>` tag. This template will also include the `user_details.html` template partial via the `<% includes() %>` tag.
 
-   console.log(`Server running at ${server.address}`);
-   ```
+  ```html
+  <% extends("/layout.html") %>
 
-2. Create your `home_resource.ts` file.
+  <div style="max-width: 640px; margin: 50px auto;">
+    <h1 class="text-5xl mb-5"><% user.name %></h1>
+    <% include_partial("/user_details.html") %>
+  </div>
+  ```
 
-   ```typescript
-   import { Drash } from ",/deps.ts";
+4. Create your `app.ts` file.
 
-   export class HomeResource extends Drash.Resource {
-    paths = ["/"];
+  ```typescript
+  import {
+    Drash,
+    TengineService,
+  } from "./deps.ts";
 
-     public GET(request: Drash.Request, response: Drash.Response) {
-       // Call the .render() method and specify the first argument as a
-       // relative path to the views_path config value. Notice, this
-       // argument has a leading slash whereas the views_path config
-       // does not have a trailing slash. Having a trailing slash in
-       // the views_path config would make Jae look for ...
-       //
-       //     ./views_path//index.html
-       //
-       // ... which would cause an error.
-       return response.html(response.render(
-         "/index.html",
-         {
-           message: "Hella using Jae.",
-           template_engines: [
-             {
-               name: "dejs",
-               url: "https://github.com/syumai/dejs",
-             },
-             {
-               name: "Dinja",
-               url: "https://github.com/denjucks/dinja",
-             },
-             {
-               name: "Eta",
-               url: "https://github.com/eta-dev/eta",
-             },
-           ],
-         },
-       ) as string);
-     }
-   }
-   ```
+  // Instantiate and configure TengineService
 
-3. Create your `index.html` file.
+  const tengine = new TengineService({
+    views_path: "./views",
+  });
 
-   ```html
-   <!DOCTYPE html>
-   <html class="h-full w-full">
-     <head>
-       <meta charset="utf-8"/>
-       <meta name="viewport" content="width=device-width, minimum-scale=1.0, user-scalable=no"/>
-       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
-       <title>Tengine</title>
-     </head>
-     <body style="background: #f4f4f4">
-       <div style="max-width: 640px; margin: 50px auto;">
-         <h1 class="text-5xl mb-5"><% message %></h1>
-         <p class="mb-5">Jae is a template engine. Some other template engines are:</p>
-         <% include_partial("/template_engines.html") %>
-       </div>
-     </body>
-   </html>
-   ```
+  // Create your resource with TengineService enabled on GET requests
 
-4. Create your `template_engines.html` file.
+  class HomeResource extends Drash.Resource {
+    public paths = ["/"];
 
-   ```html
-   <ul class="list-disc ml-5">
-     <% for (const index in template_engines) { %>
-       <li>
-         <span class="text-bold"><% template_engines[index].name %>: </span>
-         <a href="<% template_engines[index].url %>" target="_BLANK"><% template_engines[index].url %></a>
-       </li>
-     <% } %>
-   </ul>
-   ```
+    public GET(_request: Drash.Request, response: Drash.Response): void {
+      const templateVariables = {
+        user: {
+          name: "Jae",
+          details: {
+            "Role": "Software Engineer",
+            "Phone": "(555) 555-5555",
+            "E-mail": "jae@example.com",
+          },
+        }
+      };
 
-### Jae: Verification
+      const html = response.render("/index.html", templateVariables) as string;
 
-1. Run your `app.ts` file.
+      response.html(html);
+    }
+  }
 
-   ```
-   deno run --allow-net --allow-read app.ts
-   ```
+  // Create and run your server
 
-2. Navigate to `localhost:1447` in your browser. You should see an HTML page
-   with the following text:
+  const server = new Drash.Server({
+    hostname: "0.0.0.0",
+    port: 1447,
+    protocol: "http",
+    resources: [HomeResource],
+    services: [tengine],
+  });
 
-   ```text
-   Hella using Jae.
-   ```
+  server.run();
 
-### Jae: Further Learning
+  console.log(`Server running at ${server.address}.`);
+  ```
 
-You can learn more about Jae through its tutorials [here](./jae).
+## Verification
 
-## Tutorial: Using Eta
+1. Run your app.
 
-This tutorial teaches you how to use Eta.
+  ```shell
+  $ deno run --allow-net app.ts
+  ```
 
-### Disclaimer Related To Eta
+2. Open up your web browser and navigate to `http://localhost:1447`. You should see the following:
 
-- Drash Land is not affiliated with the Eta project or its maintainers in any
-  form. Eta is a third-party project. Any issues related to Eta must be filed
-  with Eta and not Drash Land.
-- Eta uses unstable Deno APIs. Therefore, you must pass in the `--unstable` flag
-  when you run your application. This means, if you use Eta with Drash, your
-  Drash application will be running under unstable APIs; and your application
-  could break in the future since Deno's unstable APIs are subject to change or
-  be removed without notice.
-- The Drash Land team has manually tested using Eta with Tengine. The version of
-  Eta being imported in the code block/s below has/have been verified to work
-  with the latest release of Drash Middleware. If you decide you want to upgrade
-  to a newer version of Eta, please note that your application might break. Do
-  not file an issue with Drash Land if your application breaks in this scenario.
+  ![Drash and Tengine](/drash/v2.x/tengine.png "Drash and Tengine")
 
-### Eta: Folder Structure End State
-
-```
-▾ /path/to/your/project/
-    ▾ views/
-        index.eta
-    app.ts
-    home_resource.ts
-```
-
-### Eta: Steps
-
-1. Create your `app.ts` file.
-
-   ```typescript
-   import { Drash } from "./deps.ts";
-   import { HomeResource } from "./home_resource.ts";
-   import { TengineService } from "./deps.ts";
-   import {
-     configure,
-     renderFile,
-   } from "https://deno.land/x/eta@v<VERSION>/mod.ts";
-
-   // Set Eta's configuration
-   configure({
-     // This tells Eta to look for templates in the ./views/ directory
-     views: "./views/",
-   });
-
-   const tengine = new TengineService({
-     render: async (...args: unknown[]): Promise<string> => {
-       return await renderFile(
-         args[0] as string,
-         args[1] as any,
-       );
-     },
-   });
-
-   const server = new Drash.Server({
-     resources: [
-       HomeResource,
-     ],
-     services: {
-       tengine,
-     ],
-     protocol: "http",
-     hostname: "localhost",
-     port: 1447
-   });
-
-   server.run();
-
-   console.log(`Server running at ${server.address}`);
-   ```
-
-2. Create your `home_resource.ts` file.
-
-   ```typescript
-   import { Drash } from "./deps.ts";
-
-   export class HomeResource extends Drash.Resource {
-    paths = ["/"];
-
-     public async GET(request: Drash.Request, response: Drash.Response) {
-       return response.html(await response.render(
-         "./index",
-         {
-           message: "Hella using Eta.",
-           template_engines: [
-             {
-               name: "dejs",
-               url: "https://github.com/syumai/dejs",
-             },
-             {
-               name: "Dinja",
-               url: "https://github.com/denjucks/dinja",
-             },
-             {
-               name: "Jae",
-               url: "https://github.com/drashland/deno-drash-middleware",
-             },
-           ],
-         },
-       ) as string );
-
-       return this.response;
-     }
-   }
-   ```
-
-3. Create your `index.eta` file.
-
-   ```html
-   <!DOCTYPE html>
-   <html class="h-full w-full">
-     <head>
-       <meta charset="utf-8"/>
-       <meta name="viewport" content="width=device-width, minimum-scale=1.0, user-scalable=no"/>
-       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
-       <title>Tengine</title>
-     </head>
-     <body style="background: #f4f4f4">
-       <div style="max-width: 640px; margin: 50px auto;">
-         <h1 class="text-5xl mb-5"><%= it.message %></h1>
-         <p class="mb-5">Eta is a template engine. Some other template engines are:</p>
-         <ul class="list-disc ml-5">
-           <% for (const index in it.template_engines) { %>
-             <li>
-               <span class="text-bold"><%= it.template_engines[index].name %>: </span>
-               <a href="<%= it.template_engines[index].url %>" target="_BLANK"><%= it.template_engines[index].url %></a>
-             </li>
-           <% } %>
-         </ul>
-       </div>
-     </body>
-   </html>
-   ```
-
-### Eta: Verification
-
-1. Run your `app.ts` file.
-
-   ```
-   deno run --allow-net --allow-read --unstable app.ts
-   ```
-
-2. Navigate to `localhost:1447` in your browser. You should see an HTML page
-   with the following text:
-
-   ```text
-   Hella using Eta.
-   ```
+  As you can see, everything has been rendered except for the `Phone` field since the in-template JavaScript in `user_details.html` conditionally removes it.

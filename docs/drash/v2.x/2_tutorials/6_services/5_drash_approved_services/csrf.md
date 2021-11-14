@@ -28,7 +28,7 @@ To use this service, edit your `deps.ts` file to include the service.
 export { CSRFService } from "https://deno.land/x/drash@<VERSION>/src/services/csrf/csrf.ts";
 ```
 
-Replace `<VERSION>` with the **Drash v2.x** version you want to use. All versions can be found [here](https://github.com/drashland/drash/releases?q=v2&expanded=true).
+Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest version can be found [here](https://github.com/drashland/drash/releases/latest).
 
 ## Folder Structure End State
 
