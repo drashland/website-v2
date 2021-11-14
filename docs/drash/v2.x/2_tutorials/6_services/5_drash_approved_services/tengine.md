@@ -11,6 +11,19 @@ This service is allows your Drash application to render HTML using a template en
 
 ## Before You Get Started
 
+To use this service, edit your `deps.ts` file to include the service.
+
+```typescript
+// deps.ts
+
+...
+...
+...
+export { TengineService } from "https://deno.land/x/drash@<VERSION>/src/services/tengine/tengine.ts";
+```
+
+Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest version can be found [here](https://github.com/drashland/drash/releases/latest).
+
 This service can do the following:
 
 * Render template variables
@@ -81,6 +94,8 @@ This tutorial will go over the following:
 4. Create your `app.ts` file.
 
   ```typescript
+  // app.ts
+
   import {
     Drash,
     TengineService,
