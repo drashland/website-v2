@@ -1,8 +1,8 @@
 # Etag
 
-This service can help improve request time by cacing responses for certain requests, by setting the `Etag` header. It abides by the [RFC](https://datatracker.ietf.org/doc/html/rfc7232). If you are unaware what "Etag" is, then please read the [documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) before proceeding, as that information is crucial to understanding what adding this service to your app will do, and how it works.
+This service can help improve request time by caching responses for certain requests, by setting the `Etag` header. It abides by the [RFC](https://datatracker.ietf.org/doc/html/rfc7232). If you are unaware of what "Etag" is, then please read the [documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) before proceeding, as that information is crucial to understanding what adding this service to your app will do, and how it works.
 
-It can be simply placed as a middleware for your resources and you are all set!
+It can be simply be placed as a service for your resources and you are all set!
 
 Simply add it to your resources that you wish to improve caching for, and you're all set! Generally this would be used in conjunction with serving static files, such as CSS and JavaScript files.
 
@@ -52,7 +52,7 @@ import {
 // Instantiate the service and set the Etag to "strong". Set to strong by default
 const etag = new EtagService({
   // optional: 
-  // weak: true // instead of strong, will set the etag to weak
+  // weak: true /* instead of strong, it will set the etag to weak */
 });
 
 // Create your resource
@@ -123,6 +123,7 @@ console.log(`Server running at ${server.address}.`);
   < content-length: 19
   < date: Tue, 19 Oct 2021 12:21:20 GMT
   < etag: "25-abcdefghijk"
+  < last-modified: Tue, 19 Oct 2021 12:21:20 GMT
   <
   ```
 
