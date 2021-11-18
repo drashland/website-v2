@@ -6,7 +6,7 @@ This service will add rate limits to requests from an IP address.
 
 - [Before You Get Started](#before-you-get-started)
 - [Folder Structure End State](#folder-structure-end-state)
-- [Steps](#configuration)
+- [Steps](#steps)
 - [Verification](#verification)
 
 ## Before You Get Started

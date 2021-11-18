@@ -11,7 +11,7 @@ Please note that this service does not make your application bulletproof. It onl
 
 - [Before You Get Started](#before-you-get-started)
 - [Folder Structure End State](#folder-structure-end-state)
-- [Steps](#configuration)
+- [Steps](#steps)
 - [Verification](#verification)
 - [Configuration](#configuration)
   - [Content-Security-Policy](#content-security-policy)

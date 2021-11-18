@@ -8,7 +8,7 @@ This service allows your Drash application to use [GraphQL](https://graphql.org/
 
 - [Before You Get Started](#before-you-get-started)
 - [Folder Structure End State](#folder-structure-end-state)
-- [Steps](#configuration)
+- [Steps](#steps)
 - [Verification](#verification)
 
 ## Before You Get Started
