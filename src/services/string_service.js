@@ -9,6 +9,10 @@
 export function formatLabel(label) {
   const replacements = [
     {
+      from: /Etag/g,
+      to: "ETag"
+    },
+    {
       from: /Graphql/g,
       to: "GraphQL"
     },
