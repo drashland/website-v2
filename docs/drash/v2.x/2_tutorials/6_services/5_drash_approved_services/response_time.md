@@ -8,7 +8,7 @@ Simply add it to your Drash server's `services` config and you are all set!
 
 - [Before You Get Started](#before-you-get-started)
 - [Folder Structure End State](#folder-structure-end-state)
-- [Steps](#configuration)
+- [Steps](#steps)
 - [Verification](#verification)
 
 ## Before You Get Started
