@@ -1,16 +1,14 @@
 # ETag
 
-This service can help improve request time by caching responses for certain requests, by setting the `ETag` header. It abides by the [RFC](https://datatracker.ietf.org/doc/html/rfc7232). If you are unaware of what "ETag" is, then please read the [documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) before proceeding, as that information is crucial to understanding what adding this service to your app will do, and how it works.
+This service can help improve response times by caching responses for certain requests by setting the `ETag` header. It abides by the [RFC](https://datatracker.ietf.org/doc/html/rfc7232). If you are unaware of what "ETag" is, then please read the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) before proceeding. That information is crucial to understanding what adding this service to your app will do and how it works.
 
-It can be simply be placed as a service for your resources and you are all set!
-
-Simply add it to your resources that you wish to improve caching for, and you're all set! Generally this would be used in conjunction with serving static files, such as CSS and JavaScript files.
+To use this service, simply add it to your resources that you wish to improve caching for and you are all set! Generally this would be used in conjunction with serving static files such as CSS and JavaScript files.
 
 ## Table of Contents
 
 - [Before You Get Started](#before-you-get-started)
 - [Folder Structure End State](#folder-structure-end-state)
-- [Steps](#configuration)
+- [Steps](#steps)
 - [Verification](#verification)
 - [How It Works](#how-it-works)
 
@@ -27,7 +25,7 @@ To use this service, edit your `deps.ts` file to include the service.
 export { ETagService } from "https://deno.land/x/drash@<VERSION>/src/services/etag/etag.ts";
 ```
 
-Replace `<VERSION>` with the **Drash v2.x** version you want to use. All versions can be found [here](https://github.com/drashland/drash/releases?q=v2&expanded=true).
+Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest version can be found [here](https://github.com/drashland/drash/releases/latest).
 
 ## Folder Structure End State
 
@@ -49,11 +47,14 @@ import {
   ETagService,
 } from "./deps.ts";
 
-// Instantiate the service and set the ETag to "strong". Set to strong by default
-const etag = new ETagService({
-  // optional: 
-  // weak: true /* instead of strong, it will set the etag to weak */
-});
+// Instantiate the service
+//
+// By default, this will set ETags to use a "strong validator". You can supply
+// the `weak` config to make this service use a "weak validator" like so:
+//
+//     const etag = new ETagService({ weak: true });
+//
+const etag = new ETagService();
 
 // Create your resource
 
@@ -63,7 +64,7 @@ class HomeResource extends Drash.Resource {
 
   // Tell the resource what HTTP methods should have an ETag header set. In this
   // case, we are telling the resource to set it on the GET method. This means
-  // the GET method will response with a new "ETag" header.
+  // all responses to GET requests will contain an ETag header.
   public services = {
     GET: [ etag ],
   };
@@ -76,7 +77,7 @@ class HomeResource extends Drash.Resource {
 // Create and run your server
 
 const server = new Drash.Server({
-  hostname: "localhost",
+  hostname: "0.0.0.0",
   port: 1447,
   protocol: "http",
   resources: [
@@ -127,10 +128,10 @@ console.log(`Server running at ${server.address}.`);
   <
   ```
 
-  As you can see, the response supplied a new header: "ETag". This means that this exact response body is identified by that value. Should you make another request, the response time should be faster, though in our case it may not because our resource is very small. If you change the content of the response body and make a new request, you no longer receive a cached response, but a new etag is set for this body to follow up any other further requests.
+  As you can see, the response supplied the `ETag` header. This means that this exact response body is identified by that value. Should you make another request, the response time should be faster, though in our case it may not be because our resource is very small. If you change the content of the response body and make a new request, you no longer receive a cached response, but a new `ETag` is set for this body to follow up subsequent requests.
 
 ## How It Works
 
-Once a resource method is called, `ETag` will generate a cryptographical hash, using the response body, and will set the ETag header, supplied this new hash as the value. Should the `weak` option be called, the value has `W/` as a prefix, to tell the browser this is a weak ETag.
+Once a resource method is called, `ETagService` will generate a cryptographical hash, using the response body, and will set the `ETag` header using the hash as the value. Should the `weak` option be called, the value will have a `W/` prefix to tell the browser this is a weak ETag.
 
-This is why the etag changes - because it's generated from the body, so when the body changes, the hash changes.
+This is why the `ETag` header changes -- because it is generated from the response body. So, when the body changes, the hash changes.
