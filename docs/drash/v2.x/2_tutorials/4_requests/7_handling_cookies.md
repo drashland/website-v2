@@ -86,8 +86,8 @@ Drash uses Deno Standard Modules for cookie handling.
    $ curl --cookie my_cookie=chocolate http://localhost:1447
    ```
 
-You should receive the following response:
+   You should receive the following response:
 
-    ```text
-    You passed in the following cookie value: chocolate
-    ```
+   ```text
+   You passed in the following cookie value: chocolate
+   ```

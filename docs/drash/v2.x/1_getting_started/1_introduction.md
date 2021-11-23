@@ -58,11 +58,11 @@ Learn more about Drash [here](about-drash).
 
 5. Go to `http://localhost:1447` in your web browser.
 
-You should see something like the following:
+   You should see something like the following:
 
-    ```text
-    {"hello":"world","time":"2021-10-09T21:08:21.982Z"}
-    ```
+   ```text
+   {"hello":"world","time":"2021-10-09T21:08:21.982Z"}
+   ```
 
 ## Features
 

@@ -91,11 +91,11 @@ const param = request.pathParam("param_name");
    $ curl http://localhost:1447/users/1
    ```
 
-You should receive the following response:
+   You should receive the following response:
 
-    ```text
-    You passed in the following user ID as the path param: 1
-    ```
+   ```text
+   You passed in the following user ID as the path param: 1
+   ```
 
 3. Make the same request, but change the `:id` path param to `one`.
 
@@ -103,11 +103,11 @@ You should receive the following response:
    $ curl http://localhost:1447/users/one
    ```
 
-You should receive the following response:
+   You should receive the following response:
 
-    ```text
-    This resource requires the `:id` path param to be a number.
-    ```
+   ```text
+   This resource requires the `:id` path param to be a number.
+   ```
 
 ## Further Reading
 

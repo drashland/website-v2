@@ -87,21 +87,21 @@ const param = request.queryParam("param_name");
    $ curl http://localhost:1447?name=deno
    ```
 
-You should receive the following response:
+   You should receive the following response:
 
-    ```text
-    You passed in the following URL query param: deno
-    ```
+   ```text
+   You passed in the following URL query param: deno
+   ```
 
-2. Make the same request, but change the URL query param to use `username`
+3. Make the same request, but change the URL query param to use `username`
    instead of `name`.
 
    ```text
    $ curl http://localhost:1447?username=deno
    ```
 
-You should receive the following response:
+   You should receive the following response:
 
-    ```text
-    This resource requires the `name` URL query param.
-    ```
+   ```text
+   This resource requires the `name` URL query param.
+   ```

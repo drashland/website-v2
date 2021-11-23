@@ -104,43 +104,43 @@ console.log(`Server running at ${server.address}.`);
    $ curl -v http://localhost:1447
    ```
 
-You should receive a response similar to the following:
+   You should receive a response similar to the following:
 
-    ```text
-    *   Trying ::1...
-    * TCP_NODELAY set
-    * Connection failed
-    * connect to ::1 port 1447 failed: Connection refused
-    *   Trying 127.0.0.1...
-    * TCP_NODELAY set
-    * Connected to localhost (127.0.0.1) port 1447 (#0)
-    > GET / HTTP/1.1
-    > Host: localhost:1447
-    > User-Agent: curl/7.64.1
-    > Accept: */*
-    >
-    < HTTP/1.1 200 OK
-    < content-type: text/plain
-    < strict-transport-security: max-age=5184000; include_sub_domains
-    < x-content-type-options: nosniff
-    < x-dns-prefetch-control: off
-    < x-frame-options: SAMEORIGIN
-    < x-xss-protection: 1; mode=block
-    < content-length: 13
-    < date: Wed, 20 Oct 2021 02:20:33 GMT
-    <
-    * Connection #0 to host localhost left intact
-    Hello, world!* Closing connection 0
-    ```
+   ```text
+   *   Trying ::1...
+   * TCP_NODELAY set
+   * Connection failed
+   * connect to ::1 port 1447 failed: Connection refused
+   *   Trying 127.0.0.1...
+   * TCP_NODELAY set
+   * Connected to localhost (127.0.0.1) port 1447 (#0)
+   > GET / HTTP/1.1
+   > Host: localhost:1447
+   > User-Agent: curl/7.64.1
+   > Accept: */*
+   >
+   < HTTP/1.1 200 OK
+   < content-type: text/plain
+   < strict-transport-security: max-age=5184000; include_sub_domains
+   < x-content-type-options: nosniff
+   < x-dns-prefetch-control: off
+   < x-frame-options: SAMEORIGIN
+   < x-xss-protection: 1; mode=block
+   < content-length: 13
+   < date: Wed, 20 Oct 2021 02:20:33 GMT
+   <
+   * Connection #0 to host localhost left intact
+   Hello, world!* Closing connection 0
+   ```
 
-As you can see, the response contains the following headers:
+   As you can see, the response contains the following headers:
 
-    ```text
-    < x-content-type-options: nosniff
-    < x-dns-prefetch-control: off
-    < x-frame-options: SAMEORIGIN
-    < x-xss-protection: 1; mode=block
-    ```
+   ```text
+   < x-content-type-options: nosniff
+   < x-dns-prefetch-control: off
+   < x-frame-options: SAMEORIGIN
+   < x-xss-protection: 1; mode=block
+   ```
 
 ## Configuration
 

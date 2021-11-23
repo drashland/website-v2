@@ -99,25 +99,25 @@ Drash uses Deno Standard Modules for cookie handling.
    $ curl --verbose http://localhost:1447
    ```
 
-You should receive a response similar to the following:
+   You should receive a response similar to the following:
 
-    ```text
-    *   Trying 127.0.0.1...
-    * TCP_NODELAY set
-    * Connected to localhost (127.0.0.1) port 1447 (#0)
-    > GET / HTTP/1.1
-    > Host: localhost:1447
-    > User-Agent: curl/7.64.1
-    > Accept: */*
-    >
-    < HTTP/1.1 200 OK
-    < content-type: application/json
-    < set-cookie: my_cookie=chocolate <---------- The cookie is here
-    < content-length: 24
-    <
-    * Connection #0 to host localhost left intact
-    "my_cookie cookie sent!"* Closing connection 0
-    ```
+   ```text
+   *   Trying 127.0.0.1...
+   * TCP_NODELAY set
+   * Connected to localhost (127.0.0.1) port 1447 (#0)
+   > GET / HTTP/1.1
+   > Host: localhost:1447
+   > User-Agent: curl/7.64.1
+   > Accept: */*
+   >
+   < HTTP/1.1 200 OK
+   < content-type: application/json
+   < set-cookie: my_cookie=chocolate <---------- The cookie is here
+   < content-length: 24
+   <
+   * Connection #0 to host localhost left intact
+   "my_cookie cookie sent!"* Closing connection 0
+   ```
 
 3. Using `curl` (or similar command), make a `DELETE` request to
    `http://localhost:1447`.
@@ -126,22 +126,22 @@ You should receive a response similar to the following:
    $ curl --request DELETE --verbose http://localhost:1447
    ```
 
-You should receive a response similar to the following:
+   You should receive a response similar to the following:
 
-    ```text
-    *   Trying 127.0.0.1...
-    * TCP_NODELAY set
-    * Connected to localhost (127.0.0.1) port 1447 (#0)
-    > DELETE / HTTP/1.1
-    > Host: localhost:1447
-    > User-Agent: curl/7.64.1
-    > Accept: */*
-    >
-    < HTTP/1.1 200 OK
-    < content-type: application/json
-    < set-cookie: my_cookie=; Expires=Thu, 01 Jan 1970 00:00:00 GMT <---------- The cookie is here and is invalidated via the Expires attribute
-    < content-length: 39
-    <
-    * Connection #0 to host localhost left intact
-    "my_cookie cookie was set and deleted!"* Closing connection 0
-    ```
+   ```text
+   *   Trying 127.0.0.1...
+   * TCP_NODELAY set
+   * Connected to localhost (127.0.0.1) port 1447 (#0)
+   > DELETE / HTTP/1.1
+   > Host: localhost:1447
+   > User-Agent: curl/7.64.1
+   > Accept: */*
+   >
+   < HTTP/1.1 200 OK
+   < content-type: application/json
+   < set-cookie: my_cookie=; Expires=Thu, 01 Jan 1970 00:00:00 GMT <---------- The cookie is here and is invalidated via the Expires attribute
+   < content-length: 39
+   <
+   * Connection #0 to host localhost left intact
+   "my_cookie cookie was set and deleted!"* Closing connection 0
+   ```

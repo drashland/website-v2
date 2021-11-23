@@ -89,13 +89,13 @@ const param = request.bodyParam("param_name");
    http://localhost:1447
    ```
 
-You should receive the following response:
+   You should receive the following response:
 
-    ```text
-    You passed in the following body param: deno
-    ```
+   ```text
+   You passed in the following body param: deno
+   ```
 
-2. Make the same request, but change the data to use `username` instead of
+3. Make the same request, but change the data to use `username` instead of
    `name`.
 
    ```text
@@ -105,8 +105,8 @@ You should receive the following response:
    http://localhost:1447
    ```
 
-You should receive the following response:
+   You should receive the following response:
 
-    ```text
-    This resource requires the `name` body param.
-    ```
+   ```text
+   This resource requires the `name` body param.
+   ```
