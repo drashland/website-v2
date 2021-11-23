@@ -3,6 +3,36 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutTopBar from "../src/components/LayoutTopBar";
 
+const MAINTAINERS = [
+  {
+    github_username: "crookse",
+    image_src: "https://github.com/crookse.png",
+  },
+  {
+    github_username: "ebebbington",
+    image_src: "https://github.com/ebebbington.png",
+  },
+  {
+    github_username: "Guergeiro",
+    image_src: "https://github.com/Guergeiro.png",
+  },
+  {
+    github_username: "saragee3",
+    image_src: "https://github.com/saragee3.png",
+  },
+];
+
+const KEY_CONTRIBUTORS = [
+  {
+    github_username: "SnoCold",
+    image_src: "https://github.com/SnoCold.png",
+  },
+  {
+    github_username: "prisis",
+    image_src: "https://github.com/prisis.png",
+  },
+];
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -221,6 +251,24 @@ const Tag = styled.div`
   }
 `;
 
+const MaintainersContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+`;
+
+const Maintainer = styled.img`
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 1rem;
+  max-width: 110px;
+  &:last-of-type {
+    margin-right: 0;
+  }
+`;
+
 export default function Home() {
   const router = useRouter();
   const [mobileViewport, setMobileViewport] = useState(null);
@@ -242,6 +290,10 @@ export default function Home() {
       setMobileViewport(true);
     }
   }
+
+  const handleTeamMemberClick = (username) => {
+    window.open(`https://github.com/${username}`, "_blank").focus();
+  };
 
   return (
     <Container>
@@ -368,6 +420,17 @@ export default function Home() {
         <Section>
           <InnerContainer>
             <SectionTitle>The Drash Land Team</SectionTitle>
+            <MaintainersContainer>
+              {MAINTAINERS.map((maintainer) => {
+                return (
+                  <Maintainer
+                    onClick={() =>
+                      handleTeamMemberClick(maintainer.github_username)}
+                    src={maintainer.image_src}
+                  />
+                );
+              })}
+            </MaintainersContainer>
             <p>
               We're a small squad of software engineers who code a lot of really
               cool stuff. We focus heavily on the developer UX because we think
@@ -404,11 +467,23 @@ export default function Home() {
                 tutorial we write is tested end-to-end.
               </li>
             </ul>
-            <p>
+            <p style={{ marginBottom: "3rem" }}>
               Drash Land is more than just a project to us. We've invested our
               whole selves (and lots of energy drinks) into this. Does that make
               us nerds? We hope so. Because nerds make the best stuff.
             </p>
+            <SectionTitle>Key Contributors</SectionTitle>
+            <MaintainersContainer>
+              {KEY_CONTRIBUTORS.map((maintainer) => {
+                return (
+                  <Maintainer
+                    onClick={() =>
+                      handleTeamMemberClick(maintainer.github_username)}
+                    src={maintainer.image_src}
+                  />
+                );
+              })}
+            </MaintainersContainer>
           </InnerContainer>
         </Section>
         <Section background="#2f343c" color="#ffffff">

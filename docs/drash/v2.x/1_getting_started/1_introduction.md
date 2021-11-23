@@ -20,14 +20,14 @@ Learn more about Drash [here](about-drash).
    ```typescript
    // app.ts
 
-   // Replace `<VERSION>` with the Drash v2.x version you want to use. // All
-   versions can be found at
-   https://github.com/drashland/drash/releases?q=v2&expanded=true. import * as
-   Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
+   // Replace `<VERSION>` with the latest version of Drash v2.x. The latest
+   // version can be found at https://github.com/drashland/drash/releases/latest
+   import * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
 
    // Create your resource
 
-   class HomeResource extends Drash.Resource { public paths = ["/"];
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
 
      public GET(request: Drash.Request, response: Drash.Response): void {
        return response.json({
@@ -35,14 +35,15 @@ Learn more about Drash [here](about-drash).
          time: new Date(),
        });
      }
-
    }
 
    // Create and run your server
 
    const server = new Drash.Server({
-     hostname: "0.0.0.0", port: 1447, protocol:
-    "http", resources: [ HomeResource, ],
+     hostname: "0.0.0.0",
+     port: 1447,
+     protocol: "http",
+     resources: [HomeResource],
    });
 
    server.run();

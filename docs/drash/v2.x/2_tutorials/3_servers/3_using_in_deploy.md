@@ -33,7 +33,7 @@ without using Deno Deploy.
 ```typescript
 // app.ts
 
-import * as Drash from "./deps.ts";
+import { Drash } from "./deps.ts";
 
 class HomeResource extends Drash.Resource {
   paths = ["/"];

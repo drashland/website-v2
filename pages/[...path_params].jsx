@@ -70,9 +70,27 @@ export default function Page(props) {
       return router.replace(redirectUri);
     }
 
+    window.document.title = getPageTitle();
+
     // Make sure all code blocks are highlighted
     window.Prism.highlightAll();
   }, [redirectUri, router]);
+
+  /**
+   * Get the breadcrumbs that go at the top of every page.
+   *
+   * @returns {string[]} - An array of breadcrumbs.
+   */
+  function getPageTitle() {
+    let breadcrumbs = router.asPath.split("#")[0];
+    breadcrumbs = breadcrumbs.split("/");
+    // The first element is an empty string so take it out
+    breadcrumbs.shift();
+
+    return `Drash Land - ${topBarModuleName} - ${
+      formatLabel(titleCase(breadcrumbs[breadcrumbs.length - 1]))
+    }`;
+  }
 
   return (
     <Layout
