@@ -8,52 +8,140 @@ Just like other frameworks, Drash resources have the ability to parse paths like
 
 ## Table of Contents
 
-* [How To Implement Prefixes](#hoe-to-implement-prefixes)
+* [Regular Path Params](#regular-path-params)
+* [Optional Path Params](#optional-path-params)
+* [Regular Expression Paths](#regular-expression-paths)
 
-## How to Implement Prefixes
+## Regular Path Params
 
-Drash does not have any magic code built-in to allow you to do this, because we feel it's trivial to implement yourself and due to the way Drash is written, you can easily extend it.
+Resources are able to specify path params in their paths to allow them to cover multiple endpoints. For example:
 
-An example of how you may add prefixes could look like so:
+```typescript
+import { Drash } from "./deps.ts";
+ 
+export default class HomeResource extends Drash.Resource {
 
-```ts
-// resources/base_resource.ts
-export class BaseResource extends Drash.Resource {
-  protected prefixes = {
-    api: "/api/v2",
+  public paths = [
+    "/:my_param",
+  ];
+ 
+  public GET(request: Drash.Request, response: Drash.Response): void {
+    const param = request.pathParam("my_param");
+
+    if (param) {
+      return response.text(myParam);
+    }
+
+    return response.text("No param passed in!");
   }
+} 
+```
+Examples of URIs that this resource would handle:
 
-  /**
-   * Returns the passed in array with each path being prefixed
-   * 
-   * @param prefix - The prefix to use
-   * @param paths - The resource paths to prefix
-   * 
-   * @example
-   * ```js
-   * class Resource extends BaseResource {
-   *   public paths = this.prefixPaths(this.prefixes.api, ["/users", "/cars"]); // ["/api/v2//users", "/api/v2//cars"]
-   * }
-   * ```
-   * 
-   * @returns The `paths` parameter, but with every item prefixed with `this.#prefix`
-   */
-  protected prefixPaths(prefix: string, paths: string[]) {
-    return paths.map(path => this.#prefixes[prefix] + path);
+* `GET /hello`
+  * Responds with: `hello`
+* `GET /world`
+  * Responds with: `world`
+* `GET /something`
+  * Responds with: `something`
+
+## Optional Path Params
+
+Path params can also be optional. This allows a resource to accept a request with a URI that does not depend on path params. For example:
+
+```typescript
+import { Drash } from "./deps.ts";
+ 
+export default class UsersResource extends Drash.Resource {
+
+  // id = required
+  // name = optional
+  // age = optional
+  // city = optional
+  public paths = [
+    "/users/:id/:name?/:age?/:city?",
+  ];
+ 
+  public GET(request: Drash.Request, response: Drash.Response): void {
+    let body = "GOT";
+ 
+    const id   = this.request.pathParam("id");
+    const name = this.request.pathParam("name");
+    const age  = this.request.pathParam("age");
+    const city = this.request.pathParam("city");
+
+    if (id) {
+      body += ` | ${id}`;
+    }
+
+    if (name) {
+      body += ` | ${name}`;
+    }
+
+    if (age) {
+      body += ` | ${age}`;
+    }
+
+    if (city) {
+      body += ` | ${city}`;
+    }
+
+    return response.text(body);
   }
 }
 ```
 
-```ts
-// resources/api/user_resource.ts
+You can have as many optional params as you wish, but required params _MUST COME BEFORE_ optional params (notice how the `id` param is required and comes before the optional params).
 
-import { BaseResource } from "../base_resource.ts";
+Examples of URIs that this resource would handle:
 
-export class ApiUserResource extends BaseResource {
-  public paths = this.prefixPaths("api", ["/user", "/users", "/user/:id"])
+* `GET /users/1`
+  * Responds with: `GOT | 1`
+* `GET /users/1/`
+  * Responds with: `GOT | 1`
+* `GET /users/1/John`
+  * Responds with: `GOT | 1 | John`
+* `GET /users/1/John/`
+  * Responds with: `GOT | 1 | John`
+* `GET /users/1/John/54`
+  * Responds with: `GOT | 1 | John | 54`
+* `GET /users/1/John/54/`
+  * Responds with: `GOT | 1 | John | 54`
+* `GET /users/1/John/54/UK`
+  * Responds with: `GOT | 1 | John | 54 | UK`
+* `GET /users/1/John/54/UK/`
+  * Responds with: `GOT | 1 | John | 54 | UK`
+
+## Regular Expression Paths
+
+Resources are able to specify regular expressions in their paths to allow them to cover multiple endpoints.
+
+
+```typescript
+import { Drash } from "./deps.ts";
+ 
+export default class HomeResource extends Drash.Resource {
+
+  public paths = [
+    "/([0-9]$)",
+  ];
+ 
+  public GET(request: Drash.Request, response: Drash.Response): void {
+    return response.text("GOT!");
+  }
 }
 ```
 
-Now you can do this for all of your resources (assuming they all need a prefix), just create the base resource once and for every resource, just extend the base resource and define the paths like the above.
+Examples of URIs that this resource would handle:
 
-If only some of your resources need a prefix, they can still extend the base resource, but they don't need to call the `prefixPaths` method.
+* `GET /1`
+* `GET /2`
+* `GET /3`
+* `GET /9`
+
+This resource would not handle the following URIs because they do not match the regular expression:
+
+* `GET /11`
+* `GET /12`
+* `GET /13`
+* `GET /99`
