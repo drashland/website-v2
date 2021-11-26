@@ -9,6 +9,26 @@
 export function formatLabel(label) {
   const replacements = [
     {
+      from: /Api/g,
+      to: "API"
+    },
+    {
+      from: /Cors/g,
+      to: "CORS"
+    },
+    {
+      from: /Csrf/g,
+      to: "CSRF"
+    },
+    {
+      from: /Etag/g,
+      to: "ETag"
+    },
+    {
+      from: /Graphql/g,
+      to: "GraphQL"
+    },
+    {
       from: /Http/g,
       to: "HTTP"
     },
@@ -21,36 +41,24 @@ export function formatLabel(label) {
       to: "JSON"
     },
     {
-      from: /Url/g,
-      to: "URL"
+      from: /Resource Level/g,
+      to: "Resource-Level"
     },
     {
       from: /(Server Level)/g,
       to: "Server-Level"
     },
     {
-      from: /Resource Level/g,
-      to: "Resource-Level"
-    },
-    {
-      from: /Cors/g,
-      to: "CORS"
-    },
-    {
-      from: /Csrf/g,
-      to: "CSRF"
-    },
-    {
-      from: /Api/g,
-      to: "API"
+      from: /Spa/g,
+      to: "SPA"
     },
     {
       from: /Ssr/g,
       to: "SSR"
     },
     {
-      from: /Spa/g,
-      to: "SPA"
+      from: /Url/g,
+      to: "URL"
     },
     {
       from: /V2/g,

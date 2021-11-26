@@ -40,6 +40,9 @@ module.exports = {
       wocket: "https://github.com/drashland/wocket",
       website: "https://github.com/drashland/website-v2",
     },
+    roadmapsUrls: {
+      drash: "https://github.com/drashland/drash/issues?q=is%3Aissue+is%3Aopen+roadmap",
+    },
     versions: {
       drash: {
         versions: [

@@ -49,3 +49,19 @@ export function getGitHubUrl(moduleName) {
 
   return publicRuntimeConfig.gitHubUrls[moduleName.toLowerCase()];
 }
+
+/**
+ * For the module being currently viewed, get the Roadmaps URL associated with the module.
+ *
+ * @param {string} moduleName - The module's name (e.g., "Drash"). This gets
+ * lowercased so that it's used correctly against the configs.
+ *
+ * @returns {string} - The roadmaps URL for the given module.
+ */
+export function getRoadmapsUrl(moduleName) {
+  if (!publicRuntimeConfig.roadmapsUrls[moduleName.toLowerCase()]) {
+    return false;
+  }
+
+  return publicRuntimeConfig.roadmapsUrls[moduleName.toLowerCase()];
+}
