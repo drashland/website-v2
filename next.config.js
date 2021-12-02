@@ -41,7 +41,8 @@ module.exports = {
       website: "https://github.com/drashland/website-v2",
     },
     roadmapsUrls: {
-      drash: "https://github.com/drashland/drash/issues?q=is%3Aissue+is%3Aopen+roadmap",
+      drash:
+        "https://github.com/drashland/drash/issues?q=is%3Aissue+is%3Aopen+roadmap",
     },
     versions: {
       drash: {
@@ -53,8 +54,8 @@ module.exports = {
       sinco: {
         versions: [
           "v1.x",
-          "v2.x"
-        ]
+          "v2.x",
+        ],
       },
       wocket: {
         versions: [
@@ -64,7 +65,7 @@ module.exports = {
     },
   },
   reactStrictMode: false,
-  async redirects() {
+  redirects() {
     return [
       // Redirect pages without content to the nearest page with content
       {
@@ -74,7 +75,8 @@ module.exports = {
       },
       {
         source: "/drash/v2.x/tutorials",
-        destination: "/drash/v2.x/tutorials/introduction/add-drash-as-a-dependency",
+        destination:
+          "/drash/v2.x/tutorials/introduction/add-drash-as-a-dependency",
         permanent: false,
       },
       {

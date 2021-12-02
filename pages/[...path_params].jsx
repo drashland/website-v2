@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import * as fs from "fs";
 import path from "path";
-import Markdown from 'markdown-to-jsx';
+import Markdown from "markdown-to-jsx";
 import Layout from "../src/components/Layout";
 import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
-import { formatLabel } from '../src/services/string_service';
+import { formatLabel } from "../src/services/string_service";
 import { publicRuntimeConfig } from "../src/services/config_service";
 import {
   Code,
@@ -87,7 +87,9 @@ export default function Page(props) {
     // The first element is an empty string so take it out
     breadcrumbs.shift();
 
-    return `Drash Land - ${topBarModuleName} - ${formatLabel(titleCase(breadcrumbs[breadcrumbs.length - 1]))}`;
+    return `Drash Land - ${topBarModuleName} - ${
+      formatLabel(titleCase(breadcrumbs[breadcrumbs.length - 1]))
+    }`;
   }
 
   return (
@@ -103,42 +105,42 @@ export default function Page(props) {
         options={{
           overrides: {
             h1: {
-              component: Heading1
+              component: Heading1,
             },
             h2: {
-              component: Heading2
+              component: Heading2,
             },
             h3: {
-              component: Heading3
+              component: Heading3,
             },
             h4: {
-              component: Heading4
+              component: Heading4,
             },
             hr: {
-              component: HorizontalRule
+              component: HorizontalRule,
             },
             p: {
-              component: Paragraph
+              component: Paragraph,
             },
             ul: {
-              component: UnorderedList
+              component: UnorderedList,
             },
             ol: {
-              component: OrderedList
+              component: OrderedList,
             },
             li: {
-              component: ListItem
+              component: ListItem,
             },
             code: {
-              component: RestyledCode
+              component: RestyledCode,
             },
             pre: {
-              component: Pre
+              component: Pre,
             },
             img: {
-              component: Image
-            }
-          }
+              component: Image,
+            },
+          },
         }}
       >
         {markdown}
@@ -151,7 +153,7 @@ export default function Page(props) {
 // FILE MARKER - SERVER FUNCTIONS //////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-export async function getStaticProps({ params }) {
+export function getStaticProps({ params }) {
   const paths = getAllPaths("docs");
 
   const moduleName = params.path_params.slice().shift().replace("/", "");
@@ -177,7 +179,8 @@ export async function getStaticProps({ params }) {
     version = versions[versions.length - 1];
   }
 
-  const editThisPageUrl = `${publicRuntimeConfig.gitHubUrls.website}/edit/main/${markdownFile}`;
+  const editThisPageUrl =
+    `${publicRuntimeConfig.gitHubUrls.website}/edit/main/${markdownFile}`;
 
   // Check if we need to redirect the user to the Introduction page. This code
   // exists because users can go to https://drash.land/drash, but that page
@@ -205,7 +208,7 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export async function getStaticPaths() {
+export function getStaticPaths() {
   const paths = getAllPaths("docs");
   return {
     paths,
@@ -237,7 +240,7 @@ function getAllPaths(filename, paths = []) {
 
   if (stats.isDirectory()) {
     fs.readdirSync(filename).forEach((child) => {
-        getAllPaths(filename + '/' + child, paths);
+      getAllPaths(filename + "/" + child, paths);
     });
   }
 
@@ -253,13 +256,16 @@ function getDirectoryTree(path, paths = []) {
   baseName = baseName[baseName.length - 1];
 
   const setPath = {
+    // deno-lint-ignore camelcase
     is_directory: stats.isDirectory(),
-    label: getCategoryLabel(baseName
-      .replace(/[0-9]_/, "")
-      .replace("docs", "/")
-      .replace(/_/g, " ")
-      .replace(".md", "")
-      .replace(/\/\//g, "/")),
+    label: getCategoryLabel(
+      baseName
+        .replace(/[0-9]_/, "")
+        .replace("docs", "/")
+        .replace(/_/g, " ")
+        .replace(".md", "")
+        .replace(/\/\//g, "/"),
+    ),
     path: path
       .replace(/[0-9]+_/g, "")
       .replace("docs", "/")
@@ -275,7 +281,7 @@ function getDirectoryTree(path, paths = []) {
 
   if (stats.isDirectory()) {
     fs.readdirSync(path).forEach((child) => {
-        getDirectoryTree(path + '/' + child, setPath.paths);
+      getDirectoryTree(path + "/" + child, setPath.paths);
     });
   }
 

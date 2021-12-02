@@ -1,30 +1,33 @@
 # Migration Guide to v2
 
-Below are sections pertaining to parts of Drash that have changed. There are example code blocks highlighted similarly to Git diffs. The `-` red lines are what was removed and the `+` green lines are what was added. The `+` green lines are what your Drash application should be using if migrating from v1 to v2.
+Below are sections pertaining to parts of Drash that have changed. There are
+example code blocks highlighted similarly to Git diffs. The `-` red lines are
+what was removed and the `+` green lines are what was added. The `+` green lines
+are what your Drash application should be using if migrating from v1 to v2.
 
 ## Table of Contents
 
-* [Drash Namespace](#drash-namespace)
-* [Resources](#resources)
-* [Middleware](#middleware)
-  * [Importing](#importing)
-  * [Resource-Level](#resource-level)
-* [Example Application](#example-application)
-  * [Code](#code)
-  * [Running the Application](#running-the-application)
+- [Drash Namespace](#drash-namespace)
+- [Resources](#resources)
+- [Middleware](#middleware)
+  - [Importing](#importing)
+  - [Resource-Level](#resource-level)
+- [Example Application](#example-application)
+  - [Code](#code)
+  - [Running the Application](#running-the-application)
 
 ## Drash Namespace
 
 Changes:
 
-* `Drash` is not the only exported member.
+- `Drash` is not the only exported member.
 
   ```diff
   - import { Drash } from "...";
   + import * as Drash from "...";
   ```
 
-* You can `import` parts of the `Drash` namespace like so:
+- You can `import` parts of the `Drash` namespace like so:
 
   ```typescript
   import {
@@ -39,33 +42,39 @@ Changes:
 
 Changes:
 
-* `Http` namespace has been removed.
+- `Http` namespace has been removed.
 
   ```diff
   - class MyResource extends Drash.Http.Resource {
   + class MyResource extends Drash.Resource {
   ```
 
-* `paths` property is now `public`.
+- `paths` property is now `public`.
 
   ```diff
   - static paths = ["/:some_param"];
   + public paths = ["/:some_param"];
   ```
 
-* HTTP methods now require `request` and `response` parameters; and `this.request` and `this.response` are no longer available. This change goes against Drash's original philosophy that `this.request` and `this.response` should be readily available, but having `this` in resources seemed to be too "magical," and it was decided to have them removed and turned into required parameters.
+- HTTP methods now require `request` and `response` parameters; and
+  `this.request` and `this.response` are no longer available. This change goes
+  against Drash's original philosophy that `this.request` and `this.response`
+  should be readily available, but having `this` in resources seemed to be too
+  "magical," and it was decided to have them removed and turned into required
+  parameters.
 
   ```diff
   - public GET(): Drash.Response {
   + public GET(request: Drash.Request, response: Drash.Response): void {
   ```
 
-  Also, with the above change, HTTP methods do not return a `response` object. They now return `void`.
+  Also, with the above change, HTTP methods do not return a `response` object.
+  They now return `void`.
 
-* Methods to get parameters off the `request` object have changed.
+- Methods to get parameters off the `request` object have changed.
 
   ```diff
-    // Get path params from the URI
+  // Get path params from the URI
   - const pathParam = this.request.getPathParam("some_param");
   + const pathParam = request.pathParam("some_param");
 
@@ -82,7 +91,12 @@ Changes:
   + const queryParam = request.queryParam("some_param");
   ```
 
-* `this.response.body` and `return this.response` can no longer be used. To set a body on the `response` object, you can call one of the `response` object's body methods to set the response body and `return` on the same line. You can learn more about the `response` object's body methods at [Tutorials > Responses > Setting the Body](/drash/v2.x/tutorials/responses/setting-the-body). The `response` object's body methods return `void`.
+- `this.response.body` and `return this.response` can no longer be used. To set
+  a body on the `response` object, you can call one of the `response` object's
+  body methods to set the response body and `return` on the same line. You can
+  learn more about the `response` object's body methods at
+  [Tutorials > Responses > Setting the Body](/drash/v2.x/tutorials/responses/setting-the-body).
+  The `response` object's body methods return `void`.
 
   ```diff
   - this.response.body = "Hello, world!";
@@ -99,19 +113,28 @@ Changes:
 
 ## Middleware
 
-Drash v2 uses the term "services" to encapsulate any software used in a Drash application that is not part of Drash's core functionality. This includes middleware. In Drash v1, the term "middleware" is used. During the course of v1 maintenance, it was found that the term "middleware" was restrictive about what kind of software could be plugged into a Drash application. Therefore, the term was changed to "services" to create a broader scope.
+Drash v2 uses the term "services" to encapsulate any software used in a Drash
+application that is not part of Drash's core functionality. This includes
+middleware. In Drash v1, the term "middleware" is used. During the course of v1
+maintenance, it was found that the term "middleware" was restrictive about what
+kind of software could be plugged into a Drash application. Therefore, the term
+was changed to "services" to create a broader scope.
 
 When using services, there are quite a few differences:
 
-* `import` statements have changed
-* Decorators have been removed from resource-level services and a `tsconfig.json` file is not required
-* All services must follow the new `Drash.Service` syntax (see [Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services))
+- `import` statements have changed
+- Decorators have been removed from resource-level services and a
+  `tsconfig.json` file is not required
+- All services must follow the new `Drash.Service` syntax (see
+  [Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services))
 
-You can learn more about using Drash services in the left sidebar under Tutorials > Services.
+You can learn more about using Drash services in the left sidebar under
+Tutorials > Services.
 
 ### Importing
- 
-In v1, you use the `deno-drash-middleware` repository to import middleware. In v2, you use the `deno-drash` repository's `services.ts` file like so:
+
+In v1, you use the `deno-drash-middleware` repository to import middleware. In
+v2, you use the `deno-drash` repository's `services.ts` file like so:
 
 ```diff
 - import SomeMiddleware from "http://deno.land/x/deno-drash-middleware/some_middleware/mod.ts";
@@ -120,10 +143,13 @@ In v1, you use the `deno-drash-middleware` repository to import middleware. In v
 
 ### Resource-Level
 
-Resource-level middleware in Drash v1 requires a `tsconfig.json` file with `experimentalDecorators` set to `true`. In Drash v2, decorators were removed so you do not need a `tsconfig.json` file (unless you use one for something other than Drash).
+Resource-level middleware in Drash v1 requires a `tsconfig.json` file with
+`experimentalDecorators` set to `true`. In Drash v2, decorators were removed so
+you do not need a `tsconfig.json` file (unless you use one for something other
+than Drash).
 
 ```diff
-  // tsconfig.json
+// tsconfig.json
 
 - {
 -   "compilerOptions": {
@@ -135,7 +161,7 @@ Resource-level middleware in Drash v1 requires a `tsconfig.json` file with `expe
 To use a service in your resource, change to the following:
 
 ```diff
-  // some_resource.ts
+// some_resource.ts
 
 - @Drash.Http.Middleware({
 -   before_request: [ SomethingA ],
@@ -169,9 +195,13 @@ To use a service in your resource, change to the following:
   }
 ```
 
-If you have any custom middleware that you have plugged into your Drash application, they must be converted to the new `Drash.Services` syntax. To learn more about creating services, read [Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services).
+If you have any custom middleware that you have plugged into your Drash
+application, they must be converted to the new `Drash.Services` syntax. To learn
+more about creating services, read
+[Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services).
 
-To learn more about resource-level services, see [Tutorials > Services > Adding Resource-Level Services](/drash/v2.x/tutorials/services/adding-resource-level-services).
+To learn more about resource-level services, see
+[Tutorials > Services > Adding Resource-Level Services](/drash/v2.x/tutorials/services/adding-resource-level-services).
 
 ## Example Application
 
@@ -179,15 +209,14 @@ To learn more about resource-level services, see [Tutorials > Services > Adding 
 
 The below example application contains the following:
 
-* A resource (`HomeResource`) that handles `GET` and `POST` requests
-* A resource (`ServicesResource`) that handles `GET` and `POST` requests
-  * This resource has a service that executes on all requests
-  * This resource also has a service that executes only on `POST` requests
-* A server with a service that executes on all requests
+- A resource (`HomeResource`) that handles `GET` and `POST` requests
+- A resource (`ServicesResource`) that handles `GET` and `POST` requests
+  - This resource has a service that executes on all requests
+  - This resource also has a service that executes only on `POST` requests
+- A server with a service that executes on all requests
 
 ```typescript
 // app.ts
-
 
 // Replace `<VERSION>` with the Drash v2.x version you want to use.
 // All versions can be found at https://github.com/drashland/drash/releases?q=v2&expanded=trueh.
@@ -215,7 +244,7 @@ class ServerService extends Drash.Service {
    */
   public runBeforeResource(
     request: Drash.Request,
-    response: Drash.Response
+    response: Drash.Response,
   ): void {
     response.headers.set("SERVER-SERVICE", "hello");
   }
@@ -228,7 +257,7 @@ class ServerService extends Drash.Service {
    */
   public runAfterResource(
     request: Drash.Request,
-    response: Drash.Response
+    response: Drash.Response,
   ): void {
     const originalValue = response.headers.get("SERVER-SERVICE");
     if (originalValue) {
@@ -251,7 +280,7 @@ class ServicesResourceAllRequestsService extends Drash.Service {
    */
   public runBeforeResource(
     request: Drash.Request,
-    response: Drash.Response
+    response: Drash.Response,
   ): void {
     response.headers.set("RESOURCE-SERVICE", "bonjour");
   }
@@ -264,7 +293,7 @@ class ServicesResourceAllRequestsService extends Drash.Service {
    */
   public runAfterResource(
     request: Drash.Request,
-    response: Drash.Response
+    response: Drash.Response,
   ): void {
     const originalValue = response.headers.get("RESOURCE-SERVICE");
     if (originalValue) {
@@ -287,7 +316,7 @@ class ServicesResourcePostRequestsService extends Drash.Service {
    */
   public runBeforeResource(
     request: Drash.Request,
-    response: Drash.Response
+    response: Drash.Response,
   ): void {
     response.headers.set("RESOURCE-SERVICE-POST", "hola");
   }
@@ -300,7 +329,7 @@ class ServicesResourcePostRequestsService extends Drash.Service {
    */
   public runAfterResource(
     request: Drash.Request,
-    response: Drash.Response
+    response: Drash.Response,
   ): void {
     const originalValue = response.headers.get("RESOURCE-SERVICE-POST");
     if (originalValue) {
@@ -330,7 +359,6 @@ class ServicesResourcePostRequestsService extends Drash.Service {
  *     ... and so on
  */
 class HomeResource extends Drash.Resource {
-
   public paths = ["/"];
 
   /**
@@ -373,14 +401,13 @@ class HomeResource extends Drash.Resource {
  * run them.
  */
 class ServicesResource extends Drash.Resource {
-
   public paths = ["/services"];
 
   public services = {
     // Run the below service on all requests
-    ALL: [ new ServicesResourceAllRequestsService() ],
+    ALL: [new ServicesResourceAllRequestsService()],
     // Run the below service on POST requests
-    POST: [ new ServicesResourcePostRequestsService() ],
+    POST: [new ServicesResourcePostRequestsService()],
   };
 
   /**
@@ -428,20 +455,20 @@ const server = new Drash.Server({
   ],
   services: [
     new ServerService(),
-  ]
+  ],
 });
 
 server.run();
 
 console.log(`Server running at ${server.address}.`);
-
 ```
 
 ### Running the Application
 
-If you run this application, the following requests will result in the following responses:
+If you run this application, the following requests will result in the following
+responses:
 
-* `$ curl -v http://localhost:1447` will result in the following response:
+- `$ curl -v http://localhost:1447` will result in the following response:
 
   ```text
   *   Trying ::1...
@@ -466,7 +493,8 @@ If you run this application, the following requests will result in the following
   {"hello":"world (HomeResource - GET)","time":"2021-10-17T20:20:16.557Z"}* Closing connection 0
   ```
 
-* `$ curl -v http://localhost:1447/services` will result in the following response:
+- `$ curl -v http://localhost:1447/services` will result in the following
+  response:
 
   ```text
   *   Trying ::1...
@@ -492,7 +520,8 @@ If you run this application, the following requests will result in the following
   {"hello":"world (ServicesResource - GET)","time":"2021-10-17T20:21:42.012Z"}* Closing connection 0
   ```
 
-* `$ curl -X POST -v http://localhost:1447/services` will result in the following response:
+- `$ curl -X POST -v http://localhost:1447/services` will result in the
+  following response:
 
   ```text
   *   Trying ::1...

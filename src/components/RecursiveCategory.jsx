@@ -35,8 +35,9 @@ const Category = styled.div`
 `;
 
 const CategoryHeading = styled.div`
-  color: ${({theme}) => theme.sideBar.categoryHeading.color};
-  border-bottom: 1px solid ${({theme}) => theme.sideBar.categoryHeading.borderBottomColor};
+  color: ${({ theme }) => theme.sideBar.categoryHeading.color};
+  border-bottom: 1px solid ${({ theme }) =>
+  theme.sideBar.categoryHeading.borderBottomColor};
   font-size: .8rem;
   font-weight: bold;
   letter-spacing: .1rem;
@@ -51,10 +52,10 @@ const LinkContainer = styled.div`
   display: block;
   a {
     color: ${({ isActive, theme }) => {
-      return isActive
-        ? theme.sideBar.link.colorActive
-        : theme.sideBar.link.colorInactive;
-    }};
+  return isActive
+    ? theme.sideBar.link.colorActive
+    : theme.sideBar.link.colorInactive;
+}};
     border-left: 4px solid;
     border-color: ${({ isActive }) => (isActive ? "#7dade2" : "transparent")};
     transition-duration: 0.25s;
@@ -77,14 +78,16 @@ const LinkContainer = styled.div`
 export default function RecursiveCategory(props) {
   const {
     category,
-    state
+    state,
   } = props;
 
   const router = useRouter();
 
   return (
     <Category className="category">
-      <CategoryHeading className="category-heading">{category.label}</CategoryHeading>
+      <CategoryHeading className="category-heading">
+        {category.label}
+      </CategoryHeading>
       {category.paths.map((path, index) => {
         if (path.is_directory) {
           return (
@@ -116,7 +119,7 @@ export default function RecursiveCategory(props) {
                 passHref
               >
                 <a onClick={() => state.setSideBarOpen(false)}>
-                {path.label}
+                  {path.label}
                 </a>
               </Link>
             )}
