@@ -65,10 +65,10 @@ export default class UsersResource extends Drash.Resource {
   public GET(request: Drash.Request, response: Drash.Response): void {
     let body = "GOT";
  
-    const id   = this.request.pathParam("id");
-    const name = this.request.pathParam("name");
-    const age  = this.request.pathParam("age");
-    const city = this.request.pathParam("city");
+    const id   = request.pathParam("id");
+    const name = request.pathParam("name");
+    const age  = request.pathParam("age");
+    const city = request.pathParam("city");
 
     if (id) {
       body += ` | ${id}`;
