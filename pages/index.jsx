@@ -297,9 +297,7 @@ export default function Home() {
   };
 
   if (mobileViewport === null) {
-    return (
-      <LoadingScreen />
-    );
+    return <LoadingScreen />;
   }
 
   return (

@@ -153,7 +153,7 @@ export default function SideBar(props) {
         state={state}
         category={{
           label: "Links",
-          paths: getLinks()
+          paths: getLinks(),
         }}
       />
     </Container>

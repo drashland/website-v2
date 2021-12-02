@@ -66,10 +66,10 @@ export default class UsersResource extends Drash.Resource {
 
   public GET(request: Drash.Request, response: Drash.Response): void {
     let body = "GOT";
- 
-    const id   = request.pathParam("id");
+
+    const id = request.pathParam("id");
     const name = request.pathParam("name");
-    const age  = request.pathParam("age");
+    const age = request.pathParam("age");
     const city = request.pathParam("city");
 
     if (id) {
@@ -145,7 +145,7 @@ Examples of URIs that this resource would handle:
 This resource would not handle the following URIs because they do not match the
 regular expression:
 
-* `GET /11`
-* `GET /12`
-* `GET /13`
-* `GET /99`
+- `GET /11`
+- `GET /12`
+- `GET /13`
+- `GET /99`

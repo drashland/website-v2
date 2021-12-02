@@ -11,18 +11,22 @@
 
 ## Basics
 
-***Note: Some of Drash's services use third-party software. For example, instead of reinventing the wheel, Drash's GraphQL service uses [GraphQL.js](https://www.npmjs.com/package/graphql).***
+_**Note: Some of Drash's services use third-party software. For example, instead
+of reinventing the wheel, Drash's GraphQL service uses
+[GraphQL.js](https://www.npmjs.com/package/graphql).**_
 
-Drash uses the term "services" to encapsulate any software used in a Drash application that is not part of Drash's core functionality. This includes services you create, Drash-approved middleware, middleware you create, etc.
+Drash uses the term "services" to encapsulate any software used in a Drash
+application that is not part of Drash's core functionality. This includes
+services you create, Drash-approved middleware, middleware you create, etc.
 
 Adding services to your application can make your application more feature rich.
 Services can add ...
 
-* request filtering
-* caching
-* logging
-* response transforming
-* third-party software integrations
+- request filtering
+- caching
+- logging
+- response transforming
+- third-party software integrations
 
 ... and more.
 
@@ -128,4 +132,6 @@ class HomeResource extends Drash.Resource {
 
 ## Creating Your Own Service
 
-If you want to create your own service to be plugged into your server or resource, follow [Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services).
+If you want to create your own service to be plugged into your server or
+resource, follow
+[Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services).

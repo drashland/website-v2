@@ -11,8 +11,11 @@ import {
 } from "../services/config_service";
 import LoadingScreen from "./LoadingScreen";
 import InnerContainer from "./InnerContainer";
-import { lightTheme, darkTheme } from "../../styles/theme";
-import { publicRuntimeConfig, getGitHubCreateIssueUrl } from "../services/config_service";
+import { darkTheme, lightTheme } from "../../styles/theme";
+import {
+  getGitHubCreateIssueUrl,
+  publicRuntimeConfig,
+} from "../services/config_service";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -175,7 +178,7 @@ export default function Layout(props) {
     if (!userSettingsDarkMode) {
       window.localStorage.setItem(
         publicRuntimeConfig.localStorageKeys.darkMode,
-        "false"
+        "false",
       );
     }
     setDarkMode(userSettingsDarkMode && userSettingsDarkMode === "true");
@@ -243,13 +246,11 @@ export default function Layout(props) {
   // show a loading screen so that the page doesn't transition from desktop to
   // mobile or mobile to desktop. That would look jank to the user.
   if (
-    (mobileViewport === null)
-    || (darkMode === null)
-    || willRedirect
+    (mobileViewport === null) ||
+    (darkMode === null) ||
+    willRedirect
   ) {
-    return (
-      <LoadingScreen theme={darkMode ? darkTheme : lightTheme} />
-    );
+    return <LoadingScreen theme={darkMode ? darkTheme : lightTheme} />;
   }
 
   return (

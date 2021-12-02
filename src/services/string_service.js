@@ -10,23 +10,23 @@ export function formatLabel(label) {
   const replacements = [
     {
       from: /Api/g,
-      to: "API"
+      to: "API",
     },
     {
       from: /Cors/g,
-      to: "CORS"
+      to: "CORS",
     },
     {
       from: /Csrf/g,
-      to: "CSRF"
+      to: "CSRF",
     },
     {
       from: /Etag/g,
-      to: "ETag"
+      to: "ETag",
     },
     {
       from: /Graphql/g,
-      to: "GraphQL"
+      to: "GraphQL",
     },
     {
       from: /Http/g,
@@ -46,11 +46,11 @@ export function formatLabel(label) {
     },
     {
       from: /(Server Level)/g,
-      to: "Server-Level"
+      to: "Server-Level",
     },
     {
       from: /Spa/g,
-      to: "SPA"
+      to: "SPA",
     },
     {
       from: /Ssr/g,
@@ -58,7 +58,7 @@ export function formatLabel(label) {
     },
     {
       from: /Url/g,
-      to: "URL"
+      to: "URL",
     },
     {
       from: /V2/g,

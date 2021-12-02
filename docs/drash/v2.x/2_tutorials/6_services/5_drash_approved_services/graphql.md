@@ -1,8 +1,9 @@
 # GraphQL
 
-This service allows your Drash application to use [GraphQL](https://graphql.org/).
+This service allows your Drash application to use
+[GraphQL](https://graphql.org/).
 
-***Note: This service uses third-party software.***
+_**Note: This service uses third-party software.**_
 
 ## Table of Contents
 
@@ -13,7 +14,9 @@ This service allows your Drash application to use [GraphQL](https://graphql.org/
 
 ## Before You Get Started
 
-This tutorial only shows you how to set up your Drash application to use GraphQL. To learn more about using GraphQL, please refer to the [GraphQL documentation](https://graphql.org/).
+This tutorial only shows you how to set up your Drash application to use
+GraphQL. To learn more about using GraphQL, please refer to the
+[GraphQL documentation](https://graphql.org/).
 
 To use this service, edit your `deps.ts` file to include the service.
 
@@ -26,7 +29,8 @@ To use this service, edit your `deps.ts` file to include the service.
 export { GraphQL, GraphQLService } from "https://deno.land/x/drash@<VERSION>/src/services/graphql/graphql.ts";
 ```
 
-Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest version can be found [here](https://github.com/drashland/drash/releases/latest).
+Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest
+version can be found [here](https://github.com/drashland/drash/releases/latest).
 
 ## Folder Structure End State
 
@@ -43,11 +47,7 @@ Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest versio
 ```typescript
 // app.ts
 
-import {
-  Drash,
-  GraphQL,
-  GraphQLService,
-} from "./deps.ts";
+import { Drash, GraphQL, GraphQLService } from "./deps.ts";
 
 // Set up your GraphQL environment
 
@@ -128,26 +128,26 @@ console.log(`Server running at ${server.address}.`);
 
 1. Run your app.
 
-  ```shell
-  $ deno run --allow-net app.ts
-  ```
+```shell
+$ deno run --allow-net app.ts
+```
 
 2. View your front-end playground by going to `http://localhost:1447/graphql`.
 
 3. Make a query by entering the following in the left pane of your playground.
 
-  ```text
-  {
-    greeting
-  }
-  ```
+```text
+{
+  greeting
+}
+```
 
-  You should receive the following response in the right pane of your playground:
+You should receive the following response in the right pane of your playground:
 
-  ```json
-  {
-    "data": {
-      "greeting": "Hello world!"
-    }
+```json
+{
+  "data": {
+    "greeting": "Hello world!"
   }
-  ```
+}
+```
