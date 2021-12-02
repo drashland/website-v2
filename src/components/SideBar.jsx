@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import RecursiveCategory from "./RecursiveCategory";
-import { getApiReferenceUrl } from "../services/config_service";
+import { getApiReferenceUrl, getRoadmapsUrl } from "../services/config_service";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -81,6 +81,27 @@ export default function SideBar(props) {
   const logoName = `/logo-${moduleName.toLowerCase()}.svg`;
   const router = useRouter();
 
+  function getLinks() {
+    const links = [
+      {
+        is_external: true,
+        label: "API Reference",
+        path: getApiReferenceUrl(moduleName),
+      },
+    ];
+
+    const roadmapsUrl = getRoadmapsUrl(moduleName);
+    if (roadmapsUrl) {
+      links.push({
+        is_external: true,
+        label: "Roadmaps",
+        path: roadmapsUrl,
+      });
+    }
+
+    return links;
+  }
+
   /**
    * Handle when the version `select` element value is changed.
    *
@@ -132,13 +153,7 @@ export default function SideBar(props) {
         state={state}
         category={{
           label: "Links",
-          paths: [
-            {
-              is_external: true,
-              label: "API Reference",
-              path: getApiReferenceUrl(moduleName),
-            },
-          ],
+          paths: getLinks()
         }}
       />
     </Container>

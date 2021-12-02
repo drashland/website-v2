@@ -12,7 +12,7 @@
 Getting a cookie from a request can be done using the following in a resource:
 
 ```typescript
-const cookieValue = this.request.getCookie("my_cookie");
+const cookieValue = request.getCookie("my_cookie");
 ```
 
 In this tutorial, you will learn how to get cookies from a request and parse

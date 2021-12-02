@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutTopBar from "../src/components/LayoutTopBar";
+import LoadingScreen from "../src/components/LoadingScreen";
 
 const MAINTAINERS = [
   {
@@ -294,6 +295,12 @@ export default function Home() {
   const handleTeamMemberClick = (username) => {
     window.open(`https://github.com/${username}`, "_blank").focus();
   };
+
+  if (mobileViewport === null) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <Container>

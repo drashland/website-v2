@@ -13,7 +13,7 @@ only adds extra security layers.
 
 - [Before You Get Started](#before-you-get-started)
 - [Folder Structure End State](#folder-structure-end-state)
-- [Steps](#configuration)
+- [Steps](#steps)
 - [Verification](#verification)
 - [Configuration](#configuration)
   - [Content-Security-Policy](#content-security-policy)
