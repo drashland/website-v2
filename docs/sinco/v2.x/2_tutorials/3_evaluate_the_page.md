@@ -67,8 +67,8 @@ In this tutorial, you will:
     await Sinco.done();
     assertEquals(pageTitle, "Drash Land");
     assertEquals(sum, 11);
-    assertEquals(oldBodyLength, 14);
-    assertEquals(newBodyLength, 15);
+    assertEquals(oldBodyLength, 3);
+    assertEquals(newBodyLength, 4);
   })
   ```
 
