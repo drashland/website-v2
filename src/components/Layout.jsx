@@ -4,11 +4,6 @@ import styled, { ThemeProvider } from "styled-components";
 import SideBar from "./SideBar";
 import LayoutTopBar from "./LayoutTopBar";
 import Breadcrumbs from "./Breadcrumbs";
-import { darkTheme, lightTheme } from "../../styles/theme";
-import {
-  getGitHubCreateIssueUrl,
-  publicRuntimeConfig,
-} from "../services/config_service";
 import LoadingScreen from "./LoadingScreen";
 import InnerContainer from "./InnerContainer";
 import { darkTheme, lightTheme } from "../../styles/theme";
