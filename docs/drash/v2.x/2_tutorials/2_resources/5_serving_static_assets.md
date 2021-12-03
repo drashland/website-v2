@@ -1,7 +1,7 @@
 # Serving Static Assets
 
 Drash has a unique, object orientated way to serve static assets. In other
-projects, you may e used to serving static assets via Nginx, Apache, middleware,
+projects, you may be used to serving static assets via Nginx, Apache, middleware,
 or a single route. With Drash, you can use resources to serve your static
 assets, and this makes complete sense. Why?
 
@@ -16,11 +16,7 @@ So what you would do is create a resource for these endpoints, and respond with
 the related file. A common resource name for doing this in Drash, is a "Files
 Resource"
 
-- `/path/:id`
-- `/path/:id?`
-- `/[a-z]/[0-9]`
-
-## Table of Contents
+## Example
 
 In this example, we are going to be using a `FilesResource`, defined by us, to
 handle requests for all your javascript, stylesheet, and image files.
