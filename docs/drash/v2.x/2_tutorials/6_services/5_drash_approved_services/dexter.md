@@ -4,9 +4,12 @@ Dexter is a logging service inspired by
 [expressjs/morgan](https://github.com/expressjs/morgan). It is configurable and
 can be used throughout the request-resource-response lifecycle.
 
-When used, it will log information on a request to the stdout, such as request method and request url, response time. This service will run before and after a resource method is called.
+When used, it will log information on a request to the stdout, such as request
+method and request url, response time. This service will run before and after a
+resource method is called.
 
 ## Table of Contents
+
 - [Before You Get Started](#before-you-get-started)
 - [Example](#example)
 - [Configuration](#configuration)
@@ -112,7 +115,7 @@ you want to use Dexter in one of your resources, then do the following:
 
    ```typescript
    // File: app.ts
-   import { Drash, dexter } from "./deps.ts";
+   import { dexter, Drash } from "./deps.ts";
    import { HomeResource } from "./home_resource.ts";
 
    const server = new Drash.Http.Server({
@@ -120,11 +123,11 @@ you want to use Dexter in one of your resources, then do the following:
        HomeResource,
      ],
      services: [
-         dexter
+       dexter,
      ],
      protocol: "http",
      port: 1447,
-     hostname: "localhost"
+     hostname: "localhost",
    });
 
    server.run();
@@ -135,10 +138,10 @@ you want to use Dexter in one of your resources, then do the following:
 2. Create your `home_resource` file.
 
    ```typescript
-   import { Drash, dexter } from "./deps.ts";
+   import { dexter, Drash } from "./deps.ts";
 
    export class HomeResource extends Drash.Resource {
-    paths = ["/"];
+     paths = ["/"];
 
      public GET(request: Drash.Request, response: Drash.Response) {
        // Access Dexter's logger from it's prototype and log some messages
