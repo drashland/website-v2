@@ -76,7 +76,7 @@ calling `new DexterService` to disable this
 Will display the requested url. Example logging output would be:
 `[INFO] /users | Request received`
 
-### method
+### `method`
 
 Will display the HTTP verb (method) of the request. Example logging output would
 be: `[INFO] GET | Request received`
