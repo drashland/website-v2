@@ -53,9 +53,19 @@ export const ListItem = styled.li`
 `;
 
 export const Code = function ({ className, children }) {
+  function getPrismJsClassName(ogClassName) {
+    if (ogClassName.includes("diff")) {
+      const diffClassName = ogClassName.replace("lang-", " language-diff-");
+      return diffClassName + " diff-highlight";
+    }
+
+    // For everything else, just make sure we prefix languages with `language-`
+    return ogClassName.replace("lang-", " language-")
+  }
+
   return (
     <code
-      className={className && className.replace("lang-", " language-")}
+      className={className && getPrismJsClassName(className)}
     >
       {children}
     </code>
