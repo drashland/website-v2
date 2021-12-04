@@ -13,7 +13,8 @@
 This tutorial builds off of
 [Tutorials > Creating Single Command CLIs > Adding Arguments](/line/v1.x/tutorials/main-commands/creating-a-main-command).
 
-To allow your main command to handle options, define the `options` property like so ...
+To allow your main command to handle options, define the `options` property like
+so ...
 
 ```typescript
 public options = {
