@@ -13,32 +13,23 @@
 This tutorial builds off of
 [Tutorials > Creating Single Command CLIs > Adding Arguments](/line/v1.x/tutorials/main-commands/creating-a-main-command).
 
-To allow your main command to handle arguments, add them to your main command's
-`signature` property like so ...
+To allow your main command to handle options, define the `options` property like so ...
 
 ```typescript
-public signature = "my-cli [arg1] [arg2] [arg3]";
-```
-
-... and create a `handle()` method in your main command ...
-
-```typescript
-public handle(): void { // or public async handle(): Promise<void> {
-  // Handle arguments here
-}
+public options = {
+  "--some-option": "Some cool option."
+};
 ```
 
 You can retrieve arguments using the following in the `handle()` method:
 
 ```typescript
 public handle(): void { // or public async handle(): Promise<void> {
-  console.log(this.argument("arg1"));
-  console.log(this.argument("arg2"));
-  console.log(this.argument("arg3"));
+  console.log(this.option("--some-option"));
 }
 ```
 
-You can add as many arguments as you wish.
+You can add as many options as you wish.
 
 Things to know:
 
