@@ -5,6 +5,7 @@ import Switch from "react-switch";
 import { Moon, Sun } from "@styled-icons/bootstrap";
 import { useRouter } from "next/router";
 import { getGitHubUrl } from "../services/config_service";
+import Link from "next/link";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -105,7 +106,7 @@ export default function TopBar(props) {
       <Title>
         {moduleName && (
           <>
-            <a href="/">Drash Land</a>
+            <Link href="/"><a>Drash Land</a></Link>
             <span className="middot">&middot;</span>
             {moduleName}
           </>
@@ -137,6 +138,7 @@ export default function TopBar(props) {
         <a
           href={getGitHubUrl(moduleName)}
           target="_BLANK"
+          rel="noreferrer"
         >
           {pageLoaded === true && <GitHubIcon />}
         </a>
