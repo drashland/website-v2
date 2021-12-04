@@ -1,43 +1,51 @@
 # Serving Static Assets
 
-Drash has a unique, object orientated way to serve static assets. In other
-projects, you may be used to serving static assets via Nginx, Apache, middleware,
-or a single route. With Drash, you can use resources to serve your static
-assets, and this makes complete sense. Why?
+## Table of Contents
 
-1. Requests for assets such as javascript and image files still need to 'hit' a
-   resource
-2. These are no different than any other request made to your Drash application
-3. Defining a resource to render assets gives you unlimited configuration, and
-   you have access to everything any other resource would have access to
+- [Before You Get Started](#before-you-get-started)
+- [Example](#example)
+
+## Before You Get Started
+
+Drash has a unique, object orientated way to serve static assets. In other
+projects, you may be used to serving static assets via Nginx, Apache, middleware
+(e.g. `serve-static` in Node), or a single route. With Drash, you can use
+resources to serve your static assets, and this makes complete sense. Why?
+
+1. Requests for assets such as JavaScript and image files still need to "hit" a
+   resource.
+2. These are no different than any other request made to your Drash application.
+3. Defining a resource to render assets gives you unlimited configuration and
+   you have access to everything any other resource would have access to.
 4. Semantically, it just makes sense!
 
-So what you would do is create a resource for these endpoints, and respond with
-the related file. A common resource name for doing this in Drash, is a "Files
-Resource"
+So, what you would do is create a resource for these endpoints and respond with
+the related file. A common resource name for doing this in Drash is
+`FilesResource`.
 
 ## Example
 
 In this example, we are going to be using a `FilesResource`, defined by us, to
-handle requests for all your javascript, stylesheet, and image files.
+handle requests for all your JavaScript, CSS, and image files.
 
-When your web application uses client assets, such as javascript files, it will
-make a request to your server. What you are going to be doing is, creating a
-resource for these requests, and essentially, returning the requested files
+When your web application uses client assets, such as JavaScript files, it will
+make a request to your server. What you are going to be doing is creating a
+resource for these requests, and essentially, returning the requested files'
 content.
 
-The files resource is going to render and handle any requests for files, this
-could be anything you want! JavaScript? Stylesheets? Favicons? User images? But
-here we're going to be using javascript, stylesheets and favicons.
+The `FilesResource` is going to render and handle any requests for files and
+this could be anything you want to serve! JavaScript? CSS? Favicons? User
+images? You can serve all of that! However, here we are going to be using
+JavaScript, CSS, and Favicons.
 
 1. First, you will want to create your resource:
 
    ```typescript
-   // File: app.ts
+   // File: files_resource.ts
 
-   import { Drash } from "../deps.ts";
+   import { Drash } from "./deps.ts";
 
-   class FilesResource extends Drash.Resource {
+   export class FilesResource extends Drash.Resource {
      // This resource will handle the following paths:
      //
      //   1. /favicon.ico
@@ -80,31 +88,43 @@ here we're going to be using javascript, stylesheets and favicons.
    }
    ```
 
-2. And add it to your server just like any other resource:
+2. Next, add it to your server just like any other resource:
 
    ```typescript
+   // app.ts
+
+   import { Drash } from "./deps.ts";
+   import { FilesResource } from "./files_resource.ts";
+
    const server = new Drash.Server({
-     ...,
+     // ... other server config
+     // ... other server config
+     // ... other server config
      resources: [
-       ...,
-       FilesResource
-     ]
+       // ... other resource
+       // ... other resource
+       // ... other resource
+       FilesResource,
+     ],
    });
    ```
 
-And there you have it! You can now handle any file you want, and the options are
+And there you have it! You can now handle any file you want and the options are
 limitless:
 
-- You can make your files resource only handle `/favicon.ico` is you do not use
+- You can make your files resource only handle `/favicon.ico` if you do not use
   any other assets in your application
-- You can split out your resource into two, if handling requests for `.js` files
-  differs from handling a `favicon.ico` file
+- You can split out your resource into multiple resources:
+  - If handling requests for `.js` files, you can have a `JSFileResource`
+  - If handling requests for `favicon.ico`, you can have a `FaviconFileResource`
+  - If handling requests for `.css` files, you can have a `CSSFileResource`
 - You can add services to this resource
-- You could create an auth service to only allow logged in users to view certain
-  paths
-- You have absolutely full control over how responses are sent, and how to
-  handle requests
+- You could create an authentication service to only allow logged in users to
+  view certain paths
 
-A files resource isn't special, it's no different than a resource that will
-update a user ina database. All you're doing is telling it to handle assets,
-this is your asset resource.
+You have absolutely full control over how responses are sent and how to handle
+requests to your resources that handle files.
+
+A files resource is not special. It is no different than a resource that will
+update a user in a database. All you are doing is telling it to handle assets
+and specific endpoints -- this is your asset resource.
