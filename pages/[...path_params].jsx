@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import * as fs from "fs";
 import path from "path";
-import Markdown from "markdown-to-jsx";
 import Layout from "../src/components/Layout";
 import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
