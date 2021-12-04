@@ -320,7 +320,9 @@ export default function Home() {
               <Lede>
                 Zero dependencies. Extensively documented. Thoroughly tested.
               </Lede>
-              <p style={{ marginBottom: "3rem" }}>It&apos;s what we&apos;re all about.</p>
+              <p style={{ marginBottom: "3rem" }}>
+                It&apos;s what we&apos;re all about.
+              </p>
               <Button href="https://discord.gg/RFsCSaHRWK">
                 Join The Community
               </Button>
@@ -399,7 +401,8 @@ export default function Home() {
               >
                 <CardTitle>Moogle</CardTitle>
                 <CardDescription>
-                  An easy way to &quot;Google&quot; your &quot;Map&quot; using search terms
+                  An easy way to &quot;Google&quot; your &quot;Map&quot; using
+                  search terms
                 </CardDescription>
                 <TagsContainer>
                   <Tag>Deno</Tag>
@@ -453,11 +456,12 @@ export default function Home() {
               </li>
               <li>
                 Extensive Documentation: We love a good challenge, but working
-                with Drash Land software shouldn&apos;t be one of them. That&apos;s why we
-                provide all of the documentation you&apos;ll need. Want to know how
-                to set up an HTTP server? We got you. Need to know how to set up
-                WebSockets? We&apos;ll show you the way. And if you ever get stuck,
-                just send us a message in our{" "}
+                with Drash Land software shouldn&apos;t be one of them.
+                That&apos;s why we provide all of the documentation you&apos;ll
+                need. Want to know how to set up an HTTP server? We got you.
+                Need to know how to set up WebSockets? We&apos;ll show you the
+                way. And if you ever get stuck, just send us a message in our
+                {" "}
                 <a
                   href="https://discord.gg/RFsCSaHRWK"
                   target="_BLANK"
@@ -474,9 +478,9 @@ export default function Home() {
               </li>
             </ul>
             <p style={{ marginBottom: "3rem" }}>
-              Drash Land is more than just a project to us. We&apos;ve invested our
-              whole selves (and lots of energy drinks) into this. Does that make
-              us nerds? We hope so. Because nerds make the best stuff.
+              Drash Land is more than just a project to us. We&apos;ve invested
+              our whole selves (and lots of energy drinks) into this. Does that
+              make us nerds? We hope so. Because nerds make the best stuff.
             </p>
             <SectionTitle>Key Contributors</SectionTitle>
             <MaintainersContainer>

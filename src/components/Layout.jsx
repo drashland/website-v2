@@ -250,7 +250,7 @@ export default function Layout(props) {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <Container>
+      <Container className={darkMode ? "dark-theme" : "light-theme"}>
         <ButtonOpenSideBar
           show={mobileViewport}
           sideBarOpen={sideBarOpen}
@@ -294,7 +294,11 @@ export default function Layout(props) {
                 If you are having issues with this page (e.g., parts of this
                 page are not loading, documentation does not make sense, etc.),
                 please let us know by filing an issue{" "}
-                <a href={getGitHubCreateIssueUrl(pageUri)} target="_BLANK" rel="noreferrer">
+                <a
+                  href={getGitHubCreateIssueUrl(pageUri)}
+                  target="_BLANK"
+                  rel="noreferrer"
+                >
                   here
                 </a>. We want to make sure these documentation pages cater the
                 best developer experience possible.

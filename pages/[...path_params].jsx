@@ -1,28 +1,13 @@
 import { useEffect, useState } from "react";
 import * as fs from "fs";
 import path from "path";
-import Markdown from "markdown-to-jsx";
 import Layout from "../src/components/Layout";
 import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
 import { formatLabel } from "../src/services/string_service";
 import { publicRuntimeConfig } from "../src/services/config_service";
-import {
-  Code,
-  Heading1,
-  Heading2,
-  Heading3,
-  Heading4,
-  HorizontalRule,
-  Image,
-  ListItem,
-  OrderedList,
-  Paragraph,
-  Pre,
-  RestyledCode,
-  UnorderedList,
-} from "../src/components/Markdown";
+import ReactMarkdown from "react-markdown";
 
 /**
  * This constant is used for associating all markdown files with page URIs.
@@ -101,50 +86,9 @@ export default function Page(props) {
       moduleVersion={moduleVersion}
       moduleVersions={moduleVersions}
     >
-      <Markdown
-        options={{
-          overrides: {
-            h1: {
-              component: Heading1,
-            },
-            h2: {
-              component: Heading2,
-            },
-            h3: {
-              component: Heading3,
-            },
-            h4: {
-              component: Heading4,
-            },
-            hr: {
-              component: HorizontalRule,
-            },
-            p: {
-              component: Paragraph,
-            },
-            ul: {
-              component: UnorderedList,
-            },
-            ol: {
-              component: OrderedList,
-            },
-            li: {
-              component: ListItem,
-            },
-            code: {
-              component: RestyledCode,
-            },
-            pre: {
-              component: Pre,
-            },
-            img: {
-              component: Image,
-            },
-          },
-        }}
-      >
+      <ReactMarkdown>
         {markdown}
-      </Markdown>
+      </ReactMarkdown>
     </Layout>
   );
 }
