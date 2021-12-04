@@ -320,7 +320,7 @@ export default function Home() {
               <Lede>
                 Zero dependencies. Extensively documented. Thoroughly tested.
               </Lede>
-              <p style={{ marginBottom: "3rem" }}>It's what we're all about.</p>
+              <p style={{ marginBottom: "3rem" }}>It&apos;s what we&apos;re all about.</p>
               <Button href="https://discord.gg/RFsCSaHRWK">
                 Join The Community
               </Button>
@@ -399,7 +399,7 @@ export default function Home() {
               >
                 <CardTitle>Moogle</CardTitle>
                 <CardDescription>
-                  An easy way to "Google" your "Map" using search terms
+                  An easy way to &quot;Google&quot; your &quot;Map&quot; using search terms
                 </CardDescription>
                 <TagsContainer>
                   <Tag>Deno</Tag>
@@ -426,9 +426,10 @@ export default function Home() {
           <InnerContainer>
             <SectionTitle>The Drash Land Team</SectionTitle>
             <MaintainersContainer>
-              {MAINTAINERS.map((maintainer) => {
+              {MAINTAINERS.map((maintainer, index) => {
                 return (
                   <Maintainer
+                    key={`${JSON.stringify(maintainer)}_${index}`}
                     onClick={() =>
                       handleTeamMemberClick(maintainer.github_username)}
                     src={maintainer.image_src}
@@ -437,7 +438,7 @@ export default function Home() {
               })}
             </MaintainersContainer>
             <p>
-              We're a small squad of software engineers who code a lot of really
+              We&apos;re a small squad of software engineers who code a lot of really
               cool stuff. We focus heavily on the developer UX because we think
               coding should be fun.
             </p>
@@ -452,10 +453,10 @@ export default function Home() {
               </li>
               <li>
                 Extensive Documentation: We love a good challenge, but working
-                with Drash Land software shouldn't be one of them. That's why we
-                provide all of the documentation you'll need. Want to know how
+                with Drash Land software shouldn&apos;t be one of them. That&apos;s why we
+                provide all of the documentation you&apos;ll need. Want to know how
                 to set up an HTTP server? We got you. Need to know how to set up
-                WebSockets? We'll show you the way. And if you ever get stuck,
+                WebSockets? We&apos;ll show you the way. And if you ever get stuck,
                 just send us a message in our{" "}
                 <a
                   href="https://discord.gg/RFsCSaHRWK"
@@ -464,7 +465,7 @@ export default function Home() {
                 >
                   Discord
                 </a>{" "}
-                and we'll gladly help you!
+                and we&apos;ll gladly help you!
               </li>
               <li>
                 Thorough Testing: To put it bluntly, we test the shiz out of our
@@ -473,15 +474,16 @@ export default function Home() {
               </li>
             </ul>
             <p style={{ marginBottom: "3rem" }}>
-              Drash Land is more than just a project to us. We've invested our
+              Drash Land is more than just a project to us. We&apos;ve invested our
               whole selves (and lots of energy drinks) into this. Does that make
               us nerds? We hope so. Because nerds make the best stuff.
             </p>
             <SectionTitle>Key Contributors</SectionTitle>
             <MaintainersContainer>
-              {KEY_CONTRIBUTORS.map((maintainer) => {
+              {KEY_CONTRIBUTORS.map((maintainer, index) => {
                 return (
                   <Maintainer
+                    key={`${JSON.stringify(maintainer)}_${index}`}
                     onClick={() =>
                       handleTeamMemberClick(maintainer.github_username)}
                     src={maintainer.image_src}
