@@ -13,6 +13,10 @@ export function formatLabel(label) {
       to: "API",
     },
     {
+      from: /Clis/g,
+      to: "CLIs",
+    },
+    {
       from: /Cors/g,
       to: "CORS",
     },
