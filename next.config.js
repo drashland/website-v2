@@ -21,6 +21,7 @@ module.exports = {
     //     using the `destination` in the `redirects` config.
     modules: [
       "drash",
+      "line",
       "sinco",
     ],
     docDenoLandUrls: {
@@ -49,6 +50,12 @@ module.exports = {
         versions: [
           "v1.x",
           "v2.x",
+        ],
+      },
+      line: {
+        versions: [
+          "v0.x",
+          "v1.x",
         ],
       },
       sinco: {
@@ -136,12 +143,6 @@ module.exports = {
       {
         source: "/rhum/v1.x",
         destination: "/rhum/v1.x/index.html",
-        permanent: false,
-      },
-      // Remove the below /line object when the its migrated
-      {
-        source: "/line",
-        destination: "/line/v0.x/index.html",
         permanent: false,
       },
       {
