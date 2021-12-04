@@ -8,7 +8,8 @@
 ## Add Drash as a Dependency
 
 Before you get started with any tutorial, make sure you create a `deps.ts` file
-(at the root of your project) for the tutorial you are viewing and **_add Drash as a dependency_** in the file like so:
+(at the root of your project) for the tutorial you are viewing and **_add Drash
+as a dependency_** in the file like so:
 
 ```typescript
 // deps.ts
