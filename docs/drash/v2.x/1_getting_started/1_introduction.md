@@ -10,74 +10,72 @@ Learn more about Drash [here](about-drash).
 
 2. Create your project directory.
 
-  ```shell
-  $ mkdir my-project
-  $ cd my-project
-  ```
+   ```shell
+   $ mkdir my-project
+   $ cd my-project
+   ```
 
 3. Create your `app.ts` file.
 
-  ```typescript
-  // app.ts
+   ```typescript
+   // app.ts
 
-  // Replace `<VERSION>` with the latest version of Drash v2.x. The latest
-  // version can be found at https://github.com/drashland/drash/releases/latest
-  import * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
+   // Replace `<VERSION>` with the latest version of Drash v2.x. The latest
+   // version can be found at https://github.com/drashland/drash/releases/latest
+   import * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
 
-  // Create your resource
+   // Create your resource
 
-  class HomeResource extends Drash.Resource {
-    public paths = ["/"];
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
 
-    public GET(request: Drash.Request, response: Drash.Response): void {
-      return response.json({
-        hello: "world",
-        time: new Date(),
-      });
-    }
-  }
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       return response.json({
+         hello: "world",
+         time: new Date(),
+       });
+     }
+   }
 
-  // Create and run your server
+   // Create and run your server
 
-  const server = new Drash.Server({
-    hostname: "0.0.0.0",
-    port: 1447,
-    protocol: "http",
-    resources: [
-      HomeResource
-    ],
-  });
+   const server = new Drash.Server({
+     hostname: "0.0.0.0",
+     port: 1447,
+     protocol: "http",
+     resources: [HomeResource],
+   });
 
-  server.run();
+   server.run();
 
-  console.log(`Server running at ${server.address}.`);
-  ```
+   console.log(`Server running at ${server.address}.`);
+   ```
 
 4. Run your `app.ts` file.
 
-  ```shell
-  $ deno run --allow-net app.ts
-  ```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 5. Go to `http://localhost:1447` in your web browser.
 
-  You should see something like the following:
+   You should see something like the following:
 
-  ```text
-  {"hello":"world","time":"2021-10-09T21:08:21.982Z"}
-  ```
+   ```text
+   {"hello":"world","time":"2021-10-09T21:08:21.982Z"}
+   ```
 
 ## Features
 
-* Zero third-party dependencies outside of Deno Standard Modules
-* Extensively documented
-* Server-side rendering (SSR)
-* Single page application (SPA) support
-* Content negotiation
-* Dynamic paths
-* Services (e.g. middleware, caching, logging)
-* Request body parsing
-* Deno Deploy support
+- Zero third-party dependencies outside of Deno Standard Modules
+- Extensively documented
+- Server-side rendering (SSR)
+- Single page application (SPA) support
+- Content negotiation
+- Dynamic paths
+- Services (e.g. middleware, caching, logging)
+- Request body parsing
+- Deno Deploy support
 
 ## Badge
 

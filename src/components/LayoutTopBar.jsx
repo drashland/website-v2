@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { MarkGithub } from "@styled-icons/octicons";
 import Switch from "react-switch";
 import { Moon, Sun } from "@styled-icons/bootstrap";
 import { useRouter } from "next/router";
 import { getGitHubUrl } from "../services/config_service";
+import Link from "next/link";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -92,11 +93,11 @@ export default function TopBar(props) {
 
   const router = useRouter();
 
-  const [pageLoaded, setPageLoaded] = useState(false)
+  const [pageLoaded, setPageLoaded] = useState(false);
 
   useEffect(() => {
-    setPageLoaded(true)
-  }, [])
+    setPageLoaded(true);
+  }, []);
 
   return (
     <Container
@@ -105,16 +106,16 @@ export default function TopBar(props) {
       <Title>
         {moduleName && (
           <>
-            <a href="/">Drash Land</a>
+            <Link href="/"><a>Drash Land</a></Link>
             <span className="middot">&middot;</span>
             {moduleName}
           </>
-      )}
+        )}
       </Title>
       <RightSection>
         {router.asPath !== "/" && (
           <ThemeSwitchContainer>
-            <span style={{marginRight: ".25rem"}}>Mode</span>
+            <span style={{ marginRight: ".25rem" }}>Mode</span>
             <ThemeSwitch
               onChange={state.toggleDarkMode}
               checked={state.darkMode}
@@ -137,10 +138,9 @@ export default function TopBar(props) {
         <a
           href={getGitHubUrl(moduleName)}
           target="_BLANK"
+          rel="noreferrer"
         >
-         {pageLoaded === true && (
-           <GitHubIcon />
-         )}
+          {pageLoaded === true && <GitHubIcon />}
         </a>
       </RightSection>
     </Container>

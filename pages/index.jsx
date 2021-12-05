@@ -190,12 +190,12 @@ const Card = styled.div`
 const CardTitle = styled.h3`
   font-weight: bold;
   font-size: 1.5rem;
-`
+`;
 
 const CardDescription = styled.p`
   font-size: 1rem;
   margin-bottom: 1.5rem;
-`
+`;
 
 const Button = styled.a`
   background: #000000;
@@ -222,7 +222,7 @@ const Hr = styled.div`
   border-radius: 3rem;
   background: rgba(0, 0, 0, 0.25);
   margin-bottom: 3rem;
-`
+`;
 
 const ImageContainer = styled.div`
   text-align: center;
@@ -271,14 +271,13 @@ const Maintainer = styled.img`
 `;
 
 export default function Home() {
-
   const router = useRouter();
   const [mobileViewport, setMobileViewport] = useState(null);
 
   // TODO(crookse) This is duplicate code. We should switch to using contexts or something else.
   useEffect(() => {
     // Support mobile views, desktop views, and window resizing
-    window.addEventListener("resize", handleWindowSizeChange);
+    addEventListener("resize", handleWindowSizeChange);
     if (mobileViewport === null) {
       handleWindowSizeChange();
     }
@@ -294,13 +293,11 @@ export default function Home() {
   }
 
   const handleTeamMemberClick = (username) => {
-    window.open(`https://github.com/${username}`, "_blank").focus()
-  }
+    window.open(`https://github.com/${username}`, "_blank").focus();
+  };
 
   if (mobileViewport === null) {
-    return (
-      <LoadingScreen />
-    );
+    return <LoadingScreen />;
   }
 
   return (
@@ -320,9 +317,13 @@ export default function Home() {
         <Section>
           <InnerContainer>
             <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-              <Lede>Zero dependencies. Extensively documented. Thoroughly tested.</Lede>
-              <p style={{marginBottom: "3rem"}}>It's what we're all about.</p>
-              <Button href="https://discord.gg/RFsCSaHRWK">Join The Community</Button>
+              <Lede>
+                Zero dependencies. Extensively documented. Thoroughly tested.
+              </Lede>
+              <p style={{ marginBottom: "3rem" }}>It&apos;s what we&apos;re all about.</p>
+              <Button href="https://discord.gg/RFsCSaHRWK">
+                Join The Community
+              </Button>
             </div>
           </InnerContainer>
         </Section>
@@ -332,7 +333,7 @@ export default function Home() {
             <CardsContainer>
               <Card onClick={() => router.push("/drash")}>
                 <ImageContainer>
-                  <img src="/logo-drash.svg"/>
+                  <img src="/logo-drash.svg" />
                 </ImageContainer>
                 <CardTitle>Drash</CardTitle>
                 <CardDescription>A micro HTTP framework</CardDescription>
@@ -342,7 +343,7 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/wocket")}>
                 <ImageContainer>
-                  <img src="/logo-wocket.svg"/>
+                  <img src="/logo-wocket.svg" />
                 </ImageContainer>
                 <CardTitle>Wocket</CardTitle>
                 <CardDescription>A WebSocket framework</CardDescription>
@@ -352,7 +353,7 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/dmm")}>
                 <ImageContainer>
-                  <img src="/logo-dmm.svg"/>
+                  <img src="/logo-dmm.svg" />
                 </ImageContainer>
                 <CardTitle>dmm</CardTitle>
                 <CardDescription>A lightweight module manager</CardDescription>
@@ -362,7 +363,7 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/rhum")}>
                 <ImageContainer>
-                  <img src="/logo-rhum.svg"/>
+                  <img src="/logo-rhum.svg" />
                 </ImageContainer>
                 <CardTitle>Rhum</CardTitle>
                 <CardDescription>A unit test framework</CardDescription>
@@ -372,17 +373,19 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/sinco")}>
                 <ImageContainer>
-                  <img src="/logo-sinco.svg"/>
+                  <img src="/logo-sinco.svg" />
                 </ImageContainer>
                 <CardTitle>Sinco</CardTitle>
-                <CardDescription>A browser automation and testing tool</CardDescription>
+                <CardDescription>
+                  A browser automation and testing tool
+                </CardDescription>
                 <TagsContainer>
                   <Tag>Deno</Tag>
                 </TagsContainer>
               </Card>
               <Card onClick={() => router.push("/line")}>
                 <ImageContainer>
-                  <img src="/logo-line.svg"/>
+                  <img src="/logo-line.svg" />
                 </ImageContainer>
                 <CardTitle>Line</CardTitle>
                 <CardDescription>A command-line framework</CardDescription>
@@ -390,17 +393,27 @@ export default function Home() {
                   <Tag>Deno</Tag>
                 </TagsContainer>
               </Card>
-              <Card onClick={() => router.push("https://github.com/drashland/moogle")}>
+              <Card
+                onClick={() =>
+                  router.push("https://github.com/drashland/moogle")}
+              >
                 <CardTitle>Moogle</CardTitle>
-                <CardDescription>An easy way to "Google" your "Map" using search terms</CardDescription>
+                <CardDescription>
+                  An easy way to &quot;Google&quot; your &quot;Map&quot; using search terms
+                </CardDescription>
                 <TagsContainer>
                   <Tag>Deno</Tag>
                   <Tag>Node</Tag>
                 </TagsContainer>
               </Card>
-              <Card onClick={() => router.push("https://github.com/drashland/accio")}>
+              <Card
+                onClick={() =>
+                  router.push("https://github.com/drashland/accio")}
+              >
                 <CardTitle>Accio</CardTitle>
-                <CardDescription>An easy way to search for deeply nested data in large datasets</CardDescription>
+                <CardDescription>
+                  An easy way to search for deeply nested data in large datasets
+                </CardDescription>
                 <TagsContainer>
                   <Tag>Deno</Tag>
                   <Tag>Node</Tag>
@@ -413,29 +426,66 @@ export default function Home() {
           <InnerContainer>
             <SectionTitle>The Drash Land Team</SectionTitle>
             <MaintainersContainer>
-              {MAINTAINERS.map((maintainer) => {
+              {MAINTAINERS.map((maintainer, index) => {
                 return (
                   <Maintainer
-                    onClick={() => handleTeamMemberClick(maintainer.github_username)}
+                    key={`${JSON.stringify(maintainer)}_${index}`}
+                    onClick={() =>
+                      handleTeamMemberClick(maintainer.github_username)}
                     src={maintainer.image_src}
                   />
                 );
               })}
             </MaintainersContainer>
-            <p>We're a small squad of software engineers who code a lot of really cool stuff. We focus heavily on the developer UX because we think coding should be fun.</p>
-            <p>When we release software in the Deno or Node ecosystem, you can count on these three things:</p>
+            <p>
+              We&apos;re a small squad of software engineers who code a lot of really
+              cool stuff. We focus heavily on the developer UX because we think
+              coding should be fun.
+            </p>
+            <p>
+              When we release software in the Deno or Node ecosystem, you can
+              count on these three things:
+            </p>
             <ul>
-              <li>Zero Dependencies: Every Drash Land project has zero dependencies (with the exception of Deno and Node, of course). There are some exceptions (e.g., using GraphQL in Drash), but all of Drash Land's core code has zero dependencies.</li>
-              <li>Extensive Documentation: We love a good challenge, but working with Drash Land software shouldn't be one of them. That's why we provide all of the documentation you'll need. Want to know how to set up an HTTP server? We got you. Need to know how to set up WebSockets? We'll show you the way. And if you ever get stuck, just send us a message in our <a href="https://discord.gg/RFsCSaHRWK" target="_BLANK" rel="noreferrer">Discord</a> and we'll gladly help you!</li>
-              <li>Thorough Testing: To put it bluntly, we test the shiz out of our software. We know it works. Every example code block and every tutorial we write is tested end-to-end.</li>
+              <li>
+                Zero Dependencies: Every Drash Land project has zero
+                dependencies (with the exception of Deno and Node, of course).
+              </li>
+              <li>
+                Extensive Documentation: We love a good challenge, but working
+                with Drash Land software shouldn&apos;t be one of them. That&apos;s why we
+                provide all of the documentation you&apos;ll need. Want to know how
+                to set up an HTTP server? We got you. Need to know how to set up
+                WebSockets? We&apos;ll show you the way. And if you ever get stuck,
+                just send us a message in our{" "}
+                <a
+                  href="https://discord.gg/RFsCSaHRWK"
+                  target="_BLANK"
+                  rel="noreferrer"
+                >
+                  Discord
+                </a>{" "}
+                and we&apos;ll gladly help you!
+              </li>
+              <li>
+                Thorough Testing: To put it bluntly, we test the shiz out of our
+                software. We know it works. Every example code block and every
+                tutorial we write is tested end-to-end.
+              </li>
             </ul>
-            <p style={{ marginBottom: "3rem" }}>Drash Land is more than just a project to us. We've invested our whole selves (and lots of energy drinks) into this. Does that make us nerds? We hope so. Because nerds make the best stuff.</p>
+            <p style={{ marginBottom: "3rem" }}>
+              Drash Land is more than just a project to us. We&apos;ve invested our
+              whole selves (and lots of energy drinks) into this. Does that make
+              us nerds? We hope so. Because nerds make the best stuff.
+            </p>
             <SectionTitle>Key Contributors</SectionTitle>
             <MaintainersContainer>
-              {KEY_CONTRIBUTORS.map((maintainer) => {
+              {KEY_CONTRIBUTORS.map((maintainer, index) => {
                 return (
                   <Maintainer
-                    onClick={() => handleTeamMemberClick(maintainer.github_username)}
+                    key={`${JSON.stringify(maintainer)}_${index}`}
+                    onClick={() =>
+                      handleTeamMemberClick(maintainer.github_username)}
                     src={maintainer.image_src}
                   />
                 );
@@ -450,5 +500,5 @@ export default function Home() {
         </Section>
       </Main>
     </Container>
-  )
+  );
 }

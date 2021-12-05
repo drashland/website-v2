@@ -5,12 +5,12 @@ const common = {
   module: {
     logo: {
       size: "100px",
-    }
+    },
   },
   themeSwitch: {
     icon: {
       height: "13px",
-    }
+    },
   },
 };
 
@@ -55,7 +55,7 @@ export const lightTheme = {
       colorActive: "#7dade2",
     },
   },
-}
+};
 
 /**
  * Dark theme colors go here. This is used by `ThemeProvider` in the `Layout`

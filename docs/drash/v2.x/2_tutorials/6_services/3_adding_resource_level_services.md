@@ -2,7 +2,8 @@
 
 Resource-level services execute only on the resource they are added to.
 
-To add resource-level services, use the `services` property in your resource class. For example:
+To add resource-level services, use the `services` property in your resource
+class. For example:
 
 ```typescript
 import { Drash } from "./deps.ts";

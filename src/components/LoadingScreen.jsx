@@ -42,7 +42,6 @@ const MiddleMessage = styled.div`
 ////////////////////////////////////////////////////////////////////////////////
 
 export default function LoadingScreen(props) {
-
   const { message = null, theme = null } = props;
 
   return (

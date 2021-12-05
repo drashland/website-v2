@@ -1,27 +1,29 @@
 # Configuration
 
-Below are the configurations for the `Drash.Server` class and examples of how to use each.
+Below are the configurations for the `Drash.Server` class and examples of how to
+use each.
 
 ## Table of Contents
 
-* [Required](#required)
-  * [hostname: string](#hostname-string)
-  * [port: number](#port-number)
-  * [protocol: "http" | "https"](#protocol-http--https)
-  * [resources: typeof Drash.Resource[]](#resources-typeof-drashresource)
-* [Optional](#required)
-  * [cert_file?: string](#certfile-string)
-  * [key_file?: string](#keyfile-string)
-  * [services?: Drash.Service[]](#services-drashservice)
+- [Required](#required)
+  - [hostname: string](#hostname-string)
+  - [port: number](#port-number)
+  - [protocol: "http" | "https"](#protocol-http--https)
+  - [resources: typeof Drash.Resource[]](#resources-typeof-drashresource)
+- [Optional](#required)
+  - [cert_file?: string](#certfile-string)
+  - [key_file?: string](#keyfile-string)
+  - [services?: Drash.Service[]](#services-drashservice)
 
 ## Required
 
-Below are the required configurations. You cannot create a Drash server without these.
+Below are the required configurations. You cannot create a Drash server without
+these.
 
 ### hostname: string
 
-* This is the server's domain.
-* Example Usage
+- This is the server's domain.
+- Example Usage
 
   ```typescript
   import { Drash } from "./deps.ts";
@@ -36,8 +38,8 @@ Below are the required configurations. You cannot create a Drash server without 
 
 ### port: number
 
-* This is the server's port.
-* Example Usage
+- This is the server's port.
+- Example Usage
 
   ```typescript
   import { Drash } from "./deps.ts";
@@ -52,8 +54,9 @@ Below are the required configurations. You cannot create a Drash server without 
 
 ### protocol: "http" | "https"
 
-* This is the server's protocol. If this is set to `https`, then `cert_file` and `key_file` must also be used when instantiating the `server` object.
-* Example Usage (if using `http`)
+- This is the server's protocol. If this is set to `https`, then `cert_file` and
+  `key_file` must also be used when instantiating the `server` object.
+- Example Usage (if using `http`)
 
   ```typescript
   import { Drash } from "./deps.ts";
@@ -66,7 +69,7 @@ Below are the required configurations. You cannot create a Drash server without 
   });
   ```
 
-* Example Usage (if using `https`)
+- Example Usage (if using `https`)
 
   ```typescript
   import { Drash } from "./deps.ts";
@@ -83,8 +86,10 @@ Below are the required configurations. You cannot create a Drash server without 
 
 ### resources: typeof Drash.Resource[]
 
-* This is the array of resources that the server will register so clients can target them. You can learn more about resources in the left sidebar under [Tutorials > Resources > Creating a Resource](/drash/v2.x/tutorials/resources/creating-a-resource).
-* Example Usage
+- This is the array of resources that the server will register so clients can
+  target them. You can learn more about resources in the left sidebar under
+  [Tutorials > Resources > Creating a Resource](/drash/v2.x/tutorials/resources/creating-a-resource).
+- Example Usage
 
   ```typescript
   import { Drash } from "./deps.ts";
@@ -107,12 +112,14 @@ Below are the required configurations. You cannot create a Drash server without 
 
 ## Optional
 
-Below are the optional configurations. Drash servers can be created without these unless your `protocol` config is set to `https`. If your `protocol` config is set to `https`, then `cert_file` and `key_file` are required.
+Below are the optional configurations. Drash servers can be created without
+these unless your `protocol` config is set to `https`. If your `protocol` config
+is set to `https`, then `cert_file` and `key_file` are required.
 
 ### cert_file?: string
 
-* This config is only required when the `protocol` config is set to `https`.
-* Example Usage
+- This config is only required when the `protocol` config is set to `https`.
+- Example Usage
 
   ```typescript
   import { Drash } from "./deps.ts";
@@ -129,8 +136,8 @@ Below are the optional configurations. Drash servers can be created without thes
 
 ### key_file?: string
 
-* This config is only required when the `protocol` config is set to `https`.
-* Example Usage
+- This config is only required when the `protocol` config is set to `https`.
+- Example Usage
 
   ```typescript
   import { Drash } from "./deps.ts";
@@ -147,8 +154,11 @@ Below are the optional configurations. Drash servers can be created without thes
 
 ### services?: Drash.Service
 
-* This is the array of instantiated services that the server will use throughout the request-resource-response lifecycle. You can learn more about services in the left sidebar under [Tutorials > Services > Introduction](/drash/v2.x/tutorials/services/introduction).
-* Example Usage
+- This is the array of instantiated services that the server will use throughout
+  the request-resource-response lifecycle. You can learn more about services in
+  the left sidebar under
+  [Tutorials > Services > Introduction](/drash/v2.x/tutorials/services/introduction).
+- Example Usage
 
   ```typescript
   import { Drash } from "./deps.ts";
@@ -169,4 +179,3 @@ Below are the optional configurations. Drash servers can be created without thes
     ],
   });
   ```
-

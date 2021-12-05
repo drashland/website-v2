@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { useRouter }  from "next/router";
+import { useRouter } from "next/router";
 import styled, { ThemeProvider } from "styled-components";
 import SideBar from "./SideBar";
 import LayoutTopBar from "./LayoutTopBar";
 import Breadcrumbs from "./Breadcrumbs";
 import LoadingScreen from "./LoadingScreen";
 import InnerContainer from "./InnerContainer";
-import { lightTheme, darkTheme } from "../../styles/theme";
-import { publicRuntimeConfig, getGitHubCreateIssueUrl } from "../services/config_service";
+import { darkTheme, lightTheme } from "../../styles/theme";
+import {
+  getGitHubCreateIssueUrl,
+  publicRuntimeConfig,
+} from "../services/config_service";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -32,7 +35,7 @@ const Container = styled.div`
 `;
 
 const Main = styled.div`
-  padding-left: ${({ mobileViewport }) => (!mobileViewport ? '350px': '0')};
+  padding-left: ${({ mobileViewport }) => (!mobileViewport ? "350px" : "0")};
   display: flex;
   justify-content: center;
   height: 100%;
@@ -74,7 +77,7 @@ const Copyright = styled.div`
 `;
 
 const ButtonOpenSideBar = styled.button`
-  display: ${({ show }) => (show ? 'block' : 'none' )};
+  display: ${({ show }) => (show ? "block" : "none")};
   color: #ffffff;
   position: fixed;
   font-size: .8rem;
@@ -97,12 +100,14 @@ const ButtonOpenSideBar = styled.button`
     clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
     position: absolute;
     height: 15px;
-    top: ${({ sideBarOpen }) => (sideBarOpen ? '25px' : '17px')};
+    top: ${({ sideBarOpen }) => (sideBarOpen ? "25px" : "17px")};
     width: 25px;
     left: 20px;
     transition-duration: .25s;
     transition-property: transform, top;
-    transform: ${({ sideBarOpen }) => (sideBarOpen ? 'rotate(-45deg)' : 'rotate(0deg)')};
+    transform: ${(
+  { sideBarOpen },
+) => (sideBarOpen ? "rotate(-45deg)" : "rotate(0deg)")};
   }
 
   &:after {
@@ -110,13 +115,15 @@ const ButtonOpenSideBar = styled.button`
     background: #ffffff;
     clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
     position: absolute;
-    top: ${({ sideBarOpen }) => (sideBarOpen ? '25px' : '35px')};
+    top: ${({ sideBarOpen }) => (sideBarOpen ? "25px" : "35px")};
     height: 15px;
     width: 25px;
     left: 20px;
     transition-duration: .25s;
     transition-property: transform, top;
-    transform: ${({ sideBarOpen }) => (sideBarOpen ? 'rotate(45deg)' : 'rotate(0deg)')};
+    transform: ${(
+  { sideBarOpen },
+) => (sideBarOpen ? "rotate(45deg)" : "rotate(0deg)")};
   }
 `;
 
@@ -127,8 +134,8 @@ const ButtonOpenSidebarMiddleBar = styled.div`
   top: 26px;
   height: 15px;
   width: 25px;
-  left: ${({ sideBarOpen }) => (sideBarOpen ? '50px' : '20px')};
-  opacity: ${({ sideBarOpen }) => (sideBarOpen ? '0' : '1')};
+  left: ${({ sideBarOpen }) => (sideBarOpen ? "50px" : "20px")};
+  opacity: ${({ sideBarOpen }) => (sideBarOpen ? "0" : "1")};
   transition-duration: .25s;
   transition-property: opacity, left;
   z-index: 1;
@@ -160,19 +167,19 @@ export default function Layout(props) {
     window.Prism.highlightAll();
 
     // Make sure to set the user's theme mode preference
-    let userSettingsDarkMode = window.localStorage.getItem(
-      publicRuntimeConfig.localStorageKeys.darkMode
+    const userSettingsDarkMode = window.localStorage.getItem(
+      publicRuntimeConfig.localStorageKeys.darkMode,
     );
     if (!userSettingsDarkMode) {
       window.localStorage.setItem(
         publicRuntimeConfig.localStorageKeys.darkMode,
-        "false"
+        "false",
       );
     }
     setDarkMode(userSettingsDarkMode && userSettingsDarkMode === "true");
 
     // Support mobile views, desktop views, and window resizing
-    window.addEventListener("resize", handleWindowSizeChange);
+    addEventListener("resize", handleWindowSizeChange);
     // If the `mobileViewport` variable hasn't been set yet, then we need to
     // perform the `handleWindowSizeChange()` to see if we're in a mobile
     // viewport or not.
@@ -214,7 +221,7 @@ export default function Layout(props) {
   function toggleDarkMode() {
     window.localStorage.setItem(
       publicRuntimeConfig.localStorageKeys.darkMode,
-      !darkMode
+      !darkMode,
     );
     setDarkMode(!darkMode);
   }
@@ -234,13 +241,11 @@ export default function Layout(props) {
   // show a loading screen so that the page doesn't transition from desktop to
   // mobile or mobile to desktop. That would look jank to the user.
   if (
-    (mobileViewport === null)
-    || (darkMode === null)
-    || willRedirect
+    (mobileViewport === null) ||
+    (darkMode === null) ||
+    willRedirect
   ) {
-    return (
-      <LoadingScreen theme={darkMode ? darkTheme : lightTheme} />
-    );
+    return <LoadingScreen theme={darkMode ? darkTheme : lightTheme} />;
   }
 
   return (
@@ -280,14 +285,27 @@ export default function Layout(props) {
           <InnerContainer>
             <Breadcrumbs breadcrumbs={getBreadcrumbs()} />
             {children}
-            <HorizontalRule/>
+            <HorizontalRule />
             <MakeBetter>
               <MakeBetterHeading>
                 Help Improve This Page
               </MakeBetterHeading>
-              <p>If you are having issues with this page (e.g., parts of this page are not loading, documentation does not make sense, etc.), please let us know by filing an issue <a href={getGitHubCreateIssueUrl(pageUri)} target="_BLANK">here</a>. We want to make sure these documentation pages cater the best developer experience possible.</p>
+              <p>
+                If you are having issues with this page (e.g., parts of this
+                page are not loading, documentation does not make sense, etc.),
+                please let us know by filing an issue{" "}
+                <a href={getGitHubCreateIssueUrl(pageUri)} target="_BLANK" rel="noreferrer">
+                  here
+                </a>. We want to make sure these documentation pages cater the
+                best developer experience possible.
+              </p>
               {editThisPageUrl && (
-                <p>Alternatively, you can <a href={editThisPageUrl} target="_BLANK" rel="noreferrer">edit this page</a>.</p>
+                <p>
+                  Alternatively, you can{" "}
+                  <a href={editThisPageUrl} target="_BLANK" rel="noreferrer">
+                    edit this page
+                  </a>.
+                </p>
               )}
             </MakeBetter>
             <Copyright>
