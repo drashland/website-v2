@@ -26,7 +26,7 @@ import styled from "styled-components";
 
 const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
-const Heading = function(level) {
+const Heading = function (level) {
   const heading = function (props) {
     const children = React.Children.toArray(props.children);
     const text = children.reduce(flatten, "");
