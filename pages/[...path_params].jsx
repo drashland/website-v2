@@ -88,7 +88,6 @@ export default function Page(props) {
       moduleVersions={moduleVersions}
     >
       <ReactMarkdown
-        renderers={{ heading: Markdown.HeadingRenderer }}
         components={{
           blockquote: Markdown.Blockquote,
           h1: Markdown.Heading1,
