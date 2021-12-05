@@ -56,11 +56,19 @@ const Heading = function (level) {
 
     // Wrap the heading in a <div> tag so that we can style a border on the
     // <div> and style the heading separately
+    if (level != 1) {
+      return (
+        <div className={props.className}>
+          <a className="heading-anchor" name={slug} />
+          {renderLinkedHeading}
+        </div>
+      );
+    }
+
     return (
-      <div className={props.className}>
-        <a className="heading-anchor" name={slug} />
-        {renderLinkedHeading}
-      </div>
+        <div className={props.className}>
+          {renderLinkedHeading}
+        </div>
     );
   };
 
