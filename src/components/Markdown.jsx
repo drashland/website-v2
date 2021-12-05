@@ -4,6 +4,8 @@
 // in `[...path_params].jsx`.
 //
 import React from "react";
+import { Link } from "@styled-icons/bootstrap";
+import styled from "styled-components";
 
 const flatten = (text, child) => {
   return typeof child === "string"
@@ -11,20 +13,15 @@ const flatten = (text, child) => {
     : React.Children.toArray(child.props.children).reduce(flatten, text);
 };
 
-/**
- * HeadingRenderer is a custom renderer
- * It parses the heading and attaches an id to it to be used as an anchor
- */
-export const HeadingRenderer = (props) => {
-  const children = React.Children.toArray(props.children);
-  const text = children.reduce(flatten, "");
-  const slug = text.toLowerCase().replace(/\W/g, "-");
-  return React.createElement("h" + props.level, { id: slug }, props.children);
-};
-
-import styled from "styled-components";
-
 const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
+
+
+const LinkIcon = styled(Link)`
+  color: ${({ theme }) => theme.headingLinkIcon.color};
+  height: 25px;
+  transition-duration: 0.15s;
+  transition-property: opacity;
+`;
 
 export const Blockquote = styled.blockquote`
   border-left: 5px solid #efefef;
@@ -32,67 +29,95 @@ export const Blockquote = styled.blockquote`
 `;
 
 const Heading = function (level) {
-  const heading = function (props) {
+  const wrappedHeadingBlock = function (props) {
     const children = React.Children.toArray(props.children);
     const text = children.reduce(flatten, "");
-    const slug = text.toLowerCase().replace(/\W/g, "-");
-    switch (level) {
-      case 1:
-        return <h1 id={slug} className={props.className}>{props.children}</h1>;
-      case 2:
-        return <h2 id={slug} className={props.className}>{props.children}</h2>;
-      case 3:
-        return <h3 id={slug} className={props.className}>{props.children}</h3>;
-      case 4:
-        return <h4 id={slug} className={props.className}>{props.children}</h4>;
-      default:
-        break;
+    const slug = text.toLowerCase().replace(/\W/g, "-").replace("--", "-");
+    const linkedHeadingChildren = [...props.children];
+
+    // The <h1> tags do not need an anchor because they are at the top of the
+    // page
+    if (level !== 1) {
+        linkedHeadingChildren.push((
+          <a key={`anchor_${slug}_${level}`} className="icon-link" href={`#` + slug}>
+            <LinkIcon key={`link_icon_${slug}_${level}`} className="icon" />
+          </a>
+        ));
     }
-    return <p id={slug} className={props.className}>{props.children}</p>;
+
+    let renderLinkedHeading = React.createElement(
+      "h" + level,
+      {
+        key: JSON.stringify(props.children + level),
+        className: (level != 1) ? "heading-linked" : null
+      },
+      linkedHeadingChildren,
+    );
+
+    // Wrap the heading in a <div> tag so that we can style a border on the
+    // <div> and style the heading separately
+    return (
+      <div className={props.className}>
+        <a className="heading-anchor" name={slug} />
+        {renderLinkedHeading}
+      </div>
+    );
   };
 
-  return heading;
+  return wrappedHeadingBlock;
 };
 
 export const Heading1 = styled(Heading(1))`
-  font-size: 3rem;
-  font-weight: bold;
-  line-height: 1.2;
-  ${MARGIN_BOTTOM};
-  transition-duration: 0.25s;
-  transition-property: color;
+  h1 {
+    color: ${({ theme }) => theme.layout.text.color};
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 1.2;
+    ${MARGIN_BOTTOM};
+    transition-duration: 0.25s;
+    transition-property: color;
+  }
 `;
 
 export const Heading2 = styled(Heading(2))`
   border-top: .25rem solid ${({ theme }) =>
   theme.markdown.heading2.borderTopColor};
   margin-top: 2.5rem !important;
-  padding-top: 2rem;
-  font-size: 2rem;
-  font-weight: bold;
-  line-height: 1.2;
-  ${MARGIN_BOTTOM};
-  transition-duration: 0.25s;
-  transition-property: border-top, color;
+  h2 {
+    color: ${({ theme }) => theme.layout.text.color};
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.2;
+    padding-top: 2rem;
+    ${MARGIN_BOTTOM};
+    transition-duration: 0.25s;
+    transition-property: border-top, color;
+  }
 `;
 
 export const Heading3 = styled(Heading(3))`
   margin-top: 1.6rem !important;
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: 1.2;
-  ${MARGIN_BOTTOM};
-  transition-duration: 0.25s;
-  transition-property: color;
+  h3 {
+    color: ${({ theme }) => theme.layout.text.color};
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.2;
+    ${MARGIN_BOTTOM};
+    transition-duration: 0.25s;
+    transition-property: color;
+  }
 `;
 
 export const Heading4 = styled(Heading(4))`
   margin-top: 1.6rem !important;
-  font-size: 1.3rem;
-  font-weight: bold;
-  ${MARGIN_BOTTOM};
-  transition-duration: 0.25s;
-  transition-property: color;
+  h4 {
+    color: ${({ theme }) => theme.layout.text.color};
+    font-size: 1.3rem;
+    font-weight: bold;
+    ${MARGIN_BOTTOM};
+    transition-duration: 0.25s;
+    transition-property: color;
+  }
 `;
 
 export const ListItem = styled.li`
