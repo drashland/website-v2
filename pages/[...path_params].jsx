@@ -113,7 +113,6 @@ export default function Page(props) {
           h2: Markdown.Heading2,
           h3: Markdown.Heading3,
           h4: Markdown.Heading4,
-          h4: Markdown.Heading4,
           li: Markdown.ListItem,
           code: Markdown.RestyledCode,
           pre: Markdown.Pre,
