@@ -106,7 +106,9 @@ export default function TopBar(props) {
       <Title>
         {moduleName && (
           <>
-            <Link href="/"><a>Drash Land</a></Link>
+            <Link href="/">
+              <a>Drash Land</a>
+            </Link>
             <span className="middot">&middot;</span>
             {moduleName}
           </>
