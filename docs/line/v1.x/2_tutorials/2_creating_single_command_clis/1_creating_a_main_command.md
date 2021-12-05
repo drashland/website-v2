@@ -185,11 +185,11 @@ You can provide explicit installation instructions to your users. That is, give
 them something like the following:
 
 > When installing this CLI, please use the following command:
-
+>
 > ```shell
-> $ deno install --name greet app.ts`.
+> $ deno install --name greet app.ts.
 > ```
-
+>
 > If you install this CLI using a different `--name`, then please be aware that
 > the help menu(s) will not reflect the `--name` you have chosen.
 

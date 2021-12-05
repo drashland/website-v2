@@ -26,6 +26,11 @@ import styled from "styled-components";
 
 const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
+export const Blockquote = styled.blockquote`
+  border-left: 5px solid #efefef;
+  padding-left: 1rem;
+`;
+
 const Heading = function (level) {
   const heading = function (props) {
     const children = React.Children.toArray(props.children);

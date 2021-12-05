@@ -5,8 +5,10 @@
 - [Before You Get Started](#before-you-get-started)
 - [Folder Structure End State](#folder-structure-end-state)
 - [Steps](#steps)
+- [Verification](#verification)
 - [Option Signatures](#option-signatures)
 - [Option Values](#option-values)
+  - [Example](#example)
 
 ## Before You Get Started
 
@@ -34,13 +36,13 @@ You can add as many options as you wish.
 
 Things to know:
 
-- Any argument in a signature _**is required**_. This means if a user does not
-  specify all arguments, then they will be shown an error and the `USAGE`
-  section for the command being used.
-- Arguments must be surrounded by square brackets in the signature. This is how
-  Line knows that the command handles arguments.
+- Options are optional.
+- The key in the `options` property is the signature.
+- The value in the `options` property is the option's description.
+- Options do not have to begin with `-` or `--`. However, it is probably best to
+  keep this convention to prevent confusion.
 
-In this tutorial, you will create a CLI that takes in two arguments.
+In this tutorial, you will create a CLI that takes in one option.
 
 ## Folder Structure End State
 
@@ -52,70 +54,67 @@ In this tutorial, you will create a CLI that takes in two arguments.
 
 ## Steps
 
-1. Add arguments to your main command's `signature`.
+1. Add a `--debug` option to enable debug logging. Also, add the logic to handle
+   the `--debug` option.
 
    ```diff-typescript
-     // cli.ts
+      // cli.ts
 
-     import { Line } from "./deps.ts";
+      import { Line } from "./deps.ts";
 
-     // Create your main command
+      // Create your main command
 
-     class GreetMainCommand extends Line.MainCommand {
-   -   public signature = "greet";
-   +   public signature = "greet [greeting] [name]";
-     }
+      class GreetMainCommand extends Line.MainCommand {
+        public signature = "greet [greeting] [name]";
 
-     // Construct your Line.CLI object and plug in your main command
+        public arguments = {
+          "greeting": "The greeting to use before the name.",
+          "name": "The name of the thing to greet.",
+        };
+   +
+   +    public options = {
+   +      "--debug": "Output debug logging",
+   +    };
 
-     const cli = new Line.CLI({
-       name: "Greeter CLI", // Required config
-       description: "A CLI that outputs greetings", // Required config
-       version: "v1.0.0", // Required config
-       command: GreetMainCommand, // Required config
-     });
+        public handle(): void {
+   +      const debugEnabled = this.option("--debug"); // Evalutes to true if specified by the user
+   +
+   +      if (debugEnabled) {
+   +        console.log("[DEBUG] Process started.");
+   +      }
 
-     // Run your CLI
+          const greeting = this.argument("greeting");
+          const name = this.argument("name");
+   +
+   +      if (debugEnabled) {
+   +        console.log(`[DEBUG] User passed in greeting arg: ${greeting}`);
+   +        console.log(`[DEBUG] User passed in name arg: ${name}`);
+   +      }
 
-     cli.run();
+          console.log(`${greeting}, ${name}!`);
+   +
+   +      if (debugEnabled) {
+   +        console.log("[DEBUG] Process finished.");
+   +      }
+        }
+      }
+
+      // Construct your Line.CLI object and plug in your main command
+
+      const cli = new Line.CLI({
+        name: "Greeter CLI", // Required config
+        description: "A CLI that outputs greetings", // Required config
+        version: "v1.0.0", // Required config
+        command: GreetMainCommand, // Required config
+      });
+
+      // Run your CLI
+
+      cli.run();
    ```
 
-2. Add your `handle()` method.
-
-   ```diff-typescript
-     // cli.ts
-
-     import { Line } from "./deps.ts";
-
-     // Create your main command
-
-     class GreetMainCommand extends Line.MainCommand {
-       public signature = "greet [greeting] [name]";
-   +
-   +   public handle(): void {
-   +     const greeting = this.argument("greeting");
-   +     const name = this.argument("name");
-   +
-   +     console.log(`${greeting}, ${name}!`);
-   +   }
-     }
-
-     // Construct your Line.CLI object and plug in your main command
-
-     const cli = new Line.CLI({
-       name: "Greeter CLI", // Required config
-       description: "A CLI that outputs greetings", // Required config
-       version: "v1.0.0", // Required config
-       command: GreetMainCommand, // Required config
-     });
-
-     // Run your CLI
-
-     cli.run();
-   ```
-
-3. Reinstall your CLI using the `--force` option to forcefully overwrite the
-   existing installion.
+2. Reinstall your CLI using the `--force` option to forcefully overwrite the
+   existing installation.
 
    ```shell
    $ deno install --force --name greet cli.ts
@@ -131,153 +130,125 @@ In this tutorial, you will create a CLI that takes in two arguments.
 
    You should see the following output:
 
-   ```text
-   Greeter CLI - A CLI that outputs greetings
+   ```diff-text
+      Greeter CLI - A CLI that outputs greetings
 
-   USAGE
+      USAGE
 
-       greet [option]
-       greet [arg: greeting] [arg: name]
+          greet [option]
+   -      greet [arg: greeting] [arg: name]
+   +      greet [options] [arg: greeting] [arg: name]
 
-   ARGUMENTS
+      ARGUMENTS
 
-       greeting
-           (no description)
-       name
-           (no description)
+          greeting
+              The greeting to use before the name.
+          name
+              The name of the thing to greet.
 
-   OPTIONS
+      OPTIONS
 
-       -h, --help
-           Show this menu.
-       -v, --version
-           Show this CLI's version.
+          -h, --help
+              Show this menu.
+          -v, --version
+              Show this CLI's version.
+   +
+   +      --debug
+   +          Output debug logging
    ```
 
-2. Run your CLI again with arguments.
+2. Run your CLI again with arguments and the `--debug` option.
 
    ```shell
-   $ greet Hello Line
+   $ greet --debug Hello Line
    ```
 
    You should see the following output:
 
    ```text
+   [DEBUG] Process started.
+   [DEBUG] User passed in greeting arg: Hello
+   [DEBUG] User passed in name arg: Line
    Hello, Line!
+   [DEBUG] Process finished.
    ```
 
-3. Run your CLI again, but without the second argument.
+## Option Signatures
 
-   ```shell
-   $ greet Hello
-   ```
+Multiple option signatures for a single option can be defined in the key of the
+`options` property. For example:
 
-   You should see the following output based on Line's argument validation code:
-
-   ```text
-   [ERROR] Command 'greet' used incorrectly. Error(s) found:
-
-     * Argument 'name' is missing
-
-   USAGE
-
-       greet [option]
-       greet [arg: greeting] [arg: name]
-
-       Run `greet --help` for more information.
-   ```
-
-4. Run your CLI again, but add an extra argument.
-
-   ```shell
-   $ greet Hello Line SomeRandomArgument
-   ```
-
-   You should see the following output based on Line's argument validation code:
-
-   ```text
-   [ERROR] Command 'greet' used incorrectly. Error(s) found:
-
-     * Unknown argument(s) provided: SomeRandomArgument.
-
-   USAGE
-
-       greet [option]
-       greet [arg: greeting] [arg: name]
-
-       Run `greet --help` for more information.
-   ```
-
-## Argument Descriptions
-
-By default, arguments do not have descriptions. This is because Line does not
-know the intent behind the arguments you define. For example, in the above
-Verification steps, the output of the help menu contains the following
-`ARGUMENTS` section:
-
-```text
-ARGUMENTS
-
-    greeting
-        (no description)
-    name
-        (no description)
+```typescript
+public options = {
+  "-d, --debug": "Output debug logging",
+};
 ```
 
-To add descriptions to these arguments, you can define an `arguments` property
-in your main command class. For example:
+Notice that each signature is separated by a comma. The comma lets Line know
+that a single option has multiple signatures.
 
-```diff-typescript
-  // cli.ts
+In the above `options` property, both `-d` and `--debug` are considered the same
+option in Line. This means a user can specify `-d` or `--debug`.
 
-  import { Line } from "./deps.ts";
+You can retrieve the option using ...
 
-  // Create your main command
-
-  class GreetMainCommand extends Line.MainCommand {
-    public signature = "greet";
-    public signature = "greet [greeting] [name]";
-+
-+   public arguments = {
-+     "greeting": "The greeting to use before the name.",
-+     "name": "The name of the thing to greet.",
-+   };
-
-    public handle(): void {
-      const greeting = this.argument("greeting");
-      const name = this.argument("name");
-
-      console.log(`${greeting}, ${name}!`);
-    }
-  }
-
-  // Construct your Line.CLI object and plug in your main command
-
-  const cli = new Line.CLI({
-    name: "Greeter CLI", // Required config
-    description: "A CLI that outputs greetings", // Required config
-    version: "v1.0.0", // Required config
-    command: GreetMainCommand, // Required config
-  });
-
-  // Run your CLI
-
-  cli.run();
+```typescript
+const debugEnabled = this.option("--debug"); // Evaluates to true if specified by the user
 ```
 
-The above CLI's `ARGUMENTS` section will show the following:
+... or:
 
-```text
-ARGUMENTS
-
-    greeting
-        The greeting to use before the name.
-    name
-        The name of the thing to greet.
+```typescript
+const debugEnabled = this.option("-d"); // Evalutes to true if specified by the user
 ```
 
-Take note of the following when defining the `arguments` property:
+Both options will evaluate to `true`. It does not matter which signature you
+specify in the `this.option()` call. Line will know which one you are trying to
+get based on the signature you specify in the `this.option()` call since both
+are considered the same option.
 
-- The key is the argument name that is in the `signature` property.
-- Argument names are not surrounded by square brackets.
-- The value is the description of the argument.
+## Option Values
+
+By default, the value of an option is `true`. However, options can take in a
+different value. You can have your options take in a value by doing the
+following:
+
+```typescript
+public options = {
+  "-l [value], --log [value]": "Output logging at the specified value",
+};
+```
+
+Things to note:
+
+- If an option takes in a value, the value _**is required**_ when the user
+  specifies the option.
+- Options can only take in one value (support to take in more values might be
+  introduced in the future).
+- If you want your option to take in a value, it must be done using `[value]`.
+  Notice the square brackets. This is required for Line to register that the
+  option takes in a value.
+
+### Example
+
+```typescript
+class GreetMainCommand extends Line.MainCommand {
+  public signature = "greet [greeting] [name]";
+
+ public options = {
+   "-l [value], --log [value]": "Output logging at the specified value",
+ };
+
+public handle(): void {
+  const logLevel = this.option("--log");
+
+  // If a user specifies `greet --log error Hello Line`, then the `logLevel`
+  // variable above would evaluate to `error`.
+  //
+  // If a user specifies `greet --log debug Hello Line`, then the `logLevel`
+  // variable above would evaluate to `debug`.
+  ...
+  ...
+  ...
+}
+```

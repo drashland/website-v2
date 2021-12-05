@@ -20,7 +20,7 @@ To allow your main command to handle arguments, add them to your main command's
 public signature = "my-cli [arg1] [arg2] [arg3]";
 ```
 
-... and create a `handle()` method in your main command ...
+... and create a `handle()` method in your main command to handle arguments:
 
 ```typescript
 public handle(): void { // or public async handle(): Promise<void> {
@@ -45,6 +45,7 @@ Things to know:
 - Any argument in a signature _**is required**_. This means if a user does not
   specify all arguments, then they will be shown an error and the `USAGE`
   section for the command being used.
+- Any extra arguments specified by a user will result in an error being shown.
 - Arguments must be surrounded by square brackets in the signature. This is how
   Line knows that the command handles arguments.
 
@@ -243,7 +244,6 @@ in your main command class. For example:
   // Create your main command
 
   class GreetMainCommand extends Line.MainCommand {
-    public signature = "greet";
     public signature = "greet [greeting] [name]";
 +
 +   public arguments = {
