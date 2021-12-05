@@ -1,4 +1,4 @@
-# Adding Arguments
+# Add Arguments
 
 ## Table of Contents
 
@@ -11,7 +11,7 @@
 ## Before You Get Started
 
 This tutorial builds off of
-[Tutorials > Creating Single Command CLIs > Creating a Main Command](/line/v1.x/tutorials/main-commands/creating-a-main-command).
+[Part 1: Add a Main Command](/line/v1.x/tutorials/creating-a-cli/single-command-clis/part-1-add-a-main-command).
 
 To allow your main command to handle arguments, add them to your main command's
 `signature` property like so ...
@@ -42,12 +42,15 @@ You can add as many arguments as you wish.
 
 Things to know:
 
-- Any argument in a signature _**is required**_. This means if a user does not
-  specify all arguments, then they will be shown an error and the `USAGE`
-  section for the command being used.
-- Any extra arguments specified by a user will result in an error being shown.
-- Arguments must be surrounded by square brackets in the signature. This is how
-  Line knows that the command handles arguments.
+- All arguments in a signature _**are required**_. If a user does not specify
+  all arguments, then they will be shown an error and the `USAGE` section.
+- If a user specifies too many arguments, then they will be shown an error and
+  the `USAGE` section.
+- Arguments must be surrounded by square brackets in the `signature`. This is
+  how Line knows that the command handles arguments.
+- If an argument is surrounded by quotes when passed in, then the entire value
+  inside the quotes will be the argument value. An example of this is shown in
+  the Verification section below.
 
 In this tutorial, you will create a CLI that takes in two arguments.
 
@@ -217,6 +220,18 @@ In this tutorial, you will create a CLI that takes in two arguments.
        Run `greet --help` for more information.
    ```
 
+5. Run your CLI again, but surround arguments with quotes.
+
+   ```shell
+   $ greet "How are you" "user of this CLI"
+   ```
+
+   You should see the following output:
+
+   ```text
+   How are you, user of this CLI!
+   ```
+
 ## Argument Descriptions
 
 By default, arguments do not have descriptions. This is because Line does not
@@ -273,7 +288,8 @@ in your main command class. For example:
   cli.run();
 ```
 
-The above CLI's `ARGUMENTS` section will show the following:
+The above will result in the `ARGUMENTS` section of the help menu showing the
+following:
 
 ```text
 ARGUMENTS
@@ -289,3 +305,7 @@ Take note of the following when defining the `arguments` property:
 - The key is the argument name that is in the `signature` property.
 - Argument names are not surrounded by square brackets.
 - The value is the description of the argument.
+
+Continue to
+[Part 3: Add Options](/line/v1.x/tutorials/creating-a-cli/single-command-clis/part-3-add-options)
+to see how to make this CLI take options.

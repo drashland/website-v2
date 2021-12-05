@@ -1,4 +1,4 @@
-# Part 1: Creating A Main Command
+# Part 1: Add a Main Command
 
 ## Table of Contents
 
@@ -93,4 +93,4 @@ menu and version.
    ```
 
 To make this CLI more feature-rich, proceed to reading
-[Adding Arguments](/line/v1.x/tutorials/creating-a-cli/single-command-clis/adding-arguments).
+[Part 2: Add Arguments](/line/v1.x/tutorials/creating-a-cli/single-command-clis/part-2-add-arguments).
