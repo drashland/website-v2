@@ -5,7 +5,7 @@ Dexter is a logging service inspired by
 can be used throughout the request-resource-response lifecycle.
 
 When used, it will log information on a request to the stdout, such as request
-method and request url, response time. This service will run before and after a
+method and request URL, response time. This service will run before and after a
 resource method is called.
 
 ## Table of Contents
@@ -44,14 +44,14 @@ import { DexterService } from "./deps.ts";
 const dexter = new DexterService(); // By default, will display the date and time of the request
 
 // Create your server and plug in dexter to the middleware config
-const server = new Drash.Http.Server({
+const server = new Drash.Server({
   resources: [
     HomeResource,
   ],
   services: [
       dexter
   ]
-  hostname: "localhost",
+  hostname: "0.0.0.0",
   port: 1447,
   protocol: "http"
 });
@@ -66,20 +66,20 @@ console.log(`Server running at ${server.address}`);
 ### `datetime`
 
 Will display the date and time of when the request was handled. Example logging
-output would be: `[INFO] 2021-07-08 19:59:50 | Request received`
+output would be: `[INFO] 2021-07-08 19:59:50 | Request received`.
 
 Note that this option is enabled by default. Set `datetime` to `false` when
-calling `new DexterService` to disable this
+calling `new DexterService()` to disable this.
 
 ### `url`
 
-Will display the requested url. Example logging output would be:
-`[INFO] /users | Request received`
+Will display the requested URL. Example logging output would be:
+`[INFO] /users | Request received`.
 
 ### `method`
 
 Will display the HTTP verb (method) of the request. Example logging output would
-be: `[INFO] GET | Request received`
+be: `[INFO] GET | Request received`.
 
 ### `response_time`
 
@@ -100,12 +100,14 @@ const dexter = new DexterService({
 You can reuse Dexter in your codebase by accessing its `logger`. For example, if
 you want to use Dexter in one of your resources, then do the following:
 
-1. Create your `app.ts` file.
+1. Set up your `deps.ts` file to export a `dexter` object.
 
    ```typescript
-   // File: deps.ts
+   // deps.ts
+
    export * as Drash from { ... };
    import { DexterService } from { ... };
+
    export const dexter = new DexterService({
      enabled: true,
      level: "debug",
@@ -113,12 +115,15 @@ you want to use Dexter in one of your resources, then do the following:
    });
    ```
 
+2. Create your `app.ts` file.
+
    ```typescript
-   // File: app.ts
+   // app.ts
+
    import { dexter, Drash } from "./deps.ts";
    import { HomeResource } from "./home_resource.ts";
 
-   const server = new Drash.Http.Server({
+   const server = new Drash.Server({
      resources: [
        HomeResource,
      ],
@@ -127,7 +132,7 @@ you want to use Dexter in one of your resources, then do the following:
      ],
      protocol: "http",
      port: 1447,
-     hostname: "localhost",
+     hostname: "0.0.0.0",
    });
 
    server.run();
@@ -135,9 +140,11 @@ you want to use Dexter in one of your resources, then do the following:
    console.log(`Server running at ${server.address}`);
    ```
 
-2. Create your `home_resource` file.
+3. Create your `home_resource.ts` file.
 
    ```typescript
+   // home_resource.ts
+
    import { dexter, Drash } from "./deps.ts";
 
    export class HomeResource extends Drash.Resource {
