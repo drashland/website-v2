@@ -1,0 +1,237 @@
+# Entry Points
+
+## Table of Contents
+
+- [Before You Get Started](#before-you-get-started)
+- [Entry Point File](#entry-point-file)
+  - [Example Entry Point File](#example-entry-point-file)
+- [Entry Point Main Command](#entry-point-main-command)
+  - [Example Entry Point Main Command](#example-entry-point-main-command)
+- [Caveats](#caveats)
+  - [Differentiating Signatures](#differentiating-signatures)
+    - [Option 1: Provide Explicit Installation Instructions](#option-1-provide-explicit-installation-instructions)
+    - [Option 2: Use a Generic Signature](#option-2-use-a-generic-signature)
+
+## Before You Get Started
+
+There are two entry points for a Line CLI. They are:
+
+1. The entry point file that contains an instantiated `Line.CLI` object; and
+2. The entry point "main command" that contains the code that your Line CLI
+   runs.
+
+On this page, we will go over both entry points and some caveats to be aware of.
+
+## Entry Point File
+
+The main entry point file for all Line CLIs must run an instantiated `Line.CLI`
+object. It must also run that object using the `.run()` method on the
+instantiated `Line.CLI` object.
+
+### Example Entry Point File
+
+```typescript
+// some_file.ts
+
+import { Line } from "./deps.ts";
+
+// Instantiate your CLI
+const cli = new Line.CLI({
+  name: "Greeter CLI", // Required config
+  description: "A CLI that outputs greetings", // Required config
+  version: "v1.0.0", // Required config
+  command: SomeMainCommandClass, // Required config
+});
+
+// Run your CLI
+cli.run();
+```
+
+The above is the only way to run a Line CLI. You can extend the `Line.CLI` class
+to further meet your needs, but ultimately, the `Line.CLI` class is used to run
+a Line CLI and all of its configs (`name`, `description`, `version`, and
+`command`) are required.
+
+The above is just an example, but if it were a real implementation, it could be
+installed using `deno install` (more on `deno install` can be found
+[here](https://deno.land/manual/tools/script_installer)):
+
+```shell
+$ deno install --name some-cool-command-name some_file.ts
+```
+
+## Entry Point Main Command
+
+The entry point _main command_ for all Line CLIs is a main command class. Line
+expects a main command class to be plugged into the `command` config of a
+`Line.CLI` object (e.g., in the Entry Point File section above, it uses
+`SomeMainCommandClass`). In order for any Line CLI to run, it must contain a
+main command class.
+
+All main commands must extend the `Line.MainCommand` class. This is the base
+class for all main commands. You can define your own base main command class,
+but it _MUST_ extend the `Line.MainCommand` class for type checking and to
+inherit required data members.
+
+Line CLIs only need to register one main command. This is true for both single
+command CLIs and subcommand CLIs. Single command CLIs are those like `mkdir` and
+`rm` -- they only have a single command that you can run. They have a command
+signature like the following:
+
+```text
+<MAIN COMMAND> [options] [arg] ...
+```
+
+Subcommand CLIs are those like `deno` and `yarn` -- `deno`/`yarn` are the main
+commands and they take in subcommands like `run`. They have a command signature
+like the following:
+
+```text
+<MAIN COMMAND> [subcommand] [options] [arg] ...
+```
+
+### Example Entry Point Main Command
+
+To create a main command class, extend the `Line.MainCommand` class and provide
+a `signature`:
+
+```typescript
+// main_command.ts
+
+import { Line } from "./deps.ts";
+
+export class SomeMainCommandClass extends Line.MainCommand {
+  public signature = "greet";
+}
+```
+
+This page will not go over the all of the implementation details of a main
+command because it can vary greatly depending on things like adding arguments,
+adding options, and adding subcommands. However, there are tutorials in the
+sidebar that go over creating the following CLIs so that you get a better sense
+of how to create your main command's implementation:
+
+- [Creating a Single Command CLI](/line/v1.x/line/creating-single-command-clis)
+- [Creating a Subcommand CLI](/line/v1.x/tutorials/creating-subcommands-clis)
+
+## Caveats
+
+### Differentiating Signatures
+
+Based on
+[Deno's documentation on script installations](https://deno.land/manual/tools/script_installer),
+Line has no control over what users will use as an executable's name. Even
+though you can specify an explicit `signature` in a main command class, users
+can still specify `--name some-random-name` when installing your CLI and they
+will be able to use `some-random-name` as the command instead of what you
+specified in the `signature`. This can cause great confusion.
+
+For example, say you have a `GreetMainCommand` with a `signature` of ...
+
+```typescript
+public signature = "greet";
+```
+
+... and you installed your CLI using `--name greet` ...
+
+```shell
+$ deno install --name greet cli.ts
+```
+
+Doing the above will allow you to run `greet` and you will be shown the
+following help menu (automatically generated by Line):
+
+```text
+$ greet
+
+Greeter CLI - A CLI that outputs greetings
+
+USAGE
+
+    greet [option]
+
+
+OPTIONS
+
+    -h, --help
+        Show this menu.
+    -v, --version
+        Show this CLI's version.
+```
+
+This help menu makes sense because the `USAGE` section shows `greet`, but what
+if a user installs your CLI using `--name` like so:
+
+```shell
+$ deno install --name tester app.ts
+```
+
+The user would be able to run your CLI using `tester` instead of `greet` and
+when they are shown your CLI's help menu, they will see the following `USAGE`
+section:
+
+```text
+USAGE
+
+    greet [option]
+```
+
+As you can see, the `USAGE` section still shows `greet`. This is because of the
+following:
+
+- You defined a `signature` of `greet`
+- The user installed your CLI using a different name than what is specified by
+  you
+- Line only knows about _YOUR_ CLI's signature, so it uses that in the help
+  menu(s)
+
+Below are two options to help you prevent this confusion:
+
+#### Option 1: Provide Explicit Installation Instructions
+
+(This first option comes from
+[Deno's documentation on script installations](https://deno.land/manual/tools/script_installer))
+
+You can provide explicit installation instructions to your users. That is, give
+them something like the following:
+
+> When installing this CLI, please use the following command:
+>
+> ```shell
+> $ deno install --name greet app.ts.
+> ```
+>
+> If you install this CLI using a different `--name`, then please be aware that
+> the help menu(s) will not reflect the `--name` you have chosen.
+
+#### Option 2: Use a Generic Signature
+
+Another option is to use a placeholder in your main command's signature. For
+example:
+
+```typescript
+class GreetMainCommand extends Line.MainCommand {
+  public signature = "<COMMAND>";
+}
+```
+
+When users install your CLI with the above main command and are shown the help
+menu, they will see the following in the `USAGE` section:
+
+```text
+USAGE
+
+    <COMMAND> [option]
+```
+
+This way, users can be free to install your CLI as they please and will see a
+generic `<COMMAND>` instead of something you defined. However, it would be best
+to tell users that `<COMMAND>` is a placeholder for the `--name` they used when
+installing your CLI. For example, you can provide users with the following:
+
+> The help menu(s) in this CLI contain `<COMMAND>` in the USAGE section(s).
+> Please be aware that this is just a placeholder value for help menu purposes.
+> This command is actually the command you specified with the `--name` option
+> when installing this CLI.
+
+Also take note that this approach may cause ambiguity to some users.

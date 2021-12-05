@@ -6,16 +6,8 @@
 - [Folder Structure End State](#folder-structure-end-state)
 - [Steps](#steps)
 - [Verification](#verification)
-- [Caveats](#caveats)
-  - [Differentiating Signatures](#differentiating-signatures)
-    - [Option 1: Provide Explicit Installation Instructions](#option-1-provide-explicit-installation-instructions)
-    - [Option 2: Use a Generic Signature](#option-2-use-a-generic-signature)
 
 ## Before You Get Started
-
-The entry point for all Line CLI's is a "main command" class that gets plugged
-into a `Line.CLI` object. To create a main command class, you must extend the
-`Line.MainCommand` class. For example:
 
 ```typescript
 public class MyMainCommand extends Line.MainCommand { ... }
