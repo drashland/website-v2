@@ -55,7 +55,7 @@ class HomeResource extends Drash.Resource {
 // Create and run your server (with RateLimiterService instantiated)
 
 const server = new Drash.Server({
-  hostname: "localhost",
+  hostname: "0.0.0.0",
   port: 1447,
   protocol: "http",
   resources: [

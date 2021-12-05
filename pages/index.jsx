@@ -441,9 +441,9 @@ export default function Home() {
               })}
             </MaintainersContainer>
             <p>
-              We&apos;re a small squad of software engineers who code a lot of really
-              cool stuff. We focus heavily on the developer UX because we think
-              coding should be fun.
+              We&apos;re a small squad of software engineers who code a lot of
+              really cool stuff. We focus heavily on the developer UX because we
+              think coding should be fun.
             </p>
             <p>
               When we release software in the Deno or Node ecosystem, you can
