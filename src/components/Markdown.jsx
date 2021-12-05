@@ -1,14 +1,55 @@
 //
-// This file only contains exported styled components. These components are used
-// to replace the default components in the "markdown-to-jsx" package. See
-// the `[...path_params].js` file to see how they are used.
+// This file only contains exported styled components. These components are
+// used to replace the default components in our markdown package that we use
+// in `[...path_params].jsx`.
 //
+import React from "react";
+
+const flatten = (text, child) => {
+  return typeof child === "string"
+    ? text + child
+    : React.Children.toArray(child.props.children).reduce(flatten, text);
+};
+
+/**
+ * HeadingRenderer is a custom renderer
+ * It parses the heading and attaches an id to it to be used as an anchor
+ */
+export const HeadingRenderer = (props) => {
+  const children = React.Children.toArray(props.children);
+  const text = children.reduce(flatten, "");
+  const slug = text.toLowerCase().replace(/\W/g, "-");
+  return React.createElement("h" + props.level, { id: slug }, props.children);
+};
 
 import styled from "styled-components";
 
 const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
-export const Heading1 = styled.h1`
+const Heading = function (level) {
+  const heading = function (props) {
+    const children = React.Children.toArray(props.children);
+    const text = children.reduce(flatten, "");
+    const slug = text.toLowerCase().replace(/\W/g, "-");
+    switch (level) {
+      case 1:
+        return <h1 id={slug} className={props.className}>{props.children}</h1>;
+      case 2:
+        return <h2 id={slug} className={props.className}>{props.children}</h2>;
+      case 3:
+        return <h3 id={slug} className={props.className}>{props.children}</h3>;
+      case 4:
+        return <h4 id={slug} className={props.className}>{props.children}</h4>;
+      default:
+        break;
+    }
+    return <p id={slug} className={props.className}>{props.children}</p>;
+  };
+
+  return heading;
+};
+
+export const Heading1 = styled(Heading(1))`
   font-size: 3rem;
   font-weight: bold;
   line-height: 1.2;
@@ -17,7 +58,7 @@ export const Heading1 = styled.h1`
   transition-property: color;
 `;
 
-export const Heading2 = styled.h2`
+export const Heading2 = styled(Heading(2))`
   border-top: .25rem solid ${({ theme }) =>
   theme.markdown.heading2.borderTopColor};
   margin-top: 2.5rem !important;
@@ -30,7 +71,7 @@ export const Heading2 = styled.h2`
   transition-property: border-top, color;
 `;
 
-export const Heading3 = styled.h3`
+export const Heading3 = styled(Heading(3))`
   margin-top: 1.6rem !important;
   font-size: 1.5rem;
   font-weight: bold;
@@ -40,7 +81,7 @@ export const Heading3 = styled.h3`
   transition-property: color;
 `;
 
-export const Heading4 = styled.h3`
+export const Heading4 = styled(Heading(4))`
   margin-top: 1.6rem !important;
   font-size: 1.3rem;
   font-weight: bold;
@@ -55,12 +96,11 @@ export const ListItem = styled.li`
 export const Code = function ({ className, children }) {
   function getPrismJsClassName(ogClassName) {
     if (ogClassName.includes("diff")) {
-      const diffClassName = ogClassName.replace("lang-", " language-diff-");
-      return diffClassName + " diff-highlight";
+      return className.replace("lang-", " language-") + " diff-highlight";
     }
 
-    // For everything else, just make sure we prefix languages with `language-`
-    return ogClassName.replace("lang-", " language-")
+    // Default to just making sure that `language-` is used instead of `lang-`.
+    return className.replace("lang-", " language-");
   }
 
   return (

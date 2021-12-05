@@ -250,7 +250,7 @@ export default function Layout(props) {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <Container className={darkMode ? "dark-theme" : "light-theme"}>
+      <Container>
         <ButtonOpenSideBar
           show={mobileViewport}
           sideBarOpen={sideBarOpen}

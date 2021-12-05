@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { formatLabel } from "../src/services/string_service";
 import { publicRuntimeConfig } from "../src/services/config_service";
 import ReactMarkdown from "react-markdown";
+import * as Markdown from "../src/components/Markdown";
 
 /**
  * This constant is used for associating all markdown files with page URIs.
@@ -86,7 +87,22 @@ export default function Page(props) {
       moduleVersion={moduleVersion}
       moduleVersions={moduleVersions}
     >
-      <ReactMarkdown>
+      <ReactMarkdown
+        renderers={{ heading: Markdown.HeadingRenderer }}
+        components={{
+          h1: Markdown.Heading1,
+          h2: Markdown.Heading2,
+          h3: Markdown.Heading3,
+          h4: Markdown.Heading4,
+          li: Markdown.ListItem,
+          code: Markdown.RestyledCode,
+          pre: Markdown.Pre,
+          p: Markdown.Paragraph,
+          ol: Markdown.OrderedList,
+          ul: Markdown.UnorderedList,
+          img: Markdown.Image,
+        }}
+      >
         {markdown}
       </ReactMarkdown>
     </Layout>
