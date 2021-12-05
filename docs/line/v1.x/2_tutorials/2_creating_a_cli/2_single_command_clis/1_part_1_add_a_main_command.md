@@ -1,4 +1,4 @@
-# Creating A Main Command
+# Part 1: Creating A Main Command
 
 ## Table of Contents
 
@@ -8,14 +8,6 @@
 - [Verification](#verification)
 
 ## Before You Get Started
-
-The entry point for all Line CLI's is a "main command" class that gets plugged
-into a `Line.CLI` object. To create a main command class, you must extend the
-`Line.MainCommand` class. For example:
-
-```typescript
-public class MyMainCommand extends Line.MainCommand { ... }
-```
 
 In this tutorial, you will create a VERY basic CLI that can show your CLI's help
 menu and version.
@@ -99,3 +91,6 @@ menu and version.
    ```text
    Greeter CLI v1.0.0
    ```
+
+To make this CLI more feature-rich, proceed to reading
+[Adding Arguments](/line/v1.x/tutorials/creating-a-cli/single-command-clis/adding-arguments).

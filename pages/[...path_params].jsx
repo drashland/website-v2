@@ -5,7 +5,7 @@ import Layout from "../src/components/Layout";
 import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
-import { formatLabel } from "../src/services/string_service";
+import { convertFilenameToURL, formatLabel } from "../src/services/string_service";
 import { publicRuntimeConfig } from "../src/services/config_service";
 import ReactMarkdown from "react-markdown";
 import * as Markdown from "../src/components/Markdown";
@@ -187,12 +187,7 @@ function getAllPaths(filename, paths = []) {
     return;
   }
 
-  const file = filename
-    .replace(/[0-9]+_/g, "")
-    .replace("docs", "/")
-    .replace(/_/g, "-")
-    .replace(".md", "")
-    .replace(/\/\//g, "/");
+  const file = convertFilenameToURL(filename);
 
   FILES[file] = filename;
 
@@ -226,12 +221,7 @@ function getDirectoryTree(path, paths = []) {
         .replace(".md", "")
         .replace(/\/\//g, "/"),
     ),
-    path: path
-      .replace(/[0-9]+_/g, "")
-      .replace("docs", "/")
-      .replace(/_/g, "-")
-      .replace(".md", "")
-      .replace(/\/\//g, "/"),
+    path: convertFilenameToURL(path),
     paths: [],
   };
 

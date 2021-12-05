@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-- [Before You Get Started](#before-you-get-started)
+- [Entry Points](#entry-points)
 - [Entry Point File](#entry-point-file)
   - [Example Entry Point File](#example-entry-point-file)
 - [Entry Point Main Command](#entry-point-main-command)
@@ -12,7 +12,7 @@
     - [Option 1: Provide Explicit Installation Instructions](#option-1-provide-explicit-installation-instructions)
     - [Option 2: Use a Generic Signature](#option-2-use-a-generic-signature)
 
-## Before You Get Started
+## Entry Points
 
 There are two entry points for a Line CLI. They are:
 
@@ -104,6 +104,9 @@ export class SomeMainCommandClass extends Line.MainCommand {
   public signature = "greet";
 }
 ```
+
+In the above, `greet` is specified as the main command. This means it is
+expected for users to use `greet` to execute the main command.
 
 This page will not go over the all of the implementation details of a main
 command because it can vary greatly depending on things like adding arguments,
@@ -234,4 +237,5 @@ installing your CLI. For example, you can provide users with the following:
 > This command is actually the command you specified with the `--name` option
 > when installing this CLI.
 
-Also take note that this approach may cause ambiguity to some users.
+Also take note that this approach may cause ambiguity to some users beacuse
+`<COMMAND>` can mean anything at first glance.
