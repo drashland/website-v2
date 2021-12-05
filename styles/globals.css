@@ -53,7 +53,7 @@ img {
 }
 
 ul {
-  margin-left: 2rem;
+  margin-left: 1.5rem;
   list-style-type: disc;
   margin-bottom: 1rem;
 }
@@ -120,69 +120,32 @@ select {
 
 /* PrismJS overrides */
 
-.light-theme code {
-  background-color: #f4f4f4 !important;
-  border-radius: 1rem;
-  color: #d43790 !important;
-  font-size: .85rem;
-  font-weight: 500;
-  padding: .25rem .5rem;
-  transition-duration: 0.25s;
-  transition-property: background, color;
-}
-
-.dark-theme code {
-  color: #cc99cd;
-  background-color: #2f343c !important;
-  border-radius: 1rem;
-  font-size: .85rem;
-  font-weight: 500;
-  padding: .25rem .5rem;
-  transition-duration: 0.25s;
-  transition-property: background, color;
-}
-
-pre {
-  background: #2f343c !important;
-  border-radius: 1rem !important;
-  margin-bottom: 1.25rem !important;
-}
-
-.dark-theme pre code,
-.light-theme pre code {
-  font-size: .85rem !important;
-  background-color: transparent !important;
-  padding: 0 !important;
-  color: inherit !important;
-}
-
 .token.inserted-sign {
   background-color: rgba(61, 191, 131, 0.26) !important;
-  margin-bottom: 1px;
+  width: 100%;
 }
 
 .token.deleted-sign {
   background-color: rgba(215, 32, 32, 0.54) !important;
+  width: 100%;
 }
 
 .token.prefix.inserted {
-  background-color: rgba(90, 1081, 90, 0.65) !important;
+  /* background-color: rgba(90, 1081, 90, 0.65) !important; */
   color: #ffffff;
   display: inline-block;
   width: 15px;
-  margin: 1px;
   text-align: center;
 }
 
 .token.prefix.deleted {
-  background-color: rgba(213, 72, 72, 0.81) !important;
+  /* background-color: rgba(213, 72, 72, 0.81) !important; */
   color: #ffffff;
   display: inline-block;
   width: 15px;
-  margin: 1px;
   text-align: center;
 }
 
-pre.code {
-  display: block;
+pre code {
+  width: 100%;
 }

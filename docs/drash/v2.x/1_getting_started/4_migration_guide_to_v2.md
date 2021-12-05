@@ -22,7 +22,7 @@ Changes:
 
 - `Drash` is not the only exported member.
 
-  ```diff
+  ```diff-typescript
   - import { Drash } from "...";
   + import * as Drash from "...";
   ```
@@ -44,14 +44,14 @@ Changes:
 
 - `Http` namespace has been removed.
 
-  ```diff
+  ```diff-typescript
   - class MyResource extends Drash.Http.Resource {
   + class MyResource extends Drash.Resource {
   ```
 
 - `paths` property is now `public`.
 
-  ```diff
+  ```diff-typescript
   - static paths = ["/:some_param"];
   + public paths = ["/:some_param"];
   ```
@@ -63,7 +63,7 @@ Changes:
   "magical," and it was decided to have them removed and turned into required
   parameters.
 
-  ```diff
+  ```diff-typescript
   - public GET(): Drash.Response {
   + public GET(request: Drash.Request, response: Drash.Response): void {
   ```
@@ -73,7 +73,7 @@ Changes:
 
 - Methods to get parameters off the `request` object have changed.
 
-  ```diff
+  ```diff-typescript
   // Get path params from the URI
   - const pathParam = this.request.getPathParam("some_param");
   + const pathParam = request.pathParam("some_param");
@@ -98,7 +98,7 @@ Changes:
   [Tutorials > Responses > Setting the Body](/drash/v2.x/tutorials/responses/setting-the-body).
   The `response` object's body methods return `void`.
 
-  ```diff
+  ```diff-typescript
   - this.response.body = "Hello, world!";
   - return this.response;
   + return response.text("Hello, world!");
@@ -136,7 +136,7 @@ Tutorials > Services.
 In v1, you use the `deno-drash-middleware` repository to import middleware. In
 v2, you use the `deno-drash` repository's `services.ts` file like so:
 
-```diff
+```diff-typescript
 - import SomeMiddleware from "http://deno.land/x/deno-drash-middleware/some_middleware/mod.ts";
 + import { SomeMiddleware } from "http://deno.land/x/drash/services.ts";
 ```
@@ -148,7 +148,7 @@ Resource-level middleware in Drash v1 requires a `tsconfig.json` file with
 you do not need a `tsconfig.json` file (unless you use one for something other
 than Drash).
 
-```diff
+```diff-typescript
 // tsconfig.json
 
 - {
@@ -160,7 +160,7 @@ than Drash).
 
 To use a service in your resource, change to the following:
 
-```diff
+```diff-typescript
 // some_resource.ts
 
 - @Drash.Http.Middleware({
