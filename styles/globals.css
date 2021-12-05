@@ -53,7 +53,7 @@ img {
 }
 
 ul {
-  margin-left: 2rem;
+  margin-left: 1.5rem;
   list-style-type: disc;
   margin-bottom: 1rem;
 }
@@ -118,6 +118,34 @@ select {
   border-radius: 3rem;
 }
 
-.language-diff .token.inserted {
-  color: #68c968;
+/* PrismJS overrides */
+
+.token.inserted-sign {
+  background-color: rgba(61, 191, 131, 0.26) !important;
+  width: 100%;
+}
+
+.token.deleted-sign {
+  background-color: rgba(215, 32, 32, 0.54) !important;
+  width: 100%;
+}
+
+.token.prefix.inserted {
+  /* background-color: rgba(90, 1081, 90, 0.65) !important; */
+  color: #ffffff;
+  display: inline-block;
+  width: 15px;
+  text-align: center;
+}
+
+.token.prefix.deleted {
+  /* background-color: rgba(213, 72, 72, 0.81) !important; */
+  color: #ffffff;
+  display: inline-block;
+  width: 15px;
+  text-align: center;
+}
+
+pre code {
+  width: 100%;
 }
