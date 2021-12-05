@@ -10,25 +10,6 @@ import { publicRuntimeConfig } from "../src/services/config_service";
 import ReactMarkdown from "react-markdown";
 import * as Markdown from "../src/components/Markdown";
 
-import React from "react";
-
-const flatten = (string, child) => {
-  return typeof child === "string"
-    ? string + child
-    : React.Children.toArray(child.props.children).reduce(flatten, text);
-};
-
-/**
- * HeadingRenderer is a custom renderer
- * It parses the heading and attaches an id to it to be used as an anchor
- */
-const HeadingRenderer = (props) => {
-  const children = React.Children.toArray(props.children);
-  const text = children.reduce(flatten, "");
-  const slug = text.toLowerCase().replace(/\W/g, "-");
-  return React.createElement("h" + props.level, { id: slug }, props.children);
-};
-
 /**
  * This constant is used for associating all markdown files with page URIs.
  * For example, the object looks like this:
