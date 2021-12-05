@@ -26,8 +26,8 @@ import styled from "styled-components";
 
 const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
-const Heading = (level) =>
-  (props) => {
+const Heading = function(level) {
+  const heading = function (props) {
     const children = React.Children.toArray(props.children);
     const text = children.reduce(flatten, "");
     const slug = text.toLowerCase().replace(/\W/g, "-");
@@ -41,10 +41,13 @@ const Heading = (level) =>
       case 4:
         return <h4 id={slug} className={props.className}>{props.children}</h4>;
       default:
-        return <p id={slug} className={props.className}>{props.children}</p>;
         break;
     }
+    return <p id={slug} className={props.className}>{props.children}</p>;
   };
+
+  return heading;
+};
 
 export const Heading1 = styled(Heading(1))`
   font-size: 3rem;
