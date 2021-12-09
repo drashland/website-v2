@@ -6,9 +6,6 @@
 - [Folder Structure End State](#folder-structure-end-state)
 - [Steps](#steps)
 - [Verification](#verification)
-- [Option Signatures](#option-signatures)
-- [Option Values](#option-values)
-  - [Example of Option Values](#example-of-option-values)
 
 ## Before You Get Started
 
@@ -42,9 +39,9 @@ Things to know:
 - Options do not have to begin with `-` or `--`. However, it is probably best to
   keep this convention to prevent confusion in your CLIs.
 - A single option can have multiple signatures. This is discussed in the
-  [Option Signatures](#option-signatures) section on this page.
+  [Option Signatures](/line/v1.x/tutorials/options/option-signatures) tutorial.
 - Options can take in values. This is discussed in the
-  [Option Values](#option-values) section on this page.
+  [Option Values](/line/v1.x/tutorials/options/option-values) tutorial.
 
 In this tutorial, you will create a CLI that takes in one option: `--debug`.
 
@@ -176,121 +173,6 @@ In this tutorial, you will create a CLI that takes in one option: `--debug`.
    Hello, Line!
    [DEBUG] Process finished.
    ```
-
-## Option Signatures
-
-Multiple option signatures for a single option can be defined in the key of the
-`options` property. For example:
-
-```typescript
-public options = {
-  "-d, --debug": "Output debug logging",
-};
-```
-
-Notice that each signature is separated by a comma. The comma lets Line know
-that a single option has multiple signatures.
-
-In the above `options` property, both `-d` and `--debug` are considered the same
-option in Line. This means a user can specify `-d` or `--debug` and you can
-retrieve the option using ...
-
-```typescript
-const debugEnabled = this.option("--debug"); // Evaluates to true if specified by the user
-```
-
-... or ...
-
-```typescript
-const debugEnabled = this.option("-d"); // Evalutes to true if specified by the user
-```
-
-Both options will evaluate to `true` if specified by the user. It does not
-matter which signature you specify in the `this.option()` call. Line will know
-which one you are trying to get based on the signature you specify in the
-`this.option()` call since both are considered the same option.
-
-## Option Values
-
-By default, the value of an option is `true`. However, options can take in a
-different value if you change their signature to do so. You can have your
-options take in a value by doing the following:
-
-```typescript
-public options = {
-  "-l [value], --log [value]": "Output logging at the specified value",
-};
-```
-
-Things to note:
-
-- If an option takes in a value, the value _**is required**_ when the user
-  specifies the option. If a user does not specify the value, then they will be
-  shown an error and the `USAGE` section.
-- Options can only take in one value (support to take in more values might be
-  introduced in the future).
-- If you want your option to take in a value, it must be done using `[value]`.
-  Notice the square brackets. This is required for Line to know that the option
-  takes in a value.
-
-### Example of Option Values
-
-```typescript
-class GreetMainCommand extends Line.MainCommand {
-  public signature = "greet [greeting] [name]";
-
-  public options = {
-    "-l [value], --log [value]": "Output logging at the specified value",
-  };
-
-  public handle(): void {
-    const logLevel = this.option("--log"); // or this.option("-l");
-
-    console.log(logLevel);
-  }
-}
-```
-
-Taking the above example:
-
-- If a user were to pass in ...
-
-  ```shell
-  $ greet --log error Hello Line
-  ```
-
-  ... then the `--log` option would evaluate as follows ...
-
-  ```typescript
-  this.option("--log") === "error";
-  this.option("-l") === "error";
-  ```
-
-- If a user were to pass in ...
-
-  ```shell
-  $ greet --log debug Hello Line
-  ```
-
-  ... then the `--log` option would evaluate as follows ...
-
-  ```typescript
-  this.option("--log") === "debug";
-  this.option("-l") === "debug";
-  ```
-
-- If a user were to pass in ...
-
-  ```shell
-  $ greet --log "Some really cool option value" Hello Line
-  ```
-
-  ... then the `--log` option would evaluate as follows ...
-
-  ```typescript
-  this.option("--log") === "Some really cool option value";
-  this.option("-l") === "Some really cool option value";
-  ```
 
 Congratulations! You finished the Single Command CLIs tutorial series!
 
