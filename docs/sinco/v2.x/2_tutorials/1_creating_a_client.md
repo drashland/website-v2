@@ -97,5 +97,5 @@ that will be used, due to this, a Firefox client requires a
 1. Run your file.
 
    ```shell
-   $ deno run --allow-run --allow-net --allow-write=$TMPDIR --allow-read app.ts
+   $ deno run --allow-run --allow-net --allow-write=$TMPDIR --allow-read app_test.ts
    ```

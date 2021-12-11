@@ -37,7 +37,8 @@ When you wish to build a client, Sinco will do the following:
 To create and build a client, Sinco provides a `buildFor()` method, where you
 can specify which browser to build for, and any extra confguration options you
 wish to supply, such as a default URL to open when the browser instance runs, or
-point to a specific Chrome version installed on your computer. This method will then return a `Client` instance.
+point to a specific Chrome version installed on your computer. This method will
+then return a `Client` instance.
 
 In this tutorial, you will:
 
@@ -97,5 +98,5 @@ that will be used, due to this, a Firefox client requires a
 1. Run your file.
 
    ```shell
-   $ deno run --allow-run --allow-net --allow-write=$TMPDIR --allow-read app.ts
+   $ deno run --allow-run --allow-net --allow-write=$TMPDIR --allow-read app_test.ts
    ```

@@ -9,8 +9,9 @@
 
 ## Before You Get Started
 
-Sinco provides the method `.goTo()` on the `Client` class that will navigate your browser client to
-the web page specified. This method will wait until the page has loaded.
+Sinco provides the method `.goTo()` on the `Client` class that will navigate
+your browser client to the web page specified. This method will wait until the
+page has loaded.
 
 Example pages could be:
 
@@ -41,7 +42,7 @@ In this tutorial, you will:
    ```typescript
    // app_test.ts
 
-   import { buildFor, assertEquals } from "./deps.ts";
+   import { assertEquals, buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
      const Sinco = await buildFor("chrome");

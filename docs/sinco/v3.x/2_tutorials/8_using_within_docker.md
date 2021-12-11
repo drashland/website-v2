@@ -116,19 +116,23 @@ container, and execute your test file.
    Deno.test("My web app works as expected", async () => {
      const Chrome = await buildFor("chrome");
      const chromePage = await Chrome.goTo("https://drash.land");
-     const chromePageElem = await chromePage.querySelector('a[href="https://discord.gg/RFsCSaHRWK"]');
+     const chromePageElem = await chromePage.querySelector(
+       'a[href="https://discord.gg/RFsCSaHRWK"]',
+     );
      await chromePageElem.click();
      await chromePage.waitForPageChange();
-     const chromePageLocation = await chromePage.location()
+     const chromePageLocation = await chromePage.location();
      await Chrome.done();
      assertEquals(chromePageLocation, "https://discord.com/invite/RFsCSaHRWK");
      await Chrome.done();
      const Firefox = await buildFor("chrome");
      const firefoxPage = await Firefox.goTo("https://drash.land");
-     const firefoxPageElem = await firefoxPage.querySelector('a[href="https://discord.gg/RFsCSaHRWK"]');
+     const firefoxPageElem = await firefoxPage.querySelector(
+       'a[href="https://discord.gg/RFsCSaHRWK"]',
+     );
      await firefoxePageElem.click();
      await firefoxPage.waitForPageChange();
-     const firefoxPageLocation = await firefoxPage.location()
+     const firefoxPageLocation = await firefoxPage.location();
      await Firefox.done();
      assertEquals(firefoxPageLocation, "https://discord.com/invite/RFsCSaHRWK");
    });

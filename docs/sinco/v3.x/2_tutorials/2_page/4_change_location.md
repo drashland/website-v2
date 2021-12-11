@@ -9,7 +9,9 @@
 
 ## Before You Get Started
 
-`Page` provides the method `.location()` that can either get the current location (url) of the page, or set it if you wish to visit a different path or website.
+`Page` provides the method `.location()` that can either get the current
+location (url) of the page, or set it if you wish to visit a different path or
+website.
 
 In this tutorial, you will:
 
@@ -42,12 +44,14 @@ Deno.test("My web app works as expected", async () => {
   await page.location("https://github.com");
   const location = await page.location();
   await Sinco.done();
-  assertEquals(location, "https://github.com");
+  assertEquals(location, "https://github.com/");
 });
 ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will then navigate to https://github.com. After, you are going to retrieve the pages current location, and assert it is that of GitHubs.
+https://drash.land. Once the page has loaded, you will then navigate to
+https://github.com. After, you are going to retrieve the pages current location,
+and assert it is that of GitHubs.
 
 ## Verification
 

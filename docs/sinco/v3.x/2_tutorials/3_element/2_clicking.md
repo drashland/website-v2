@@ -9,7 +9,8 @@
 
 ## Before You Get Started
 
-`Element` provides the method `.click()` that will allow you to click the element you have selected.
+`Element` provides the method `.click()` that will allow you to click the
+element you have selected.
 
 In this tutorial, you will:
 
@@ -37,7 +38,9 @@ In this tutorial, you will:
    Deno.test("My web app works as expected", async () => {
      const Sinco = await buildFor("chrome");
      const page = await Sinco.goTo("https://drash.land");
-     const elem = page.querySelector('a[href="https://discord.gg/RFsCSaHRWK"]');
+     const elem = await page.querySelector(
+       'a[href="https://discord.gg/RFsCSaHRWK"]',
+     );
      await elem.click();
      await page.waitForPageChange();
      const location = await page.location();

@@ -25,7 +25,8 @@ Example evaluations could be:
   you can do here!
 - If there was an error with the code you tried to evaluate, Sinco will throw an
   error.
-- You can even query using the `$x` selector when the passed in parameter to `evaluate()` is a string!
+- You can even query using the `$x` selector when the passed in parameter to
+  `evaluate()` is a string!
 
 In this tutorial, you will:
 
@@ -77,9 +78,9 @@ Deno.test("My web app works as expected", async () => {
 });
 ```
 
-Within the function you can pass to `evaluate()`, you have full access to
-the DOM, meaning you can write client side JavaScript like you normally would,
-for example:
+Within the function you can pass to `evaluate()`, you have full access to the
+DOM, meaning you can write client side JavaScript like you normally would, for
+example:
 
 ```typescript
 await page.evaluate(() => {

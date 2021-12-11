@@ -49,9 +49,8 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will assert that
-you can see some given text on the page, and in this example, it is Develop With
-Confidence.
+https://drash.land. Once the page has loaded, you will assert that you can see
+some given text on the page, and in this example, it is Develop With Confidence.
 
 ## Verification
 

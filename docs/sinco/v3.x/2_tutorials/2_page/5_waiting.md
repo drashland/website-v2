@@ -48,8 +48,10 @@ In this tutorial, you will:
    Deno.test("My web app works as expected", async function () {
      const Sinco = await buildFor("chrome");
      const page = await Sinco.goTo("https://drash.land");
-     const element = page.querySelector('a[href="https://discord.gg/RFsCSaHRWK"]')
-     await element.click('a[href="https://discord.gg/RFsCSaHRWK"]');
+     const element = await page.querySelector(
+       'a[href="https://discord.gg/RFsCSaHRWK"]',
+     );
+     await element.click();
      await page.waitForPageChange();
      const location = await page.location();
      await Sinco.done();
@@ -58,7 +60,9 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will select an element on the page and click it, waiting for the new page to load before proceeding. Finally you will assert that clicking has worked and the url is now different.
+https://drash.land. Once the page has loaded, you will select an element on the
+page and click it, waiting for the new page to load before proceeding. Finally
+you will assert that clicking has worked and the url is now different.
 
 ## Verification
 

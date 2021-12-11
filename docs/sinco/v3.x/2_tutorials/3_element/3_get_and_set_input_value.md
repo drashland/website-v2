@@ -9,8 +9,8 @@
 
 ## Before You Get Started
 
-`Element` provides a method to get the value associated with an input element that
-is present on the page, as well as setting it.
+`Element` provides a method to get the value associated with an input element
+that is present on the page, as well as setting it.
 
 In this tutorial, you will:
 

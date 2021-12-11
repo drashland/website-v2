@@ -9,7 +9,9 @@
 
 ## Before You Get Started
 
-`Page` provides the method `.querySelector()` that will query the DOM for this element, and return an `Element` instance, allowing you to query that specific element. 
+`Page` provides the method `.querySelector()` that will query the DOM for this
+element, and return an `Element` instance, allowing you to query that specific
+element.
 
 In this tutorial, you will:
 
@@ -17,11 +19,10 @@ In this tutorial, you will:
 - Go to a website;
 - Query an element;
 
-
 Example selectors could be:
 
 - `.querySelector('a[href="/user"]');`
-- `.querySelector('button#submit');` The `.click()` method will take any valid selector.
+- `.querySelector('button#submit');`
 
 ## Folder Structure End State
 
@@ -44,7 +45,7 @@ import { assertEquals, buildFor } from "./deps.ts";
 Deno.test("My web app works as expected", async () => {
   const Sinco = await buildFor("chrome");
   const page = await Sinco.goTo("https://drash.land");
-  const img = await page.querySelector('img'); // This should be the logo
+  const img = await page.querySelector("img"); // This should be the logo
   // Now `img` is an `Element` instance, allowing you to action upon this element such as:
   //
   //   await img.click()
@@ -59,7 +60,8 @@ Deno.test("My web app works as expected", async () => {
 ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will then query the DOM for the first `img` element, which would be our logo.
+https://drash.land. Once the page has loaded, you will then query the DOM for
+the first `img` element, which would be our logo.
 
 ## Verification
 
