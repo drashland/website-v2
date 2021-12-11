@@ -20,16 +20,6 @@ moved into the `Element` or `Page` class. Hopefully it's already quite self
 explanatory where the methods have gone, for example, `type()` belongs in the
 `Element` class, whereas `cookie()` belongs to the `Page` class.
 
-## Table of Contents
-
-- [`buildFor()`](#buildFor)
-- [`type()`](#type)
-- [`getInputValue`](#getInputValue)
-- [`waitForPageChange`]
-- [New Element Class](#new-element-class)
-- [New Page Class](#new-page-class)
-- [Methods Removed or Renamed](#methods-removed-or-renamed)
-
 ## `buildFor()`
 
 The returned class has been changed significantly.

@@ -122,10 +122,9 @@ container, and execute your test file.
      await chromePageElem.click();
      await chromePage.waitForPageChange();
      const chromePageLocation = await chromePage.location();
-     await Chrome.done();
      assertEquals(chromePageLocation, "https://discord.com/invite/RFsCSaHRWK");
      await Chrome.done();
-     const Firefox = await buildFor("chrome");
+     const Firefox = await buildFor("firefox");
      const firefoxPage = await Firefox.goTo("https://drash.land");
      const firefoxPageElem = await firefoxPage.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
