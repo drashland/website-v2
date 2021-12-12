@@ -2,6 +2,8 @@
 
 Line is a class-based, command-line interface framework for Deno.
 
+Learn more about Line [here](/line/v1.x/getting-started/about-line).
+
 ## Getting Started
 
 1. Install [Deno](https://deno.land/).
