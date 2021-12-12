@@ -16,11 +16,11 @@ and you should be ready to go.
 Other than that, there are no other changes required, and the rest of Sinco's
 documentation still applies.
 
-The ability to run your Browser tests from within a docker container is very
+The ability to run your Browser tests from within a Docker container is very
 useful, because (as containers can be networked together), you could go to your
-website, test your /register page works when creating a user, and then clean up
-(delete the user) from your database - whether that's importing your 'User
-model' and deleting it manually.
+website, test your `/register` page works when creating a user, and then clean up
+(delete the user) from your database -- whether that is importing your "User
+model" and deleting it manually.
 
 In this tutorial, you will:
 
