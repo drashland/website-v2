@@ -64,7 +64,7 @@ Learn more about Sinco [here](about-sinco).
   - Firefox
 - Click elements
 - Type into input fields, and extract values
-- Visit any page or website available on the internet
+- Visit any page or website available on the Internet
 - Evaluate JavaScript
 - Docker support
 - Assertions
