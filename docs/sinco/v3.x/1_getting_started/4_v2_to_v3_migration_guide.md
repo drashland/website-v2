@@ -42,7 +42,7 @@ await client.someMethod();
 ### `Client#goTo()`
 
 The `goTo` method now returns an instance of a `Page` class, which you now use
-to query elements, and any other actions related to the **page**
+to query elements, and any other actions related to the **page**.
 
 ```ts
 const client = await buildFor("chrome");
