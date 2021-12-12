@@ -48,7 +48,7 @@ export const lightTheme = {
     },
     text: {
       color: "#333333",
-    }
+    },
   },
   sideBar: {
     background: "#f3f6f9",
@@ -89,7 +89,7 @@ export const darkTheme = {
     },
     text: {
       color: "#f4f8ff",
-    }
+    },
   },
   markdown: {
     heading2: {

@@ -15,7 +15,6 @@ const flatten = (text, child) => {
 
 const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
-
 const LinkIcon = styled(Link)`
   color: ${({ theme }) => theme.headingLinkIcon.color};
   height: 25px;
@@ -41,18 +40,22 @@ const Heading = function (level) {
     // The <h1> tags do not need an anchor because they are at the top of the
     // page
     if (level !== 1) {
-        linkedHeadingChildren.push((
-          <a key={`anchor_${slug}_${level}`} className="icon-link" href={`#` + slug}>
-            <LinkIcon key={`link_icon_${slug}_${level}`} className="icon" />
-          </a>
-        ));
+      linkedHeadingChildren.push(
+        <a
+          key={`anchor_${slug}_${level}`}
+          className="icon-link"
+          href={`#` + slug}
+        >
+          <LinkIcon key={`link_icon_${slug}_${level}`} className="icon" />
+        </a>,
+      );
     }
 
     const renderLinkedHeading = React.createElement(
       "h" + level,
       {
         key: JSON.stringify(props.children + level),
-        className: (level != 1) ? "heading-linked" : null
+        className: (level != 1) ? "heading-linked" : null,
       },
       linkedHeadingChildren,
     );
@@ -69,9 +72,9 @@ const Heading = function (level) {
     }
 
     return (
-        <div className={props.className}>
-          {renderLinkedHeading}
-        </div>
+      <div className={props.className}>
+        {renderLinkedHeading}
+      </div>
     );
   };
 

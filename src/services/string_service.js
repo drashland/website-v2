@@ -8,7 +8,7 @@
  * @returns A URL version of a filename.
  */
 export function convertFilenameToURL(filename) {
-return filename
+  return filename
     .split("/") // Split the filename into path parts so we can clean up each part in `.map()`
     .map((path) => {
       // Remove all prefixed numbers and underscores from each path part. For example, a filename
