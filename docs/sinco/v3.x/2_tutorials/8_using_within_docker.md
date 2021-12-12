@@ -103,7 +103,7 @@ it will not be from within Docker unless you tell it to.
        working_dir: /var/www/my-app
    ```
 
-Here, you are creating your docker-compose file, which will start/run your
+Here, you are creating your `docker-compose` file, which will start/run your
 container, and execute your test file.
 
 3. Create your `app_test.ts` file.
