@@ -1,4 +1,4 @@
-# Creating A Client
+# Creating a Client
 
 ## Table of Contents
 
@@ -85,7 +85,7 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance for Firefox and
-Chrome. Note that you wouldn't need to create both at the same time, you are
+Chrome. Note that you would not need to create both at the same time, you are
 only doing that here for demonstration purposes.
 
 When building a client for Firefox, note that it will create a temporary profile

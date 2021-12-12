@@ -18,13 +18,13 @@ Example pages could be:
 - https://github.com
 - www.google.com
 
-If there was an error navigating to the page (page doesn't exist), then Sinco
+If there was an error navigating to the page (page does not exist), then Sinco
 will throw an error, but will close all resources before doing so.
 
 In this tutorial, you will:
 
-- Create a headless browser instance; and
-- Go to a website;
+- Create a headless browser instance;
+- Go to a website; and
 - Assert the url is correct.
 
 ## Folder Structure End State
@@ -54,7 +54,7 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will assert that the url for
+`https://drash.land`. Once the page has loaded, you will assert that the url for
 the page is as expected.
 
 ## Verification
@@ -65,4 +65,4 @@ the page is as expected.
    $ deno test --allow-run --allow-read --allow-net app_test.ts
    ```
 
-2. All of your tests should pass
+2. All of your tests should pass.

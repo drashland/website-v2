@@ -11,22 +11,22 @@
 
 `Page` provides methods to wait in specific scenarios, such as waiting for the
 page to change after clicking a button, or waiting for an anchor change on the
-uri. These help in ensuring your following code matches what the page should be,
-so say for example, you click a button that changes the page after 5 seconds.
+URI. These help in ensuring your following code matches what the page should be.
+So say for example, you click a button that changes the page after 5 seconds.
 The `waitForPageChange()` method will wait for this, so your other actions and
-assertions aren't trying to run whilst the new page hasn't loaded yet.
+assertions are not trying to run whilst the new page has not loaded yet.
 
 The following methods Sinco provides are:
 
 - `waitForPageChange()`
-- The `waitForPageChange()` method will wait for the page to change, eg clicking
-  an anchor tag that directs the user to a new uri.
+  - The `waitForPageChange()` method will wait for the page to change, eg
+    clicking an anchor tag that directs the user to a new uri.
 
 In this tutorial, you will:
 
-- Create a headless browser instance; and
-- Go to a website;
-- Wait for the page to change on a click;
+- Create a headless browser instance;
+- Go to a website; and
+- Wait for the page to change on a click.
 
 ## Folder Structure End State
 
@@ -60,9 +60,9 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will select an element on the
-page and click it, waiting for the new page to load before proceeding. Finally
-you will assert that clicking has worked and the url is now different.
+`https://drash.land`. Once the page has loaded, you will select an element on
+the page and click it -- waiting for the new page to load before proceeding.
+Finally you will assert that clicking has worked and the URL is now different.
 
 ## Verification
 
@@ -72,4 +72,4 @@ you will assert that clicking has worked and the url is now different.
    $ deno test --allow-run --allow-read --allow-net app_test.ts
    ```
 
-2. All of your tests should pass
+2. All of your tests should pass.

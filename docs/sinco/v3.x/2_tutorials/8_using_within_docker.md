@@ -10,7 +10,7 @@
 ## Before You Get Started
 
 Sinco provides support for running your tests inside Docker. It only requires
-just over half a dozen lines inside a dockerfile to install the chrome-driver
+just over half a dozen lines inside a `dockerfile` to install the chrome-driver
 and you should be ready to go.
 
 Other than that, there are no other changes required, and the rest of Sinco's
@@ -18,8 +18,8 @@ documentation still applies.
 
 The ability to run your Browser tests from within a Docker container is very
 useful, because (as containers can be networked together), you could go to your
-website, test your `/register` page works when creating a user, and then clean up
-(delete the user) from your database -- whether that is importing your "User
+website, test your `/register` page works when creating a user, and then clean
+up (delete the user) from your database -- whether that is importing your "User
 model" and deleting it manually.
 
 In this tutorial, you will:
@@ -138,10 +138,10 @@ container, and execute your test file.
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-`https://drash.land`. Once the page has loaded, you will click an element matching
-the `img[src="/logo-sinco.svg"]` selector, which will send you to a different
-page. To assert this, you are going to use `.assertUrlIs()` to assert the page
-you are currently on, has now changed.
+`https://drash.land`. Once the page has loaded, you will click an element
+matching the `img[src="/logo-sinco.svg"]` selector, which will send you to a
+different page. To assert this, you are going to use `.assertUrlIs()` to assert
+the page you are currently on, has now changed.
 
 ## Verification
 

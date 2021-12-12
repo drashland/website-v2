@@ -9,7 +9,7 @@
 
 ## Before You Get Started
 
-`Page` provides the method `.takeScreenshot` that will allow you to take a
+`Page` provides the method `.takeScreenshot()` that will allow you to take a
 screenshot of the whole page, or a specific element. This method will then write
 the screenshot to a file.
 
@@ -18,11 +18,11 @@ Example usage would be:
 - `.takeScreenshot("./screenshots");`
 - `.takeScreenshot("./screenshots", { fileName: "home_page.png", selector: "body > main", format: "png" });`
 
-The `.takeScreenshot` method will take any valid selector for `selector`.
+The `.takeScreenshot()` method will take any valid selector for `selector`.
 
-If the directory for where to save the screenshot does not exist, Sinco will
-throw an error. By default, passing in one parameter will save a screenshot to
-the specified directory, where the filename is timestamped, and the format is
+If the directory for where to save screenshots does not exist, Sinco will throw
+an error. By default, passing in one parameter will save a screenshot to the
+specified directory -- where the filename is timestamped, and the format is
 JPEG.
 
 The method also takes an optional second parameter, which allows you to specify:
@@ -35,14 +35,15 @@ The method also takes an optional second parameter, which allows you to specify:
   named. For example, say you write
   `.takeScreenshot("./screenshots", { filename: "login_form.jpeg" })`, the
   screenshot will be saved to `./screenshots/login_form.jpeg`.
-- `format` - The format of the image, eg jpeg or png. The default is jpeg.
+- `format` - The format of the image (e.g., `jpeg` or `png`). The default is
+  `jpeg`.
 - `quality` - The compression quality of the screenshot. The maximum is 100, and
   the default is 80.
 
 In this tutorial, you will:
 
 - Create a headless browser instance; and
-- Take a screenshot of your favourite website: drash.land!;
+- Take a screenshot of your favourite website: drash.land!
 
 ## Folder Structure End State
 
@@ -80,9 +81,11 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will take a screenshot of the
-whole page, take another screenshot with a custom filename and format, and take
-a third screenshot with a custom selector.
+`https://drash.land`. Once the page has loaded, you will:
+
+- Take a screenshot of the whole page;
+- Take a second screenshot with a custom filename and format; and
+- Take a third screenshot with a custom selector.
 
 ## Verification
 
@@ -92,4 +95,5 @@ a third screenshot with a custom selector.
    $ deno test --allow-run --allow-read --allow-write --allow-net app_test.ts
    ```
 
-2. Now check your screenshots folder!
+2. Now check your `screenshots` directory! The screenshots should be stored in
+   there.

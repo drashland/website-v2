@@ -14,8 +14,8 @@ element you have selected.
 
 In this tutorial, you will:
 
-- Create a headless browser instance; and
-- Click a link;
+- Create a headless browser instance;
+- Click a link; and
 - Assert the page was changed.
 
 ## Folder Structure End State
@@ -50,9 +50,9 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will click an element matching
-the `a[href="https://discord.gg/RFsCSaHRWK"]` selector, which will send you to a
-different page.
+`https://drash.land`. Once the page has loaded, you will click an element
+matching the `a[href="https://discord.gg/RFsCSaHRWK"]` selector, which will send
+you to a different page.
 
 ## Verification
 
@@ -62,4 +62,4 @@ different page.
    $ deno test --allow-run --allow-read --allow-net app_test.ts
    ```
 
-2. All of your tests should pass
+2. All of your tests should pass.

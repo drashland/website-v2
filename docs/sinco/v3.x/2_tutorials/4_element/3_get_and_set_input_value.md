@@ -1,4 +1,4 @@
-# Get and Set Inpiut Value
+# Get and Set Input Value
 
 ## Table of Contents
 
@@ -49,7 +49,7 @@ In this tutorial, you will:
    ```
 
 In this tutorial, you are creating a new browser instance that is pointing to
-https://chromestatus.com, then you will type a value into an input field, just
+`https://chromestatus.com`, then you will type a value into an input field, just
 so the field is populated with a value. After, you will get the value from that
 input field and assert it equals the value you typed.
 
@@ -61,4 +61,4 @@ input field and assert it equals the value you typed.
    $ deno test --allow-run --allow-net --allow-read app_test.ts
    ```
 
-2. All of your tests should pass
+2. All of your tests should pass.

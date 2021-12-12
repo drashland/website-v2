@@ -10,7 +10,7 @@
 Sinco is a browser automation and testing tool. What this means is, Sinco runs a
 subprocess for Chrome or Firefox, and will communicate to the process via the
 Chrome Devtools Protocol. This allows Sinco to spin up a new browser tab, go to
-certain websites, click buttons and so much more, all programtically.
+certain websites, click buttons and so much more, all programatically.
 
 Some examples of what you can build are:
 

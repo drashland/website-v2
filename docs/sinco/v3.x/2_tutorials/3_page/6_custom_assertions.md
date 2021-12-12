@@ -13,14 +13,14 @@
 assertions. These methods will run a query on the DOM and make an assertion. You
 do not need to assert these yourself.
 
-The methods it provides are:
+The method it provides is:
 
 - `assertSee` - This method will assert that the given text exists inside the
   page
 
 In this tutorial, you will:
 
-- Create a headless browser instance;
+- Create a headless browser instance; and
 - Assert text exists inside the DOM (page).
 
 ## Folder Structure End State
@@ -49,8 +49,9 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will assert that you can see
-some given text on the page, and in this example, it is Develop With Confidence.
+`https://drash.land`. Once the page has loaded, you will assert that you can see
+some given text on the page, and in this example, it is
+`Develop With Confidence`.
 
 ## Verification
 
@@ -60,4 +61,4 @@ some given text on the page, and in this example, it is Develop With Confidence.
    $ deno test --allow-run --allow-read --allow-net app_test.ts
    ```
 
-2. All of your tests should pass
+2. All of your tests should pass.

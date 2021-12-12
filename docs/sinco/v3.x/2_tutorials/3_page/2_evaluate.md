@@ -30,10 +30,10 @@ Example evaluations could be:
 
 In this tutorial, you will:
 
-- Create a headless browser instance; and
+- Create a headless browser instance;
 - Go to a website;
 - Gather some information about the page;
-- Run a basic sum;
+- Run a basic sum; and
 - Update the DOM.
 
 ## Folder Structure End State
@@ -79,7 +79,7 @@ Deno.test("My web app works as expected", async () => {
 ```
 
 Within the function you can pass to `evaluate()`, you have full access to the
-DOM, meaning you can write client side JavaScript like you normally would, for
+DOM, meaning you can write client-side JavaScript like you normally would. For
 example:
 
 ```typescript
@@ -92,15 +92,15 @@ await page.evaluate(() => {
 ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will evaluate a few scripts
+`https://drash.land`. Once the page has loaded, you will evaluate a few scripts
 that will get the document title and create a new element on the page. You will
 then assert that the page title is as expected, and also that a new element was
 added to the DOM.
 
-2. Create your config
+2. Create your config.
 
-A tsconfig.json file is required when targeting the DOM (using document syntax)
-to tell Deno that this is valid.
+A `tsconfig.json` file is required when targeting the DOM (using document
+syntax) to tell Deno that this is valid.
 
 ```json
 {
@@ -118,4 +118,4 @@ to tell Deno that this is valid.
 $ deno test --allow-run --allow-read --allow-net --config tsconfig.json app_test.ts
 ```
 
-2. All of your tests should pass
+2. All of your tests should pass.

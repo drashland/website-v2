@@ -15,9 +15,9 @@ element.
 
 In this tutorial, you will:
 
-- Create a headless browser instance; and
-- Go to a website;
-- Query an element;
+- Create a headless browser instance;
+- Go to a website; and
+- Query an element.
 
 Example selectors could be:
 
@@ -60,7 +60,7 @@ Deno.test("My web app works as expected", async () => {
 ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will then query the DOM for
+`https://drash.land`. Once the page has loaded, you will then query the DOM for
 the first `img` element, which would be our logo.
 
 ## Verification
@@ -71,4 +71,4 @@ the first `img` element, which would be our logo.
 $ deno test --allow-run --allow-read --allow-net app_test.ts
 ```
 
-2. All of your tests should pass
+2. All of your tests should pass.

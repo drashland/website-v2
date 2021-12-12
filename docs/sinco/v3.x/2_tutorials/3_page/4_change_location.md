@@ -10,14 +10,14 @@
 ## Before You Get Started
 
 `Page` provides the method `.location()` that can either get the current
-location (url) of the page, or set it if you wish to visit a different path or
+location (URL) of the page, or set it if you wish to visit a different path or
 website.
 
 In this tutorial, you will:
 
-- Create a headless browser instance; and
+- Create a headless browser instance;
 - Go to a website;
-- Set the location to be a new site;
+- Set the location to be a new site; and
 - Then retrieve the location, asserting it to be the one you just set;
 
 ## Folder Structure End State
@@ -49,9 +49,9 @@ Deno.test("My web app works as expected", async () => {
 ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will then navigate to
-https://github.com. After, you are going to retrieve the pages current location,
-and assert it is that of GitHubs.
+`https://drash.land`. Once the page has loaded, you will then navigate to
+`https://github.com`. After, you are going to retrieve the page's current
+location, and assert it is that of GitHub.
 
 ## Verification
 
@@ -61,4 +61,4 @@ and assert it is that of GitHubs.
 $ deno test --allow-run --allow-read --allow-net app_test.ts
 ```
 
-2. All of your tests should pass
+2. All of your tests should pass.

@@ -12,8 +12,8 @@
 `Page` provides the method `.cookie()` that can either get all cookies for the
 page, or set a new one.
 
-Passing no parameters (`await page.cookie()`) will return an array of cookies on
-the page, or you can pass an object to set a cookie:
+Passing no parameters (e.g., `await page.cookie()`) will return an array of
+cookies on the page, or you can pass an object to set a cookie:
 
 ```ts
 await page.cookie({
@@ -25,9 +25,9 @@ await page.cookie({
 
 In this tutorial, you will:
 
-- Create a headless browser instance; and
+- Create a headless browser instance;
 - Go to a website;
-- Set a cookie;
+- Set a cookie; and
 - Then retrieve that cookie;
 
 ## Folder Structure End State
@@ -68,7 +68,7 @@ Deno.test("My web app works as expected", async () => {
 
 Here you are going to create your headless browser instance, and navigate to
 https://drash.land. Once the page has loaded, you will set a new cookie on the
-page. You will then assert that the cookie you just set, exists as expected.
+page. You will then assert that the cookie you just set exists as expected.
 
 ## Verification
 
@@ -78,4 +78,4 @@ page. You will then assert that the cookie you just set, exists as expected.
 $ deno test --allow-run --allow-read --allow-net app_test.ts
 ```
 
-2. All of your tests should pass
+2. All of your tests should pass.
