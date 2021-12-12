@@ -2,7 +2,7 @@
 
 This is the migration guide for upgrading from v2 to v3.
 
-There's quite a few things you would need to change, but we hoped that changing
+There are quite a few things you would need to change, but we hoped that changing
 these would improve the experience long term, so whilst migrating is a pain (as
 we all know), the API will make more sense and be easier to write.
 
