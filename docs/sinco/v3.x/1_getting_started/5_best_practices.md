@@ -34,7 +34,7 @@ assertEquals(location, "https://drash.land/");
 assertEquals(inputValue, "some value");
 ```
 
-## Wrap your code in a try/catch
+## Wrap Your Code in a try/catch
 
 It would be best to wrap your code in a try/catch block where possible, so if
 something does throw an unexpected error, you're able to close the client:
