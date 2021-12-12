@@ -49,8 +49,8 @@ const client = await buildFor("chrome");
 const page = await client.goTo("https://drash.land");
 ```
 
-And to change location on the page, you can use
-`await page.location("https://github.com");`
+And to change the page location, you can use
+`await page.location("https://github.com");`.
 
 ## `Client#setCookie()`
 
