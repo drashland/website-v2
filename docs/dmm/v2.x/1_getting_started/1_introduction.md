@@ -1,10 +1,14 @@
 # Introduction
 
-Dmm is a CLI tool bump your dependencies to their latest version. Nothing else. It simply checks your dependency file, and for each dependency, if a newer version exists, dmm will write to the file updating the specific version string on the line for the URL, to match the latest.
+Dmm is a CLI tool bump your dependencies to their latest version. Nothing else.
+It simply checks your dependency file, and for each dependency, if a newer
+version exists, dmm will write to the file updating the specific version string
+on the line for the URL, to match the latest.
 
 Learn more about Dmm [here](about-dmm).
 
-Note that all examples after this page will act as if you have installed dmm as an executable.
+Note that all examples after this page will act as if you have installed dmm as
+an executable.
 
 ## Getting Started
 
@@ -34,7 +38,9 @@ Note that all examples after this page will act as if you have installed dmm as 
     update
    ```
 
-   (When installing, the file passed for `--allow-write` and `--allow-read` is the file you wish to update, so if you are specifying a custom path, make sure to specify that: `--allow-read=server/my_deps.js`)
+   (When installing, the file passed for `--allow-write` and `--allow-read` is
+   the file you wish to update, so if you are specifying a custom path, make
+   sure to specify that: `--allow-read=server/my_deps.js`)
 
 5. Check output.
 
@@ -52,7 +58,7 @@ Note that all examples after this page will act as if you have installed dmm as 
 - Updates dependencies in a simple manner
 - Only reads and writes to your deps.ts file
 - Looks up modules on the following registries:
-   - https://deno.land/std/
-   - https://deno.land/x/
-   - https://x.nest.land/
-   - https://raw.githubusercontent.com
+  - https://deno.land/std/
+  - https://deno.land/x/
+  - https://x.nest.land/
+  - https://raw.githubusercontent.com

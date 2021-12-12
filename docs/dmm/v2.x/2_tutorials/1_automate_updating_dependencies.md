@@ -1,14 +1,20 @@
 # Automate Updating Dependencies
 
 ## Table Of Contents
+
 - [Description](#description)
 - [Example](#example)
 
 ## Description
 
-You can use Dmm to automatically update your dependencies. As Dmm can update dependencies, all you need is a new workflow, and every Sunday, the workflow will run, update your dependencies (if they can be) and make a pull request for you to review!
+You can use Dmm to automatically update your dependencies. As Dmm can update
+dependencies, all you need is a new workflow, and every Sunday, the workflow
+will run, update your dependencies (if they can be) and make a pull request for
+you to review!
 
-Note: This tutorial will explain how to use Dmm as a 'bumper', but will not explain the ins and outs of a workflow file. For this, refer to GitHub's documentation.
+Note: This tutorial will explain how to use Dmm as a 'bumper', but will not
+explain the ins and outs of a workflow file. For this, refer to GitHub's
+documentation.
 
 ## Example
 

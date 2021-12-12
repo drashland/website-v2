@@ -12,8 +12,10 @@ are what your Drash application should be using if migrating from v1 to v2.
 
 ## Info
 
-The `info` subcommand was removed. We felt it wasn't useful and no alternative will be added in this version or the near future.
+The `info` subcommand was removed. We felt it wasn't useful and no alternative
+will be added in this version or the near future.
 
 ## Check
 
-The `check` subcommand was removed. We felt it wasn't useful and no alternative will be added in this version or the near future.
+The `check` subcommand was removed. We felt it wasn't useful and no alternative
+will be added in this version or the near future.
