@@ -13,9 +13,9 @@ There are various ways to combat this:
 
 ## Close the Client Before Asserting
 
-We cannot know when you want to assert. If your assertion fails but you haven't
+We cannot know when you want to assert. If your assertion fails but you have not
 called `.done()`, the test case will throw an error and the subprocess will
-never end. This isn't something we can address, it's down to the you.
+never end. This is not something we can address -- it comes down to you.
 
 To combat this, you should close your client before any assertions (where
 possible):
