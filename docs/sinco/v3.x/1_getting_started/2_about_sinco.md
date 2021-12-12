@@ -29,7 +29,7 @@ Some examples of what you can build are:
 Sinco is similar to the more well-known tools that achieve the same thing, such
 as Puppeteer. What sets Sinco apart is:
 
-- It's the first Deno browser automation tool
+- It is the first Deno browser automation tool
 - It doesn't try to install a specific chrome or firefox version on your
   computer
 - It is transparent: It will use the browser and version you already have
