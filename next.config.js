@@ -64,6 +64,7 @@ module.exports = {
       },
       dmm: {
         versions: [
+          "v1.x",
           "v2.x",
         ],
       },
