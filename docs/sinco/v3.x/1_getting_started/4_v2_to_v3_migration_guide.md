@@ -32,7 +32,7 @@ where the methods have been moved to. For example, `type()` belongs in the
 
 The returned class has been changed significantly.
 
-This refers to usage of a 'client':
+This refers to usage of a "client":
 
 ```ts
 const client = await buildFor(...);
