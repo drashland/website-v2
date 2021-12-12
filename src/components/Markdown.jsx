@@ -32,7 +32,7 @@ const Heading = function (level) {
   const wrappedHeadingBlock = function (props) {
     const children = React.Children.toArray(props.children);
     const text = children.reduce(flatten, "");
-    let slug = text.toLowerCase()
+    const slug = text.toLowerCase()
       .replace(/\W/g, "-")
       .replace("---", "-")
       .replace("--", "-");
@@ -48,7 +48,7 @@ const Heading = function (level) {
         ));
     }
 
-    let renderLinkedHeading = React.createElement(
+    const renderLinkedHeading = React.createElement(
       "h" + level,
       {
         key: JSON.stringify(props.children + level),
