@@ -4,14 +4,6 @@ Sinco is a browser testing and automation tool for Deno.
 
 Learn more about Sinco [here](about-sinco).
 
-The way Sinco's API was built was to provide abstraction and be closer to
-browser API's. This is why we have added `Client`, `Page` and `Element` classes,
-as a way to interact with those aspects, and abstract certain methods for
-certain scenarios. Take version 2 for example. The `Client` class held a
-`getInputValue` method, but the naming was long winded, writing it was similar
-to how you may get the value of an input element in the browser. Due to this, we
-decided to rename this to `value`, and place it under an `Element` class.
-
 ## Getting Started
 
 1. Install [Deno](https://deno.land/).

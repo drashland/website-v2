@@ -6,7 +6,15 @@ There's quite a few things you would need to change, but we hoped that changing
 these would improve the experience long term, so whilst migrating is a pain (as
 we all know), the API will make more sense and be easier to write.
 
-The main changes are the introduction of a Page and Element class:
+The way Sinco's version 3 API was built was to provide abstraction and be closer to
+browser API's. This is why we have added `Client`, `Page` and `Element` classes,
+as a way to interact with those aspects, and abstract certain methods for
+certain scenarios. Take version 2 for example. The `Client` class held a
+`getInputValue` method, but the naming was long winded. Writing it wasn't similar
+to how you may get the value of an input element in the browser. Due to this, we
+decided to rename this to `value`, and place it under an `Element` class.
+
+The main changes are the introduction of a Page and Element class, and many methods moved under those classes:
 
 ```ts
 const client = await buildFor(...)
