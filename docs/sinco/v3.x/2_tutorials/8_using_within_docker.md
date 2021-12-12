@@ -78,11 +78,11 @@ In this tutorial, you will:
    RUN export PATH="$DENO_INSTALL/bin:$PATH"
    ```
 
-Here, you are using a very small image (debian-slim) as your baseline for your
-docker container. Then you install the chrome-driver and firefox-driver, which
+Here, you are using a very small image (`debian-slim`) as your baseline for your
+Docker container. Then you install the chrome-driver and firefox-driver, which
 allows Sinco to create a headless browser instance for these browsers. Then you
 install Deno, because whilst you may have Deno installed on your host machine,
-it won't be from within docker unless you tell it to.
+it will not be from within Docker unless you tell it to.
 
 2. Create your docker compose file
 
