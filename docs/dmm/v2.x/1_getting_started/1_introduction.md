@@ -1,7 +1,7 @@
 # Introduction
 
-Dmm is a CLI tool bump your dependencies to their latest version. Nothing else.
-It simply checks your dependency file, and for each dependency, if a newer
+Dmm is a CLI tool that helps you keep your dependencies up to date. Nothing
+else. It simply checks your dependency file, and for each dependency, if a newer
 version exists, dmm will write to the file updating the specific version string
 on the line for the URL, to match the latest.
 
@@ -40,7 +40,7 @@ an executable.
 
    (When installing, the file passed for `--allow-write` and `--allow-read` is
    the file you wish to update, so if you are specifying a custom path, make
-   sure to specify that: `--allow-read=server/my_deps.js`)
+   sure to specify that: `--allow-read=server/my_deps.ts`)
 
 5. Check output.
 
@@ -50,13 +50,13 @@ an executable.
    drash was updated from v1.5.2 to v2.0.0
    ```
 
-   And if you check your `deps.ts` file, the version should have been updated
+   And if you check your `deps.ts` file, the version should have been updated.
 
 ## Features
 
-- Zero 3rd party dependencies
+- Zero third-party dependencies outside of Deno Standard Modules
 - Updates dependencies in a simple manner
-- Only reads and writes to your deps.ts file
+- Only reads and writes to your `deps.ts` file
 - Looks up modules on the following registries:
   - https://deno.land/std/
   - https://deno.land/x/
