@@ -20,6 +20,7 @@ module.exports = {
     //     `redirects` config down below), then Next.js will redirect the user
     //     using the `destination` in the `redirects` config.
     modules: [
+      "dmm",
       "drash",
       "sinco",
     ],
