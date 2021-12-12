@@ -1,6 +1,6 @@
 # v2 to v3 Migration Guide
 
-This is the migrationg guide for upgrading from v2 to v3.
+This is the migration guide for upgrading from v2 to v3.
 
 There's quite a few things you would need to change, but we hoped that changing
 these would improve the experience long term, so whilst migrating is a pain (as
