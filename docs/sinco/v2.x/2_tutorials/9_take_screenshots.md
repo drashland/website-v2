@@ -42,7 +42,7 @@ The method also takes an optional second parameter, which allows you to specify:
 In this tutorial, you will:
 
 - Create a headless browser instance; and
-- Take a screenshot of your favourite website: drash.land!;
+- Take a screenshot of your favourite website: drash.land!
 
 ## Folder Structure End State
 

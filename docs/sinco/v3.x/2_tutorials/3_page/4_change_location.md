@@ -18,7 +18,7 @@ In this tutorial, you will:
 - Create a headless browser instance;
 - Go to a website;
 - Set the location to be a new site; and
-- Then retrieve the location, asserting it to be the one you just set;
+- Then retrieve the location, asserting it to be the one you just set.
 
 ## Folder Structure End State
 
