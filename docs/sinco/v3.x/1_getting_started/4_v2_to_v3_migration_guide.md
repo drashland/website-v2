@@ -24,8 +24,8 @@ await page.evaluate(...);
 ```
 
 Which documentation already exists for. Nearly all methods have either been
-moved into the `Element` or `Page` class. Hopefully it's already quite self
-explanatory where the methods have gone, for example, `type()` belongs in the
+moved into the `Element` or `Page` class. Hopefully it's already quite self-explanatory
+where the methods have been moved to. For example, `type()` belongs in the
 `Element` class, whereas `cookie()` belongs to the `Page` class.
 
 ## `buildFor()`
