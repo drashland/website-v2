@@ -53,28 +53,34 @@ get cookies too. See the
 ## `Client#evaluatePage`
 
 Renamed to `evaluate` and now exists on the `Page` class. See the
-[documentation page](/sinco/v3.x/tutorials/page/evaluate) for more information on how to use it
+[documentation page](/sinco/v3.x/tutorials/page/evaluate) for more information
+on how to use it
 
 ## `Client#waitForPageChange`
 
-Moved to the `Page` class. See the [documentation page](/sinco/v3.x/tutorials/page/waiting)
+Moved to the `Page` class. See the
+[documentation page](/sinco/v3.x/tutorials/page/waiting)
 
 ## `Client#takeScreenshot()`
 
-Moved to the `Page` class. See the [documentation page](/sinco/v3.x/tutorials/page/take-screenshots)
+Moved to the `Page` class. See the
+[documentation page](/sinco/v3.x/tutorials/page/take-screenshots)
 
 ## `Client#assertSee()`
 
-Moved to the `Page` class. See the [documentation page](/sinco/v3.x/tutorials/page/custom-assertions)
+Moved to the `Page` class. See the
+[documentation page](/sinco/v3.x/tutorials/page/custom-assertions)
 
 ## `Client#getInputValue()` and `Client#type()`
 
 Moved to the `Element` class, and combined into a single method called
-`value()`. See the [documentation page](/sinco/v3.x/tutorials/element/get-and-set-input-value)
+`value()`. See the
+[documentation page](/sinco/v3.x/tutorials/element/get-and-set-input-value)
 
 ## `Client.click()`
 
-Moved to the `Element` class. See the [documentation page](/sinco/v3.x/tutorials/element/clicking)
+Moved to the `Element` class. See the
+[documentation page](/sinco/v3.x/tutorials/element/clicking)
 
 ## `Client#assertUrlIs()`
 
