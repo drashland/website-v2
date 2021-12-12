@@ -1,4 +1,4 @@
-# Part 1: Add a Main Command
+# Part 1: Entry Points
 
 ## Table of Contents
 
@@ -9,8 +9,11 @@
 
 ## Before You Get Started
 
-In this tutorial, you will create a VERY basic CLI that can show your CLI's help
-menu and version.
+In this tutorial part, you will create your entry point file (`cli.ts`) and your
+[main command](/line/v1.x/tutorials/commands/main-commands).
+
+At the end of this tutorial part, you will have a CLI that will be able to show
+a help menu and version.
 
 ## Folder Structure End State
 
@@ -49,7 +52,10 @@ menu and version.
    cli.run();
    ```
 
-2. Install your CLI.
+2. Install your CLI. Notice the `--name` option. Caveats on this can be found on
+   the
+   [Commands > Main Commands](/line/v1.x/tutorials/commands/main-commands#caveats)
+   page under the "Caveats" section.
 
    ```shell
    $ deno install --name greet cli.ts
@@ -92,5 +98,6 @@ menu and version.
    Greeter CLI v1.0.0
    ```
 
-To make this CLI more feature-rich, proceed to reading
-[Part 2: Add Arguments](/line/v1.x/tutorials/creating-a-cli/single-command-clis/part-2-add-arguments).
+Continue to
+[Part 2](/line/v1.x/tutorials/creating-a-cli/single-command-clis/part-2-add-arguments)
+to make your main command handle arguments.

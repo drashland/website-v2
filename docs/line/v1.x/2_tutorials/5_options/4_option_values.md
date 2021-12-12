@@ -7,9 +7,15 @@
 
 ## Default Behavior
 
-By default, the value of an option is `true`. However, options can take in a
-different value if you change their signature to do so. You can have your
-options take in a value by doing the following:
+By default, the initial value of an option is `false`. If it is specified by a
+user through the command line, then the value changes to `true`. This works well
+in some cases, but what if you want your options to take in values like:
+
+```shell
+$ <MAIN COMMAND> --config my.config.ts run
+```
+
+This can be achieved by changing the signature of the option(s) like so:
 
 ```typescript
 public options = {
@@ -17,16 +23,19 @@ public options = {
 };
 ```
 
+Notice that each signature has a `[value]` attribute. This lets Line know that
+your option(s) can take in a value.
+
 Things to note:
 
 - If an option takes in a value, the value _**is required**_ when the user
   specifies the option. If a user does not specify the value, then they will be
-  shown an error and the `USAGE` section.
+  shown an error and the `USAGE` section for the command they used the option
+  with.
 - Options can only take in one value (support to take in more values might be
   introduced in the future).
-- If you want your option to take in a value, it must be done using `[value]`.
-  Notice the square brackets. This is required for Line to know that the option
-  takes in a value.
+- If you want your option(s) to take in a value, it must be done using
+  `[value]`. Notice the square brackets.
 
 ## Example of Option Values
 

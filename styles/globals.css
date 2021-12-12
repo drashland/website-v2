@@ -148,6 +148,11 @@ select {
   border-radius: 3rem;
 }
 
+.tutorial-finished {
+  background-color: #efefef;
+  padding: 1rem;
+}
+
 /* PrismJS overrides */
 
 .token.inserted-sign {

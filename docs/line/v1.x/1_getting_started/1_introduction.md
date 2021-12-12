@@ -107,7 +107,7 @@ Line is a class-based, command-line interface framework for Deno.
 - Argument support (e.g., `some-command arg1 arg2 arg3 ..and so on`
 - Argument validation
 - Option validation
-- Help menus for main commands and subcommands
+- Auto-generated help menus
 
 ## Badge
 

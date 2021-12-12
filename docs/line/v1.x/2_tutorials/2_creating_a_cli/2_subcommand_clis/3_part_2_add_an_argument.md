@@ -1,4 +1,4 @@
-# Part 2: Main Command Argument
+# Part 2: Add an Arguemnt
 
 ## Table of Contents
 
@@ -6,14 +6,17 @@
 - [Folder Structure End State](#folder-structure-end-state)
 - [Steps](#steps)
 - [Verification](#verification)
-- [Argument Descriptions](#argument-descriptions)
 
 ## Before You Get Started
 
-In this tutorial part, you will build off of
-[Part 1](/line/v1.x/tutorials/creating-a-cli/subcommand-clis/part-1-main-command)
-and add an argument to your main command. At the end of this tutorial part, your
-CLI will be able to run tests stored in a `tests` directory.
+This tutorial builds off of
+[Part 1](/line/v1.x/tutorials/creating-a-cli/subcommand-clis/part-1-entry-points).
+
+In this tutorial part, you will add a `file_pattern` argument to your main
+command.
+
+At the end of this tutorial part, your CLI will be able to run tests stored in a
+`tests` directory.
 
 To learn more about arguments, read the
 [Arguments > Introduction](/line/v1.x/tutorials/arguments/introduction) page.
@@ -30,9 +33,9 @@ To learn more about arguments, read the
 
 ## Steps
 
-1. Add an argument to your main command's `signature`. This argument will take
-   in a file pattern and pass it off to `Deno.run()` to run tests in the next
-   step.
+1. Add the `file_pattern` argument to your main command's `signature` property.
+   This argument will take in a file pattern and pass it to `Deno.run()` to run
+   tests.
 
    ```diff-typescript
      // cli.ts
@@ -92,7 +95,9 @@ To learn more about arguments, read the
    ```
 
 3. Add your `handle()` method. This method will be in charge of handling the
-   `file_pattern` argument and running tests.
+   `file_pattern` argument and running tests. **Line will be expecting this
+   method under the hood (it is required since your main command takes an
+   argument).**
 
    ```diff-typescript
      // cli.ts
@@ -200,7 +205,7 @@ To learn more about arguments, read the
    You should see the following output:
 
    ```text
-   Check file:///path/to/your/project/tmp/tests/unit_1_test.ts
+   Check file:///path/to/your/project/tests/unit_1_test.ts
    running 1 test from file:///path/to/your/project/tests/unit_1_test.ts
    test Unit 1 Test  ... ok (9ms)
 
@@ -230,5 +235,5 @@ To learn more about arguments, read the
    ```
 
 Continue to
-[Part 3](/line/v1.x/tutorials/creating-a-cli/subcommand-clis/part-3-main-command-option)
+[Part 3](/line/v1.x/tutorials/creating-a-cli/subcommand-clis/part-3-add-an-option)
 to make your main command handle an option.

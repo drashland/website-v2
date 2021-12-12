@@ -1,4 +1,4 @@
-# Part 3: Main Command Option
+# Part 3: Add an Option
 
 ## Table of Contents
 
@@ -10,7 +10,10 @@
 ## Before You Get Started
 
 This tutorial builds off of
-[Part 2](/line/v1.x/tutorials/creating-a-cli/subcommand-clis/part-2-main-command-argument).
+[Part 2](/line/v1.x/tutorials/creating-a-cli/subcommand-clis/part-2-add-an-argument).
+
+In this tutorial part, you will add a `--debug` option to your main command.
+
 At the end of this tutorial part, your CLI will be able to output debug logging.
 
 To learn more about options, read the
@@ -20,6 +23,8 @@ To learn more about options, read the
 
 ```text
 ▾  path/to/your/project/
+  ▾  tests/
+       unit_1_test.ts
      cli.ts
      deps.ts
 ```
@@ -40,7 +45,7 @@ To learn more about options, read the
         public signature = "rhum [file_pattern]";
 
         public arguments = {
-          "file_pattern": "Run `deno test` on files matching this pattern."
+          "file_pattern": "Pattern used to match test files. Can also be a directory."
         };
    +
    +    public options = {
@@ -128,7 +133,7 @@ To learn more about options, read the
      ARGUMENTS
 
          file_pattern
-             Run `deno test` on files matching this pattern.
+             Pattern used to match test files. Can also be a directory.
 
      OPTIONS
 
@@ -162,5 +167,5 @@ To learn more about options, read the
    ```
 
 Continue to
-[Part 4](/line/v1.x/tutorials/creating-a-cli/subcommand-clis/part-4-subcommand)
+[Part 4](/line/v1.x/tutorials/creating-a-cli/subcommand-clis/part-4-add-a-subcommand)
 to make your main command handle a subcommand.

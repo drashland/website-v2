@@ -19,11 +19,14 @@ handle the arguments. For example:
 
 ```typescript
 public handle(): void { // or public async handle(): Promise<void> {
-  console.log(this.argument("arg1"));
-  console.log(this.argument("arg2"));
-  console.log(this.argument("arg3"));
+  console.log(this.argument("arg1")); // Targets [arg1] in the signature
+  console.log(this.argument("arg2")); // Targets [arg2] in the signature
+  console.log(this.argument("arg3")); // Targets [arg3] in the signature
 }
 ```
+
+When calling `this.argument()`, the argument name must match the argument name
+in the signature. Otherwise, the value will be `undefined`.
 
 ## Complete Example
 

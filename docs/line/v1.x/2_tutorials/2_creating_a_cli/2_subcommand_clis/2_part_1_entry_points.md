@@ -1,4 +1,4 @@
-# Part 1: Main Command
+# Part 1: Entry Points
 
 ## Table of Contents
 
@@ -9,8 +9,11 @@
 
 ## Before You Get Started
 
-In this tutorial part, you will create your CLI's main command. At the end of
-this tutorial part, your CLI will be able to show a help menu and verison.
+In this tutorial part, you will create your entry point file (`cli.ts`) and your
+[main command](/line/v1.x/tutorials/commands/main-commands).
+
+At the end of this tutorial part, you will have a CLI that will be able to show
+a help menu and verison.
 
 ## Folder Structure End State
 
@@ -49,7 +52,10 @@ this tutorial part, your CLI will be able to show a help menu and verison.
    cli.run();
    ```
 
-2. Install your CLI.
+2. Install your CLI. Notice the `--name` option. Caveats on this can be found on
+   the
+   [Commands > Main Commands](/line/v1.x/tutorials/commands/main-commands#caveats)
+   page under the "Caveats" section.
 
    ```shell
    $ deno install --name rhum cli.ts
@@ -93,5 +99,5 @@ this tutorial part, your CLI will be able to show a help menu and verison.
    ```
 
 Continue to
-[Part 2](/line/v1.x/tutorials/creating-a-cli/subcommand-clis/part-2-main-command-argument)
+[Part 2](/line/v1.x/tutorials/creating-a-cli/subcommand-clis/part-2-add-an-argument)
 to make your main command handle an argument.

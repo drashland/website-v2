@@ -1,4 +1,4 @@
-# Adding Options
+# Part 3: Add an Option
 
 ## Table of Contents
 
@@ -10,40 +10,14 @@
 ## Before You Get Started
 
 This tutorial builds off of
-[Part 2: Add Arguments](/line/v1.x/tutorials/creating-a-cli/single-command-clis/part-2-add-arguments).
+[Part 2](/line/v1.x/tutorials/creating-a-cli/single-command-clis/part-2-add-arguments).
 
-To allow your main command to handle options, define an `options` property like
-so ...
+In this tutorial part, you will add a `--debug` option to your main command.
 
-```typescript
-public options = {
-  "--some-option": "Some cool option."
-};
-```
+At the end of this tutorial part, your CLI will be able to output debug logging.
 
-You can retrieve options using the following in the `handle()` method:
-
-```typescript
-public handle(): void { // or public async handle(): Promise<void> {
-  console.log(this.option("--some-option")); // Evalutes to true if specified by a user
-}
-```
-
-You can add as many options as you wish.
-
-Things to know:
-
-- Options are optional.
-- The key in the `options` property is the signature.
-- The value in the `options` property is the option's description.
-- Options do not have to begin with `-` or `--`. However, it is probably best to
-  keep this convention to prevent confusion in your CLIs.
-- A single option can have multiple signatures. This is discussed in the
-  [Option Signatures](/line/v1.x/tutorials/options/option-signatures) tutorial.
-- Options can take in values. This is discussed in the
-  [Option Values](/line/v1.x/tutorials/options/option-values) tutorial.
-
-In this tutorial, you will create a CLI that takes in one option: `--debug`.
+To learn more about options, read the
+[Options > Introduction](/line/v1.x/tutorials/options/introduction) page.
 
 ## Folder Structure End State
 
@@ -175,6 +149,3 @@ In this tutorial, you will create a CLI that takes in one option: `--debug`.
    ```
 
 Congratulations! You finished the Single Command CLIs tutorial series!
-
-To learn how to make a more complex CLI that can handle subcommands, proceed to
-[Subcommand CLIs](/line/v1.x/tutorials/creating-a-cli/subcommand-clis).

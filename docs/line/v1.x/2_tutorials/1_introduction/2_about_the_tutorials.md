@@ -1,12 +1,12 @@
 # About the Tutorials
 
-The tutorials in the sidebar show you how to create a "Greeter" CLI and build
-off of each other. They are ordered (from top to bottom) in a way that will help
-you understand how Line can be used to build basic CLIs to complex CLIs as well
-as the nuances in the framework. Since all tutorials have example code of
-setting up and installing a CLI, it is not required that you read the tutorials
-in order. However, it is greatly recommended so you do not miss out on any
-details explaining Line's internal behavior.
+The tutorials in the sidebar are ordered (from top to bottom) in a way that will
+help you understand how to create a single command CLI and a subcommand CLI.
+
+All of the information regarding main commands, subcommands, adding arguments,
+and adding options come after the CLI-creation tutorials. Reason being we want
+you to build a CLI first and get into the nuances of the framework later.
+However, the choice is always yours!
 
 Most tutorials will follow the format below:
 
@@ -28,3 +28,7 @@ Most tutorials will follow the format below:
 
 - After you follow the Steps section, you can use this Verification section to
   test that your application is working.
+
+If at any time you get confused and the documentation is not helping you, hit us
+up in our [Discord server](https://discord.gg/RFsCSaHRWK) and we will be glad to
+provide you with guidance!

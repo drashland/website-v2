@@ -47,8 +47,8 @@ main command or subcommand class. For example:
   }
 ```
 
-The above will result in the follow `ARGUMENTS` section for the command in
-question:
+The above will result in the following `ARGUMENTS` section in the help menu for
+the command in question:
 
 ```text
 ARGUMENTS

@@ -13,13 +13,19 @@ Things to know:
 
 - Commands can have an unlimited number of arguments.
 - All arguments in a signature _**are required**_. If a user does not specify
-  all arguments, then they will be shown an error and the `USAGE` section.
+  all arguments, then they will be shown an error and the `USAGE` section for
+  the command.
 - If a user specifies too many arguments, then they will be shown an error and
-  the `USAGE` section.
+  the `USAGE` section for the command.
 - Arguments must be surrounded by square brackets in the `signature`. This is
   how Line knows that the command handles arguments.
-- If an argument is surrounded by quotes when passed in, then the entire value
+- If an argument is surrounded by quotes when passed in through the command line
+  (e.g., `<MAIN COMMAND> "some really long argument"`), then the entire value
   inside the quotes will be the argument value.
+- If your command takes arguments, then your command _MUST_ have a `handle()`
+  method to handle the arguments. More on this can be found in the
+  [Arguments > Adding Arguments](/line/v1.x/tutorials/arguments/adding-arguments)
+  page.
 
 ## Complete Example
 
@@ -34,7 +40,7 @@ class MainCommand extends Line.MainCommand {
   public signature = "greet [some_arg]";
 
   public handle(): void {
-    console.log(this.argument("some_arg"));
+    console.log(this.argument("some_arg")); // Targets [some_arg] in the signature
   }
 }
 

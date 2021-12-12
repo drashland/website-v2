@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - [Adding Options](#adding-options)
+- [Option Locations](#option-locations)
 - [Complete Example](#complete-example)
 
 ## Adding Options
@@ -28,6 +29,19 @@ public handle(): void { // or public async handle(): Promise<void> {
   console.log(this.option("--some-other-other-option"));
 }
 ```
+
+## Option Locations
+
+If you have a main command _and_ subcommand(s) that take in options, then please
+take not of the following:
+
+- Main command options come after the main command
+- Subcommand options come after the subcommand
+- You cannot use a main command option before a subcommand
+
+The above rules are reflected in the help menus for both main commands and
+subcommands, but we want to make sure we call this out as we feel it is not
+noticeable at first glance.
 
 ## Complete Example
 

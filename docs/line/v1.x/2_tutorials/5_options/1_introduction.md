@@ -13,7 +13,7 @@ Things to know:
 
 - Commands can have an unlimited number of options.
 - Options are optional -- they do not have to be specified by users.
-- The key in the `options` property is the signature.
+- The key in the `options` property is the option's signature.
 - The value in the `options` property is the option's description.
 - Options do not have to begin with `-` or `--`. However, it is probably best to
   keep this convention to prevent confusion in your CLIs.
