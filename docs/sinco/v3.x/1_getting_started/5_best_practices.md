@@ -1,7 +1,9 @@
 # Best Practices
 
-As Sinco runs a subprocess, the subprocess will only be closed if we, or you
-tell it do. Otherwise it becomes a zombie process, and you will have to manually
+As Sinco runs a subprocess, the subprocess will only be closed if:
+- It is told to do so internally; or
+- You tell it to.
+Otherwise it becomes a zombie process, and you will have to manually
 terminate it via Monitor, Task Manager or other related process managers.
 
 This can lead to dozens of chrome processes running on your system, when you
