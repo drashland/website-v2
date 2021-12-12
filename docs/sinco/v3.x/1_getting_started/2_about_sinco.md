@@ -26,7 +26,7 @@ Some examples of what you can build are:
 
 ## Concepts
 
-Sinco is similar to the more well known tools that achieve the same thing, such
+Sinco is similar to the more well-known tools that achieve the same thing, such
 as Puppeteer. What sets Sinco apart is:
 
 - It's the first Deno browser automation tool
