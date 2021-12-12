@@ -65,8 +65,8 @@ module.exports = {
       dmm: {
         versions: [
           "v2.x",
-        ]
-      }
+        ],
+      },
     },
   },
   reactStrictMode: false,
