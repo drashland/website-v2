@@ -138,7 +138,7 @@ container, and execute your test file.
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will click an element matching
+`https://drash.land`. Once the page has loaded, you will click an element matching
 the `img[src="/logo-sinco.svg"]` selector, which will send you to a different
 page. To assert this, you are going to use `.assertUrlIs()` to assert the page
 you are currently on, has now changed.
