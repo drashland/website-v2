@@ -30,7 +30,7 @@ Sinco is similar to the more well-known tools that achieve the same thing, such
 as Puppeteer. What sets Sinco apart is:
 
 - It is the first Deno browser automation tool
-- It doesn't try to install a specific chrome or firefox version on your
+- It does not try to install a specific Chrome or Firefox version on your
   computer
 - It is transparent: It will use the browser and version you already have
   installed.
