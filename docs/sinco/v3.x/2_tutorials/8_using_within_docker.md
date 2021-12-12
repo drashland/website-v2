@@ -24,9 +24,9 @@ model" and deleting it manually.
 
 In this tutorial, you will:
 
-- Create a docker container, that installs Deno and chrome-driver; and
+- Create a docker container, that installs Deno and chrome-driver;
 - Create a headless browser instance from within Docker;
-- Go to a page;
+- Go to a page; and
 - Assert that you are on the expected web page.
 
 ## Folder Structure End State
