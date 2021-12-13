@@ -30,7 +30,7 @@ Most tutorials will follow the format below:
   recommended that you do. The reason they don't is because what Sinco needs
   access to is very dynamic, and very dependant on which OS and browser you are
   using. You should refer to
-  [restricting permissions](tutorials/restricting-permissions) for more
-  information on how you may do this. But we do suggest that when you start
-  using Sinco in your project, you make the restrictions so you know exactly
-  what Sinco can and can't do.
+  [restricting permissions](https://drash.land/sinco/v3.x/tutorials/restricting-permissions)
+  for more information on how you may do this. But we do suggest that when you
+  start using Sinco in your project, you make the restrictions so you know
+  exactly what Sinco can and can't do.
