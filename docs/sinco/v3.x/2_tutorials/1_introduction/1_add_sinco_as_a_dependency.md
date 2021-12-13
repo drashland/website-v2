@@ -17,7 +17,7 @@ as a dependency_** in the file like so:
 export { buildFor } from "https://deno.land/x/sinco@<VERSION>/mod.ts";
 ```
 
-Replace `<VERSION>` with the latest version of **Sinco v2.x**. The latest
+Replace `<VERSION>` with the latest version of **Sinco v3.x**. The latest
 version can be found
 [here](https://github.com/drashland/sinco/releases/latest?q=v3&expanded=true).
 

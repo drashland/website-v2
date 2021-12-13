@@ -48,35 +48,35 @@ In this tutorial, you will:
 
 1. Create your `app_test.ts` file.
 
-```typescript
-// app_test.ts
+  ```typescript
+  // app_test.ts
 
-// Note you will need to import assertEquals from https://deno.land/std/testing/asserts.ts
-import { assertEquals, buildFor } from "./deps.ts";
+  // Note you will need to import assertEquals from https://deno.land/std/testing/asserts.ts
+  import { assertEquals, buildFor } from "./deps.ts";
 
-Deno.test("My web app works as expected", async () => {
-  const Sinco = await buildFor("chrome");
-  const page = await Sinco.goTo("https://drash.land");
-  const pageTitle = await page.evaluate(() => {
-    return document.title;
+  Deno.test("My web app works as expected", async () => {
+    const Sinco = await buildFor("chrome");
+    const page = await Sinco.goTo("https://drash.land");
+    const pageTitle = await page.evaluate(() => {
+      return document.title;
+    });
+    const sum = await page.evaluate(`1 + 10`);
+    const oldBodyLength = await page.evaluate(() => {
+      return document.body.children.length;
+    });
+    const newBodyLength = await page.evaluate(() => {
+      const p = document.createElement("p");
+      p.textContent = "Hello world!";
+      document.body.appendChild(p);
+      return document.body.children.length;
+    });
+    await Sinco.done();
+    assertEquals(pageTitle, "Drash Land");
+    assertEquals(sum, 11);
+    assertEquals(oldBodyLength, 3);
+    assertEquals(newBodyLength, 4);
   });
-  const sum = await page.evaluate(`1 + 10`);
-  const oldBodyLength = await page.evaluate(() => {
-    return document.body.children.length;
-  });
-  const newBodyLength = await page.evaluate(() => {
-    const p = document.createElement("p");
-    p.textContent = "Hello world!";
-    document.body.appendChild(p);
-    return document.body.children.length;
-  });
-  await Sinco.done();
-  assertEquals(pageTitle, "Drash Land");
-  assertEquals(sum, 11);
-  assertEquals(oldBodyLength, 3);
-  assertEquals(newBodyLength, 4);
-});
-```
+  ```
 
 Within the function you can pass to `evaluate()`, you have full access to the
 DOM, meaning you can write client-side JavaScript like you normally would. For
