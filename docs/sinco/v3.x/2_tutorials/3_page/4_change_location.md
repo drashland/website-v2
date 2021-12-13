@@ -32,21 +32,21 @@ In this tutorial, you will:
 
 1. Create your `app_test.ts` file.
 
-```typescript
-// app_test.ts
+   ```typescript
+   // app_test.ts
 
-// Note you will need to import assertEquals from https://deno.land/std/testing/asserts.ts
-import { assertEquals, buildFor } from "./deps.ts";
+   // Note you will need to import assertEquals from https://deno.land/std/testing/asserts.ts
+   import { assertEquals, buildFor } from "./deps.ts";
 
-Deno.test("My web app works as expected", async () => {
-  const Sinco = await buildFor("chrome");
-  const page = await Sinco.goTo("https://drash.land");
-  await page.location("https://github.com");
-  const location = await page.location();
-  await Sinco.done();
-  assertEquals(location, "https://github.com/");
-});
-```
+   Deno.test("My web app works as expected", async () => {
+     const Sinco = await buildFor("chrome");
+     const page = await Sinco.goTo("https://drash.land");
+     await page.location("https://github.com");
+     const location = await page.location();
+     await Sinco.done();
+     assertEquals(location, "https://github.com/");
+   });
+   ```
 
 Here you are going to create your headless browser instance, and navigate to
 `https://drash.land`. Once the page has loaded, you will then navigate to
@@ -57,8 +57,8 @@ location, and assert it is that of GitHub.
 
 1. Run your test.
 
-```shell
-$ deno test --allow-run --allow-read --allow-net app_test.ts
-```
+   ```shell
+   $ deno test --allow-run --allow-read --allow-net app_test.ts
+   ```
 
 2. All of your tests should pass.
