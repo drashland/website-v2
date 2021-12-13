@@ -19,29 +19,30 @@ create a client. Sinco currently supports:
 When you wish to build a client, Sinco will do the following:
 
 - Run a Deno subprocess for the given browser. This points to your own
-  executable of the browser. If you're using Chrome version 88, Sinco to spin up
-  Chrome instance using version 88. If you do not have Chrome installed, Sinco
-  will fail to run.
+  executable of the browser. If you are using Chrome version 88, Sinco will spin
+  up a Chrome instance using version 88. If you do not have Chrome installed,
+  Sinco will fail to run.
   - This means that a Chrome or Firefox process will run, and will run
-    indefinitely until Sinco closes it via it's `.close()` method on the API
-- The browser is ran via headless, meaning the process is running, but there is
-  no window or application you can view it on. The command used to run the
-  headless browser instance will open up a websocket server.
+    indefinitely until Sinco closes it via its `.done()` method on the API
+- The browser runs headless. This means the process is running, but there is no
+  window or application you can view it on. The command used to run the headless
+  browser instance will open up a websocket server.
 - Sinco will connect to that websocket endpoint as a client, via the Chrome
   Remote Devtools Protocol. This is how Sinco tells the page what to do
 - Sinco then returns a class to you, with methods that allow you to easily
   interact with your browser instance/client.
-- This class provides the exact same API methods whether you're using Firefox or
-  Chrome. The reason we did this was for consistency
+- This class provides the exact same API methods whether you are using Firefox
+  or Chrome. The reason we did this was for consistency.
 
 To create and build a client, Sinco provides a `buildFor()` method, where you
 can specify which browser to build for, and any extra confguration options you
 wish to supply, such as a default URL to open when the browser instance runs, or
-point to a specific Chrome version installed on your computer.
+point to a specific Chrome version installed on your computer. This method will
+then return a `Client` instance.
 
 In this tutorial, you will:
 
-- Create both a headless browser instance for Chrome and Firefix
+- Create both a headless browser instance for Chrome and Firefox
 - Customise the build options
 
 ## Folder Structure End State
@@ -89,8 +90,8 @@ Chrome. Note that you would not need to create both at the same time, you are
 only doing that here for demonstration purposes.
 
 When building a client for Firefox, note that it will create a temporary profile
-that will be used, due to this, a Firefox client requires a
-`--allow-write=$TMPDIR` flag
+that will be used. Due to this, a Firefox client requires the
+`--allow-write=$TMPDIR` flag.
 
 ## Verification
 

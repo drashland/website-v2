@@ -1,4 +1,4 @@
-# Using Within Docker
+# Take Screenshots
 
 ## Table of Contents
 
@@ -9,7 +9,7 @@
 
 ## Before You Get Started
 
-Sinco provides the method `.takeScreenshot` that will allow you to take a
+`Page` provides the method `.takeScreenshot()` that will allow you to take a
 screenshot of the whole page, or a specific element. This method will then write
 the screenshot to a file.
 
@@ -18,11 +18,11 @@ Example usage would be:
 - `.takeScreenshot("./screenshots");`
 - `.takeScreenshot("./screenshots", { fileName: "home_page.png", selector: "body > main", format: "png" });`
 
-The `.takeScreenshot` method will take any valid selector for `selector`.
+The `.takeScreenshot()` method will take any valid selector for `selector`.
 
-If the directory for where to save the screenshot does not exist, Sinco will
-throw an error. By default, passing in one parameter will save a screenshot to
-the specified directory, where the filename is timestamped, and the format is
+If the directory for where to save screenshots does not exist, Sinco will throw
+an error. By default, passing in one parameter will save a screenshot to the
+specified directory -- where the filename is timestamped, and the format is
 JPEG.
 
 The method also takes an optional second parameter, which allows you to specify:
@@ -35,7 +35,8 @@ The method also takes an optional second parameter, which allows you to specify:
   named. For example, say you write
   `.takeScreenshot("./screenshots", { filename: "login_form.jpeg" })`, the
   screenshot will be saved to `./screenshots/login_form.jpeg`.
-- `format` - The format of the image, eg jpeg or png. The default is jpeg.
+- `format` - The format of the image (e.g., `jpeg` or `png`). The default is
+  `jpeg`.
 - `quality` - The compression quality of the screenshot. The maximum is 100, and
   the default is 80.
 
@@ -63,15 +64,15 @@ In this tutorial, you will:
 
    Deno.test("My web app works as expected", async () => {
      const Sinco = await buildFor("chrome");
-     await Sinco.goTo("https://drash.land");
+     const page = await Sinco.goTo("https://drash.land");
      const screenshotsFolder = "./screenshots";
      Deno.mkdirSync(screenshotsFolder); // Ensure you create the directory your screenshots will be put within
-     await Sinco.takeScreenshot(screenshotsFolder); // Will take a screenshot of the whole page, and write it to `./screenshots/dd_mm_yyyy_hh_mm_ss.jpeg`
-     await Sinco.takeScreenshot(screenshotsFolder, {
+     await page.takeScreenshot(screenshotsFolder); // Will take a screenshot of the whole page, and write it to `./screenshots/dd_mm_yyyy_hh_mm_ss.jpeg`
+     await page.takeScreenshot(screenshotsFolder, {
        fileName: "drash_land.png",
        format: "png",
      }); // Specify filename and format. Will be saved as `./screenshots/drash_land.png`
-     await Sinco.takeScreenshot(screenshotsFolder, {
+     await page.takeScreenshot(screenshotsFolder, {
        fileName: "modules.jpeg",
        selector: 'a[href="https://github.com/drashland"]',
      }); // Will screenshot only the GitHub icon section, and write it to `./screenshots/dd_mm_yyyy_hh_mm_ss.jpeg`
@@ -80,27 +81,19 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-https://drash.land. Once the page has loaded, you will take a screenshot of the
-whole page, take another screenshot with a custom filename and format, and take
-a third screenshot with a custom selector.
+`https://drash.land`. Once the page has loaded, you will:
 
-2. Create your `tsconfig.json`. You will need this because Sinco uses DOM types
-   to aid in creating a screenshot
-
-   ```json
-   {
-     "compilerOptions": {
-       "lib": ["dom", "deno.ns"]
-     }
-   }
-   ```
+- Take a screenshot of the whole page;
+- Take a second screenshot with a custom filename and format; and
+- Take a third screenshot with a custom selector.
 
 ## Verification
 
 1. Run your test.
 
    ```shell
-   $ deno test --config tsconfig.json --allow-run --allow-read --allow-write --allow-net app_test.ts
+   $ deno test --allow-run --allow-read --allow-write --allow-net app_test.ts
    ```
 
-2. Now check your screenshots folder!
+2. Now check your `screenshots` directory! The screenshots should be stored in
+   there.

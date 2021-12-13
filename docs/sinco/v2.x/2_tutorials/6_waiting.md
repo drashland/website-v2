@@ -26,7 +26,7 @@ In this tutorial, you will:
 
 - Create a headless browser instance; and
 - Go to a website;
-- Wait for the page to change on a click;
+- Wait for the page to change on a click.
 
 ## Folder Structure End State
 
