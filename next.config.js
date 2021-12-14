@@ -20,6 +20,7 @@ module.exports = {
     //     `redirects` config down below), then Next.js will redirect the user
     //     using the `destination` in the `redirects` config.
     modules: [
+      "dmm",
       "drash",
       "line",
       "sinco",
@@ -68,6 +69,12 @@ module.exports = {
       wocket: {
         versions: [
           "v0.x",
+        ],
+      },
+      dmm: {
+        versions: [
+          "v1.x",
+          "v2.x",
         ],
       },
     },
@@ -125,11 +132,6 @@ module.exports = {
         permanent: false,
       },
       // Remove the below /dmm object when the its migrated
-      {
-        source: "/dmm",
-        destination: "/dmm/v1.x/index.html",
-        permanent: false,
-      },
       {
         source: "/dmm/v1.x",
         destination: "/dmm/v1.x/index.html",
