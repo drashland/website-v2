@@ -9,8 +9,14 @@
 
 Sinco is a browser automation and testing tool. What this means is, Sinco runs a
 subprocess for Chrome or Firefox, and will communicate to the process via the
-Chrome Devtools Protocol. This allows Sinco to spin up a new browser tab, go to
-certain websites, click buttons and so much more, all programatically.
+Chrome Devtools Protocol, as the subprocess opens a WebSocket server that Sinco
+connects to. This allows Sinco to spin up a new browser tab, go to certain
+websites, click buttons and so much more, all programatically. All Sinco does is
+runs a subprocess for Chrome or Firefox, so you do not need to worry about it
+creating or running any other processes.
+
+Sinco is used to run or test actions of a page in the browser. Similar to unit
+and integration tests, Sinco can be used for "browser" tests.
 
 Some examples of what you can build are:
 
@@ -20,11 +26,11 @@ Some examples of what you can build are:
 
 ## Concepts
 
-Sinco is similar to the more well known tools that achieve the same thing, such
+Sinco is similar to the more well-known tools that achieve the same thing, such
 as Puppeteer. What sets Sinco apart is:
 
-- It's the first Deno browser automation tool
-- It doesn't try to install a specific chrome or firefox version on your
+- It is the first Deno browser automation tool
+- It does not try to install a specific Chrome or Firefox version on your
   computer
 - It is transparent: It will use the browser and version you already have
   installed.
