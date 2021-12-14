@@ -17,7 +17,7 @@ as a dependency_** in the file like so:
 export * as Line from "https://deno.land/x/line@<VERSION>/mod.ts";
 ```
 
-Replace `<VERSION>` with the latest version of **Line v2.x**. The latest version
+Replace `<VERSION>` with the latest version of **Line v1.x**. The latest version
 can be found [here](https://github.com/drashland/line/releases/latest).
 
 The `deps.ts` file is **_required_** for all tutorials. Tutorials will reference
