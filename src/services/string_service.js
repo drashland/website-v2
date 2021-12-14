@@ -109,6 +109,10 @@ export function formatLabel(label) {
       to: "v2",
     },
     {
+      from: /V3/g,
+      to: "v3",
+    },
+    {
       from: /Websocket/g,
       to: "WebSocket",
     },
