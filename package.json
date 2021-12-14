@@ -19,7 +19,7 @@
     "@styled-icons/bootstrap": "^10.34.0",
     "@styled-icons/octicons": "^10.44.0",
     "eslint": "<8.0.0",
-    "eslint-config-next": "12.0.5",
+    "eslint-config-next": "12.0.7",
     "react-markdown": "^7.1.1",
     "title-case": "^3.0.3"
   }
