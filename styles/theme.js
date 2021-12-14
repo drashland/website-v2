@@ -23,6 +23,9 @@ export const lightTheme = {
   breadcrumbs: {
     color: "#333333",
   },
+  headingLinkIcon: {
+    color: "#333333",
+  },
   markdown: {
     heading2: {
       borderTopColor: "#f4f4f4",
@@ -42,6 +45,9 @@ export const lightTheme = {
       heading: {
         color: "#efefef",
       },
+    },
+    text: {
+      color: "#333333",
     },
   },
   sideBar: {
@@ -66,6 +72,9 @@ export const darkTheme = {
   breadcrumbs: {
     color: "#efefef",
   },
+  headingLinkIcon: {
+    color: "#efefef",
+  },
   layout: {
     background: "#363b44",
     color: "#efefef",
@@ -77,6 +86,9 @@ export const darkTheme = {
       heading: {
         color: "#efefef",
       },
+    },
+    text: {
+      color: "#f4f8ff",
     },
   },
   markdown: {
@@ -92,7 +104,7 @@ export const darkTheme = {
     background: "#2f343c",
     categoryHeading: {
       borderBottomColor: "#424c5f",
-      color: "#d4dbe8",
+      color: "#f4f8ff",
     },
     link: {
       colorInactive: "#d4dbe8",

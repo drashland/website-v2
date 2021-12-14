@@ -39,6 +39,36 @@ a:hover {
   text-decoration: underline;
 }
 
+a.heading-anchor {
+  display: block;
+  position: relative;
+  top: -100px;
+  visibility: hidden;
+}
+
+.heading-linked {
+  display: flex;
+  color: #333333;
+  text-decoration: none;
+  align-items: center;
+  width: 100%;
+}
+
+.heading-linked .icon-link {
+  display: flex;
+}
+
+.heading-linked .icon {
+  margin-left: .25rem;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.heading-linked:hover .icon {
+  opacity: 1;
+}
+
 button {
   border: none;
   cursor: pointer;
@@ -118,34 +148,41 @@ select {
   border-radius: 3rem;
 }
 
+.tutorial-finished {
+  background-color: #efefef;
+  padding: 1rem;
+}
+
 /* PrismJS overrides */
 
 .token.inserted-sign {
   background-color: rgba(61, 191, 131, 0.26) !important;
-  width: 100%;
+  margin-bottom: 1px;
 }
 
 .token.deleted-sign {
   background-color: rgba(215, 32, 32, 0.54) !important;
-  width: 100%;
 }
 
 .token.prefix.inserted {
   /* background-color: rgba(90, 1081, 90, 0.65) !important; */
   color: #ffffff;
   display: inline-block;
-  width: 15px;
+  margin: 1px;
   text-align: center;
+  user-select: none;
 }
 
 .token.prefix.deleted {
   /* background-color: rgba(213, 72, 72, 0.81) !important; */
   color: #ffffff;
   display: inline-block;
-  width: 15px;
+  margin: 1px;
   text-align: center;
+  user-select: none;
 }
 
-pre code {
+pre.code {
+  display: block;
   width: 100%;
 }
