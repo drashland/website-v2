@@ -65,8 +65,11 @@ currently support, so if you use one we do not support, please feel free to
    the filepath for any reason, you can do so:
 
    ```shell
-   $ dmm update src/server/my_deps.ts
+   $ dmm update --deps-file src/server/my_deps.ts
+   $ dmm update -F src/server/my_deps.ts
    ```
+
+   `-F` is just shorthand for `--deps-file`.
 
    You should receive something like the following:
 
