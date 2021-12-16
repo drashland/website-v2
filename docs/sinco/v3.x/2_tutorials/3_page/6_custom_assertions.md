@@ -17,9 +17,13 @@ The method it provides is:
 
 - `assertSee` - This method will assert that the given text exists inside the
   page
-- `assertNoConsoleErrors` - This method will check the developer console for any errors, and if there are, the browser resources will be closed (so you don't have to do it), and an assertion error will be thrown, where the error message will contain a list of errors in the console. Example errors could be:
+- `assertNoConsoleErrors` - This method will check the developer console for any
+  errors, and if there are, the browser resources will be closed (so you don't
+  have to do it), and an assertion error will be thrown, where the error message
+  will contain a list of errors in the console. Example errors could be:
   - An error when a favicon was not found (failed requests eg 404, 500)
-  - An error with a JavaScript file (such as a vue component has thrown an error during render)
+  - An error with a JavaScript file (such as a vue component has thrown an error
+    during render)
 
 In this tutorial, you will:
 
@@ -56,7 +60,8 @@ In this tutorial, you will:
 Here you are going to create your headless browser instance, and navigate to
 `https://drash.land`. Once the page has loaded, you will assert that you can see
 some given text on the page, and in this example, it is
-`Develop With Confidence`. Finally you will assert that no errors exist inside the console.
+`Develop With Confidence`. Finally you will assert that no errors exist inside
+the console.
 
 ## Verification
 
