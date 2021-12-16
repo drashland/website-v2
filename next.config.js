@@ -45,6 +45,8 @@ module.exports = {
     roadmapsUrls: {
       drash:
         "https://github.com/drashland/drash/issues?q=is%3Aissue+is%3Aopen+roadmap",
+      line:
+        "https://github.com/drashland/line/issues?q=is%3Aissue+is%3Aopen+roadmap",
     },
     versions: {
       drash: {
