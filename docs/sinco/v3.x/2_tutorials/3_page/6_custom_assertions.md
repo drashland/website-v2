@@ -23,8 +23,8 @@ The method it provides is:
   will contain a list of errors in the console. Example errors could be:
   - An error when a favicon was not found (failed requests eg 404, 500)
   - An error with a JavaScript file (such as a vue component has thrown an error
-    during render)
-  You can also pass in an exclusion list to ignore specific errors: `assertNoConsoleErrors('favicon')`.
+    during render) You can also pass in an exclusion list to ignore specific
+    errors: `assertNoConsoleErrors('favicon')`.
 
 In this tutorial, you will:
 
