@@ -24,6 +24,7 @@ The method it provides is:
   - An error when a favicon was not found (failed requests eg 404, 500)
   - An error with a JavaScript file (such as a vue component has thrown an error
     during render)
+  You can also pass in an exclusion list to ignore specific errors: `assertNoConsoleErrors('favicon')`.
 
 In this tutorial, you will:
 
@@ -52,7 +53,7 @@ In this tutorial, you will:
      const Sinco = await buildFor("chrome");
      const page = await Sinco.goTo("https://drash.land");
      await page.assertSee("Develop With Confidence");
-     await page.assertNoConsoleErrors();
+     await page.assertNoConsoleErrors(); // or await page.assertNoConsoleErrors(["favicon"]);
      await Sinco.done();
    });
    ```
