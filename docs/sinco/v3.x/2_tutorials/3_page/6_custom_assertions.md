@@ -22,7 +22,7 @@ The method it provides is:
   have to do it), and an assertion error will be thrown, where the error message
   will contain a list of errors in the console. Example errors could be:
   - An error when a favicon was not found (failed requests eg 404, 500)
-  - An error with a JavaScript file (such as a vue component has thrown an error
+  - An error with a JavaScript file (such as a Vue component has thrown an error
     during render) You can also pass in an exclusion list to ignore specific
     errors: `assertNoConsoleErrors('favicon')`.
 
