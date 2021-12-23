@@ -43,6 +43,14 @@ import { DexterService } from "./deps.ts";
 // Instantiate dexter
 const dexter = new DexterService(); // By default, will display the date and time of the request
 
+class HomeResource extends Drash.Resource {
+  public paths = ["/"];
+
+  public GET(request: Drash.Request, response: Drash.Response): void {
+    return response.text("Hello");
+  }
+}
+
 // Create your server and plug in dexter to the middleware config
 const server = new Drash.Server({
   resources: [
@@ -50,7 +58,7 @@ const server = new Drash.Server({
   ],
   services: [
       dexter
-  ]
+  ],
   hostname: "0.0.0.0",
   port: 1447,
   protocol: "http"
