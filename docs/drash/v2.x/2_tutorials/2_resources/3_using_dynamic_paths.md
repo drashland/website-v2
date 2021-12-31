@@ -30,7 +30,7 @@ export default class HomeResource extends Drash.Resource {
     const param = request.pathParam("my_param");
 
     if (param) {
-      return response.text(myParam);
+      return response.text(param);
     }
 
     return response.text("No param passed in!");
