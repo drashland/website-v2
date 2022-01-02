@@ -46,9 +46,6 @@ Briefly stated, at a high level, services execute in the following order:
 4. Resource HTTP method level `runAfterResource()`
 5. Resource-level `runAfterResource()`
 6. Server-level `runAfterResource()`
-7. Server-level `runOnError()`
-8. Resource-level `runOnError()`
-9. Resource HTTP method level `runOnError()`
 
 Check out the
 [Drash Lifecycle Diagram](/drash/v2.x/getting-started/lifecycle-diagram) for a

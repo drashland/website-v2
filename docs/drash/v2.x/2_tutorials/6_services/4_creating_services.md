@@ -13,8 +13,6 @@ implement one or both of the methods below in the service:
     example, if you have a resource with a `GET()` method and a `GET` request is
     made to that resource, then the server will run the service after the
     `GET()` method is called.
-- `runOnError()`
-  - This method is executed after a resource or service thrown an error.
 
 An example of how a service is written is below:
 
@@ -41,16 +39,6 @@ class SomeService extends Drash.Service {
   ): void {
     // Some code here
   }
-
-  /**
-   * Run this service after an error is thrown
-   */
-  public runOnError(
-    error: Drash.Errors.HttpError,
-    response: Drash.Response,
-  ): Drash.Response | Promise<Drash.Response> {
-    // Some code here
-  };
 }
 ```
 
