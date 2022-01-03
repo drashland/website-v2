@@ -179,3 +179,28 @@ is set to `https`, then `cert_file` and `key_file` are required.
     ],
   });
   ```
+
+### exception?: typeof Drash.ExceptionLayer
+
+- This is a var of instantiated custom ExceptionLayer that the server will use
+  to make response when error was thrown.
+- Example Usage
+
+  ```typescript
+  import { Drash } from "./deps.ts";
+
+  class MyExceptionLayer extends Drash.ExceptionLayer {
+    catch(error: Drash.Errors.HttpError, _request: Drash.Request, response: Drash.Response) {
+      response.status = error.code;
+      response.json(error);
+    }
+  }
+
+  const server = new Drash.Server({
+    hostname: "0.0.0.0",
+    port: 1447,
+    protocol: "http",
+    resources: [ ... ]
+    exception: MyExceptionLayer // <--- See here
+  });
+  ```
