@@ -180,7 +180,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
   });
   ```
 
-### error_handler?: typeof Drash.ErrorHandler
+### error_handler?: Drash.ErrorHandler
 
 - This is a var of instantiated custom ErrorHandler that the server will use
   to make response when error was thrown.
@@ -190,8 +190,12 @@ is set to `https`, then `cert_file` and `key_file` are required.
   import { Drash } from "./deps.ts";
 
   class MyErrorHandler extends Drash.ErrorHandler {
-    catch(error: Drash.Errors.HttpError, _request: Drash.Request, response: Drash.Response) {
-      response.status = error.code;
+    public catch(error: Error, _request: Drash.Request, response: Drash.Response) {
+      if (error instanceof Drash.Errors.HttpError) {
+        response.status = error.code;
+      } else {
+        response.status = 500;
+      }
       response.json(error);
     }
   }
