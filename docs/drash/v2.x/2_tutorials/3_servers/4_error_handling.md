@@ -461,7 +461,7 @@ Key benefits to this method:
       response: Drash.Response,
     ): void {
       // Any error that should return a stack trace is handled here. Since
-      // Drash's default error handler returns a staack trace, just use its
+      // Drash's default error handler returns a stack trace, just use its
       // implementation.
       if (error instanceof SomeErrorThatShouldReturnStackTraces) {
         return super.catch(error, request, response);
