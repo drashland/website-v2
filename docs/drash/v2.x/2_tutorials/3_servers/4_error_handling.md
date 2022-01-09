@@ -1,5 +1,9 @@
 # Error Handling
 
+This page goes over the default error handling behavior and how to customize it.
+Customizing the default behavior was introduced in v2.4.0. Please make sure you
+are using v2.4.0 (or higher) before proceeding with this tutorial.
+
 ## Table of Contents
 
 - [Before You Get Started](#before-you-get-started)
