@@ -31,10 +31,13 @@ const Heading = function (level) {
   const wrappedHeadingBlock = function (props) {
     const children = React.Children.toArray(props.children);
     const text = children.reduce(flatten, "");
-    const slug = text.toLowerCase()
+    let slug = text.toLowerCase()
       .replace(/\W/g, "-")
-      .replace("---", "-")
-      .replace("--", "-");
+      .replace(/_+/g, "-")
+      .replace(/-+/g, "-");
+    if ((slug.lastIndexOf("-") + 1) === slug.length) {
+      slug = slug.substr(0, slug.lastIndexOf("-"));
+    }
     const linkedHeadingChildren = [...props.children];
 
     // The <h1> tags do not need an anchor because they are at the top of the
