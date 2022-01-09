@@ -137,7 +137,10 @@ is set to `https`, then `cert_file` and `key_file` are required.
 
 ### error_handler?: new (...args: any[]) => IErrorHandler
 
-- This config is useful if you want to override the server's default error handling behavior. To learn more about the default behavior and overriding it, read [Tutorials > Servers > Error Handling](/drash/v2.x/tutorials/servers/error-handling).
+- This config is useful if you want to override the server's default error
+  handling behavior. To learn more about the default behavior and overriding it,
+  read
+  [Tutorials > Servers > Error Handling](/drash/v2.x/tutorials/servers/error-handling).
 - Example Usage
 
   ```typescript

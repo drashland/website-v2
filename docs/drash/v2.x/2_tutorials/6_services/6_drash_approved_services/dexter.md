@@ -57,11 +57,11 @@ const server = new Drash.Server({
     HomeResource,
   ],
   services: [
-      dexter
+    dexter,
   ],
   hostname: "0.0.0.0",
   port: 1447,
-  protocol: "http"
+  protocol: "http",
 });
 
 server.run();

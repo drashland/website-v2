@@ -12,7 +12,12 @@
 
 ### Default Behavior
 
-Under the hood (in `Drash.Server`), Drash uses its default `Drash.ErrorHandler` class to handle all errors thrown during the request-resource-response lifecycle. When the error handler catches errors, it returns an error response with a proper HTTP error status code. However, it also returns the stack trace and this behavior might not fit well with your application's requirements. For example, it will return something like the following:
+Under the hood (in `Drash.Server`), Drash uses its default `Drash.ErrorHandler`
+class to handle all errors thrown during the request-resource-response
+lifecycle. When the error handler catches errors, it returns an error response
+with a proper HTTP error status code. However, it also returns the stack trace
+and this behavior might not fit well with your application's requirements. For
+example, it will return something like the following:
 
 ```text
 Error: Method Not Allowed
@@ -22,7 +27,9 @@ Error: Method Not Allowed
 
 ### Overriding the Default Behavior
 
-You may want to override the default behavior so that clients do not see a stack trace. For example, you can override the default behavior to return an error response like the following:
+You may want to override the default behavior so that clients do not see a stack
+trace. For example, you can override the default behavior to return an error
+response like the following:
 
 ```json
 {
@@ -30,9 +37,13 @@ You may want to override the default behavior so that clients do not see a stack
 }
 ```
 
-Overriding the default behavior is a very simple process. All you need to do is to plug in a custom error handler class to the `error_handler` server config (as shown in the Steps section on this page).
+Overriding the default behavior is a very simple process. All you need to do is
+to plug in a custom error handler class to the `error_handler` server config (as
+shown in the Steps section on this page).
 
-All error handler classes passed into the `error_handler` server config must match the `Drash.Interfaces.IErrorHandler` contract. In other words, make sure your error handler class has the following `catch` method definition:
+All error handler classes passed into the `error_handler` server config must
+match the `Drash.Interfaces.IErrorHandler` contract. In other words, make sure
+your error handler class has the following `catch` method definition:
 
 ```typescript
 public catch(
@@ -46,23 +57,23 @@ A full example looks like:
 
 ```typescript
 class MyErrorHandler {
- public catch(error: Error, request: Request, response: Drash.Response) {
+  public catch(error: Error, request: Request, response: Drash.Response) {
     // If a Drash error was thrown (internally or in a resource), then use the
     // error code and message attached to the error -- converting the error
     // object into a JSON response to send to clients
-   if (error instanceof Drash.Errors.HttpError) {
-     response.status = error.code;
-     return response.json({
+    if (error instanceof Drash.Errors.HttpError) {
+      response.status = error.code;
+      return response.json({
         message: error.message,
-     });
-   }
+      });
+    }
 
-   // Default to 500
-   response.status = 500;
-   return response.json({
+    // Default to 500
+    response.status = 500;
+    return response.json({
       message: "Server failed to process the request.",
-   });
- }
+    });
+  }
 }
 ```
 
@@ -84,45 +95,45 @@ class MyErrorHandler {
    // Create your resource
 
    class HomeResource extends Drash.Resource {
-    public paths = ["/"];
+     public paths = ["/"];
 
-    public GET(request: Drash.Request, response: Drash.Response): void {
-      return response.json({
-        hello: "world"
-      });
-    }
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       return response.json({
+         hello: "world",
+       });
+     }
    }
 
    // Create your error handler to send JSON responses
 
    class MyErrorHandler {
-    public catch(error: Error, request: Request, response: Drash.Response) {
-      // Handle all built-in Drash errors
-      if (error instanceof Drash.Errors.HttpError) {
-        response.status = error.code;
-        return response.json({
+     public catch(error: Error, request: Request, response: Drash.Response) {
+       // Handle all built-in Drash errors
+       if (error instanceof Drash.Errors.HttpError) {
+         response.status = error.code;
+         return response.json({
            message: error.message,
-        });
-      }
+         });
+       }
 
-      // Default to 500
-      response.status = 500;
-      return response.json({
+       // Default to 500
+       response.status = 500;
+       return response.json({
          message: "Server failed to process the request.",
-      });
-    }
+       });
+     }
    }
 
    // Create and run your server
 
    const server = new Drash.Server({
-    error_handler: MyErrorHandler,
-    hostname: "0.0.0.0",
-    port: 1447,
-    protocol: "http",
-    resources: [
-      HomeResource,
-    ],
+     error_handler: MyErrorHandler,
+     hostname: "0.0.0.0",
+     port: 1447,
+     protocol: "http",
+     resources: [
+       HomeResource,
+     ],
    });
 
    server.run();
@@ -163,7 +174,7 @@ class MyErrorHandler {
    {"message":"Not Found"}
    ```
 
-3. To see the default behavior, comment the `error_handler` config.
+4. To see the default behavior, comment the `error_handler` config.
 
    ```diff-typescript
         const server = new Drash.Server({
@@ -178,7 +189,7 @@ class MyErrorHandler {
         });
    ```
 
-4. Now make a `GET` request to `/hello` again.
+5. Now make a `GET` request to `/hello` again.
 
    ```text
    $ curl http://localhost:1447/hello
@@ -194,9 +205,14 @@ class MyErrorHandler {
 
 ## Further Reading
 
-The above tutorial exercises "catching" Drash errors and transforming them to a specific response. What if you wanted to throw different types of errors in your resources though?
+The above tutorial exercises "catching" Drash errors and transforming them to a
+specific response. What if you wanted to throw different types of errors in your
+resources though?
 
-For example, what if you had a `BadRequestError` class that you wanted to throw in your resource and catch in your error handler? Again, the process is simple. Just make your resource throw that error and handle the error in your error handler class like so:
+For example, what if you had a `BadRequestError` class that you wanted to throw
+in your resource and catch in your error handler? Again, the process is simple.
+Just make your resource throw that error and handle the error in your error
+handler class like so:
 
 ```typescript
 // app.ts
@@ -226,29 +242,29 @@ class HomeResource extends Drash.Resource {
 // Create your error handler to send JSON responses
 
 class MyErrorHandler {
- public catch(error: Error, request: Request, response: Drash.Response) {
-   // Handle all built-in Drash errors
-   if (error instanceof Drash.Errors.HttpError) {
-     response.status = error.code;
-     return response.json({
+  public catch(error: Error, request: Request, response: Drash.Response) {
+    // Handle all built-in Drash errors
+    if (error instanceof Drash.Errors.HttpError) {
+      response.status = error.code;
+      return response.json({
         message: error.message,
-     });
-   }
+      });
+    }
 
-   // Handle your custom error that you can throw in resources and catch here
-   if (error instanceof BadRequestError) {
-     response.status = error.code;
-     return response.json({
-       message: error.message
-     });
-   }
+    // Handle your custom error that you can throw in resources and catch here
+    if (error instanceof BadRequestError) {
+      response.status = error.code;
+      return response.json({
+        message: error.message,
+      });
+    }
 
-   // Default to 500
-   response.status = 500;
-   return response.json({
+    // Default to 500
+    response.status = 500;
+    return response.json({
       message: "Server failed to process the request.",
-   });
- }
+    });
+  }
 }
 
 // Create and run your server
@@ -266,10 +282,10 @@ const server = new Drash.Server({
 server.run();
 
 console.log(`Server running at ${server.address}.`);
-
 ```
 
-Taking the above code (assuming it is written in an `app.ts` file), we can verify that it handles errors as expected:
+Taking the above code (assuming it is written in an `app.ts` file), we can
+verify that it handles errors as expected:
 
 1. Run your app.
 
