@@ -405,10 +405,10 @@ verify that it handles errors as expected:
 Just like in resources, you can throw errors in services and handle them in your
 error handler.
 
-For example, what if you had an `UnauthorizedError` class that you wanted to
-throw in an `AuthService` to accommodate your auth process? No problem! Just
-make your service throw that error and handle the error in your error handler
-class like so:
+For example, what if you had a `BadRequestBodyError` class that you wanted to
+throw in a `RequestBodyValidationService` to accommodate your request validation
+process? No problem! Just make your service throw that error and handle the
+error in your error handler class like so:
 
 ```typescript
 // app.ts
@@ -417,47 +417,39 @@ import { Drash } from "./deps.ts";
 
 // Create your custom error. This MUST be an extension of Error.
 
-class UnauthorizedError extends Error {
+class BadRequestBodyError extends Error {
   // It is a good idea to associate the HTTP status code in your custom error
   // so you can retrieve it as `error.code` in your error handler class
-  public code = 401;
+  public code = 400;
 
   constructor(message?: string) {
     // Use the message provided or default to a generic error message
-    super(message ?? "You do not have access to this resource.");
+    super(message ?? "Missing required body params.");
   }
 }
 
-// Create your service that handles auth. Note that this is just an example and
-// does not actually do any auth. Please use a reputable library for auth.
+// Create your service that handles request body validation on POST requests
 
-class AuthService extends Drash.Service {
+class RequestBodyValidationService extends Drash.Service {
   public runBeforeResource(
     request: Drash.Request,
     response: Drash.Response,
   ): void {
-    // No Authorization header? Throw an error early to shortcut the
-    // request-resource-response lifecycle.
-    if (!request.headers.has("Authorization")) {
-      throw new UnauthorizedError();
+    if (
+      request.method === "POST" &&
+      !request.bodyParam("params")
+    ) {
+      throw new BadRequestBodyError("Body field `params` is required.");
     }
-
-    // No bearer token? Throw an error early to shortcut the
-    // request-resource-response lifecycle.
-    if (request.headers.get("Authorization") !== "Bearer SomeToken") {
-      throw new UnauthorizedError();
-    }
-
-    // If we get here, then the client can proceed to /users.
   }
 }
 
-// Create your resource that is behind AuthService
+// Create your resource
 
 class UsersResource extends Drash.Resource {
   public paths = ["/users"];
 
-  public GET(request: Drash.Request, response: Drash.Response): void {
+  public POST(request: Drash.Request, response: Drash.Response): void {
     return response.json({
       message: `You made it to the UsersResource!`,
     });
@@ -477,7 +469,7 @@ class MyErrorHandler extends Drash.ErrorHandler {
     }
 
     // Handle your custom error that you can throw in resources and catch here
-    if (error instanceof UnauthorizedError) {
+    if (error instanceof BadRequestBodyError) {
       response.status = error.code;
       return response.json({
         message: error.message,
@@ -503,7 +495,7 @@ const server = new Drash.Server({
     UsersResource,
   ],
   services: [
-    new AuthService(),
+    new RequestBodyValidationService(),
   ],
 });
 
@@ -523,55 +515,57 @@ verify that it handles errors as expected:
    $ deno run --allow-net app.ts
    ```
 
-2. Using `curl -v` (or similar command), make a `GET` request to
+2. Using `curl -v` (or similar command), make a `POST` request to
    `http://localhost:1447/users`.
 
    ```text
-   $ curl -v http://localhost:1447/users
+   $ curl -X POST -v http://localhost:1447/users
    ```
 
    You should receive a response similar to the following:
 
    ```text
-   > GET /users HTTP/1.1
+   > POST /users HTTP/1.1
    > Host: localhost:1447
    > User-Agent: curl/7.64.1
    > Accept: */*
    >
-   < HTTP/1.1 401 Unauthorized
+   < HTTP/1.1 400 Bad Request
    < content-type: application/json
-   < content-length: 54
-   < date: Mon, 10 Jan 2022 01:10:08 GMT
+   < content-length: 46
+   < date: Mon, 10 Jan 2022 01:23:00 GMT
    <
    * Connection #0 to host localhost left intact
-   {"message":"You do not have access to this resource."}* Closing connection 0
+   {"message":"Body field `params` is required."}* Closing connection 0
    ```
 
-   As you can see, the response status code is `401` and the response body is:
+   As you can see, the response status code is `400` and the response body is:
 
    ```text
-   {"message":"You do not have access to this resource."}
+   {"message":"Body field `params` is required."}
    ```
 
 3. Now make a valid request to `http://localhost:1447/users`.
 
    ```text
-   $ curl -v --header "Authorization: Bearer SomeToken" http://localhost:1447/users
+   $ curl -X POST -v -H "Content-Type: application/json" -d '{"params":"hello"}' localhost:1447/users
    ```
 
    You should receive a response similar to the following:
 
    ```text
-   > GET /users HTTP/1.1
+   > POST /users HTTP/1.1
    > Host: localhost:1447
    > User-Agent: curl/7.64.1
    > Accept: */*
-   > Authorization: Bearer SomeToken
+   > Content-Type: application/json
+   > Content-Length: 18
    >
+   * upload completely sent off: 18 out of 18 bytes
    < HTTP/1.1 200 OK
    < content-type: application/json
    < content-length: 47
-   < date: Mon, 10 Jan 2022 01:11:09 GMT
+   < date: Mon, 10 Jan 2022 01:24:55 GMT
    <
    * Connection #0 to host localhost left intact
    {"message":"You made it to the UsersResource!"}* Closing connection 0
