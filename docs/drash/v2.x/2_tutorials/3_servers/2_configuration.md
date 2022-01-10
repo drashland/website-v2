@@ -8,12 +8,13 @@ use each.
 - [Required](#required)
   - [hostname: string](#hostname-string)
   - [port: number](#port-number)
-  - [protocol: "http" | "https"](#protocol-http--https)
-  - [resources: typeof Drash.Resource[]](#resources-typeof-drashresource)
+  - [protocol: "http" | "https"](#protocol-http-https)
+  - [resources: typeof Drash.Resource[]](#resources-typeof-drash-resource)
 - [Optional](#required)
-  - [cert_file?: string](#certfile-string)
-  - [key_file?: string](#keyfile-string)
-  - [services?: Drash.Service[]](#services-drashservice)
+  - [cert_file?: string](#cert-file-string)
+  - [error_handler?: new (...args: any[]) => IErrorHandler](#error-handler-new-args-any-ierrorhandler)
+  - [key_file?: string](#key-file-string)
+  - [services?: Drash.Service[]](#services-drash-service)
 
 ## Required
 
@@ -131,6 +132,69 @@ is set to `https`, then `cert_file` and `key_file` are required.
     port: 1447,
     protocol: "https",
     resources: [ ... ]
+  });
+  ```
+
+### error_handler?: new (...args: any[]) => IErrorHandler
+
+- This config is useful if you want your server to use a custom implementation
+  of error handling instead of it using the default, built-in behavior. To learn
+  more about the default behavior and customizing it, read
+  [Tutorials > Servers > Error Handling](/drash/v2.x/tutorials/servers/error-handling).
+- Example Usage
+
+  ```typescript
+  import { Drash } from "./deps.ts";
+
+  class MyErrorHandler extends Drash.ErrorHandler {
+    public catch(error: Error, _request: Drash.Request, response: Drash.Response) {
+      // Default to 500
+      let code = 500;
+      let message = "Server failed to process the request. Please try again later.";
+
+      // If this was a bad request, then return 400
+      if (error instanceof MyCustomBadRequestError) {
+        code = 400;
+        message = "Invalid request params/body received.";
+      }
+
+      // If this was an unauthorized request, then return 401
+      if (error instanceof MyCustomUnauthorizedError) {
+        code = 401;
+        message = "You cannot access this resource.";
+      }
+
+      // If an internal Drash error was thrown, use the status code and message
+      // attached to the error object
+      if (error instanceof Drash.Errors.HttpError) {
+        code = error.code;
+        message = error.message;
+      }
+
+      // ... and so on ...
+
+      // Return the response for Drash to send to the client
+      return response.json({
+        message,
+      });
+
+      // The above will result in the following response ...
+      //
+      //   {
+      //     message: "Whatever the message variable was set to.",
+      //   }
+      //
+      // ... and will have the correct status code in the Status Line of the
+      // response
+    }
+  }
+
+  const server = new Drash.Server({
+    hostname: "0.0.0.0",
+    port: 1447,
+    protocol: "http",
+    resources: [ ... ]
+    error_handler: MyErrorHandler // <--- See here
   });
   ```
 
