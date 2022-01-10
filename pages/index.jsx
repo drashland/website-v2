@@ -499,7 +499,7 @@ export default function Home() {
         </Section>
         <Section background="#2f343c" color="#ffffff">
           <InnerContainer>
-            <Copyright>&copy; 2019 - 2021 Drash Land</Copyright>
+            <Copyright>&copy; 2019 - 2022 Drash Land</Copyright>
           </InnerContainer>
         </Section>
       </Main>
