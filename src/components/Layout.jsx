@@ -313,7 +313,7 @@ export default function Layout(props) {
               )}
             </MakeBetter>
             <Copyright>
-              &copy; 2019 - 2021 Drash Land
+              &copy; 2019 - 2022 Drash Land
             </Copyright>
           </InnerContainer>
         </Main>
