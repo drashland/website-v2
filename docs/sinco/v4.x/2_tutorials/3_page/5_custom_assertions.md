@@ -47,7 +47,7 @@ In this tutorial, you will:
    import { buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const {browser, page} = await buildFor("chrome");
+     const { browser, page } = await buildFor("chrome");
      await page.location("https://drash.land");
      await page.assertNoConsoleErrors(); // or await page.assertNoConsoleErrors(["favicon"]);
      await browser.close();
@@ -55,8 +55,8 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-`https://drash.land`. Finally you will assert that no errors exist inside
-the console.
+`https://drash.land`. Finally you will assert that no errors exist inside the
+console.
 
 ## Verification
 

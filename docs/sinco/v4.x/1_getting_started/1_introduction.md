@@ -37,7 +37,7 @@ Learn more about Sinco [here](about-sinco).
      const element = await page.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
-     await element.click({},true);
+     await element.click({}, true);
      const location = await page.location(); // Get all data before we close, then we can safely assert
      // Once finished, close to clean up any processes
      await browser.close();

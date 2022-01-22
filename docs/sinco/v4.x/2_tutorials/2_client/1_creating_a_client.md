@@ -75,8 +75,8 @@ In this tutorial, you will:
    //            defaultUrl: "http://drash.land",
    //            binaryPath: "C:\\Users\\Nishchay\\brave\\brave.exe"
    //          });
-   const {Chrome, Cpage} = await buildFor("chrome");
-   const {Firefox, Fpage} = await buildFor("firefox");
+   const { Chrome, Cpage } = await buildFor("chrome");
+   const { Firefox, Fpage } = await buildFor("firefox");
    // Page class is browser agnostic, and hence you can interact with the page independent of the `Client` object.
    await Cpage.location("https://drash.land");
    await Fpage.location("https://drash.land");

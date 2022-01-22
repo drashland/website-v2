@@ -10,8 +10,8 @@
 ## Before You Get Started
 
 Sinco provides the method `.location()` on the `Page` class that will navigate
-your page to the web page specified. This method will wait until the
-page has loaded.
+your page to the web page specified. This method will wait until the page has
+loaded.
 
 Example pages could be:
 
@@ -45,7 +45,7 @@ In this tutorial, you will:
    import { assertEquals, buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const {browser, page} = await buildFor("chrome");
+     const { browser, page } = await buildFor("chrome");
      await page.location("https://drash.land");
      const location = await page.location();
      await browser.close();
