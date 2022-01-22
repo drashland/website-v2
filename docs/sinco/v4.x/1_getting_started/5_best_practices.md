@@ -15,7 +15,7 @@ There are various ways to combat this:
 ## Close the Client Before Asserting
 
 We cannot know when you want to assert. If your assertion fails but you have not
-called `.done()`, the test case will throw an error and the subprocess will
+called `.close()`, the test case will throw an error and the subprocess will
 never end. This is not something we can address -- it comes down to you.
 
 To combat this, you should close your client before any assertions (where
@@ -23,13 +23,13 @@ possible):
 
 ```ts
 // Run any code that will speak to the headless browser
-const client = await buildFor("chrome");
-const page = await client.goTo("https://drash.land");
+const { browser, page } = await buildFor("chrome");
+await page.location("https://drash.land");
 const location = await page.location();
 const elem = await page.querySelector("input");
 const inputValue = await elem.value();
 // Close the process as we dont need it anymore and it isn't left hanging
-await client.done();
+await client.close();
 // Make our assertions as normal
 assertEquals(location, "https://drash.land/");
 assertEquals(inputValue, "some value");
@@ -42,8 +42,8 @@ something does throw an unexpected error, you are able to close the client:
 
 ```ts
 const { browser, page } = await buildFor("chrome");
-await page.location("https://drash.land"); // if page doesn't exist, Sinco will called done() itself, and throw an error safely
-const elem = await page.querySelector("input"); // if element doesn't exist, Sinco will called done() itself, and throw an error safely
+await page.location("https://drash.land"); // if page doesn't exist, Sinco will called close() itself, and throw an error safely
+const elem = await page.querySelector("input"); // if element doesn't exist, Sinco will called close() itself, and throw an error safely
 try {
   const elem2 = await page.querySelector("div");
   await elem2.value("hello world"); // A div is not an input element, error thrown!
