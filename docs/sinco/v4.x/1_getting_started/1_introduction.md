@@ -68,7 +68,6 @@ Learn more about Sinco [here](about-sinco).
 - Evaluate JavaScript
 - Docker support
 - Assertions
-  - Assert see
 - Query elements
 - Set and get cookies
 - Set and get the location
