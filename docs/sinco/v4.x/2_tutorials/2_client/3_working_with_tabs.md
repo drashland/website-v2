@@ -1,4 +1,4 @@
-# Get Pages
+# Working With Tabs
 
 ## Table of Contents
 
