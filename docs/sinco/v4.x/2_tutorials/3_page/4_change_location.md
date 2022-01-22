@@ -39,11 +39,11 @@ In this tutorial, you will:
    import { assertEquals, buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const Sinco = await buildFor("chrome");
-     const page = await Sinco.goTo("https://drash.land");
+     const {browser, page} = await buildFor("chrome");
+     await page.location("https://drash.land");
      await page.location("https://github.com");
      const location = await page.location();
-     await Sinco.done();
+     await browser.close();
      assertEquals(location, "https://github.com/");
    });
    ```

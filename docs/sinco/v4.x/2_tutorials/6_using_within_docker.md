@@ -114,25 +114,23 @@ container, and execute your test file.
    import { buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const Chrome = await buildFor("chrome");
-     const chromePage = await Chrome.goTo("https://drash.land");
+     const {Chrome, chromePage} = await buildFor("chrome");
+     await chromePage.location("https://drash.land");
      const chromePageElem = await chromePage.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
-     await chromePageElem.click();
-     await chromePage.waitForPageChange();
+     await chromePageElem.click({}, true);
      const chromePageLocation = await chromePage.location();
      assertEquals(chromePageLocation, "https://discord.com/invite/RFsCSaHRWK");
-     await Chrome.done();
-     const Firefox = await buildFor("firefox");
-     const firefoxPage = await Firefox.goTo("https://drash.land");
+     await Chrome.close();
+     const {Firefox, firefoxPage} = await buildFor("firefox");
+     await firefoxPage.location("https://drash.land");
      const firefoxPageElem = await firefoxPage.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
-     await firefoxePageElem.click();
-     await firefoxPage.waitForPageChange();
+     await firefoxePageElem.click({}, true);
      const firefoxPageLocation = await firefoxPage.location();
-     await Firefox.done();
+     await Firefox.close();
      assertEquals(firefoxPageLocation, "https://discord.com/invite/RFsCSaHRWK");
    });
    ```

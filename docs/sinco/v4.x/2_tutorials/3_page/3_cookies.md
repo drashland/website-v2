@@ -49,8 +49,8 @@ In this tutorial, you will:
    import { assertEquals, buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const Sinco = await buildFor("chrome");
-     const page = await Sinco.goTo("https://drash.land");
+     const {browser, page} = await buildFor("chrome");
+     await page.location("https://drash.land");
      await page.cookie({
        name: "project",
        value: "sinco",
@@ -60,7 +60,7 @@ In this tutorial, you will:
        url: "https://drash.land",
      });
      const cookies = await page.cookie();
-     await Sinco.done();
+     await browser.close();
      assertEquals(cookies[0].name, "project");
      assertEquals(cookies[0].value, "sinco");
    });

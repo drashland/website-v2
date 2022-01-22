@@ -31,16 +31,16 @@ Learn more about Sinco [here](about-sinco).
      try {
        assertEquals(await page.location(), "https://drash.land/");
      } catch (e) {
-       await Sinco.done();
+       await browser.close();
        throw e;
      }
      const element = await page.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
-     await element.click({},true); // This element will take the user to Sinco's documentation
+     await element.click({},true);
      const location = await page.location(); // Get all data before we close, then we can safely assert
      // Once finished, close to clean up any processes
-     await Sinco.done();
+     await browser.close();
 
      assertEquals(location, "https://discord.com/invite/RFsCSaHRWK");
    });

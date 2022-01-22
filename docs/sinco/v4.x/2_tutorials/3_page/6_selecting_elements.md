@@ -43,19 +43,14 @@ Example selectors could be:
    import { assertEquals, buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const Sinco = await buildFor("chrome");
-     const page = await Sinco.goTo("https://drash.land");
+     const {browser, page} = await buildFor("chrome");
+     await page.location("https://drash.land");
      const img = await page.querySelector("img"); // This should be the logo
      // Now `img` is an `Element` instance, allowing you to action upon this element such as:
      //
-     //   await img.click()
+     //   await img.click({},true)
      //   await img.value() // If this element was an input element
-     //
-     // Youc an also check certain properties of `img`:
-     //
-     //   console.log(img.selector) // "img"
-     //   console.log(img.method) // "document.querySelector"
-     await Sinco.done();
+     await browser.close();
    });
    ```
 

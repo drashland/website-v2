@@ -63,8 +63,8 @@ In this tutorial, you will:
    import { buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const Sinco = await buildFor("chrome");
-     const page = await Sinco.goTo("https://drash.land");
+     const {browser, page} = await buildFor("chrome");
+     await page.location("https://drash.land");
      const screenshotsFolder = "./screenshots";
      Deno.mkdirSync(screenshotsFolder); // Ensure you create the directory your screenshots will be put within
      await page.takeScreenshot(screenshotsFolder); // Will take a screenshot of the whole page, and write it to `./screenshots/dd_mm_yyyy_hh_mm_ss.jpeg`
@@ -76,7 +76,7 @@ In this tutorial, you will:
        fileName: "modules.jpeg",
        selector: 'a[href="https://github.com/drashland"]',
      }); // Will screenshot only the GitHub icon section, and write it to `./screenshots/dd_mm_yyyy_hh_mm_ss.jpeg`
-     await Sinco.done();
+     await browser.close();
    });
    ```
 

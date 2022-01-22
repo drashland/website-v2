@@ -38,12 +38,12 @@ In this tutorial, you will:
    import { assertEquals, buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const Sinco = await buildFor("chrome");
-     const page = await Sinco.goTo("https://chromestatus.com");
+     const {browser, page} = await buildFor("chrome");
+     await page.location("https://chromestatus.com");
      const elem = await page.querySelector('input[placeholder="Filter"]');
      await elem.value("hello world");
      const val = await elem.value();
-     await Sinco.done();
+     await browser.close();
      assertEquals(val, "hello world");
    });
    ```

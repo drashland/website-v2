@@ -38,7 +38,7 @@ To create and build a client, Sinco provides a `buildFor()` method, where you
 can specify which browser to build for, and any extra confguration options you
 wish to supply, such as a default URL to open when the browser instance runs, or
 point to a specific Chrome version installed on your computer. This method will
-then return a `Client` instance.
+then return an object containing a `Client` instance and a `Page` instance.
 
 In this tutorial, you will:
 
@@ -75,14 +75,14 @@ In this tutorial, you will:
    //            defaultUrl: "http://drash.land",
    //            binaryPath: "C:\\Users\\Nishchay\\brave\\brave.exe"
    //          });
-   const Chrome = await buildFor("chrome");
-   const Firefox = await buildFor("firefox");
-   // Both clients provide the exact same API
-   await Chrome.goTo("https://drash.land");
-   await Firefox.goTo("https://drash.land");
+   const {Chrome, Cpage} = await buildFor("chrome");
+   const {Firefox, Fpage} = await buildFor("firefox");
+   // Page class is browser agnostic, and hence you can interact with the page independent of the `Client` object.
+   await Cpage.location("https://drash.land");
+   await Fpage.location("https://drash.land");
    // Now you close the connections and processes, as you are done here
-   await Chrome.done();
-   await Firefox.done();
+   await Chrome.close();
+   await Firefox.close();
    ```
 
 Here you are going to create your headless browser instance for Firefox and

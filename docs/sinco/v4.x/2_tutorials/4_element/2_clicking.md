@@ -36,15 +36,14 @@ In this tutorial, you will:
    import { buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const Sinco = await buildFor("chrome");
-     const page = await Sinco.goTo("https://drash.land");
+     const {browser, page} = await buildFor("chrome");
+     await page.location("https://drash.land");
      const elem = await page.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
-     await elem.click();
-     await page.waitForPageChange();
+     await elem.click({}, true);
      const location = await page.location();
-     await Sinco.done();
+     await browser.close();
      assertEquals(location, "https://discord.com/invite/RFsCSaHRWK");
    });
    ```

@@ -39,7 +39,7 @@ $ deno test --allow-net=0.0.0.0:1234
 
 This permission is only required for Windows and when using Chrome, because
 Windows can have one of two default locations for Chrome, so it checks if these
-files exist. The argument to pass to this is the patht o your Chrome executable:
+files exist. The argument to pass to this is the path to your Chrome executable:
 
 ```shell
 $ deno test --allow-read="C:\Program Files\Google\Chrome\Application\chrome.exe,C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"

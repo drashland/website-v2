@@ -15,8 +15,6 @@ do not need to assert these yourself.
 
 The method it provides is:
 
-- `assertSee` - This method will assert that the given text exists inside the
-  page
 - `assertNoConsoleErrors` - This method will check the developer console for any
   errors, and if there are, the browser resources will be closed (so you don't
   have to do it), and an assertion error will be thrown, where the error message
@@ -28,9 +26,8 @@ The method it provides is:
 
 In this tutorial, you will:
 
-- Create a headless browser instance;
-- Assert no errors exist in the console; and
-- Assert text exists inside the DOM (page).
+- Create a headless browser instance; and
+- Assert no errors exist in the console.
 
 ## Folder Structure End State
 
@@ -50,18 +47,15 @@ In this tutorial, you will:
    import { buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const Sinco = await buildFor("chrome");
-     const page = await Sinco.goTo("https://drash.land");
-     await page.assertSee("Develop With Confidence");
+     const {browser, page} = await buildFor("chrome");
+     await page.location("https://drash.land");
      await page.assertNoConsoleErrors(); // or await page.assertNoConsoleErrors(["favicon"]);
-     await Sinco.done();
+     await browser.close();
    });
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-`https://drash.land`. Once the page has loaded, you will assert that you can see
-some given text on the page, and in this example, it is
-`Develop With Confidence`. Finally you will assert that no errors exist inside
+`https://drash.land`. Finally you will assert that no errors exist inside
 the console.
 
 ## Verification

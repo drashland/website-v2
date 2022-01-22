@@ -55,8 +55,8 @@ In this tutorial, you will:
    import { assertEquals, buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const Sinco = await buildFor("chrome");
-     const page = await Sinco.goTo("https://drash.land");
+     const {browser, page} = await buildFor("chrome");
+     await page.location("https://drash.land");
      const pageTitle = await page.evaluate(() => {
        return document.title;
      });
@@ -70,7 +70,7 @@ In this tutorial, you will:
        document.body.appendChild(p);
        return document.body.children.length;
      });
-     await Sinco.done();
+     await browser.close();
      assertEquals(pageTitle, "Drash Land");
      assertEquals(sum, 11);
      assertEquals(oldBodyLength, 3);

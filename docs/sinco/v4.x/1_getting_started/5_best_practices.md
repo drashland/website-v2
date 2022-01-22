@@ -41,17 +41,17 @@ It would be best to wrap your code in a try/catch block where possible, so if
 something does throw an unexpected error, you are able to close the client:
 
 ```ts
-const client = await buildFor("chrome");
-const page = await client.goTo("https://drash.land"); // if page doesn't exist, Sinco will called done() itself, and throw an error safely
+const {browser, page} = await buildFor("chrome");
+await page.location("https://drash.land"); // if page doesn't exist, Sinco will called done() itself, and throw an error safely
 const elem = await page.querySelector("input"); // if element doesn't exist, Sinco will called done() itself, and throw an error safely
 try {
   const elem2 = await page.querySelector("div");
   await elem2.value("hello world"); // A div is not an input element, error thrown!
 } catch (e) {
-  await client.done();
+  await browser.close();
   throw e;
 }
-await client.done();
+await browser.close();
 assertEquals(location, "https://drash.land/");
 assertEquals(inputValue, "some value");
 ```
