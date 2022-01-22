@@ -54,8 +54,8 @@ can query-select an `Element` from a `Page` object, and then call the
 following example:
 
 ```typescript
-const elem = page.querySelector("button#submit");
-elem.takeScreenshot("/path/to/folder");
+const elem = await page.querySelector("button#submit");
+await elem.takeScreenshot("/path/to/folder");
 ```
 
 ## `Page#waitForPageChange`
