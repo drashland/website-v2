@@ -114,7 +114,7 @@ container, and execute your test file.
    import { buildFor } from "./deps.ts";
 
    Deno.test("My web app works as expected", async () => {
-     const { Chrome, chromePage } = await buildFor("chrome");
+     const { browser: chrome, page: chromePage } = await buildFor("chrome");
      await chromePage.location("https://drash.land");
      const chromePageElem = await chromePage.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
@@ -122,15 +122,15 @@ container, and execute your test file.
      await chromePageElem.click({}, true);
      const chromePageLocation = await chromePage.location();
      assertEquals(chromePageLocation, "https://discord.com/invite/RFsCSaHRWK");
-     await Chrome.close();
-     const { Firefox, firefoxPage } = await buildFor("firefox");
+     await chrome.close();
+     const { browser: firefox, page: firefoxPage } = await buildFor("firefox");
      await firefoxPage.location("https://drash.land");
      const firefoxPageElem = await firefoxPage.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
      await firefoxePageElem.click({}, true);
      const firefoxPageLocation = await firefoxPage.location();
-     await Firefox.close();
+     await firefox.close();
      assertEquals(firefoxPageLocation, "https://discord.com/invite/RFsCSaHRWK");
    });
    ```

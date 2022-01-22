@@ -23,22 +23,24 @@ When you wish to build a client, Sinco will do the following:
   up a Chrome instance using version 88. If you do not have Chrome installed,
   Sinco will fail to run.
   - This means that a Chrome or Firefox process will run, and will run
-    indefinitely until Sinco closes it via its `.done()` method on the API
+    indefinitely until Sinco closes it via its `.close()` method on the API
 - The browser runs headless. This means the process is running, but there is no
   window or application you can view it on. The command used to run the headless
   browser instance will open up a websocket server.
 - Sinco will connect to that websocket endpoint as a client, via the Chrome
   Remote Devtools Protocol. This is how Sinco tells the page what to do
-- Sinco then returns a class to you, with methods that allow you to easily
-  interact with your browser instance/client.
-- This class provides the exact same API methods whether you are using Firefox
-  or Chrome. The reason we did this was for consistency.
+- Sinco then returns two classes to you, with methods that allow you to easily
+  interact with your browser instance/client and the browser tab.
+- These classese provides the exact same API methods whether you are using
+  Firefox or Chrome. The reason we did this was for consistency.
 
 To create and build a client, Sinco provides a `buildFor()` method, where you
 can specify which browser to build for, and any extra confguration options you
 wish to supply, such as a default URL to open when the browser instance runs, or
 point to a specific Chrome version installed on your computer. This method will
-then return an object containing a `Client` instance and a `Page` instance.
+then return an object containing a `Client` instance (which is a representation
+of the browser) and a `Page` instance (which is a representation of the default
+page to interact with).
 
 In this tutorial, you will:
 
@@ -75,8 +77,8 @@ In this tutorial, you will:
    //            defaultUrl: "http://drash.land",
    //            binaryPath: "C:\\Users\\Nishchay\\brave\\brave.exe"
    //          });
-   const { Chrome, Cpage } = await buildFor("chrome");
-   const { Firefox, Fpage } = await buildFor("firefox");
+   const { browser: Chrome, page: Cpage } = await buildFor("chrome");
+   const { browser: Firefox, page: Fpage } = await buildFor("firefox");
    // Page class is browser agnostic, and hence you can interact with the page independent of the `Client` object.
    await Cpage.location("https://drash.land");
    await Fpage.location("https://drash.land");

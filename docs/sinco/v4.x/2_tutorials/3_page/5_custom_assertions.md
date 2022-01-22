@@ -58,6 +58,10 @@ Here you are going to create your headless browser instance, and navigate to
 `https://drash.land`. Finally you will assert that no errors exist inside the
 console.
 
+Alternatively, you can provide a list of strings as an argument, that if
+matched, will be ignored. Such as `["favicon.ico"]` if you want/need to ignore a
+404 error for this file.
+
 ## Verification
 
 1. Run your test.

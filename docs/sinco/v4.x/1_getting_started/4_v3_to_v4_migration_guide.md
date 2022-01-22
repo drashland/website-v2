@@ -13,7 +13,7 @@ the actual way you would interact with your browser. For instance now the
 `Page` object, representing your browser and its first tab.
 
 ```ts
-const {browser, page} = await buildFor(...)
+const { browser, page } = await buildFor(...)
 await page.location("https://drash.land");
 const elem = await page.querySelector('div');
 await page.evaluate(...);
@@ -38,14 +38,47 @@ await browser.someOtherMethod();
 
 Has now been retired. You will now use `page.location(...)` only instead.
 
+You can still specify the url you wish to go to, but leaving the first parameter
+blank will return the current url of the page:
+
+```typescript
+await page.location("https://drash.land"); // sends the page to this site
+await page.location(); // returns the url: "https://drash.land/"
+```
+
+## `Page#takeScreenshot()`
+
+The `selector` option has been removed from Screenshot options. Instead, now you
+can query-select an `Element` from a `Page` object, and then call the
+`takeScreenshot()` on it (no need to pass the selector again), as shown in the
+following example:
+
+```typescript
+const elem = page.querySelector("button#submit");
+elem.takeScreenshot("/path/to/folder");
+```
+
 ## `Page#waitForPageChange`
 
 Has now been retired, and functionality is implemented as default during
 navigations, or an option during actions, such as a click.
 
+This method was used if you clicked an element and maybe it sent you to another
+page. Now, it is replaced by `.click({}, true)`. The first parameter in `click`
+isn't applicable right now, but the second parameter is `waitForNavigation`, if
+set to true, the element will be clicked and then it will wait for the page to
+change.
+
 ## `Page#assertSee()`
 
 Has now been retired.
+
+Instead you can try:
+
+```typescript
+const exists = page.evaluate(`document.body.innerText.includes("hello")`);
+assertEquals(exists, true);
+```
 
 ## `Client#done()`
 

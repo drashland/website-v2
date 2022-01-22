@@ -9,14 +9,27 @@
 
 ## Before You Get Started
 
-`Element` provides the method `.click()` that will allow you to click the
+`Element` provides the method `.click({})` that will allow you to click the
 element you have selected.
+
+If you wish to click-open a link in a new tab, or the link opens a new tab on
+clicking, pass in the `{button: 'middle'}` argument. Otherwise Sinco will not
+know to connect to the new page, which is important if you want to get it via
+`browser.page(2)` for example.
+
+If clicking will change the page, pass `true` as the second argument
+(`waitForNavigation`) to the method call as `.click({}, true)`. So Sinco knows
+it has to wait until new location is loaded.
 
 In this tutorial, you will:
 
 - Create a headless browser instance;
-- Click a link; and
-- Assert the page was changed.
+- Click a link with the middle mouse button;
+- Retrive the newly opened tab and get its location;
+- Click a link normally in first tab and wait for page to load;
+- Get the first page's location; and
+- Assert the first page was changed and the second page opened to the right
+  location.
 
 ## Folder Structure End State
 
@@ -38,20 +51,40 @@ In this tutorial, you will:
    Deno.test("My web app works as expected", async () => {
      const { browser, page } = await buildFor("chrome");
      await page.location("https://drash.land");
-     const elem = await page.querySelector(
+     const githubElem = await page.querySelector(
+       "a",
+     );
+     await githubElem.click({
+       button: "middle", // Make sure when clicking an element that will open a new page, "middle" is used
+     });
+     await delay(1000);
+     const page2 = await browser.page(2);
+     const page2Location = await page2.location();
+
+     // Click an element that will change a pages location
+     const discordElem = await page.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
-     await elem.click({}, true);
-     const location = await page.location();
+     await discordElem.click({}, true);
+     const page1Location = await page.location();
+
      await browser.close();
-     assertEquals(location, "https://discord.com/invite/RFsCSaHRWK");
+
+     assertEquals(
+       page2Location,
+       "https://github.com/drashland",
+     );
+     assertEquals(page1Location, "https://discord.com/invite/RFsCSaHRWK");
    });
    ```
 
 Here you are going to create your headless browser instance, and navigate to
 `https://drash.land`. Once the page has loaded, you will click an element
-matching the `a[href="https://discord.gg/RFsCSaHRWK"]` selector, which will send
-you to a different page.
+matching the `a` selector with middle mouse button. This will open a new tab
+with the href and we will then attach to this new tab. We then click an element
+on the first tab matching the `a[href="https://discord.gg/RFsCSaHRWK"]` selector
+and the flag to `waitForNavigation`, which will send your first tab to a
+different page and wait for it to load completely.
 
 ## Verification
 

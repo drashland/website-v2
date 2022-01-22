@@ -48,7 +48,6 @@ In this tutorial, you will:
 
    Deno.test("My web app works as expected", async () => {
      const { browser, page } = await buildFor("chrome");
-     const { browser, page } = await buildFor(browserItem.name);
      await page.location("https://drash.land");
      const elem = await page.querySelector("a");
      await elem.click({

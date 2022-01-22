@@ -9,10 +9,6 @@
 
 ## Before You Get Started
 
-`Page` provides the method `.takeScreenshot()` that will allow you to take a
-screenshot of the whole page. This method will then write the screenshot to a
-file.
-
 `Element` also provides the method `.takeScreenshot()` that will allow you to
 take the screenshot of only that specific element.
 
@@ -40,7 +36,7 @@ The method also takes an optional second parameter, which allows you to specify:
 In this tutorial, you will:
 
 - Create a headless browser instance; and
-- Take a screenshot of your favourite website: drash.land!
+- Take a screenshot of an element on your favourite website: drash.land!
 
 ## Folder Structure End State
 
@@ -64,11 +60,6 @@ In this tutorial, you will:
      await page.location("https://drash.land");
      const screenshotsFolder = "./screenshots";
      Deno.mkdirSync(screenshotsFolder); // Ensure you create the directory your screenshots will be put within
-     await page.takeScreenshot(screenshotsFolder); // Will take a screenshot of the whole page, and write it to `./screenshots/dd_mm_yyyy_hh_mm_ss.jpeg`
-     await page.takeScreenshot(screenshotsFolder, {
-       fileName: "drash_land.png",
-       format: "png",
-     }); // Specify filename and format. Will be saved as `./screenshots/drash_land.png`
      const elem = await page.querySelector(
        'a[href="https://github.com/drashland"]',
      );
@@ -80,11 +71,8 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance, and navigate to
-`https://drash.land`. Once the page has loaded, you will:
-
-- Take a screenshot of the whole page;
-- Take a second screenshot with a custom filename and format; and
-- Take a third screenshot with a custom selector.
+`https://drash.land`. Once the page has loaded, you will take a screenshot of an
+element on the page.
 
 ## Verification
 
@@ -94,5 +82,5 @@ Here you are going to create your headless browser instance, and navigate to
    $ deno test --allow-run --allow-read --allow-write --allow-net app_test.ts
    ```
 
-2. Now check your `screenshots` directory! The screenshots should be stored in
+2. Now check your `screenshots` directory! The screenshot should be stored in
    there.
