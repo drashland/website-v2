@@ -82,13 +82,16 @@ export default function SideBar(props) {
   const router = useRouter();
 
   function getLinks() {
-    const links = [
-      {
+    const links = []
+    // Some modules dont need/use API reference links
+    const modulesExcludedFromAPIRef = ["dmm"]
+    if (modulesExcludedFromAPIRef.includes(moduleName.toLowerCase()) === false) {
+      links.push({
         is_external: true,
         label: "API Reference",
         path: getApiReferenceUrl(moduleName),
-      },
-    ];
+      });
+    }
 
     const roadmapsUrl = getRoadmapsUrl(moduleName);
     if (roadmapsUrl) {
