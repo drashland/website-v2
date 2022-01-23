@@ -18,7 +18,7 @@
   "devDependencies": {
     "@styled-icons/bootstrap": "^10.34.0",
     "@styled-icons/octicons": "^10.44.0",
-    "react-markdown": "^7.1.1",
+    "react-markdown": "^8.0.0",
     "title-case": "^3.0.3"
   }
 }
