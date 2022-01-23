@@ -71,6 +71,7 @@ module.exports = {
       wocket: {
         versions: [
           "v0.x",
+          "v1.x",
         ],
       },
       dmm: {
@@ -122,12 +123,6 @@ module.exports = {
         destination: "/drash/v1.x/index.html",
         permanent: false,
       },
-      // Remove the below /wocket object when the its migrated
-      {
-        source: "/wocket",
-        destination: "/wocket/v0.x/index.html",
-        permanent: false,
-      },
       {
         source: "/wocket/v0.x",
         destination: "/wocket/v0.x/index.html",
@@ -155,7 +150,6 @@ module.exports = {
         destination: "/line/v0.x/index.html",
         permanent: false,
       },
-      // Remove the below /sinco object when the its migrated
       {
         source: "/sinco/v1.x",
         destination: "/sinco/v1.x/index.html",
