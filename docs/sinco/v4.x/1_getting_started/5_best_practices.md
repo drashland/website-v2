@@ -7,7 +7,7 @@ As Sinco runs a subprocess, the subprocess will only be closed if:
   manually terminate it via Monitor, Task Manager or other related process
   managers.
 
-This can lead to dozens of chrome processes running on your system, when you
+This can lead to dozens of browser processes running on your system, when you
 aren't even using them, and Sinco isn't either.
 
 There are various ways to combat this:
