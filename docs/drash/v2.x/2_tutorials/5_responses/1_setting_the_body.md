@@ -21,19 +21,28 @@ on a response and send that body to clients.
 Below are the built-in body methods on the `response` object and examples of how
 to use each one in a resource.
 
-All of the below methods, you are able to pass in a custom response status, and any extra response headers, though these are optional. The status defaults to `200` and the `headers` defaults to an empty array. For example, we'll use `json()` for this demonstration:
+All of the below methods, you are able to pass in a custom response status, and
+any extra response headers, though these are optional. The status defaults to
+`200` and the `headers` defaults to an empty array. For example, we'll use
+`json()` for this demonstration:
 
 ```ts
-response.json({
-  success: false,
-  message: 'Authentication failed',
-}, 403, {
-  'X-REQUEST-FAILED': 'true',
-  'X-TRY-AGAIN': '6s',
-})
+response.json(
+  {
+    success: false,
+    message: "Authentication failed",
+  },
+  403,
+  {
+    "X-REQUEST-FAILED": "true",
+    "X-TRY-AGAIN": "6s",
+  },
+);
 ```
 
-Upon calling the above, when the response is sent, the status will now be 403, and on top of the content-type header these methods set, two extra headers will be present.
+Upon calling the above, when the response is sent, the status will now be 403,
+and on top of the content-type header these methods set, two extra headers will
+be present.
 
 ### download()
 
@@ -103,7 +112,8 @@ Upon calling the above, when the response is sent, the status will now be 403, a
 
 ### text()
 
-- Use this method to send raw text to clients. This can be used as a basic "Hello world" example.
+- Use this method to send raw text to clients. This can be used as a basic
+  "Hello world" example.
 - Example Usage
 
   ```typescript
