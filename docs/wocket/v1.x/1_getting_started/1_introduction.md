@@ -22,24 +22,27 @@ Learn more about Wocket [here](about-wocket).
 
    // Replace `<VERSION>` with the latest version of Wocket v1.x. The latest
    // version can be found at https://github.com/drashland/wocket/releases/latest
-   import { Server, WebSocketClient } from "https://deno.land/x/wocket@<VERSION>/mod.ts";
+   import {
+     Server,
+     WebSocketClient,
+   } from "https://deno.land/x/wocket@<VERSION>/mod.ts";
 
    const server = new Server({
      hostname: "localhost",
      port: 1667,
-   })
-   server.run()
-   server.on("hello", e => {
-     server.to("hello", "hi :)")
-   })
+   });
+   server.run();
+   server.on("hello", (e) => {
+     server.to("hello", "hi :)");
+   });
 
-   const client = new WebsocketClient(server.address)
-   client.on("hello", e => {
-     console.log(`Client got a message!`, e.data)
-   })
+   const client = new WebsocketClient(server.address);
+   client.on("hello", (e) => {
+     console.log(`Client got a message!`, e.data);
+   });
    client.onopen = () => {
      client.to("hello", "Hello!");
-   }
+   };
    ```
 
 4. Run your `app.ts` file.
@@ -48,7 +51,8 @@ Learn more about Wocket [here](about-wocket).
    $ deno run --allow-net=localhost:1667 app_test.ts
    ```
 
-5. In the output it provides, you should see that "Client got message!" was logged.
+5. In the output it provides, you should see that "Client got message!" was
+   logged.
 
 ## Features
 

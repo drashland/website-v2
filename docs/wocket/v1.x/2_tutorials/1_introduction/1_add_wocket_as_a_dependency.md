@@ -14,7 +14,10 @@ as a dependency_** in the file like so:
 ```typescript
 // deps.ts
 
-export { Server, WebSocketClient } from "https://deno.land/x/wocket@<VERSION>/mod.ts";
+export {
+  Server,
+  WebSocketClient,
+} from "https://deno.land/x/wocket@<VERSION>/mod.ts";
 ```
 
 Replace `<VERSION>` with the latest version of **Sinco v3.x**. The latest
@@ -40,7 +43,8 @@ State** section in the tutorials like so:
 
 Please make sure you have this file created and set up properly.
 
-Whilst using our own `WebSocketClient` isn't required, our documentation will use it, and it makes interacting with the server easy to do.
+Whilst using our own `WebSocketClient` isn't required, our documentation will
+use it, and it makes interacting with the server easy to do.
 
 ## Managing Dependencies
 

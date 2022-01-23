@@ -9,7 +9,9 @@
 
 ## Before You Get Started
 
-Wocket exposes a `Server` class to you, which allows you to run a native HTTP server that will upgrade requests to a websocket request as and when it receives them.
+Wocket exposes a `Server` class to you, which allows you to run a native HTTP
+server that will upgrade requests to a websocket request as and when it receives
+them.
 
 In this tutorial, you will:
 
@@ -51,14 +53,16 @@ In this tutorial, you will:
      protocol: "ws",
      path: "/admin",
    });
-   server.run()
-   console.log('Running!');
+   server.run();
+   console.log("Running!");
 
    // And to close the server:
    await server.close();
    ```
 
-Here you are going to create your websocket server on the address `ws://localhost:1667/admin`. Any requests to `localhost:1667` will return a 404, whereas requests to `localhost:1667/admin` will be handled.
+Here you are going to create your websocket server on the address
+`ws://localhost:1667/admin`. Any requests to `localhost:1667` will return a 404,
+whereas requests to `localhost:1667/admin` will be handled.
 
 ## Verification
 
