@@ -47,10 +47,10 @@ In this tutorial, you will:
    });
    server.run();
    server.on("connect", (e) => {
-     console.log("A client has connected!", e.queryParams.get("project"));
+     console.log("A client has connected!", e.detail.queryParams.get("project"));
    });
 
-   const client = new WebSocketClient(server.address = "/admin?project=wocket");
+   const client = new WebSocketClient(server.address + "/admin?project=wocket");
    ```
 
 Here you are going to create your websocket server on the address

@@ -24,7 +24,7 @@ module.exports = {
       "drash",
       "line",
       "sinco",
-      "wocket"
+      "wocket",
     ],
     docDenoLandUrls: {
       dmm: "https://doc.deno.land/https/deno.land/x/dmm/mod.ts",

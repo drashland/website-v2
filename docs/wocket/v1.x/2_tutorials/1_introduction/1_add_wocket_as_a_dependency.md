@@ -20,9 +20,9 @@ export {
 } from "https://deno.land/x/wocket@<VERSION>/mod.ts";
 ```
 
-Replace `<VERSION>` with the latest version of **Sinco v3.x**. The latest
+Replace `<VERSION>` with the latest version of **Wocket v1.x**. The latest
 version can be found
-[here](https://github.com/drashland/sinco/releases/latest?q=v3&expanded=true).
+[here](https://github.com/drashland/wocket/releases/latest?q=v3&expanded=true).
 
 The `deps.ts` file is **_required_** for all tutorials. Tutorials will reference
 the `deps.ts` file in code blocks like so:

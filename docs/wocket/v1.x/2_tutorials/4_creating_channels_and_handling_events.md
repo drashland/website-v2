@@ -41,7 +41,7 @@ server.on<{ usernames: string[] }>("save-users", e => {
   console.log(e.detail.packet.usernames); // Intellisense will help you here. ["john", "jane"]
 })
 
-client.to(|"save-users", {
+client.to("save-users", {
   usernames: ["john", "jane"]
 });
 ```
@@ -100,7 +100,7 @@ In this tutorial, you will:
      console.log('A client has connected!', e.detail.id);
    })
    server.on("disconnect", e => {
-     console.log("A client has disconnected!", e.detail.id, e.detail.code, e.detail.reason)l
+     console.log("A client has disconnected!", e.detail.id, e.detail.code, e.detail.reason)
    })
    const users = [
      {
@@ -117,13 +117,13 @@ In this tutorial, you will:
    type Users = "John" | "Jane";
    server.on<Users>("get-user-from-list", e => {
      const userToGet = e.detail.packet
-     server.to("get-user-from-list", users.find(user => user.name === userToGet));
+     server.to("get-user-from-list", users.find(user => user.name === userToGet) ?? {});
    })
 
 
    const client = new WebSocketClient(server.address);
    client.on("get-user-from-list", e => {
-     console.log("Client got get-user-from-list!", e.data)
+     console.log("Client got get-user-from-list!", e)
      client.close()
    })
    client.onopen = () => {

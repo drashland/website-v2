@@ -61,14 +61,16 @@ In this tutorial, you will:
    });
    server.run();
    server.on("hello", (e) => {
-     server.to("hello", "hi :)");
+     server.to("hello", {
+       message: "hi :)"
+     });
    });
 
    // Native websocket approach
    const client1 = new WebSocket(server.address);
    client1.onmessage = (e) => {
      const packet = JSON.parse(e.data);
-     const { channel, messsage } = packet;
+     const { channel, message: { message } } = packet;
      if (channel === "hello") {
        console.log("Client got a message from hello!", message);
      }
@@ -83,7 +85,7 @@ In this tutorial, you will:
    // WebSocketClient
    const client = new WebSocketClient(server.address);
    client.on("hello", (e) => {
-     console.log("Client got a message from hello!", e.data);
+     console.log("Client got a message from hello!", e.message);
    });
    client.onopen = () => {
      client.to("hello", "hello!");

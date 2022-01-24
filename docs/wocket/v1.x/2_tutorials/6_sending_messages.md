@@ -97,7 +97,7 @@ In this tutorial, you will:
    server.on<{ message: string }>("channel-3", (e) => {
      server.to("channel-3", {
        title: "Secret message just for you. Here is what you sent us!",
-       text: message,
+       text: e.detail.packet.message,
      }, e.detail.id);
    });
 

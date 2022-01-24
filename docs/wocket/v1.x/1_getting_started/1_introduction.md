@@ -33,12 +33,14 @@ Learn more about Wocket [here](about-wocket).
    });
    server.run();
    server.on("hello", (e) => {
-     server.to("hello", "hi :)");
+     server.to("hello", {
+       message: "hi :)",
+     });
    });
 
    const client = new WebsocketClient(server.address);
    client.on("hello", (e) => {
-     console.log(`Client got a message!`, e.data);
+     console.log(`Client got a message!`, e.message);
    });
    client.onopen = () => {
      client.to("hello", "Hello!");
