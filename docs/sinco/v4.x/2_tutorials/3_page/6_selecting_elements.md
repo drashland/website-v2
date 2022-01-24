@@ -48,7 +48,7 @@ Example selectors could be:
      const img = await page.querySelector("img"); // This should be the logo
      // Now `img` is an `Element` instance, allowing you to action upon this element such as:
      //
-     //   await img.click({},true)
+     //   await img.click({ waitFor: "navigation" })
      //   await img.value() // If this element was an input element
      await browser.close();
    });

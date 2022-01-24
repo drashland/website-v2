@@ -64,9 +64,8 @@ Has now been retired, and functionality is implemented as default during
 navigations, or an option during actions, such as a click.
 
 This method was used if you clicked an element and maybe it sent you to another
-page. Now, it is replaced by `.click({}, true)`. The first parameter in `click`
-isn't applicable right now, but the second parameter is `waitForNavigation`, if
-set to true, the element will be clicked and then it will wait for the page to
+page. Now, it is replaced by `.click({ waitFor: "navigation" })`. The first parameter, if
+`options.waitFor` is set to `"navigation"`, the element will be clicked and then it will wait for the page to
 change.
 
 ## `Page#assertSee()`

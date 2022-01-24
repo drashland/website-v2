@@ -119,7 +119,9 @@ container, and execute your test file.
      const chromePageElem = await chromePage.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
-     await chromePageElem.click({}, true);
+     await chromePageElem.click({
+       waitFor: "navigation"
+     });
      const chromePageLocation = await chromePage.location();
      assertEquals(chromePageLocation, "https://discord.com/invite/RFsCSaHRWK");
      await chrome.close();
@@ -128,7 +130,9 @@ container, and execute your test file.
      const firefoxPageElem = await firefoxPage.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
-     await firefoxePageElem.click({}, true);
+     await firefoxePageElem.click({
+       waitFor: "navigation",
+     });
      const firefoxPageLocation = await firefoxPage.location();
      await firefox.close();
      assertEquals(firefoxPageLocation, "https://discord.com/invite/RFsCSaHRWK");
