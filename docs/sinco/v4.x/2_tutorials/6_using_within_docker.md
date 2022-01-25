@@ -120,7 +120,7 @@ container, and execute your test file.
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
      await chromePageElem.click({
-       waitFor: "navigation"
+       waitFor: "navigation",
      });
      const chromePageLocation = await chromePage.location();
      assertEquals(chromePageLocation, "https://discord.com/invite/RFsCSaHRWK");

@@ -38,7 +38,7 @@ Learn more about Sinco [here](about-sinco).
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
      await element.click({
-       waitFor: "navigation"
+       waitFor: "navigation",
      });
      const location = await page.location(); // Get all data before we close, then we can safely assert
      // Once finished, close to clean up any processes
