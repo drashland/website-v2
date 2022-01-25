@@ -35,14 +35,14 @@ Wocket also supports generics for the `.on()` method, which allows you to tell
 TypeScript what data you're expecting to receive:
 
 ```ts
-server.on<{ usernames: string[] }>("save-users", e => {
+server.on<{ usernames: string[] }>("save-users", (e) => {
   // Note that you access the data via `e.detail`
-  console.log(e.detail.id) // Id of the client
+  console.log(e.detail.id); // Id of the client
   console.log(e.detail.packet.usernames); // Intellisense will help you here. ["john", "jane"]
-})
+});
 
 client.to("save-users", {
-  usernames: ["john", "jane"]
+  usernames: ["john", "jane"],
 });
 ```
 
@@ -95,13 +95,18 @@ In this tutorial, you will:
      port: 1667,
      protocol: "ws",
    });
-   server.run()
-   server.on("connect", e => {
-     console.log('A client has connected!', e.detail.id);
-   })
-   server.on("disconnect", e => {
-     console.log("A client has disconnected!", e.detail.id, e.detail.code, e.detail.reason)
-   })
+   server.run();
+   server.on("connect", (e) => {
+     console.log("A client has connected!", e.detail.id);
+   });
+   server.on("disconnect", (e) => {
+     console.log(
+       "A client has disconnected!",
+       e.detail.id,
+       e.detail.code,
+       e.detail.reason,
+     );
+   });
    const users = [
      {
        name: "John",
@@ -112,23 +117,25 @@ In this tutorial, you will:
        name: "Jane",
        age: 44,
        location: "US",
-     }
-   ]
+     },
+   ];
    type Users = "John" | "Jane";
-   server.on<Users>("get-user-from-list", e => {
-     const userToGet = e.detail.packet
-     server.to("get-user-from-list", users.find(user => user.name === userToGet) ?? {});
-   })
-
+   server.on<Users>("get-user-from-list", (e) => {
+     const userToGet = e.detail.packet;
+     server.to(
+       "get-user-from-list",
+       users.find((user) => user.name === userToGet) ?? {},
+     );
+   });
 
    const client = new WebSocketClient(server.address);
-   client.on("get-user-from-list", e => {
-     console.log("Client got get-user-from-list!", e)
-     client.close()
-   })
+   client.on("get-user-from-list", (e) => {
+     console.log("Client got get-user-from-list!", e);
+     client.close();
+   });
    client.onopen = () => {
      client.to("get-user-from-list", "Jane");
-   }
+   };
    ```
 
 Here you are going to create your websocket server on the address

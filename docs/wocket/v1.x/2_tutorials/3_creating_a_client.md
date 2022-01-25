@@ -62,7 +62,7 @@ In this tutorial, you will:
    server.run();
    server.on("hello", (e) => {
      server.to("hello", {
-       message: "hi :)"
+       message: "hi :)",
      });
    });
 
