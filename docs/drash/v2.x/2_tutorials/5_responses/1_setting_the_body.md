@@ -21,8 +21,8 @@ on a response and send that body to clients.
 Below are the built-in body methods on the `response` object and examples of how
 to use each one in a resource.
 
-All of the below methods, you are able to pass in a custom response status, and
-any extra response headers, though these are optional. The status defaults to
+You are able to pass in a custom response status, and
+any extra response headers for all of the methods below (bar `download()`), though these are optional. The status defaults to
 `200` and the `headers` defaults to an empty array. For example, we'll use
 `json()` for this demonstration:
 
