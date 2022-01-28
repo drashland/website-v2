@@ -157,6 +157,6 @@ and will then close, triggering the "disconnect" event.
 
    ```shell
    A client has connected! 1
-   Client got get-user-from-list! { name: "Jane", age: 54, location: "US" }
+   Client got get-user-from-list! { name: "Jane", age: 44, location: "US" }
    A client has disconnect! 1 1005 ""
    ```

@@ -111,6 +111,10 @@ using a client, more friendly and easier to work with.
 2. You should see the following output:
 
    ```shell
-   Client got a message from hello! hi :)
-   Client got a message from hello! hi :)
+   Client 2 got a message from hello! hi :)
+   Client 1 got a message from hello! hi :)
+   Client 2 got a message from hello! hi :)
+   Client 1 got a message from hello! hi :)
    ```
+
+The reason you see four messages and not 2, is because you have 2 cients sending a message to the same channel. Your channel listener will send a message to **all** clients connected to that channel, so the channel gets a messsage, and sends it to both of your clients (even the 'initiator'). Then it will get a second message from the other client, and will proceed to send the message to both clients again, hence 4 log statements.
