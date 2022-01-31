@@ -15,7 +15,9 @@ In this tutorial part, you will create your entry point file (`cli.ts`) and your
 At the end of this tutorial part, you will have a CLI that will be able to show
 a help menu and verison.
 
-Before continuing, create a `deps.ts` file by following the [add Line as a Dependency](/line/v1.x/tutorials/introduction/add-line-as-a-dependency#add-line-as-a-dependency) instructions.
+Before continuing, create a `deps.ts` file by following the
+[add Line as a Dependency](/line/v1.x/tutorials/introduction/add-line-as-a-dependency#add-line-as-a-dependency)
+instructions.
 
 ## Folder Structure End State
 
