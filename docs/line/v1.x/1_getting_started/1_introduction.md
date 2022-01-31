@@ -53,7 +53,7 @@ Learn more about Line [here](/line/v1.x/getting-started/about-line).
    signature. In this case, we are using `my-cli`, so that will be the name.
 
    ```shell
-   $ deno install --name my-cli cli.ts
+   $ deno install --name my-cli my_cli.ts
    ```
 
    This should install a `my-cli` executable that you can execute through your
