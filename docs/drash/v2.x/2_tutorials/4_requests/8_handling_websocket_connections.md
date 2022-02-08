@@ -63,7 +63,7 @@ class HomeResource extends Drash.Resource {
     if (
       request.headers.has("connection") &&
       request.headers.has("upgrade") &&
-      request.headers.get("connection")!.toLowerCase() == "upgrade" &&
+      request.headers.get("connection")!.toLowerCase().includes("upgrade") &&
       request.headers.get("upgrade")!.toLowerCase() == "websocket"
     ) {
       try {
