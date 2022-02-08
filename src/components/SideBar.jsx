@@ -82,13 +82,18 @@ export default function SideBar(props) {
   const router = useRouter();
 
   function getLinks() {
-    const links = [
-      {
+    const links = [];
+    // Some modules dont need/use API reference links
+    const modulesExcludedFromAPIRef = ["dmm"];
+    if (
+      modulesExcludedFromAPIRef.includes(moduleName.toLowerCase()) === false
+    ) {
+      links.push({
         is_external: true,
         label: "API Reference",
         path: getApiReferenceUrl(moduleName),
-      },
-    ];
+      });
+    }
 
     const roadmapsUrl = getRoadmapsUrl(moduleName);
     if (roadmapsUrl) {
@@ -149,13 +154,15 @@ export default function SideBar(props) {
           />
         );
       })}
-      <RecursiveCategory
-        state={state}
-        category={{
-          label: "Links",
-          paths: getLinks(),
-        }}
-      />
+      {getLinks().length > 0 && (
+        <RecursiveCategory
+          state={state}
+          category={{
+            label: "Links",
+            paths: getLinks(),
+          }}
+        />
+      )}
     </Container>
   );
 }
