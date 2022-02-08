@@ -11,7 +11,8 @@ are using v2.4.0 (or higher) before proceeding with this tutorial.
 - [Steps](#steps)
 - [Verification](#verification)
 - [Further Reading](#further-reading)
-  - [Throwing Custom Errors in Resources](#throwing-custom-errors-in-resources)
+  - [Throwing Errors in Resources](#throwing-errors-in-resources)
+  - [Throwing Errors in Services](#throwing-errors-in-services)
   - [Extending Drash.ErrorHandler](#extending-drash-errorhandler)
   - [Implementing Drash.Interfaces.IErrorHandler](#implementing-drash-interfaces-ierrorhandler)
 
@@ -236,11 +237,11 @@ using `... extends Drash.ErrorHandler`._
 
 ## Further Reading
 
-### Throwing Custom Errors in Resources
+### Throwing Errors in Resources
 
 The above tutorial exercises catching `Drash.Errors.HttpError` objects and
-transforming them to a specific response. What if you wanted to throw different
-types of errors in your resources though?
+transforming them to a specific response schema. What if you wanted to throw
+your own errors in your resources though?
 
 For example, what if you had a `BadRequestError` class that you wanted to throw
 in your resource and catch it in your error handler? Again, the process is
@@ -397,6 +398,183 @@ verify that it handles errors as expected:
 
    ```text
    {"message":"Hello, Thor!"}
+   ```
+
+### Throwing Errors in Services
+
+Just like in resources, you can throw errors in services and handle them in your
+error handler.
+
+For example, what if you had a `BadRequestBodyError` class that you wanted to
+throw in a `RequestBodyValidationService` to accommodate your request validation
+process? No problem! Just make your service throw that error and handle the
+error in your error handler class like so:
+
+```typescript
+// app.ts
+
+import { Drash } from "./deps.ts";
+
+// Create your custom error. This MUST be an extension of Error.
+
+class BadRequestBodyError extends Error {
+  // It is a good idea to associate the HTTP status code in your custom error
+  // so you can retrieve it as `error.code` in your error handler class
+  public code = 400;
+
+  constructor(message?: string) {
+    // Use the message provided or default to a generic error message
+    super(message ?? "Missing required body params.");
+  }
+}
+
+// Create your service that handles request body validation on POST requests
+
+class RequestBodyValidationService extends Drash.Service {
+  public runBeforeResource(
+    request: Drash.Request,
+    response: Drash.Response,
+  ): void {
+    if (
+      request.method === "POST" &&
+      !request.bodyParam("params")
+    ) {
+      throw new BadRequestBodyError("Body field `params` is required.");
+    }
+  }
+}
+
+// Create your resource
+
+class UsersResource extends Drash.Resource {
+  public paths = ["/users"];
+
+  public POST(request: Drash.Request, response: Drash.Response): void {
+    return response.json({
+      message: `You made it to the UsersResource!`,
+    });
+  }
+}
+
+// Create your error handler to send JSON responses
+
+class MyErrorHandler extends Drash.ErrorHandler {
+  public catch(error: Error, request: Request, response: Drash.Response) {
+    // Handle all built-in Drash errors
+    if (error instanceof Drash.Errors.HttpError) {
+      response.status = error.code;
+      return response.json({
+        message: error.message,
+      });
+    }
+
+    // Handle your custom error that you can throw in resources and catch here
+    if (error instanceof BadRequestBodyError) {
+      response.status = error.code;
+      return response.json({
+        message: error.message,
+      });
+    }
+
+    // Default to 500
+    response.status = 500;
+    return response.json({
+      message: "Server failed to process the request.",
+    });
+  }
+}
+
+// Create and run your server
+
+const server = new Drash.Server({
+  error_handler: MyErrorHandler,
+  hostname: "0.0.0.0",
+  port: 1447,
+  protocol: "http",
+  resources: [
+    UsersResource,
+  ],
+  services: [
+    new RequestBodyValidationService(),
+  ],
+});
+
+server.run();
+
+console.log(`Server running at ${server.address}.`);
+```
+
+#### Verification
+
+Taking the above code (assuming it is written in an `app.ts` file), we can
+verify that it handles errors as expected:
+
+1. Run your app.
+
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
+
+2. Using `curl -v` (or similar command), make a `POST` request to
+   `http://localhost:1447/users`.
+
+   ```text
+   $ curl -X POST -v http://localhost:1447/users
+   ```
+
+   You should receive a response similar to the following:
+
+   ```text
+   > POST /users HTTP/1.1
+   > Host: localhost:1447
+   > User-Agent: curl/7.64.1
+   > Accept: */*
+   >
+   < HTTP/1.1 400 Bad Request
+   < content-type: application/json
+   < content-length: 46
+   < date: Mon, 10 Jan 2022 01:23:00 GMT
+   <
+   * Connection #0 to host localhost left intact
+   {"message":"Body field `params` is required."}* Closing connection 0
+   ```
+
+   As you can see, the response status code is `400` and the response body is:
+
+   ```text
+   {"message":"Body field `params` is required."}
+   ```
+
+3. Now make a valid request to `http://localhost:1447/users`.
+
+   ```text
+   $ curl -X POST -v -H "Content-Type: application/json" -d '{"params":"hello"}' localhost:1447/users
+   ```
+
+   You should receive a response similar to the following:
+
+   ```text
+   > POST /users HTTP/1.1
+   > Host: localhost:1447
+   > User-Agent: curl/7.64.1
+   > Accept: */*
+   > Content-Type: application/json
+   > Content-Length: 18
+   >
+   * upload completely sent off: 18 out of 18 bytes
+   < HTTP/1.1 200 OK
+   < content-type: application/json
+   < content-length: 47
+   < date: Mon, 10 Jan 2022 01:24:55 GMT
+   <
+   * Connection #0 to host localhost left intact
+   {"message":"You made it to the UsersResource!"}* Closing connection 0
+   ```
+
+   As you can see, the response status code is `200` and the response body is:
+
+   ```text
+   {"message":"You made it to the UsersResource!"}
    ```
 
 ### Extending Drash.ErrorHandler
