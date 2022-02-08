@@ -154,13 +154,15 @@ export default function SideBar(props) {
           />
         );
       })}
-      <RecursiveCategory
-        state={state}
-        category={{
-          label: "Links",
-          paths: getLinks(),
-        }}
-      />
+      {getLinks().length > 0 && (
+        <RecursiveCategory
+          state={state}
+          category={{
+            label: "Links",
+            paths: getLinks(),
+          }}
+        />
+      )}
     </Container>
   );
 }
