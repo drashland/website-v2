@@ -13,7 +13,7 @@ You can get a value from an `application/x-www-form-urlencoded` request body by
 using the following in a resource:
 
 ```typescript
-const param = request.bodyParam("param_name");
+const param = request.bodyParam<string>("param_name");
 // or const param = request.bodyParam<SomeType>("param_name");
 ```
 
@@ -41,7 +41,7 @@ const param = request.bodyParam("param_name");
 
      public POST(request: Drash.Request, response: Drash.Response): void {
        // Check for the param
-       const param = request.bodyParam("name");
+       const param = request.bodyParam<string>("name"); // string | undefined
 
        // No param passed in? Get out.
        if (!param) {
