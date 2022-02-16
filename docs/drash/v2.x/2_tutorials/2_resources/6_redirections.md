@@ -4,7 +4,7 @@
 
 - [Default Case](#default-case)
 - [Specifying the HTTP Status Code](#specifying-the-http-status-code)
-- [Specifying headers](#specifying-headers)
+- [Specifying Headers](#specifying-headers)
 
 ## Default Case
 
