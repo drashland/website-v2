@@ -52,9 +52,9 @@ In this tutorial, you will:
 
    Now, everytime you want or need to access a client, you can use the uuid!
 
-      ```ts
-      server.on("some custom channel", (e) => {
-        const client = server.clients.get(e.detail.id) as Client;
-        console.log(client.uuid); // "my uuid!"
-      });
-      ```
+   ```ts
+   server.on("some custom channel", (e) => {
+     const client = server.clients.get(e.detail.id) as Client;
+     console.log(client.uuid); // "my uuid!"
+   });
+   ```
