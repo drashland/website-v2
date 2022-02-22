@@ -174,6 +174,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
       // ... and so on ...
 
       // Return the response for Drash to send to the client
+      response.status = code;
       return response.json({
         message,
       });
