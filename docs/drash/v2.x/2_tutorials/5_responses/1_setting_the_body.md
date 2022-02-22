@@ -170,6 +170,6 @@ header, then use the `.send()` method.
   ```typescript
   public GET(request: Drash.Request, response: Drash.Response): void {
     const typescript = Deno.readFileSync("/path/to/my/typescript/file.ts");
-    return response.send<string>("application/typescript", body);
+    return response.send<string>("application/typescript", typescript);
   }
   ```
