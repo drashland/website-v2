@@ -18,7 +18,7 @@ const server = new Drash.Server({
   resources: [ ... ],
   // All services must be instantiated using the `new` keyword in this array
   services: [
-    new ServerService(),
+    new SomeService(),
     new SomeOtherService(),
   ],
 });
