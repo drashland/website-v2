@@ -55,8 +55,7 @@ In this tutorial, you will:
        name: "project",
        value: "sinco",
        // Note that getting cookies will get ones on the current page,
-       // so setting `url` here to "https://google.com", means this cookie won't
-       // exist when we try to retrieve it
+       // so setting `url` here to "https://google.com", means this cookie will not exist when we try to retrieve it
        url: "https://drash.land",
      });
      const cookies = await page.cookie();

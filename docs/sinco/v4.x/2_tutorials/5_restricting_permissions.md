@@ -11,9 +11,9 @@ Devtools Protocol (CDP) via a WebSocket that is opened when a headless browser
 instance is created.
 
 As such, restricting this permission is purely a matter of specifying a hostname
-and port, both of which make up the endpoint of the websocket URL.
+and port, both of which make up the endpoint of the WebSocket URL.
 
-The hostname defaults to "localhost", and the port defaults to "9292", so
+The hostname defaults to `localhost`, and the port defaults to `9292`, so
 restricting the permissions would look like:
 
 ```shell
@@ -71,7 +71,7 @@ $ deno test --allow-run="C:/chrome_version_67.exe"
 ## `--allow-write`
 
 This permission is only required if you are running a Firefox instance. The
-reason for this is because, to run a firefox headless browser, we (Sinco) need
+reason for this is because, to run a Firefox headless browser, we (Sinco) need
 to set a "profile" with some extra configuration to allow us to correctly
 interact with it over the CDP, and then pass this profile as an argument when
 running the subprocess. As such, you will need to pass in the location of your

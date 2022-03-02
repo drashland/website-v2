@@ -10,7 +10,7 @@
 ## Before You Get Started
 
 `Page` provides the method `.close()` that closes the tab and consequently ends
-the websocket conenction to its debugger url.
+the WebSocket connection to its debugger URL.
 
 In this tutorial, you will:
 

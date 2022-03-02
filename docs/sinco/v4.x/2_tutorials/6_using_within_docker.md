@@ -24,7 +24,7 @@ model" and deleting it manually.
 
 In this tutorial, you will:
 
-- Create a docker container, that installs Deno and chrome-driver;
+- Create a Docker container, that installs Deno and chrome-driver;
 - Create a headless browser instance from within Docker;
 - Go to a page; and
 - Assert that you are on the expected web page.
@@ -42,7 +42,7 @@ In this tutorial, you will:
 
 ## Steps
 
-1. Create your dockerfile.
+1. Create your `dockerfile`.
 
    ```dockerfile
    # app.dockerfile

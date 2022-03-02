@@ -6,11 +6,13 @@ There are a few things you would need to change, but we hoped that changing
 these would improve the experience long term, so whilst migrating is a pain (as
 we all know), the API will make more sense and be easier to write.
 
-This version, we continue to be even closer to the browser APIs. All the classes
-introduced in version 3 are carried forward, plus, we have introduced changes in
-the actual way you would interact with your browser. For instance now the
-`buildFor` method returns an object with two values - a `Client` object and a
-`Page` object, representing your browser and its first tab.
+In v4, we continue to be even closer to the browser APIs. All the classes
+introduced in v3 are carried forward, plus, we have introduced changes in the
+actual way you would interact with your browser. For instance now the `buildFor`
+method returns an object with two values:
+
+- a `Client` object; and
+- a `Page` object, which represents your browser and its first tab.
 
 ```ts
 const { browser, page } = await buildFor(...)
@@ -36,22 +38,22 @@ await browser.someOtherMethod();
 
 ### `Page#goTo()`
 
-Has now been retired. You will now use `page.location(...)` only instead.
+Has now been removed. You will now use `page.location(...)` only instead.
 
-You can still specify the url you wish to go to, but leaving the first parameter
-blank will return the current url of the page:
+You can still specify the URL you wish to go to, but leaving the first parameter
+blank will return the current URL of the page:
 
 ```typescript
 await page.location("https://drash.land"); // sends the page to this site
-await page.location(); // returns the url: "https://drash.land/"
+await page.location(); // returns the URL: "https://drash.land/"
 ```
 
 ## `Page#takeScreenshot()`
 
 The `selector` option has been removed from Screenshot options. Instead, now you
 can query-select an `Element` from a `Page` object, and then call the
-`takeScreenshot()` on it (no need to pass the selector again), as shown in the
-following example:
+`takeScreenshot()` method on it (no need to pass the selector again), as shown
+in the following example:
 
 ```typescript
 const elem = await page.querySelector("button#submit");
@@ -60,7 +62,7 @@ await elem.takeScreenshot("/path/to/folder");
 
 ## `Page#waitForPageChange`
 
-Has now been retired, and functionality is implemented as default during
+Has now been removed, and functionality is implemented as default during
 navigations, or an option during actions, such as a click.
 
 This method was used if you clicked an element and maybe it sent you to another
@@ -71,7 +73,7 @@ change.
 
 ## `Page#assertSee()`
 
-Has now been retired.
+Has now been removed.
 
 Instead you can try:
 

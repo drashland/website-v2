@@ -26,8 +26,8 @@ When you wish to build a client, Sinco will do the following:
     indefinitely until Sinco closes it via its `.close()` method on the API
 - The browser runs headless. This means the process is running, but there is no
   window or application you can view it on. The command used to run the headless
-  browser instance will open up a websocket server.
-- Sinco will connect to that websocket endpoint as a client, via the Chrome
+  browser instance will open up a WebSocket server.
+- Sinco will connect to that WebSocket endpoint as a client, via the Chrome
   Remote Devtools Protocol. This is how Sinco tells the page what to do
 - Sinco then returns two classes to you, with methods that allow you to easily
   interact with your browser instance/client and the browser tab.

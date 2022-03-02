@@ -51,11 +51,11 @@ Its maintainers have taken concepts from the following ...
 
 ## Suggestions
 
-1. Using Chrome. While we have no preference on what you wish to use, and we
-   won't force you to use a certain browser, it's worth noting that running a
-   Firefox headless instance and communicating it via the Chrome Devtools
-   Protocol (CDP) can be around 50-66% slower than using Chrome. This would mean
-   that generally speaking, each test case (if you are using Sinco to run tests)
-   would take 50% longer if the browser chosen is Firefox. This is why we would
-   suggest Chrome if you have no specific preferences, as it will drastically
-   speed up your tests.
+_Using Chrome_. While we have no preference on what you wish to use, and we will
+not force you to use a certain browser, it is worth noting that running a
+Firefox headless instance and communicating it via the Chrome Devtools Protocol
+(CDP) can be around 50-66% slower than using Chrome. This would mean that
+generally speaking, each test case (if you are using Sinco to run tests) would
+take 50% longer if the browser chosen is Firefox. This is why we would suggest
+Chrome if you have no specific preferences, as it will drastically speed up your
+tests.

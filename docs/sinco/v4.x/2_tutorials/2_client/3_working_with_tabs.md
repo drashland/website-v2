@@ -18,7 +18,7 @@ total open tabs in the browser, Sinco will close all resources and throw a
 Sinco also provides the method `closeAllPagesExcept()` on the `Client` class,
 that will try and close all open pages except the one passed in as the argument.
 Please be aware that any other page objects will then not allow interaction with
-their respective page and any such attempt will result in an Error.
+their respective page and any such attempt will result in an `Error`.
 
 In this tutorial, you will:
 
