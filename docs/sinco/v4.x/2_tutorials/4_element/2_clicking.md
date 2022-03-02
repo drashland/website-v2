@@ -9,17 +9,18 @@
 
 ## Before You Get Started
 
-`Element` provides the method `.click({})` that will allow you to click the
+`Element` provides the method `.click()` that will allow you to click the
 element you have selected.
 
-If you wish to click-open a link in a new tab, or the link opens a new tab on
-clicking, pass in the `{button: 'middle'}` argument. Otherwise Sinco will not
-know to connect to the new page, which is important if you want to get it via
-`browser.page(2)` for example.
+If you wish to open a link in a new tab by clicking an element, you would call
+`click` like so: `click({ button: "middle" })`. Otherwise Sinco will not know to
+connect to this new page before your other code is executed, which is important
+if you want to get it via `browser.page(2)` for example.
 
-If clicking will change the page, pass `true` as the second argument
-(`waitForNavigation`) to the method call as `.click({}, true)`. So Sinco knows
-it has to wait until new location is loaded.
+If clicking will change the page, pass `{ waitFor: "navigation" }` to the method
+call as `.click({ waitFor: "navigation" })`. This way, Sinco knows it has to
+wait until new the new location is loaded on the page before your other code is
+executed.
 
 In this tutorial, you will:
 
@@ -65,7 +66,9 @@ In this tutorial, you will:
      const discordElem = await page.querySelector(
        'a[href="https://discord.gg/RFsCSaHRWK"]',
      );
-     await discordElem.click({}, true);
+     await discordElem.click({
+       waitFor: "navigation",
+     });
      const page1Location = await page.location();
 
      await browser.close();
