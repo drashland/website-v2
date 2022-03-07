@@ -98,7 +98,7 @@ To interact with the file, you need to access `.content`.
      port: 1447,
      protocol: "http",
      resources: [
-       UsersResource,
+       HomeResource,
      ],
    });
 
