@@ -18,7 +18,7 @@ const Container = styled.div`
   transition-duration: 0.25s;
   left: ${({ isOpen, mobileViewport }) => {
   if (mobileViewport) {
-    return isOpen ? "0" : "-125%";
+    return isOpen ? "0" : "-200%";
   } else {
     return "0";
   }
