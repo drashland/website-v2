@@ -10,7 +10,7 @@ import { getApiReferenceUrl, getRoadmapsUrl } from "../services/config_service";
 const Container = styled.div`
   background: ${({ theme }) => theme.sideBar.background};
   padding: 4rem 0 4rem 0;
-  min-width: ${({ mobileViewport }) => (mobileViewport ? "100%" : "350px")};
+  min-width: ${({ mobileViewport }) => (mobileViewport ? "100%" : "420px")};
   overflow: auto;
   position: fixed;
   height: 100%;
