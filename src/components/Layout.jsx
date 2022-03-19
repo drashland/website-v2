@@ -145,6 +145,16 @@ const ButtonOpenSidebarMiddleBar = styled.div`
 // FILE MARKER - COMPONENT /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+// (crookse) This variable is intentionally out of the component. Reason being
+// there is weird behavior with switching this variable to a `useState()`
+// variable. When it's a `useState()` variable and is set to
+// `window.innerWidth`, it gets reset because the component seems to be
+// rerendering. However, I can't see that the component is rerendering even
+// with `console.log()` statements. Not sure what's going on, but NOT using
+// `useState()` with this variable solves the issue with the side bar closing
+// when the user scrolls on a mobile device.
+let windowInnerWidth = null;
+
 export default function Layout(props) {
   const {
     editThisPageUrl,
@@ -192,13 +202,33 @@ export default function Layout(props) {
    * Handle when the window size is changed.
    */
   function handleWindowSizeChange() {
+    // Handle desktop (or large screen) view
     if (window.innerWidth >= 900) {
       setMobileViewport(false);
       setSideBarOpen(true);
-    } else {
-      setMobileViewport(true);
-      setSideBarOpen(false);
+      return;
     }
+
+    // Handle mobile (or small screen) view below
+    setMobileViewport(true);
+
+    // On mobile devices, when the user scrolls, the browser window height
+    // changes and this function (`handleWindowSizeChange()`) will fire off.
+    // So, when that happens, we check to see if the window width changed. If
+    // it didn't, then we know the user is scrolling on a mobile device and the
+    // window height is changing. In this case, we just return early. We do not
+    // want the side bar to close. The only time we want it to close is when
+    // the user is viewing these documentations pages on a screen bigger than
+    // 900px (e.g., desktop monitor). If that's the case, then the user can
+    // change their browser window width. If they do that, we want to make sure
+    // we close the side bar when they size their browser window width less
+    // than 900px.
+    if (window.innerWidth === windowInnerWidth) {
+      return;
+    }
+
+    setSideBarOpen(false);
+    windowInnerWidth = window.innerWidth;
   }
 
   /**
