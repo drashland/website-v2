@@ -60,7 +60,8 @@ visual diagram of when services are executed by the server.
 ### Server-Level
 
 In addition to the high level order of operations, server-level services will
-execute in the order they are placed in the array. For example ...
+execute in the order they are placed in the server's `services` config. For
+example ...
 
 ```typescript
 const server = new Drash.Server({
@@ -86,7 +87,8 @@ const server = new Drash.Server({
 ### Resource-Level
 
 In addition to the high level order of operations, resource-level services will
-execute in the order they are placed in the arrays. For example ...
+execute in the order they are placed in a resource's `services` property. For
+example ...
 
 ```typescript
 class HomeResource extends Drash.Resource {
