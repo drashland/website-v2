@@ -16,6 +16,7 @@ const Category = styled.div`
 
   .category {
     padding: 0 0 1rem 1.25rem;
+
     .category-heading {
       color: ${({ theme }) => theme.sideBar.categoryHeading.color};
       border: none;
@@ -24,6 +25,8 @@ const Category = styled.div`
     }
 
     .category {
+      padding-bottom: 0;
+
       .category-heading {
         color: ${({ theme }) => theme.sideBar.categoryHeading.color};
         border: none;
@@ -92,9 +95,9 @@ export default function RecursiveCategory(props) {
         if (path.is_directory) {
           return (
             <RecursiveCategory
-              state={state}
-              key={`${JSON.stringify(path)}_${index}`}
               category={path}
+              key={`${JSON.stringify(path)}_${index}`}
+              state={state}
             />
           );
         }
