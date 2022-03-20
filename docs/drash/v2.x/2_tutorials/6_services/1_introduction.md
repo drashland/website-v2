@@ -40,12 +40,18 @@ request-resource-response lifecycle at the server level, resource level, and/or
 
 Briefly stated, at a high level, services execute in the following order:
 
-1. Server-level `runBeforeResource()`
-2. Resource-level `runBeforeResource()`
-3. Resource HTTP method level `runBeforeResource()`
-4. Resource HTTP method level `runAfterResource()`
-5. Resource-level `runAfterResource()`
-6. Server-level `runAfterResource()`
+- At startup time (when you run `deno run [deno flags] your_app.ts`)
+
+  - Server-level `runAtStartup()`
+
+- At runtime (when your `your_app.ts` is running)
+
+  1. Server-level `runBeforeResource()`
+  2. Resource-level `runBeforeResource()`
+  3. Resource HTTP method level `runBeforeResource()`
+  4. Resource HTTP method level `runAfterResource()`
+  5. Resource-level `runAfterResource()`
+  6. Server-level `runAfterResource()`
 
 Check out the
 [Drash Lifecycle Diagram](/drash/v2.x/getting-started/lifecycle-diagram) for a
