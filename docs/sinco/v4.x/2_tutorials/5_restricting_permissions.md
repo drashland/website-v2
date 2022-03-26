@@ -49,7 +49,7 @@ $ deno test --allow-read="C:\Program Files\Google\Chrome\Application\chrome.exe,
 
 This permission is required because Sinco runs a subprocess for Chrome, to start
 a headless browser instance. So the argument to pass to this would be the path
-to your browsers executable:
+to your browser's executable:
 
 ```shell
 $ deno test --allow-run="C:\Program Files\Google\Chrome\Application\chrome.exe"
