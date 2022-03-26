@@ -48,6 +48,7 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance for Chrome.
+
 <!-- Note that you would not need to create both at the same time, you are
 only doing that here for demonstration purposes. -->
 

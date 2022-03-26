@@ -14,6 +14,7 @@ use Chrome means that you will be interacting with the client, and Sinco will
 create a client. Sinco currently supports:
 
 - Chrome (or other chromium based browsers)
+
 <!-- - Firefox (or other Gecko based browsers) -->
 
 When you wish to build a client, Sinco will do the following:
@@ -22,8 +23,8 @@ When you wish to build a client, Sinco will do the following:
   executable of the browser. If you are using Chrome version 88, Sinco will spin
   up a Chrome instance using version 88. If you do not have Chrome installed,
   Sinco will fail to run.
-  - This means that a Chrome process will run, and will run
-    indefinitely until Sinco closes it via its `.close()` method on the API
+  - This means that a Chrome process will run, and will run indefinitely until
+    Sinco closes it via its `.close()` method on the API
 - The browser runs headless. This means the process is running, but there is no
   window or application you can view it on. The command used to run the headless
   browser instance will open up a WebSocket server.
@@ -31,6 +32,7 @@ When you wish to build a client, Sinco will do the following:
   Remote Devtools Protocol. This is how Sinco tells the page what to do
 - Sinco then returns two classes to you, with methods that allow you to easily
   interact with your browser instance/client and the browser tab.
+
 <!-- - These classese provides the exact same API methods whether you are using
   Firefox or Chrome. The reason we did this was for consistency. -->
 
@@ -85,6 +87,7 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance for Chrome.
+
 <!-- Note that you would not need to create both at the same time, you are
 only doing that here for demonstration purposes. -->
 
