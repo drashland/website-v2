@@ -22,7 +22,7 @@ can even provide a second argument defining the class of the error. Default is
 
 In this tutorial, you will:
 
-- Create both a headless browser instance for Chrome and Firefox; and
+- Create both a headless browser instance for Chrome; and
 - Close them both.
 
 ## Folder Structure End State
@@ -43,18 +43,16 @@ In this tutorial, you will:
    import { buildFor } from "./deps.ts";
 
    const { browser: Chrome, page: Cpage } = await buildFor("chrome");
-   const { browser: Firefox, page: Fpage } = await buildFor("firefox");
    // Now you close the connections and processes, as you are done here
    await Chrome.close(); // or await Chrome.close("Some Error occured") to close and throw an Error
-   await Firefox.close(); // or await Firefox.close("The range is too big!", RangeError) to close and throw a RangeError
    ```
 
-Here you are going to create your headless browser instance for Firefox and
-Chrome. Note that you would not need to create both at the same time, you are
+Here you are going to create your headless browser instance for Chrome.
+Note that you would not need to create both at the same time, you are
 only doing that here for demonstration purposes.
 
-Note that closing Firefox will also close any existing Firefox sessions (only on
-Windows). Related Deno issue: _https://github.com/denoland/deno/issues/7087_
+<!-- Note that closing Firefox will also close any existing Firefox sessions (only on
+Windows). Related Deno issue: _https://github.com/denoland/deno/issues/7087_ -->
 
 ## Verification
 

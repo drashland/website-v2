@@ -47,8 +47,7 @@ $ deno test --allow-read="C:\Program Files\Google\Chrome\Application\chrome.exe,
 
 ## `--allow-run`
 
-This permission is required because Sinco runs a subprocess for Chrome or
-Firefox, to start a headless browser instance. So the argument to pass to this
+This permission is required because Sinco runs a subprocess for Chrome, to start a headless browser instance. So the argument to pass to this
 would be the path to your browsers executable:
 
 ```shell
@@ -68,7 +67,7 @@ const client = await buildFor("chrome", {
 $ deno test --allow-run="C:/chrome_version_67.exe"
 ```
 
-## `--allow-write`
+<!-- ## `--allow-write`
 
 This permission is only required if you are running a Firefox instance. The
 reason for this is because, to run a Firefox headless browser, we (Sinco) need
@@ -82,4 +81,4 @@ $ deno test --allow-write=/tmp
 $ deno test --allow-write=$TMPDIR
 $ deno test --allow-write=$TMP
 $ deno test --allow-write="C:\Users\<user>\AppData\Local\Temp"
-```
+``` -->

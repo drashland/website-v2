@@ -24,7 +24,7 @@ Learn more about Sinco [here](about-sinco).
 
    Deno.test("My test", async () => {
      // Setup
-     const { browser, page } = await buildFor("chrome"); // also supports firefox
+     const { browser, page } = await buildFor("chrome");
      await page.location("https://drash.land"); // Go to this page
 
      // Try here so if the assertion fails, we can close all resources
@@ -62,7 +62,7 @@ Learn more about Sinco [here](about-sinco).
 - Extensively documented
 - Browser support for:
   - Chrome
-  - Firefox
+  - ~~Firefox~~ (Temporarily removed support)
 - Click elements
 - Type into input fields, and extract values
 - Visit any page or website available on the Internet

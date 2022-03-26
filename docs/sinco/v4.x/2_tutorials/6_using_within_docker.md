@@ -59,18 +59,6 @@ In this tutorial, you will:
      && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list \
      && apt-get update && apt-get -qqy install ${CHROME_VERSION:-google-chrome-stable}
 
-   # Install firefox driver
-   RUN apt update && apt install wget curl bzip2 -y
-   RUN apt-get remove iceweasel
-   ENV FILENAME "firefox-latest.tar.bz2"
-   RUN wget -O $FILENAME --content-disposition "https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US" \
-     && apt install bzip2
-   RUN tar -jxf $FILENAME -C /opt/
-   RUN ln -sf /opt/firefox/firefox  /usr/bin/firefox
-   RUN rm $FILENAME
-   RUN apt install libgtk-3-0 libx11-6 libx11-xcb1 libdbus-glib-1-2 xdg-utils -y
-   RUN apt clean
-
    # Install deno
    RUN apt install curl unzip -y
    RUN curl -fsSL https://deno.land/x/install/install.sh | DENO_INSTALL=/usr/local sh
@@ -79,7 +67,7 @@ In this tutorial, you will:
    ```
 
 Here, you are using a very small image (`debian-slim`) as your baseline for your
-Docker container. Then you install the chrome-driver and firefox-driver, which
+Docker container. Then you install the chrome-driver, which
 allows Sinco to create a headless browser instance for these browsers. Then you
 install Deno, because whilst you may have Deno installed on your host machine,
 it will not be from within Docker unless you tell it to.
@@ -125,17 +113,6 @@ container, and execute your test file.
      const chromePageLocation = await chromePage.location();
      assertEquals(chromePageLocation, "https://discord.com/invite/RFsCSaHRWK");
      await chrome.close();
-     const { browser: firefox, page: firefoxPage } = await buildFor("firefox");
-     await firefoxPage.location("https://drash.land");
-     const firefoxPageElem = await firefoxPage.querySelector(
-       'a[href="https://discord.gg/RFsCSaHRWK"]',
-     );
-     await firefoxePageElem.click({
-       waitFor: "navigation",
-     });
-     const firefoxPageLocation = await firefoxPage.location();
-     await firefox.close();
-     assertEquals(firefoxPageLocation, "https://discord.com/invite/RFsCSaHRWK");
    });
    ```
 
