@@ -68,7 +68,7 @@ In this tutorial, you will:
 
 Here, you are using a very small image (`debian-slim`) as your baseline for your
 Docker container. Then you install the chrome-driver, which
-allows Sinco to create a headless browser instance for these browsers. Then you
+allows Sinco to create a headless browser instance for Chrome. Then you
 install Deno, because whilst you may have Deno installed on your host machine,
 it will not be from within Docker unless you tell it to.
 

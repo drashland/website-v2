@@ -23,7 +23,7 @@ can even provide a second argument defining the class of the error. Default is
 In this tutorial, you will:
 
 - Create both a headless browser instance for Chrome; and
-- Close them both.
+- Close the client.
 
 ## Folder Structure End State
 
@@ -48,8 +48,8 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance for Chrome.
-Note that you would not need to create both at the same time, you are
-only doing that here for demonstration purposes.
+<!-- Note that you would not need to create both at the same time, you are
+only doing that here for demonstration purposes. -->
 
 <!-- Note that closing Firefox will also close any existing Firefox sessions (only on
 Windows). Related Deno issue: _https://github.com/denoland/deno/issues/7087_ -->

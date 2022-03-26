@@ -65,7 +65,7 @@ In this tutorial, you will:
    import { buildFor } from "./deps.ts";
 
    // `buildFor()` takes two arguments:
-   //   1. The browser name to build for. This can be "chrome". This is required.
+   //   1. The browser name to build for. Currently, it only accepts "chrome" and this parameter is required.
    //   2. Options for creating the client. This is optional, and can be left out. This can be any or all of the following:
    //     - The hostname of the system that the client was created on. For you, this is your host machine. Defaults to "0.0.0.0" for MacOS and Linux, and "127.0.0.1" for Windows.
    //     - The port for the headless browser process to start a debugger server on. This is only important if you wish to occupy a different port than the default one. Defaults to 9293.
@@ -85,8 +85,8 @@ In this tutorial, you will:
    ```
 
 Here you are going to create your headless browser instance for Chrome.
-Note that you would not need to create both at the same time, you are
-only doing that here for demonstration purposes.
+<!-- Note that you would not need to create both at the same time, you are
+only doing that here for demonstration purposes. -->
 
 <!-- When building a client for Firefox, note that it will create a temporary profile
 that will be used. Due to this, a Firefox client requires the
