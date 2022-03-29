@@ -67,6 +67,7 @@ module.exports = {
           "v1.x",
           "v2.x",
           "v3.x",
+          "v4.x",
         ],
       },
       wocket: {
