@@ -85,11 +85,11 @@ export function formatLabel(label) {
       to: "Part 4:",
     },
     {
-      from: /Resource Level/g,
+      from: /Resource Level/gi,
       to: "Resource-Level",
     },
     {
-      from: /(Server Level)/g,
+      from: /(Server Level)/gi,
       to: "Server-Level",
     },
     {
