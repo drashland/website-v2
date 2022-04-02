@@ -1,87 +1,134 @@
 # Creating Services
 
 When creating a service, you need to extend the `Drash.Service` class and
-implement one or all of the methods below in the service:
+implement one or all of the methods under the [Methods](#methods) section below.
 
-- `runAtStartup()`
-  - This method is executed when your server is starting up after running
-    `deno run`. For example, when you run ...
-    ```text
-    $ deno run --allow-net your_app.ts
-    ```
-    ... Deno will start to compile `your_app.ts` and Drash will run
-    `runAtStartup()` in any service that has `runAtStartup()` defined.
-- `runBeforeResource()`
-  - This method is executed before a resource's HTTP method is called. For
-    example, if you have a resource with a `GET()` method and a `GET` request is
-    made to that resource, then the server will run the service before the
-    `GET()` method is called.
-- `runAfterResource()`
-  - This method is executed after a resource's HTTP method is called. For
-    example, if you have a resource with a `GET()` method and a `GET` request is
-    made to that resource, then the server will run the service after the
-    `GET()` method is called.
+Each method gives you the ability to run code during Drash's server's lifecycle.
+You can run code during the server's startup time, runtime, or be more granular
+by only running code on specific types of HTTP requests (e.g., only run code on
+`GET` requests in a specific resource).
 
-An example of how a service is written is below:
+## Table of Contents
 
-```typescript
-import { Drash } from "./deps.ts";
+- [Methods](#methods)
+  - [runAtStartup(...)](#runatstartup)
+  - [runBeforeResource(...)](#runbeforeresource)
+  - [runAfterResource(...)](#runafterresource)
 
-class SomeService extends Drash.Service {
-  /**
-   * Run the code in this method during server startup.
-   */
-  public runAtStartup(options: Drash.Interfaces.IServiceStartupOptions): void {
-    // Some code here
-  }
+## Methods
 
-  /**
-   * Run this service before the resource's HTTP method.
-   */
-  public runBeforeResource(
-    request: Drash.Request,
-    response: Drash.Response,
-  ): void {
-    // Some code here
-  }
+_Note: If you have a service that does not define at least one of the methods
+below, Drash will not run that service._
 
-  /**
-   * Run this service after the resource's HTTP method.
-   */
-  public runAfterResource(
-    request: Drash.Request,
-    response: Drash.Response,
-  ): void {
-    // Some code here
-  }
-}
-```
+### runAtStartup(...)
 
-The `runAtStartup()` method gets passed the `options` param which contains the
-following:
+This method only works in server-level services. It has the following signature:
 
 ```typescript
-{
-  server: Drash.Server,
-  resources: Drash.Types.ResourcesAndPatternsMap,
-}
+runAtStartup?: (
+  options: IServiceStartupOptions,
+  // This options parameter includes the following:
+  //
+  //   {
+  //     server: Server, // Your instantiated Drash.Server class
+  //     resources: ResourcesAndPatternsMap, // A Map of all your instantiated resource classes and their paths as URLPattern objects
+  //   }
+  //
+) => void | Promise<void>;
 ```
 
-When using `runAtStartup()`, you can access the instantiated server object and
-all resources that were registered in the server's `resources` config. The
-`resources` are also instantiated.
+Drash's server runs this method when it is starting up (after running
+`deno run`). For example, when you run ...
 
-Both the `runBeforeResource()` and `runAfterResource()` methods require the
-`request` and `response` params. As a result, both methods have access to the
-incoming `request` object and the `response` object that will be used to send
-data to the client.
+```text
+$ deno run --allow-net your_app.ts
+```
 
-Check out
-[Tutorials > Services > Introduction > Order of Operations](/drash/v2.x/tutorials/services/introduction#order-of-operations)
-for a detailed explanation of when services execute to better decide what kind
-of service you want to create (e.g., server-level, resource-level, resource HTTP
-method level).
+... Deno will start to compile `your_app.ts` and Drash's server will run
+`runAtStartup()` in any server-level service that has `runAtStartup()` defined.
+The server will only ever run `runAtStartup()` once for each server-level
+service.
 
-You can also check out the
-[Drash Lifecycle Diagram](/drash/v2.x/getting-started/lifecycle-diagram) for a
-visual diagram of when services are executed by the server.
+Some uses cases are as follows:
+
+- Building a cache at startup time and using/modifying the cache during runtime.
+- Compiling TypeScript files to JavaScript at startup time and requesting the
+  compiled files during runtime.
+
+### runBeforeResource(...)
+
+This method works in server-level, resource-level, and resource HTTP method
+level services. It has the following signature:
+
+```typescript
+runBeforeResource?: (
+  request: DrashRequest,
+  response: DrashResponse,
+) => void | Promise<void>;
+```
+
+Drash's server runs this method before passing requests to a resource's HTTP
+method. A simplified version of this lifecycle is as follows:
+
+1. Server receives `GET /some-path` request.
+2. Server calls `runBeforeResource()` in all server-level services.
+3. Server finds resource that has `/some-path` defined.
+4. Server calls `runBeforeResource()` in all resource-level services.
+5. Server calls `runBeforeResource()` in all resource HTTP method level
+   services.
+6. Server calls resource's `GET()` method.
+
+Some uses cases are as follows:
+
+- Authenticating requests before they make it to resources.
+- Logging incoming requests
+- Throwing HTTP `400` responses to requests that do not have valid request
+  bodies
+
+### runAfterResource(...)
+
+This method works in server-level, resource-level, and resource HTTP method
+level services. It has the following signature:
+
+```typescript
+runAfterResource?: (
+  request: DrashRequest,
+  response: DrashResponse,
+) => void | Promise<void>;
+```
+
+Drash's server runs this method after a resource's HTTP method is called. A
+simplified version of this lifecycle is as follows:
+
+1. Server receives `GET /some-path` request.
+2. Server finds resource that has `/some-path` defined.
+3. Server calls resource's `GET()` method.
+4. Server calls `runAfterResource()` in all resource HTTP method level services.
+5. Server calls `runAfterResource()` in all resource-level services.
+6. Server calls `runAfterResource()` in all server-level services.
+
+Some uses cases are as follows:
+
+- Setting response headers before the response makes it back to the client.
+- Validating that the response body being sent back to the client meets a
+  specific schema.
+- Logging the response status code for a given request.
+
+## Further Learning
+
+Learn how to create server-level, resource-level, and resource HTTP method level
+services by clicking one of the tutorials below. These tutorials can be found in
+the side bar under Services > Creating Services.
+
+- Creating Server-Level Services
+  - [Running at Startup](/drash/v2.x/tutorials/services/creating-services/server-level/running-at-startup)
+  - [Running Before Resources](/drash/v2.x/tutorials/services/creating-services/server-level/running-before-resources)
+  - [Running After Resources](/drash/v2.x/tutorials/services/creating-services/server-level/running-after-resources)
+- Creating Resource-Level Services
+  - [Running at Startup](/drash/v2.x/tutorials/services/creating-services/resource-level/running-at-startup)
+  - [Running Before Resources](/drash/v2.x/tutorials/services/creating-services/resource-level/running-before-resources)
+  - [Running After Resources](/drash/v2.x/tutorials/services/creating-services/resource-level/running-after-resources)
+- Creating Resource HTTP Method Level Services
+  - [Running at Startup](/drash/v2.x/tutorials/services/creating-services/resource-http-method-level/running-at-startup)
+  - [Running Before Resources](/drash/v2.x/tutorials/services/creating-services/resource-http-method-level/running-before-resources)
+  - [Running After Resources](/drash/v2.x/tutorials/services/creating-services/resource-http-method-level/running-after-resources)
