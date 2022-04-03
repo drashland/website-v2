@@ -61,9 +61,9 @@ proof of concept.
 
 2. Create your `services/authentication_service.ts` file.
 
-   This file will be in charge of making sure all requests have the `username`
-   and `token` query parameters; and they must match the ones defined in the
-   `#users` property.
+   The class in this file will be in charge of making sure all requests have the
+   `username` and `token` query parameters; and they must match the ones defined
+   in the `#users` property.
 
    ```typescript
    // File: services/authentication_service.ts
@@ -122,10 +122,11 @@ proof of concept.
 
 3. Create your `resources/protected_resource.ts` file.
 
-   This file will be protected by the `authentication_service.ts` file. Since
-   the `authentication_service.ts` file will be filtering all requests, this
-   file should not be shown unless it meets all requirements in the
-   `authentication_service.ts` file.
+   The class in this file will be protected by the `AuthenticationService`
+   class. Since the `AuthenticationService` class will be filtering all
+   requests, any request should not see the response in this file unless the
+   request meets all of the `AuthenticationService` class' requirements
+   (requires a `username` and `token`).
 
    ```typescript
    // File: resources/protected_resource.ts

@@ -407,6 +407,7 @@ export default function Home() {
                 <TagsContainer>
                   <Tag>Deno</Tag>
                   <Tag>Node</Tag>
+                  <Tag>Browser</Tag>
                 </TagsContainer>
               </Card>
               <Card
@@ -420,6 +421,7 @@ export default function Home() {
                 <TagsContainer>
                   <Tag>Deno</Tag>
                   <Tag>Node</Tag>
+                  <Tag>Browser</Tag>
                 </TagsContainer>
               </Card>
             </CardsContainer>

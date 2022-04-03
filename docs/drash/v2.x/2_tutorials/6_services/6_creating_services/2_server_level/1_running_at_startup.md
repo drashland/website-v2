@@ -70,7 +70,7 @@ Specifically, it will show you how you can:
 
 2. Create your `services/compiled_files_service.ts` file.
 
-   This file will be in charge of taking `public/greeter.ts` and
+   The class in this file will be in charge of taking `public/greeter.ts` and
    `public/math_utils.ts` and compiling their code to JavaScript so that they
    can be used in the browser.
 
@@ -132,10 +132,10 @@ Specifically, it will show you how you can:
 
 3. Create your `resources/home_resource.ts` file.
 
-   This file will be in charge of sending an HTML document for `/` requests.
-   This HTML document will contain `script` tags that request `greeter.ts.js`
-   and `math_utils.ts.js` -- your TypeScript files that were compiled at startup
-   time in the `services/compiled_files_service.ts` file.
+   The class in this file will be in charge of sending an HTML document for `/`
+   requests. The HTML document will contain `script` tags that request
+   `greeter.ts.js` and `math_utils.ts.js` -- your TypeScript files that were
+   compiled at startup time in the `services/compiled_files_service.ts` file.
 
    ```typescript
    // File: resources/home_resource.ts
@@ -190,11 +190,12 @@ Specifically, it will show you how you can:
 
 4. Create your `resources/files_resource.ts` file.
 
-   This file will be in charge of handling `/pubilc/:filename` requests. The
-   `:filename` path param will be used to retrieve compiled source code in the
-   `#source_code_map` in the `services/compiled_files_service.ts` file.
-   Basically, the HTML document in the previous step will request your compiled
-   TypeScript files and those requests will be handled in this resource.
+   The class in this file will be in charge of handling `/pubilc/:filename`
+   requests. The `:filename` path param will be used to retrieve compiled source
+   code in the `#source_code_map` in the `services/compiled_files_service.ts`
+   file. Basically, the HTML document in the previous step will request your
+   compiled TypeScript files and those requests will be handled in this
+   resource.
 
    ```typescript
    // File: resources/files_resource.ts
