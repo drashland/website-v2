@@ -171,6 +171,16 @@ module.exports = {
         "/drash/v2.x/tutorials/services/creating-services",
         "/drash/v2.x/tutorials/services/creating-services/introduction",
       ),
+      permanentRedirect(
+        // Remove on 07-01-2022
+        "/drash/v2.x/tutorials/services/adding-server-level-services",
+        "/drash/v2.x/tutorials/services/creating-services/server-level/introduction",
+      ),
+      permanentRedirect(
+        // Remove on 07-01-2022
+        "/drash/v2.x/tutorials/services/adding-resource-level-services",
+        "/drash/v2.x/tutorials/services/creating-services/resource-level/introduction",
+      ),
     ];
   },
 };
