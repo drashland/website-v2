@@ -9,8 +9,8 @@
 
 ## Before You Get Started
 
-This tutorial goes over creating a server-level service that runs on all
-requests to all resources.
+This tutorial goes over creating a server-level service that runs after a
+resource for all requests.
 
 Specifically, it will show you how you can set a response header on all
 responses to all requests.
@@ -61,8 +61,8 @@ responses to all requests.
 
 2. Create your `services/response_header_service.ts` file.
 
-   The class in this file will be in charge of making sure all responses contain
-   the `X-CUSTOM-HEADER` header.
+   The service in this file will be in charge of making sure all responses
+   contain the `X-CUSTOM-HEADER` header.
 
    ```typescript
    // File: services/response_header_service.ts
@@ -86,10 +86,10 @@ responses to all requests.
 
 3. Create your `resources/response_modified_resource.ts` file.
 
-   The class in this file sends a response without modifying its headers. After
-   this resource is run by the server, the `ResponseHeaderService` class will be
-   called and it will set the `X-CUSTOM-HEADER` header on the response --
-   ensuring the header is present for the client.
+   The resource in this file sends a response without modifying its headers.
+   After this resource is run by the server, the `ResponseHeaderService` class
+   will be called and it will set the `X-CUSTOM-HEADER` header on the response
+   -- ensuring the header is present for the client.
 
    ```typescript
    // File: resources/response_modified_resource.ts
@@ -100,8 +100,7 @@ responses to all requests.
      public paths = ["/"];
 
      /**
-      * Handle GET / requests. Although the response for this request handler does
-      * not set response headers, the ResponseHeaderService class will set some.
+      * Handle GET requests.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client.
@@ -157,6 +156,6 @@ responses to all requests.
 
    Notice that the response contains `x-custom-header` with `Got modified!`. To
    test that the response header does not get set, you can comment out
-   `responseHeaderService` in your `app.ts` file and make the same `curl`
-   request above. You will notice the response does not contain the header
-   anymore.
+   `responseHeaderService` in your `app.ts` file, restart your app, and make the
+   same `curl` request above. You will notice the response does not contain the
+   header anymore.

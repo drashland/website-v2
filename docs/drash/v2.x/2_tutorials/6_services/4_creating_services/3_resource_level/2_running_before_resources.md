@@ -68,7 +68,7 @@ field in the `services` property in the resource that uses the service.
 
 2. Create your `services/authentication_service.ts` file.
 
-   The class in this file will be in charge of making sure all requests to
+   The service in this file will be in charge of making sure all requests to
    `AuthResource` have the `username` and `token` query parameters; and they
    must match the ones defined in the `#users` property.
 
@@ -129,7 +129,7 @@ field in the `services` property in the resource that uses the service.
 
 3. Create your `resources/auth_resource.ts` file.
 
-   The class in this file will be protected by the `AuthenticationService`
+   The resource in this file will be protected by the `AuthenticationService`
    class. Since the `AuthenticationService` class will be applied to this
    resource, any request to this resource should not see the response from this
    resource unless the request meets all of the `AuthenticationService` class'
@@ -150,8 +150,7 @@ field in the `services` property in the resource that uses the service.
      };
 
      /**
-      * Handle GET / requests. In order to get to this resource, the client has to
-      * authenticate.
+      * Handle GET requests.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client.
@@ -177,7 +176,7 @@ field in the `services` property in the resource that uses the service.
      public paths = ["/non-auth"];
 
      /**
-      * Handle GET / requests. All requests can target this resource.
+      * Handle GET requests.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client.

@@ -1,6 +1,6 @@
-# Adding Resource-Level Services
+# Introduction
 
-Resource-level services execute only on the resource they are added to.
+Resource-level services execute only on the resources they are added to.
 
 To add resource-level services, use the `ALL` field in the `services` property
 in your resource class. For example:

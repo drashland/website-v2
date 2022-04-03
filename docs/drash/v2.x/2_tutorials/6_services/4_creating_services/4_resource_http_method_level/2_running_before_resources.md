@@ -17,7 +17,8 @@ before a resource for `POST` requests only to a specific resource.
 
 Specifically, it will show you how you can check a user's role to see if they
 can view or upload files. Users with the `admin` role will be able to upload
-files. Users with the `user` role will not be able to upload files.
+files, users with the `user` role will not be able to upload files, and users
+with any role will be able to view files.
 
 Since this tutorial goes over a resource HTTP method level service for `POST`
 requests, you will not use the `services` config when creating your server.
@@ -145,7 +146,7 @@ resource that uses the service.
      };
 
      /**
-      * Handle GET /files requests. All clients can make this request.
+      * Handle GET requests.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client.
@@ -155,8 +156,7 @@ resource that uses the service.
      }
 
      /**
-      * Handle POST /files requests. Only clients with the role of `admin` can
-      * make this request.
+      * Handle POST requests.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client.

@@ -9,26 +9,23 @@
 
 ## Before You Get Started
 
-This tutorial goes over creating a resource-level service that runs after a
-resource for requests only to that resource.
+This tutorial goes over creating a resource HTTP method level service that runs
+after a resource for `POST` requests only to a specific resource.
 
-Specifically, it will show you how you can set a response header on all requests
-to a resource. You will create two resources:
+Specifically, it will show you how you can add a response header to responses
+for `POST` requests.
 
-1. A resource that applies the response header service; and
-2. A resource that does not apply the response header service.
-
-Since this tutorial goes over a resource-level service, you will not use the
-`services` config when creating your server. Instead, you will use the `ALL`
-field in the `services` property in the resource that uses the service.
+Since this tutorial goes over a resource HTTP method level service for `POST`
+requests, you will not use the `services` config when creating your server.
+Instead, you will use the `POST` field in the `services` property in the
+resource that uses the service.
 
 ## Folder Structure End State
 
 ```text
 ▾  path/to/your/project/
   ▾  resources/
-       response_modified_resource.ts
-       response_not_modified_resource.ts
+       response_modified_for_post_resource.ts
   ▾  services/
        response_header_service.ts
      app.ts
@@ -43,13 +40,11 @@ field in the `services` property in the resource that uses the service.
    // File: app.ts
 
    import { Drash } from "./deps.ts";
-   import ResponseModifiedResource from "./resources/response_modified_resource.ts";
-   import ResponseNotModifiedResource from "./resources/response_not_modified_resource.ts";
+   import ResponseModifiedForPostResource from "./resources/response_modified_for_post_resource.ts";
 
    const server = new Drash.Server({
      resources: [
-       ResponseModifiedResource,
-       ResponseNotModifiedResource,
+       ResponseModifiedForPostResource,
      ],
      hostname: "0.0.0.0",
      port: 1447,
@@ -65,8 +60,9 @@ field in the `services` property in the resource that uses the service.
 
 2. Create your `services/response_header_service.ts` file.
 
-   The class in this file will be in charge of making sure all responses to
-   requests to `ResponseModifiedResource` have the `X-CUSTOM-HEADER` header.
+   The service in this file will be used in the
+   `ResponseModifiedForPostResource` (created in the next step) to add a
+   `X-CUSTOM-HEADER` response header.
 
    ```typescript
    // File: services/response_header_service.ts
@@ -80,7 +76,7 @@ field in the `services` property in the resource that uses the service.
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client (if needed).
       */
-     public runAfterResource(
+     public runBeforeResource(
        request: Drash.Request,
        response: Drash.Response,
      ): void {
@@ -91,64 +87,47 @@ field in the `services` property in the resource that uses the service.
    export default new ResponseHeaderService();
    ```
 
-3. Create your `resources/resonse_modified_resource.ts` file.
+3. Create your `resources/response_modified_for_post_resource.ts` file.
 
-   The resource in this file will have its responses modified by the
-   `ResponseHeaderService` class. Specifically, all responses will have the
+   The resource in this file will have its `POST` method using the
+   `ResponseHeaderService`. Any `POST` request to this resource will receive a
+   response with the `X-CUSTOM-HEADER` header applied.
+
+   Also, any `GET` request made to this resource will not have the
    `X-CUSTOM-HEADER` header applied.
 
    ```typescript
-   // File: resources/response_modified_resource.ts
+   // File: resources/response_modified_for_post_resource.ts
 
    import { Drash } from "../deps.ts";
    import responseHeaderService from "../services/response_header_service.ts";
 
-   export default class ResponseModifiedResource extends Drash.Resource {
-     public paths = ["/modified"];
+   export default class ResponseModifiedForPostResource extends Drash.Resource {
+     public paths = ["/response-modified-for-post-requests"];
 
      public services = {
-       // For all requests, run the response header service
-       ALL: [responseHeaderService],
+       // For POST requests, run the service
+       POST: [responseHeaderService],
      };
 
      /**
-      * Handle GET / requests. All responses will have the X-CUSTOM-HEADER header.
+      * Handle GET requests.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client.
       */
      public GET(request: Drash.Request, response: Drash.Response): void {
-       return response.text(
-         "X-CUSTOM-HEADER is present in the response headers.",
-       );
+       return response.text("No X-CUSTOM-HEADER present in the response.");
      }
-   }
-   ```
-
-4. Create your `resources/response_not_modified_resource.ts` file.
-
-   The resource in this file will not be be using the `ResponseHeaderService`.
-   This means all responses from this resource will not have the
-   `X-CUSTOM-HEADER` header applied.
-
-   ```typescript
-   // File: resources/response_not_modified_resource.ts
-
-   import { Drash } from "../deps.ts";
-
-   export default class ResponseNotModifiedResource extends Drash.Resource {
-     public paths = ["/not-modified"];
 
      /**
-      * Handle GET / requests. All requests can target this resource.
+      * Handle POST requests.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client.
       */
-     public GET(request: Drash.Request, response: Drash.Response): void {
-       return response.text(
-         "X-CUSTOM-HEADER is not present in the response headers.",
-       );
+     public POST(request: Drash.Request, response: Drash.Response): void {
+       return response.text("X-CUSTOM-HEADER is present in the response.");
      }
    }
    ```
@@ -162,14 +141,14 @@ field in the `services` property in the resource that uses the service.
    ```
 
 2. Using `curl` (or similar command), make a `GET` request to
-   `http://localhost:1447/not-modified`.
+   `http://localhost:1447/response-modified-for-post-requests`.
 
    ```text
-   $ curl -v http://localhost:1447/not-modified
+   $ curl -v http://localhost:1447/response-modified-for-post-requests
    ```
 
-   Since this resource is not using the `ResponseHeaderService` class, you
-   should receive the following response (without the `X-CUSTOM-HEADER` header):
+   Since this resource's `GET` method does not use the `ResponseHeaderService`
+   class, you should receive the following response:
 
    ```text
    *   Trying ::1...
@@ -179,7 +158,7 @@ field in the `services` property in the resource that uses the service.
    *   Trying 127.0.0.1...
    * TCP_NODELAY set
    * Connected to localhost (127.0.0.1) port 1447 (#0)
-   > GET /not-modified HTTP/1.1
+   > GET /response-modified-for-post-requests HTTP/1.1
    > Host: localhost:1447
    > User-Agent: curl/7.64.1
    > Accept: */*
@@ -187,24 +166,24 @@ field in the `services` property in the resource that uses the service.
    < HTTP/1.1 200 OK
    < content-type: text/plain
    < vary: Accept-Encoding
-   < content-length: 55
-   < date: Sun, 03 Apr 2022 15:51:16 GMT
+   < content-length: 43
+   < date: Sun, 03 Apr 2022 19:44:54 GMT
    <
    * Connection #0 to host localhost left intact
-   X-CUSTOM-HEADER is not present in the response headers.* Closing connection 0
+   No X-CUSTOM-HEADER present in the response.* Closing connection 0
    ```
 
-   Notice that the response does not contain `x-custom-header` with
-   `Got modified!`.
+   Notice that the response does not contain the `x-custom-header` header.
 
-3. Make a `GET` request to `http://localhost:1447/modified`.
+3. Make a `POST` request to
+   `http://localhost:1447/response-modified-for-post-requests`.
 
    ```text
-   $ curl -v http://localhost:1447/modified
+   $ curl -v -X POST http://localhost:1447/response-modified-for-post-requests
    ```
 
-   Since this resource is using the `ReponseHeaderService` class for all
-   requests, you should receive the following response:
+   Since this resource's `POST` method uses the `ResponseHeaderService` class,
+   you should receive the following response:
 
    ```text
    *   Trying ::1...
@@ -214,21 +193,20 @@ field in the `services` property in the resource that uses the service.
    *   Trying 127.0.0.1...
    * TCP_NODELAY set
    * Connected to localhost (127.0.0.1) port 1447 (#0)
-   > GET /modified HTTP/1.1
+   > POST /response-modified-for-post-requests HTTP/1.1
    > Host: localhost:1447
    > User-Agent: curl/7.64.1
    > Accept: */*
-   >
+   > 
    < HTTP/1.1 200 OK
    < content-type: text/plain
    < x-custom-header: Got modified!
    < vary: Accept-Encoding
-   < content-length: 51
-   < date: Sun, 03 Apr 2022 15:52:47 GMT
-   <
+   < content-length: 43
+   < date: Sun, 03 Apr 2022 20:42:48 GMT
+   < 
    * Connection #0 to host localhost left intact
-   X-CUSTOM-HEADER is present in the response headers.* Closing connection 0
+   X-CUSTOM-HEADER is present in the response.* Closing connection 0
    ```
 
-   Notice that the response does not contain `x-custom-header` with
-   `Got modified!`.
+   Notice that the response contains `x-custom-header` with `Got modified!`.

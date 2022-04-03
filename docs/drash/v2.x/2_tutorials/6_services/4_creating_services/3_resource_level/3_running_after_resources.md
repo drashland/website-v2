@@ -65,8 +65,8 @@ field in the `services` property in the resource that uses the service.
 
 2. Create your `services/response_header_service.ts` file.
 
-   The class in this file will be in charge of making sure all responses to
-   requests to `ResponseModifiedResource` have the `X-CUSTOM-HEADER` header.
+   The service in this file will be in charge of making sure responses have the
+   `X-CUSTOM-HEADER` header.
 
    ```typescript
    // File: services/response_header_service.ts
@@ -112,7 +112,7 @@ field in the `services` property in the resource that uses the service.
      };
 
      /**
-      * Handle GET / requests. All responses will have the X-CUSTOM-HEADER header.
+      * Handle GET requests.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client.
@@ -140,7 +140,7 @@ field in the `services` property in the resource that uses the service.
      public paths = ["/not-modified"];
 
      /**
-      * Handle GET / requests. All requests can target this resource.
+      * Handle GET requests.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client.

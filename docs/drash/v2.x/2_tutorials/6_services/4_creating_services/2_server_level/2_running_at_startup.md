@@ -70,7 +70,7 @@ Specifically, it will show you how you can:
 
 2. Create your `services/compiled_files_service.ts` file.
 
-   The class in this file will be in charge of taking `public/greeter.ts` and
+   The service in this file will be in charge of taking `public/greeter.ts` and
    `public/math_utils.ts` and compiling their code to JavaScript so that they
    can be used in the browser.
 
@@ -132,10 +132,10 @@ Specifically, it will show you how you can:
 
 3. Create your `resources/home_resource.ts` file.
 
-   The class in this file will be in charge of sending an HTML document for `/`
-   requests. The HTML document will contain `script` tags that request
-   `greeter.ts.js` and `math_utils.ts.js` -- your TypeScript files that were
-   compiled at startup time in the `services/compiled_files_service.ts` file.
+   The resource in this file will be in charge of sending an HTML document for
+   `GET /` requests. The HTML document will contain `script` tags that request
+   `greeter.ts.js` and `math_utils.ts.js` -- your TypeScript files that will be
+   compiled at startup time by the `CompiledFilesService` class.
 
    ```typescript
    // File: resources/home_resource.ts
@@ -177,7 +177,7 @@ Specifically, it will show you how you can:
    `;
 
      /**
-      * Handle GET / requests and return the HTML document in the #html property.
+      * Handle GET requests and return the HTML document in the #html property.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client.
@@ -190,12 +190,12 @@ Specifically, it will show you how you can:
 
 4. Create your `resources/files_resource.ts` file.
 
-   The class in this file will be in charge of handling `/pubilc/:filename`
-   requests. The `:filename` path param will be used to retrieve compiled source
-   code in the `#source_code_map` in the `services/compiled_files_service.ts`
-   file. Basically, the HTML document in the previous step will request your
-   compiled TypeScript files and those requests will be handled in this
-   resource.
+   The resource in this file will be in charge of handling
+   `GET /pubilc/:filename` requests. The `:filename` path param will be used to
+   retrieve compiled source code in the `#source_code_map` property in the
+   `CompiledFilesService` class. Basically, the HTML document in the previous
+   step will request your compiled TypeScript files and those requests will be
+   handled in this resource.
 
    ```typescript
    // File: resources/files_resource.ts
@@ -206,6 +206,12 @@ Specifically, it will show you how you can:
    export default class FilesResource extends Drash.Resource {
      public paths = ["/public/:filename"];
 
+     /**
+      * Handle GET requests.
+      *
+      * @param request - The incoming request from the client.
+      * @param response - The response to send back to the client.
+      */
      public GET(request: Drash.Request, response: Drash.Response): void {
        const filename = request.pathParam("filename");
        if (!filename) {
