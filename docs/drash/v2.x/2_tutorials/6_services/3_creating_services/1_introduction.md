@@ -1,4 +1,4 @@
-# Creating Services
+# Introduction
 
 When creating a service, you need to extend the `Drash.Service` class and
 implement one or all of the methods under the [Methods](#methods) section below.
