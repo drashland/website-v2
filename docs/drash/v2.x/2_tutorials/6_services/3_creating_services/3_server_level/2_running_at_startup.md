@@ -1,5 +1,7 @@
 # Running at Startup
 
+_This feature was introduced in v2.6.0._
+
 ## Table of Contents
 
 - [Before You Get Started](#before-you-get-started)
