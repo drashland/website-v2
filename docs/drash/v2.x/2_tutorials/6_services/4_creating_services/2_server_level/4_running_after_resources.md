@@ -9,11 +9,11 @@
 
 ## Before You Get Started
 
-This tutorial goes over creating a server-level service that runs after a
-resource for all requests.
+This tutorial goes over creating a server-level service that runs on all
+requests to all resources.
 
 Specifically, it will show you how you can set a response header on all
-requests.
+responses to all requests.
 
 ## Folder Structure End State
 
@@ -71,7 +71,7 @@ requests.
 
    class ResponseHeaderService extends Drash.Service {
      /**
-      * Run the following code before any resource is hit and for all requests.
+      * Run the following code after a resource is hit.
       */
      public runAfterResource(
        request: Drash.Request,

@@ -9,18 +9,29 @@
 
 ## Before You Get Started
 
-This tutorial goes over creating a server-level service that runs before a
-resource for all requests.
+_Disclaimer: The service shown in this tutorial is just a proof of concept. You
+should not use this service in a production environment. It is not secure._
+
+This tutorial goes over creating a resource-level service that runs before a
+resource for requests only to a specific resource.
 
 Specifically, it will show you how you can create an authentication service
-proof of concept.
+proof of concept for a single resource. You will create two resources:
+
+1. A resource that applies the authentication service; and
+2. A resource that does not apply the authentication service.
+
+Since this tutorial goes over a resource-level service, you will not use the
+`services` config when creating your server. Instead, you will use the `ALL`
+field in the `services` property in the resource that uses the service.
 
 ## Folder Structure End State
 
 ```text
 ▾  path/to/your/project/
   ▾  resources/
-       protected_resource.ts
+       auth_resource.ts
+       non_auth_resource.ts
   ▾  services/
        authentication_service.ts
      app.ts
@@ -35,17 +46,13 @@ proof of concept.
    // File: app.ts
 
    import { Drash } from "./deps.ts";
-   import ProtectedResource from "./resources/protected_resource.ts";
-   import authenticationService from "./services/authentication_service.ts";
-
-   // Create your server and plug in the instantiated AuthenticationService class
+   import AuthResource from "./resources/auth_resource.ts";
+   import NonAuthResource from "./resources/non_auth_resource.ts";
 
    const server = new Drash.Server({
      resources: [
-       ProtectedResource,
-     ],
-     services: [
-       authenticationService,
+       AuthResource,
+       NonAuthResource,
      ],
      hostname: "0.0.0.0",
      port: 1447,
@@ -61,9 +68,9 @@ proof of concept.
 
 2. Create your `services/authentication_service.ts` file.
 
-   The class in this file will be in charge of making sure all requests have the
-   `username` and `token` query parameters; and they must match the ones defined
-   in the `#users` property.
+   The class in this file will be in charge of making sure all requests to
+   `AuthResource` have the `username` and `token` query parameters; and they
+   must match the ones defined in the `#users` property.
 
    ```typescript
    // File: services/authentication_service.ts
@@ -80,7 +87,7 @@ proof of concept.
      ]);
 
      /**
-      * Run the following code before any resource is hit and for all requests.
+      * Run the following code before a resource is hit.
       *
       * @param request - The incoming request from the client.
       * @param response - The response to send back to the client (if needed).
@@ -120,21 +127,27 @@ proof of concept.
    export default new AuthenticationService();
    ```
 
-3. Create your `resources/protected_resource.ts` file.
+3. Create your `resources/auth_resource.ts` file.
 
    The class in this file will be protected by the `AuthenticationService`
-   class. Since the `AuthenticationService` class will be filtering all
-   requests, any request should not see the response in this file unless the
-   request meets all of the `AuthenticationService` class' requirements
-   (requires a `username` and `token`).
+   class. Since the `AuthenticationService` class will be applied to this
+   resource, any request to this resource should not see the response from this
+   resource unless the request meets all of the `AuthenticationService` class'
+   requirements (requires a `username` and `token`).
 
    ```typescript
-   // File: resources/protected_resource.ts
+   // File: resources/auth_resource.ts
 
    import { Drash } from "../deps.ts";
+   import authenticationService from "../services/authentication_service.ts";
 
-   export default class ProtectedResource extends Drash.Resource {
-     public paths = ["/"];
+   export default class AuthResource extends Drash.Resource {
+     public paths = ["/auth"];
+
+     public services = {
+       // For all requests, run the authentication service
+       ALL: [authenticationService],
+     };
 
      /**
       * Handle GET / requests. In order to get to this resource, the client has to
@@ -149,6 +162,34 @@ proof of concept.
    }
    ```
 
+4. Create your `resources/non_auth_resource.ts` file.
+
+   The resource in this file will not be protected by the
+   `AuthenticationService` class. Therefore, requests will not require a
+   `username` and `token` to get a response from this resource.
+
+   ```typescript
+   // File: resources/non_auth_resource.ts
+
+   import { Drash } from "../deps.ts";
+
+   export default class NonAuthResource extends Drash.Resource {
+     public paths = ["/non-auth"];
+
+     /**
+      * Handle GET / requests. All requests can target this resource.
+      *
+      * @param request - The incoming request from the client.
+      * @param response - The response to send back to the client.
+      */
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       return response.text(
+         "Hello! You do not need a username and password to view this resource.",
+       );
+     }
+   }
+   ```
+
 ## Verification
 
 1. Run your app.
@@ -158,23 +199,37 @@ proof of concept.
    ```
 
 2. Using `curl` (or similar command), make a `GET` request to
-   `http://localhost:1447`.
+   `http://localhost:1447/non-auth`.
 
    ```text
-   $ curl http://localhost:1447
+   $ curl http://localhost:1447/non-auth
    ```
 
-   You should receive the following error message:
+   Since this resource is not using the `AuthenticationService` class, you
+   should receive the following response:
+
+   ```text
+   Hello! You do not need a username and password to view this resource.
+   ```
+
+3. Make a `GET` request to `http://localhost:1447/auth`.
+
+   ```text
+   $ curl http://localhost:1447/auth
+   ```
+
+   Since this resource is using the `AuthenticationService` class for all
+   requests, you should receive the following error message:
 
    ```text
    Error: You are not authorized! Username not provided.
    ```
 
-3. Make the same request, but add the `username` query parameter with `user_1`
+4. Make the same request, but add the `username` query parameter with `user_1`
    as the value.
 
    ```text
-   $ curl http://localhost:1447?username=user_1
+   $ curl http://localhost:1447/auth?username=user_1
    ```
 
    You should receive the following error message:
@@ -183,27 +238,31 @@ proof of concept.
    Error: You are not authorized! Token not provided.
    ```
 
-4. Make the same request, but add the `token` query parameter with `token_1` as
+5. Make the same request, but add the `token` query parameter with `token_1` as
    the value.
 
    ```text
-   $ curl "http://localhost:1447?username=user_1&token=token_1"
+   $ curl "http://localhost:1447/auth?username=user_1&token=token_1"
    ```
 
    _You may need to wrap the URL in quotes to prevent `&` from starting a
    background process._
 
-   You should receive the following message from `ProtectedResource`:
+   You should receive the following message from `AuthResource`:
 
    ```text
    You successfully authenticated!
    ```
 
-5. Make the same request, but change the token value to exercise a token
+   As you can see, the request met all requirements in the
+   `AuthenticationService` class, so the `AuthenticationService` class allowed
+   the request to go through.
+
+6. Make the same request, but change the token value to exercise a token
    mismatch.
 
    ```text
-   $ curl "http://localhost:1447?username=user_1&token=token_2"
+   $ curl "http://localhost:1447/auth?username=user_1&token=token_2"
    ```
 
    _You may need to wrap the URL in quotes to prevent `&` from starting a

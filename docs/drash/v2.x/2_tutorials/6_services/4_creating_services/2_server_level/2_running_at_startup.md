@@ -21,17 +21,17 @@ Specifically, it will show you how you can:
 ## Folder Structure End State
 
 ```text
-▾  path/to/your/project/
-  ▾  public/
-       greeter.ts
-       math_utils.ts
-  ▾  resources/
-       files_resource.ts
-       home_resource.ts
-  ▾  services/
-       compiled_files_service.ts
-     app.ts
-     deps.ts
+▾  path/to/your/project/
+  ▾  public/
+       greeter.ts
+       math_utils.ts
+  ▾  resources/
+       files_resource.ts
+       home_resource.ts
+  ▾  services/
+       compiled_files_service.ts
+     app.ts
+     deps.ts
 ```
 
 ## Steps
