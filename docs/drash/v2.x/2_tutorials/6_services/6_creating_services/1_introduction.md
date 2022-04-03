@@ -14,6 +14,7 @@ by only running code on specific types of HTTP requests (e.g., only run code on
   - [runAtStartup(...)](#runatstartup)
   - [runBeforeResource(...)](#runbeforeresource)
   - [runAfterResource(...)](#runafterresource)
+- [Further Learning](#further-learning)
 
 ## Methods
 
@@ -125,10 +126,8 @@ the side bar under Services > Creating Services.
   - [Running Before Resources](/drash/v2.x/tutorials/services/creating-services/server-level/running-before-resources)
   - [Running After Resources](/drash/v2.x/tutorials/services/creating-services/server-level/running-after-resources)
 - Creating Resource-Level Services
-  - [Running at Startup](/drash/v2.x/tutorials/services/creating-services/resource-level/running-at-startup)
   - [Running Before Resources](/drash/v2.x/tutorials/services/creating-services/resource-level/running-before-resources)
   - [Running After Resources](/drash/v2.x/tutorials/services/creating-services/resource-level/running-after-resources)
 - Creating Resource HTTP Method Level Services
-  - [Running at Startup](/drash/v2.x/tutorials/services/creating-services/resource-http-method-level/running-at-startup)
   - [Running Before Resources](/drash/v2.x/tutorials/services/creating-services/resource-http-method-level/running-before-resources)
   - [Running After Resources](/drash/v2.x/tutorials/services/creating-services/resource-http-method-level/running-after-resources)
