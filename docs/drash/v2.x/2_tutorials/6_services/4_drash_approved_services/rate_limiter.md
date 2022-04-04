@@ -1,5 +1,8 @@
 # Rate Limiter
 
+This service was introduced in v2.2.0. Please make sure you are using v2.2.0 (or
+higher) before proceeding with this tutorial.
+
 This service will add rate limits to requests from an IP address.
 
 ## Table of Contents

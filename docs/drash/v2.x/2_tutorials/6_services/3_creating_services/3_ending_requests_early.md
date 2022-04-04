@@ -12,7 +12,8 @@ There are two ways to end a request early in a service:
 
 ## Calling this.end()
 
-_This feature was introduced in v2.6.0._
+Calling `this.end()` was introduced in v2.6.0. Please make sure you are using
+v2.6.0 (or higher) before calling `this.end()`.
 
 When you create a service and extend the `Drash.Service` class, your service
 inherits the `end()` method from `Drash.Service`. This method is useful if you

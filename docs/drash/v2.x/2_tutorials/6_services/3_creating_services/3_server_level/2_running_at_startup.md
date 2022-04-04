@@ -1,6 +1,7 @@
 # Running at Startup
 
-_This feature was introduced in v2.6.0._
+Running services at startup time was introduced in v2.6.0. Please make sure you
+are using v2.6.0 (or higher) before proceeding with this tutorial.
 
 ## Table of Contents
 
