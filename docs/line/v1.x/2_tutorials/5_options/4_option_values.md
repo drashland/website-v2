@@ -26,6 +26,12 @@ public options = {
 Notice that each signature has a `[value]` attribute. This lets Line know that
 your option(s) can take in a value.
 
+_**Important: You must use `[value]` and not something else if you want to make
+your options take in values. For example, `--some-option [some_other_wording]`
+will not work. It has to be `--some-option [value]`. In a future release, Line
+will allow `[some_other_wording]` instead of `[value]` so that it is more
+intuitive.**_
+
 Things to note:
 
 - If an option takes in a value, the value _**is required**_ when the user
