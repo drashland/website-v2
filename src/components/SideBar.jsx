@@ -10,7 +10,7 @@ import { getApiReferenceUrl, getRoadmapsUrl } from "../services/config_service";
 const Container = styled.div`
   background: ${({ theme }) => theme.sideBar.background};
   padding: 4rem 0 4rem 0;
-  min-width: ${({ mobileViewport }) => (mobileViewport ? "100%" : "350px")};
+  min-width: ${({ mobileViewport }) => (mobileViewport ? "100%" : "420px")};
   overflow: auto;
   position: fixed;
   height: 100%;
@@ -18,7 +18,7 @@ const Container = styled.div`
   transition-duration: 0.25s;
   left: ${({ isOpen, mobileViewport }) => {
   if (mobileViewport) {
-    return isOpen ? "0" : "-125%";
+    return isOpen ? "0" : "-200%";
   } else {
     return "0";
   }
