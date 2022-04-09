@@ -43,7 +43,7 @@ Learn more about Rhum [here](about-rhum).
 4. Run your `app.ts` file.
 
    ```shell
-   $ deno run --allow-net app.ts
+   $ deno run app.ts
    ```
 
 5. You should see something like the following:
