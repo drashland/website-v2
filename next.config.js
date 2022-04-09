@@ -83,7 +83,7 @@ module.exports = {
           "v2.x",
         ],
       },
-      rhum:  {
+      rhum: {
         versions: [
           "v1.x",
           "v2.x",
