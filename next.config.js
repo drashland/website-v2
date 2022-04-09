@@ -34,7 +34,6 @@ module.exports = {
       rhum: "https://doc.deno.land/https/deno.land/x/rhum/mod.ts",
       sinco: "https://doc.deno.land/https/deno.land/x/sinco/mod.ts",
       wocket: "https://doc.deno.land/https/deno.land/x/wocket/mod.ts",
-      rhum: "https://doc.deno.land/https/deno.land/x/rhum/mod.ts",
     },
     gitHubUrls: {
       dmm: "https://github.com/drashland/dmm",
