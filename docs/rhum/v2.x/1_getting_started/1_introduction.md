@@ -1,6 +1,6 @@
 # Introduction
 
-Rhum is a lightweight mock and stub module for Deno.
+Rhum is a lightweight test double module for Deno.
 
 Learn more about Rhum [here](about-rhum).
 
@@ -20,8 +20,8 @@ Learn more about Rhum [here](about-rhum).
    ```typescript
    // app.ts
 
-   // Replace `<VERSION>` with the latest version of Drash v2.x. The latest
-   // version can be found at https://github.com/drashland/drash/releases/latest
+   // Replace `<VERSION>` with the latest version of Rhum v2.x. The latest
+   // version can be found at https://github.com/drashland/rhum/releases/latest
    import { Rhum } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
    class MyObject {
@@ -43,7 +43,7 @@ Learn more about Rhum [here](about-rhum).
 4. Run your `app.ts` file.
 
    ```shell
-   $ deno run --allow-net app.ts
+   $ deno run app.ts
    ```
 
 5. You should see something like the following:
@@ -54,8 +54,8 @@ Learn more about Rhum [here](about-rhum).
 
 ## Features
 
+- Zero third-party dependencies outside of Deno Standard Modules
 - Lightweight
-- Zero 3rd party dependencies
 - Simple and easy to use
 - Mock support
 - Stub support

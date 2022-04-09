@@ -7,12 +7,14 @@
 
 ## Overview
 
-Drash is a module to mock and stub your code. This can help if you want to
-assert that a certain method on a class was called a number of times, or
-override a method or property, to ensure the business logic isn't called
+Rhum is a test double module that helps facilitate your testing needs. It helps
+you with both state verification and behavior verification. Some examples of how
+Rhum can help you:
 
-Some examples of what you can use Rhum for are:
+- Assert that a certain method on a class was called a number of times
+- Override methods or properties on classes during test runs
+- Ensure business logic was not called in a user flow
+- Faking responses from databases, APIs, services, and more
 
-- Bringing it into your test files to:
-  - Mock your mock
-  - Stub your code
+The above list is not finite. There are many more use cases for Rhum. It really
+depends on your testing needs.
