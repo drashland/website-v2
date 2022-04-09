@@ -1,4 +1,4 @@
-# Add Drash as a Dependency
+# Add Rhum as a Dependency
 
 ## Table of Contents
 
