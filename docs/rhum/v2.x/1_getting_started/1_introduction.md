@@ -25,7 +25,7 @@ Learn more about Rhum [here](about-rhum).
    import { Rhum } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
    class MyObject {
-      public some_property = "someValue";
+     public some_property = "someValue";
    }
 
    // Define the object that will have stubbed members as a stubbed object
@@ -35,7 +35,9 @@ Learn more about Rhum [here](about-rhum).
    myStubbedObject.stub("some_property", "this property is now stubbed");
 
    // Assert that the property was stubbed
-   console.log(myStubbedObject.some_property === "this property is now stubbed"); // pass
+   console.log(
+     myStubbedObject.some_property === "this property is now stubbed",
+   ); // pass
    ```
 
 4. Run your `app.ts` file.
@@ -52,7 +54,7 @@ Learn more about Rhum [here](about-rhum).
 
 ## Features
 
-- Lightweight 
+- Lightweight
 - Zero 3rd party dependencies
 - Simple and easy to use
 - Mock support
