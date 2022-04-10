@@ -14,7 +14,9 @@ as a dependency_** in the file like so:
 ```typescript
 // deps.ts
 
-export { Rhum } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+export { Mock, Stub } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// or
+export * as Rhum from "...";
 ```
 
 Replace `<VERSION>` with the latest version of **Rhum v2.x**. The latest version
@@ -26,7 +28,7 @@ the `deps.ts` file in code blocks like so:
 ```typescript
 // some_file.ts
 
-import { Rhum } from "./deps.ts";
+import { Mock, Stub } from "./deps.ts";
 ```
 
 You will also notice that this file is referenced in the **Folder Structure End

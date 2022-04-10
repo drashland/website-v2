@@ -22,14 +22,14 @@ Learn more about Rhum [here](about-rhum).
 
    // Replace `<VERSION>` with the latest version of Rhum v2.x. The latest
    // version can be found at https://github.com/drashland/rhum/releases/latest
-   import { Rhum } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+   import { Mock, Stub } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
    class MyObject {
      public some_property = "someValue";
    }
 
    // Define the object that will have stubbed members as a stubbed object
-   const myStubbedObject = Rhum.stubbed(new MyObject());
+   const myStubbedObject = Stub(new MyObject());
 
    // Stub the object's some_property property to a certain value
    myStubbedObject.stub("some_property", "this property is now stubbed");

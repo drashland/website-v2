@@ -23,8 +23,7 @@ Creating a mock can be done as follows:
 ```ts
 class ToBeMocked = { ... }
 
-const mock = Rhum
-  .mock(ToBeMocked)
+const mock = Mock(ToBeMocked)
   .withConstructorArgs("someArg") // if the class to be mocked has a constructor and it requires args
   .create();
 ```
@@ -50,7 +49,7 @@ class MyObj {
   }
 }
 
-const mock = Rhum.mock(MathService).create();
+const mock = Mock(MathService).create();
 
 const myObj = new MyObj(mock);
 
@@ -72,8 +71,7 @@ class ToBeMocked {
 }
 
 // Create a mock with the following constructor args
-const mock = Rhum
-  .mock(ToBeMocked)
+const mock = Mock(ToBeMocked)
   .withConstructorArgs("someStringArg", 1)
   .create();
 ```
