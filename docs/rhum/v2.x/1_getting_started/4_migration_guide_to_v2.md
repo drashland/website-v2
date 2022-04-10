@@ -84,18 +84,18 @@ Changes:
 
 - Mocking and Stubbing have been moved into their own functions
 
-   Previously, to mock and stub, you would do:
+  Previously, to mock and stub, you would do:
 
-   ```ts
-   import { Rhum } from "./deps.ts";
-   const stub = Rhum.stubbed(myObject)
-   const mock = Rhum.mock(myObject).create();
-   ```
+  ```ts
+  import { Rhum } from "./deps.ts";
+  const stub = Rhum.stubbed(myObject);
+  const mock = Rhum.mock(myObject).create();
+  ```
 
-   Instead, you would now do:
+  Instead, you would now do:
 
-   ```ts
-   import { Mock, Stub } from "./deps.ts";
-   const mock = Mock(...).create();
-   const stub = Stub(...);
-   ```
+  ```ts
+  import { Mock, Stub } from "./deps.ts";
+  const mock = Mock(...).create();
+  const stub = Stub(...);
+  ```
