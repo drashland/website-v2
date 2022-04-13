@@ -1,34 +1,84 @@
-# Stubs
+# Mocks
 
 ## Table of Contents
 
 - [Before You Get Started](#before-you-get-started)
 - [Creating A Mock](#creating-a-mock)
-- [Checking Calls](#checking-calls)
-- [Mock Constructor Arguments](#mock-constructor-arguments)
+  - [Without Constructor Arguments](#without-constructor-arguments)
+  - [With Constructor Arguments](#with-constructor-arguments)
+- [Pre-programming](#pre-programming)
+  - [.method(...).willReturn(...)](#taking-a-shortcut-method-willreturn)
+  - [.method(...).willThrow(...)](#taking-a-shortcut-method-willthrow)
+  - [.expects(...).toBeCalled(...)](#expects-tobecalled)
+- [Verifying Calls](#checking-calls)
+  - [Using .calls](#using-calls)
+  - [Using .verifyExpectations()](#using-verifyexpectations)
 
-### Before You Get Started
+## Before You Get Started
 
-Rhum defines mocks as follows:
+Per Martin Fowler, based on (Gerard Meszaros):
 
-- Mocks register calls they receive
+> Mocks are pre-programmed with expectations which form a specification of the
+> calls they are expected to receive. They can throw an exception if they
+> receive a call they don't expect and are checked during verification to ensure
+> they got all the calls they were expecting.
 
-Unlike stubs, mocks help verify behavior. For example, you can mock an email
-service class and check to see if it is called in a test.
+Mocks differ from fakes because mocks are pre-programmed with expectations and
+verify calls they expect to receive. Fakes do not have verification logic.
 
-### Creating A Mock
+## Creating a Mock
 
-Creating a mock can be done as follows:
+### Without Constructor Arguments
+
+Creating a mock of an object without constructor arguments can be done as
+follows:
 
 ```ts
-class ToBeMocked = { ... }
+class SomeClassWithoutConstructor {}
 
-const mock = Mock(ToBeMocked)
-  .withConstructorArgs("someArg") // if the class to be mocked has a constructor and it requires args
+const mockWithoutConstructor = Mock(SomeClassWithoutConstructor)
   .create();
+
+console.log(mockWithoutConstructor instanceof SomeClassWithoutConstructor); // true
 ```
 
-### Checking Calls
+### With Constructor Arguments
+
+Creating a mock of an object with constructor arguments can be done as follows:
+
+```ts
+class SomeClassWithConstructor {
+  public name: string;
+  public type: "dog" | "cat";
+  public colors: string[];
+
+  constructor(
+    name: string,
+    type: "dog" | "cat",
+    colors: string[],
+  ) {
+    this.name = name;
+    this.type = type;
+    this.colors = colors;
+  }
+}
+
+const mockWithConstructor = Mock(SomeClassWithConstructor)
+  .withConstructorArgs(
+    "Missy",
+    "dog",
+    ["brown", "white"],
+  )
+  .create();
+
+console.log(mockWithConstructor instanceof SomeClassWithConstructor); // true
+console.log(mockWithConstructor.name === "Missy"); // true
+console.log(mockWithConstructor.type === "dog"); // true
+console.log(mockWithConstructor.colors.includes("brown")); // true
+console.log(mockWithConstructor.colors.includes("white")); // true
+```
+
+## Verifying Calls
 
 Since mocks register calls they receive, you can check to see how many times a
 mocked object's methods were called by accessing its calls property. Below is an
@@ -59,19 +109,4 @@ assertEquals(mock.calls.add, 0); // pass
 // Assert that the service's add() method was called once
 myObj.add(1, 1);
 assertEquals(mock.calls.add, 1); // pass
-```
-
-### Mock Constructor Arguments
-
-Mocks can be created with constructor arguments as follows:
-
-```ts
-class ToBeMocked {
-  constructor(arg1: string, arg2: number) { ... }
-}
-
-// Create a mock with the following constructor args
-const mock = Mock(ToBeMocked)
-  .withConstructorArgs("someStringArg", 1)
-  .create();
 ```
