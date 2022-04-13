@@ -8,6 +8,9 @@ are what your Rhum tests should be using if migrating from v1 to v2.
 ## Table of Contents
 
 - [Rhum Namespace](#rhum-namespace)
+- [Hooks](#hooks)
+- [Mocks](#mocks)
+- [Stubs](#stubs)
 
 ## Rhum Namespace
 
@@ -19,7 +22,7 @@ you might be familiar with such as:
 - `.testPlan()`
 - `.asserts.*`
 
-This being said, Rhum is purely a test double module.
+This being said, Rhum is purely a test double library.
 
 The reasons for this are:
 
@@ -62,7 +65,7 @@ Changes:
 
   - Rhum.testPlan("tests/unit/user_test.ts", () => {
   -   Rhum.testSuite("saveToGoogle()", () => {
-  -     Rhum.testCase("Saves the user to goole via the API", async () => {
+  -     Rhum.testCase("Saves the user to google via the API", async () => {
   -       // ...
   -     });
   -   });
@@ -80,22 +83,86 @@ Changes:
   no need to specify the filename in the test case.
 
   For more information on using `Deno.test()`, please refer to
-  [Deno's documentation](https://deno.land/manual@v1.20.5/testing).
+  [Deno's documentation](https://deno.land/manual/testing).
 
-- Mocking and Stubbing have been moved into their own functions
+## Hooks
 
-  Previously, to mock and stub, you would do:
+Changes:
+
+- Hooks (e.g., `Rhum.afterEach()`, `Rhum.beforeEach()`) have been removed. Rhum
+  no longer has a test runner.
+
+## Mocks
+
+Changes:
+
+- Mocking has been moved into its own function.
+
+  Previously, to create a mock, you would do:
 
   ```ts
-  import { Rhum } from "./deps.ts";
-  const stub = Rhum.stubbed(myObject);
-  const mock = Rhum.mock(myObject).create();
+  import { Rhum } from "...";
+
+  const mock = Rhum.mock(MyClass).create();
   ```
 
   Instead, you would now do:
 
   ```ts
-  import { Mock, Stub } from "./deps.ts";
-  const mock = Mock(...).create();
-  const stub = Stub(...);
+  import { Mock } from "...";
+
+  const mock = Mock(MyClass).create();
   ```
+
+## Stubs
+
+Changes:
+
+- Stubbing has been moved into its own function.
+
+  Previously, to create a stub, you would do:
+
+  ```ts
+  import { Rhum } from "...";
+
+  const stubbedObject = Rhum.stubbed(new MyClass());
+  ```
+
+  Instead, you would now do:
+
+  ```ts
+  import { Stub } from "...";
+
+  const myObject = new MyClass();
+  Stub(myObject, "somethingPropertyOrMethod"); // Makes `somethingPropertyOrMethod` return "stubbed"
+  ```
+
+- Stubbing does not require you to stub an entire class.
+
+  Previously, you had to pass in an object to introduce `.stub()` methods on it:
+
+  ```ts
+  import { Rhum } from "...";
+
+  const stubbedObject = Rhum.stubbed(new MyClass());
+  stubbedObject.stub("somePropertyOrMethod", "someValue");
+  ```
+
+  Instead, you would now do:
+
+  ```ts
+  import { Stub } from "...";
+
+  // The below shows how you can create a stub with a default "stubbed" return value (by not providing a stubbed value)
+  const myObject = new MyClass();
+  assertEquals(myObject.doSomething(), "I did something!");
+  Stub(server, "doSomething"); // Notice there is no `.stub("method", "something")` syntax
+  assertEquals(server.doSomething(), "stubbed"); // Passes
+
+  // The below shows how you can provide a stubbed value
+  const obj = { test: "hello" };
+  Stub(server, "methodThatLogs", obj); // Provide `obj` as the stubbed value instead of the default "stubbed"
+  assertEquals(server.methodThatLogs(), obj); // Passes
+  ```
+
+- The `.stub()` method has been removed (see above bullet)

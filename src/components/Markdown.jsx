@@ -194,12 +194,14 @@ export const Pre = styled.pre`
 `;
 
 export const OrderedList = styled.ol`
-  margin-left: 1rem;
+  margin-left: 0;
+  padding-left: 2.5rem;
   ${MARGIN_BOTTOM};
 `;
 
 export const UnorderedList = styled.ul`
-  margin-left: 1rem;
+  margin-left: 0;
+  padding-left: 2.5rem;
   ${MARGIN_BOTTOM};
 `;
 

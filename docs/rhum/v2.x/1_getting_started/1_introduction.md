@@ -1,8 +1,10 @@
 # Introduction
 
-Rhum is a lightweight test double module for Deno.
+Rhum is a test double library that follows
+[test double definitions](https://martinfowler.com/bliki/TestDouble.html) from
+Gerard Meszaros.
 
-Learn more about Rhum [here](about-rhum).
+Learn more about Rhum [here](./about-rhum).
 
 ## Getting Started
 
@@ -15,32 +17,61 @@ Learn more about Rhum [here](about-rhum).
    $ cd my-project
    ```
 
-3. Create your `app.ts` file.
+3. Create your `my_class_test.ts` file.
 
    ```typescript
-   // app.ts
+   // my_class_test.ts
 
    // Replace `<VERSION>` with the latest version of Rhum v2.x. The latest
    // version can be found at https://github.com/drashland/rhum/releases/latest
-   import { Mock, Stub } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+   import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+   import {
+     assertEquals,
+     assertThrows,
+   } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
-   class MyObject {
-     public some_property = "someValue";
+   class MyClass {
+     public methodOne(): string {
+       return "1";
+     }
+
+     public methodTwo(): string {
+       let ret = "2";
+       ret += this.methodOne();
+       ret += this.methodFour();
+       return ret;
+     }
+
+     public methodThree(): string {
+       return "3";
+     }
+
+     public methodFour(): string {
+       return "4";
+     }
    }
 
-   // Define the object that will have stubbed members as a stubbed object
-   const myStubbedObject = Stub(new MyObject());
+   Deno.test({
+     name: "MyClass.methodTwo() should make some calls and return a string",
+     fn(): void {
+       const mock = Mock(MyClass).create();
+       assertEquals(mock.is_mock, true); // We can check if this is a mock after calling Mock(...).create()
 
-   // Stub the object's some_property property to a certain value
-   myStubbedObject.stub("some_property", "this property is now stubbed");
+       // We expect methodOne and methodFour to be called once
+       mock.expects("methodOne").toBeCalled(1);
+       mock.expects("methodFour").toBeCalled(1);
 
-   // Assert that the property was stubbed
-   console.log(
-     myStubbedObject.some_property === "this property is now stubbed",
-   ); // pass
+       // Do the thing that we want to test
+       const actual = mock.methodTwo(); // We expect this to be "214" down below
+
+       // Make assertions
+       mock.verifyExpectations(); // Will verify .expect(...).toBeCalled(...) expectations
+       assertEquals(actual, "214");
+     },
+   });
    ```
 
-4. Run your `app.ts` file.
+4. Run your `my_class_test.ts` file.
 
    ```shell
    $ deno run app.ts
@@ -49,7 +80,11 @@ Learn more about Rhum [here](about-rhum).
 5. You should see something like the following:
 
    ```text
-   true
+   Check file:///my_class_test.ts
+   running 1 test from file:///my_class_test.ts
+   test MyClass.methodTwo() should make some calls and return a string ... ok (5ms)
+
+   test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (18ms)
    ```
 
 ## Features
@@ -57,6 +92,8 @@ Learn more about Rhum [here](about-rhum).
 - Zero third-party dependencies outside of Deno Standard Modules
 - Lightweight
 - Simple and easy to use
+- Dummy support
+- Fake support
 - Mock support
 - Stub support
 
