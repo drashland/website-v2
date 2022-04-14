@@ -27,6 +27,11 @@ expect to receive. Fakes do not have verification logic. Furthermore, mocks are
 used to verify behavior. If you want to verify state, then you should use a
 [Fake](/rhum/v2.x/tutorials/test-doubles/fakes).
 
+In this tutorial, you will learn how to create mocks:
+
+- One mock will return some value.
+- One mock will throw an error.
+
 ## Creating a Mock
 
 ### Without Constructor Arguments
