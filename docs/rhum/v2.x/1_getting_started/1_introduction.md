@@ -89,7 +89,7 @@ Learn more about Rhum [here](./about-rhum).
 
 ## Features
 
-- Zero third-party dependencies outside of Deno Standard Modules
+- Zero third-party dependencies
 - Lightweight
 - Simple and easy to use
 - Dummy support
