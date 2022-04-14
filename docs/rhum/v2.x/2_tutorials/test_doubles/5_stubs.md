@@ -16,7 +16,8 @@ Per Martin Fowler, based on (Gerard Meszaros):
 > Stubs provide canned answers to calls made during the test, usually not
 > responding at all to anything outside what's programmed in for the test.
 
-In this tutorial, you will learn how to stub properties and methods and provide stubbed values.
+In this tutorial, you will learn how to stub properties and methods and provide
+stubbed values.
 
 ## Stubbing Properties
 
