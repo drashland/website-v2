@@ -5,56 +5,117 @@
 - [Before You Get Started](#before-you-get-started)
 - [Stubbing Properties](#stubbing-properties)
 - [Stubbing Methods](#stubbing-methods)
+- [Stubbing and Providing Values](#stubbing-and-providing-values)
+  - [Properties](#properties)
+  - [Methods](#methods)
 
-### Before You Get Started
+## Before You Get Started
 
-Rhum defines stubs as follows:
+Per Martin Fowler, based on (Gerard Meszaros):
 
-- Stubs provide canned answers to calls made during tests
-- Stubs do not respond to calls outside the test's scope
+> Stubs provide canned answers to calls made during the test, usually not
+> responding at all to anything outside what's programmed in for the test.
 
-Unlike mocks, stubs are used to help verify the state of the system being
-tested. For example, you can check to see if the system being tested is in a
-certain state when stubbing an object's property to a certain value.
+## Stubbing Properties
 
-### Stubbing Properties
-
-Stubbing an object's properties can be done as follows:
+You can stub a property by calling `Stub(object, propertyName)`. Doing this will
+stub `object.propertyName` to have a value of `"stubbed"`. To provide a value,
+read [Stubbing and Providing Values](#stubbing-and-providing-values) on this
+page.
 
 ```ts
-class MyObject {
-  public some_property = "someValue";
+class MyClass {
+  public some_property = "hello";
 }
 
-// Define the object that will have stubbed members as a stubbed object
-const myStubbedObject = Rhum.stubbed(new MyObject());
+const myObject = new MyClass();
 
-// Stub the object's some_property property to a certain value
-myStubbedObject.stub("some_property", "this property is now stubbed");
+// Check that the property is not yet stubbed
+console.log(myObject.some_property === "hello"); // true
 
-// Assert that the property was stubbed
-assertEquals(myStubbedObject.some_property, "this property is now stubbed"); // pass
+// Now stub the property
+Stub(myObject, "some_property");
+
+// Check that the property was stubbed
+console.log(myObject.some_property === "stubbed"); // true
 ```
 
-### Stubbing Methods
+## Stubbing Methods
 
-Stubbing an object's methods can be done as follows:
+You can stub a method by calling `Stub(object, methodName)`. Doing this will
+stub `object.methodName` to return a value of `"stubbed"`. To provide a value,
+read [Stubbing and Providing Values](#stubbing-and-providing-values) on this
+page.
 
 ```ts
-class MyObject {
+class MyClass {
   public someMethod(): string {
-    return "someValue";
+    return "This is the original value.";
   }
 }
 
-// Define the object that will have stubbed members as a stubbed object
-const myStubbedObject = Rhum.stubbed(new MyObject());
+const myObject = new MyClass();
 
-// Stub the object's someMethod() method to return a certain value
-myStubbedObject.stub("someMethod", () => {
-  return "stubbed";
-});
+// Check that the property is not yet stubbed
+console.log(myObject.someMethod() === "This is the original value."); // true
 
-// Assert that the method was stubbed
-assertEquals(myStubbedObject.someMethod(), "stubbed"); // pass
+// Now stub the property
+Stub(myObject, "someMethod");
+
+// Check that the property was stubbed
+console.log(myObject.someMethod() === "stubbed"); // true
+```
+
+## Stubbing and Providing Values
+
+Sometimes you will want to stub a property with a given value or stub a method
+and have it return a given value. You can do so by providing a third argument to
+the `Stub()` call. For example:
+
+```ts
+Stub(object, propertyOrMethodName, someNewValue);
+```
+
+### Properties
+
+Below is how you can stub a property with a given value.
+
+```ts
+class MyClass {
+  public some_property = "hello";
+}
+
+const myObject = new MyClass();
+
+// Check that the property is not yet stubbed
+console.log(myObject.some_property === "hello"); // true
+
+// Now stub the property
+Stub(myObject, "some_property", "YOU GOT CHANGED!!!!");
+
+// Check that the property was stubbed
+console.log(myObject.some_property === "YOU GOT CHANGED!!!!"); // true
+```
+
+### Methods
+
+Below is how you can stub a method wit ha given value.
+
+```ts
+class MyClass {
+  public someMethod(): string {
+    return "This is the original value.";
+  }
+}
+
+const myObject = new MyClass();
+
+// Check that the property is not yet stubbed
+console.log(myObject.someMethod() === "This is the original value."); // true
+
+// Now stub the property
+Stub(myObject, "someMethod", "SOME NEW VALUE!!!!");
+
+// Check that the property was stubbed
+console.log(myObject.someMethod() === "SOME NEW VALUE!!!!"); // true
 ```
