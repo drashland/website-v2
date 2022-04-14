@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [Before You Get Started](#before-you-get-started)
-- [Creating A Mock](#creating-a-mock)
+- [Creating a Mock](#creating-a-mock)
   - [Without Constructor Arguments](#without-constructor-arguments)
   - [With Constructor Arguments](#with-constructor-arguments)
 - [Pre-programming Methods](#pre-programming-methods)
