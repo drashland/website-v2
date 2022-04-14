@@ -18,8 +18,11 @@ Per Martin Fowler, based on (Gerard Meszaros):
 > shortcut which makes them not suitable for production (an InMemoryTestDatabase
 > is a good example).
 
-Fake objects do not verify calls. If you want to verify calls made during a
-test, you should use a [Mock](/rhum/v2.x/tutorials/test-doubles/mocks).
+Unlike mocks, fakes do not verify calls. For example, you cannot verify that a
+fake's method was called once. Fakes are used to verify state whereas mocks are
+used to verify behavior (e.g., verifying that a call was made). If you want to
+verify calls made during a test or verify behavior in general, then you should
+use a [Mock](/rhum/v2.x/tutorials/test-doubles/mocks).
 
 In this tutorial, you will learn how to create fakes:
 
@@ -34,10 +37,11 @@ Creating a fake of an object without constructor arguments can be done as
 follows:
 
 ```ts
+import { Fake } from "./deps.ts";
+
 class SomeClassWithoutConstructor {}
 
-const fakeWithoutConstructor = Fake(SomeClassWithoutConstructor)
-  .create();
+const fakeWithoutConstructor = Fake(SomeClassWithoutConstructor).create();
 
 console.log(fakeWithoutConstructor instanceof SomeClassWithoutConstructor); // true
 ```
@@ -47,6 +51,8 @@ console.log(fakeWithoutConstructor instanceof SomeClassWithoutConstructor); // t
 Creating a fake of an object with constructor arguments can be done as follows:
 
 ```ts
+import { Fake } from "./deps.ts";
+
 class SomeClassWithConstructor {
   public name: string;
   public type: "dog" | "cat";
@@ -80,14 +86,21 @@ console.log(fakeWithConstructor.colors.includes("white")); // true
 
 ## Taking Shortcuts
 
+While this method is the same one that is used in mocks, we state "taking a
+shortcut" when using the below methods in the context of fakes -- strictly for
+staying in line with definitions.
+
 ### .method(...).willReturn(...)
 
-You can cause a fake to have one of its method take a shortcut and return a
-value by calling `.method(...).willReturn(...)`. This is useful if you do not
-care how the method gets the value and just want it to return the value you want
-it to return.
+Just like mocks, you can cause a fake to have one of its methods immediately
+return a value by calling `.method(...).willReturn(...)`. This is called "taking
+a shortcut" in the context of fakes and is useful if you do not care how the
+method gets the value and just want it to return the value you want it to
+return.
 
 ```ts
+import { Fake } from "./deps.ts";
+
 class Service {
   #repository: Repository;
 
@@ -178,12 +191,14 @@ console.log(fakeRepositoryNotDoingShortcut.do_something_else_called === true); /
 
 ### .method(...).willThrow(...)
 
-You can cause a fake to have one of its method throw an error -- taking a
-shortcut in its code to throw an expected error -- by calling
+Just like mocks, you can cause a fake to have one of its method throw an error
+-- taking a shortcut to throw an expected error -- by calling
 `.method(...).willThrow(...)`. This is useful if you do not care how the method
 gets to the error and just want to throw the error immediately.
 
 ```ts
+import { Fake } from "./deps.ts";
+
 class Service {
   #repository: Repository;
 

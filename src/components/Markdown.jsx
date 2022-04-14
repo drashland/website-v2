@@ -38,6 +38,11 @@ const Heading = function (level) {
     if ((slug.lastIndexOf("-") + 1) === slug.length) {
       slug = slug.substr(0, slug.lastIndexOf("-"));
     }
+
+    if (slug.charAt(0) === "-") {
+      slug = slug.substring(1, slug.length);
+    }
+
     const linkedHeadingChildren = [...props.children];
 
     // The <h1> tags do not need an anchor because they are at the top of the
@@ -119,6 +124,7 @@ export const Heading3 = styled(Heading(3))`
     font-size: 1.5rem;
     font-weight: bold;
     line-height: 1.2;
+    padding-top: 1.5rem;
     ${MARGIN_BOTTOM};
     transition-duration: 0.25s;
     transition-property: color;
