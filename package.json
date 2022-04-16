@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "clean": "rm -rf node_modules && rm yarn.lock && yarn",
     "start": "next start"
   },
   "dependencies": {
