@@ -3,5 +3,8 @@ version: 2
 updates:
 - package-ecosystem: npm
   directory: "/"
+  labels:
+    - "Type: Chore"
   schedule:
     interval: daily
+  target-branch: "dependabot-changes"
