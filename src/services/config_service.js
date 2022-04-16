@@ -26,7 +26,7 @@ export function getApiReferenceUrl(moduleName) {
  * @returns {string} - The GitHub issue URL.
  */
 export function getGitHubCreateIssueUrl(pageUri) {
-  return `${publicRuntimeConfig.gitHubUrls.website}/issues/new?assignees=&labels=Priority:%20Medium,%20Remark:%20Investigation%20Needed%2C+documentation&template=documentation_page_issue.md&title=Issue%20on%20${pageUri} page`;
+  return `${publicRuntimeConfig.gitHubUrls.website}/issues/new?assignees=&labels=Needs%20Investigation%2C+documentation&template=documentation_page_issue.md&title=Issue%20on%20${pageUri} page`;
 }
 
 /**
