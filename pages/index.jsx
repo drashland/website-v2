@@ -368,7 +368,7 @@ export default function Home() {
                   <img src="/logo-rhum.svg" />
                 </ImageContainer>
                 <CardTitle>Rhum</CardTitle>
-                <CardDescription>A unit test framework</CardDescription>
+                <CardDescription>A test double library</CardDescription>
                 <TagsContainer>
                   <Tag>Deno</Tag>
                 </TagsContainer>

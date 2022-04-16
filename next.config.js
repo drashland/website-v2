@@ -25,6 +25,7 @@ module.exports = {
       "line",
       "sinco",
       "wocket",
+      "rhum",
     ],
     docDenoLandUrls: {
       dmm: "https://doc.deno.land/https/deno.land/x/dmm/mod.ts",
@@ -77,6 +78,12 @@ module.exports = {
         ],
       },
       dmm: {
+        versions: [
+          "v1.x",
+          "v2.x",
+        ],
+      },
+      rhum: {
         versions: [
           "v1.x",
           "v2.x",
@@ -137,11 +144,6 @@ module.exports = {
         permanent: false,
       },
       // Remove the below /rhum object when the its migrated
-      {
-        source: "/rhum",
-        destination: "/rhum/v1.x/index.html",
-        permanent: false,
-      },
       {
         source: "/rhum/v1.x",
         destination: "/rhum/v1.x/index.html",
