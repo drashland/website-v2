@@ -14,7 +14,12 @@ as a dependency_** in the file like so:
 ```typescript
 // deps.ts
 
-export { Mock, Stub } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+export {
+  Dummy,
+  Fake,
+  Mock,
+  Stub,
+} from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 // or
 export * as Rhum from "...";
 ```
@@ -28,7 +33,7 @@ the `deps.ts` file in code blocks like so:
 ```typescript
 // some_file.ts
 
-import { Mock, Stub } from "./deps.ts";
+import { Dummy, Fake, Mock, Stub } from "./deps.ts";
 ```
 
 You will also notice that this file is referenced in the **Folder Structure End
