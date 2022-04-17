@@ -253,6 +253,7 @@ export default function Layout(props) {
       publicRuntimeConfig.localStorageKeys.darkMode,
       !darkMode,
     );
+    Prism.highlightAll();
     setDarkMode(!darkMode);
   }
 
