@@ -6,6 +6,7 @@
 import React from "react";
 import { Link } from "@styled-icons/bootstrap";
 import styled from "styled-components";
+import CodeExtended from "./markdown/CodeExtended";
 
 const flatten = (text, child) => {
   return typeof child === "string"
@@ -146,22 +147,24 @@ export const Heading4 = styled(Heading(4))`
 export const ListItem = styled.li`
 `;
 
-export const Code = function ({ className, children }) {
-  function getPrismJsClassName(ogClassName) {
-    if (ogClassName.includes("diff")) {
-      return className.replace("lang-", " language-") + " diff-highlight";
+export const PreExtended = function ({ className, children }) {
+  function renderCodeBlocks() {
+    // If we have an array, then we have multiple code blocks. Multiple code
+    // blocks means @Tab is being used inside the code block.
+    if (Array.isArray(children)) {
+      return children.map((child) => {
+        return React.cloneElement(child, { isExampleCodeBlock: true });
+      });
     }
 
-    // Default to just making sure that `language-` is used instead of `lang-`.
-    return className.replace("lang-", " language-");
+    // Otherwise, we just have a single code block
+    return children;
   }
 
   return (
-    <code
-      className={className && getPrismJsClassName(className)}
-    >
-      {children}
-    </code>
+    <pre className={className}>
+      {renderCodeBlocks()}
+    </pre>
   );
 };
 
@@ -171,24 +174,24 @@ export const Paragraph = styled.p`
   transition-property: color;
 `;
 
-export const RestyledCode = styled(Code)`
-  font-size: .85rem;
-  background: ${({ theme }) => theme.markdown.code.backgroundColor};
-  border-radius: 1rem;
-  color: ${({ theme }) => theme.markdown.code.color};
-  font-weight: 500;
-  padding: .25rem .5rem;
-  transition-duration: 0.25s;
-  transition-property: background, color;
-`;
-
-export const Pre = styled.pre`
+export const Pre = styled(PreExtended)`
   background: #2f343c !important;
   border-radius: 1rem;
+  overflow: hidden;
   ${MARGIN_BOTTOM};
 
   &[class*=language-] {
     ${MARGIN_BOTTOM};
+  }
+
+  pre {
+    background: #2f343c !important;
+    border-radius: 1rem;
+    margin-bottom: 0 !important;
+
+    &[class*=language-] {
+      margin-bottom: 0 !important;
+    }
   }
 
   code {
@@ -197,6 +200,17 @@ export const Pre = styled.pre`
     padding: 0;
     color: inherit;
   }
+`;
+
+export const Code = styled(CodeExtended)`
+  font-size: .85rem;
+  background: ${({ theme }) => theme.markdown.code.backgroundColor};
+  border-radius: 1rem;
+  color: ${({ theme }) => theme.markdown.code.color};
+  font-weight: 500;
+  padding: .25rem .5rem;
+  transition-duration: 0.25s;
+  transition-property: background, color;
 `;
 
 export const OrderedList = styled.ol`
