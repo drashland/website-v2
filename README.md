@@ -90,27 +90,27 @@ As an example, using `diff-typescript` to start a fenced code block ...
 ### Tabbed Code Blocks
 
 To turn a fenced code block into a tabbed code block, separate the code in the
-code block with `// @CodeTab {name of tab goes here}`.
+code block with `// @Tab {name of tab goes here}`.
 
-The below fenced code block (with `// @CodeTab {name of tabe goes here}`
-separators) ...
+The below fenced code block (with `// @Tab {name of tabe goes here}` separators)
+...
 
 ```typescript
-// @CodeTab Deno
+// @Tab Deno
 import { Mock } from "./deps.ts";
 
 // Some cool code goes here
 // ...
 // ...
 
-// @CodeTab Node (ESM)
+// @Tab Node (ESM)
 import { Mock } from "@drashland/rhum";
 
 // Some cool code goes here
 // ...
 // ...
 
-// @CodeTab Node (CJS)
+// @Tab Node (CJS)
 const { Mock } = require("@drashland/rhum");
 
 // Some cool code goes here
