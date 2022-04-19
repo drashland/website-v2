@@ -98,7 +98,7 @@ export default function Page(props) {
           h3: Markdown.Heading3,
           h4: Markdown.Heading4,
           li: Markdown.ListItem,
-          code: Markdown.RestyledCode,
+          code: Markdown.Code,
           pre: Markdown.Pre,
           p: Markdown.Paragraph,
           ol: Markdown.OrderedList,
