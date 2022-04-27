@@ -15,6 +15,31 @@ context of the page.
 You can pass in a string (`.evaluate('1 + 2')`) or a function
 (`.evaluate(() => document.title)`).
 
+When passing a callback, you can also pass in a list of arguments you wish to
+use inside the scope of the evaluation, and these will be received as
+parameters in the callback, for example:
+
+   ```ts
+   await page.evaluate((name: string) => {
+
+   }, "Sinco");
+   ```
+Any arguments you pass, they will be injected into the callback:
+
+   ```ts
+   interface User {
+     name: string;
+   }
+   const user: User = {
+     name: string;
+   }
+   type Answer = "yes" | "no"
+   const answer: Answer = "yes":
+   await page.evaluate((user: User, answer: Answer) => {
+     return `${user.name} - ${answer}`; // "Sinco - yes"
+   }, user, answer)
+   ```
+
 Example evaluations could be:
 
 - Querying the DOM (getting the child of an element)
@@ -27,6 +52,7 @@ Example evaluations could be:
   error.
 - You can even query using the `$x` selector when the passed in parameter to
   `evaluate()` is a string!
+- Pass arguments to the callback.
 
 In this tutorial, you will:
 
@@ -70,6 +96,14 @@ In this tutorial, you will:
        document.body.appendChild(p);
        return document.body.children.length;
      });
+
+     // Using arguments, you can use out of scope data
+     await page.evaluate((pageTitle: string, sum: number) => {
+       const p = document.createElement("p");
+       p.textContent = `${pageTitle} has the sum of ${sum}`;
+       document.body.appendChild(p);
+     }, pageTitle, sum); // Can pass an unlimited amount of arguments
+
      await browser.close();
      assertEquals(pageTitle, "Drash Land");
      assertEquals(sum, 11);
