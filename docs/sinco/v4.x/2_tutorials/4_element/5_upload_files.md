@@ -9,8 +9,8 @@
 
 ## Before You Get Started
 
-`Element` also provides the method `.file()` and `.files()` that will allow you to
-upload files to an input file element, just like how you would when clicking
+`Element` also provides the method `.file()` and `.files()` that will allow you
+to upload files to an input file element, just like how you would when clicking
 the input, and choosing a file yourself.
 
 Example usage would be:
@@ -53,8 +53,8 @@ In this tutorial, you will:
    serve(function (request: Request) {
      return new Response(`
          <input type="file" multiple id="file" />
-     `)
-   })
+     `);
+   });
 
    const { browser, page } = await buildFor("chrome");
    await page.location("http://localhost:8000");
@@ -64,13 +64,14 @@ In this tutorial, you will:
    await browser.close();
    ```
 
-Here you are going to create your headless browser instance, and navigate to your local web server.
-Once the page has loaded, you will select the element you created, and upload a file to it.
+Here you are going to create your headless browser instance, and navigate to
+your local web server. Once the page has loaded, you will select the element you
+created, and upload a file to it.
 
 2. Create your `hello.json`
 
-   This is a placeholder used to attach to your file input, given we can't expect
-   every person to have the same file at the same location!
+   This is a placeholder used to attach to your file input, given we can't
+   expect every person to have the same file at the same location!
 
    ```json
    {
@@ -86,8 +87,9 @@ Once the page has loaded, you will select the element you created, and upload a 
    $ deno run --allow-run --allow-read --allow-write --allow-net app_test.ts
    ```
 
-2. At this moment in time, there is no simple way for you to check this yourself.
-   It could be possible if/when Sinco introduces `Element#getAttribute()`.
+2. At this moment in time, there is no simple way for you to check this
+   yourself. It could be possible if/when Sinco introduces
+   `Element#getAttribute()`.
 
    For the time being, you can do:
 
