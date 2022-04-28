@@ -38,7 +38,7 @@ In this tutorial, you will:
 
    import { buildFor } from "./deps.ts";
 
-   // So we can mock up a playground with a place to upload files.
+   // So we can mock up a playground with a place to display a dialog.
    import { serve } from "https://deno.land/std@0.136.0/http/server.ts";
    serve(function (request: Request) {
      return new Response(`
