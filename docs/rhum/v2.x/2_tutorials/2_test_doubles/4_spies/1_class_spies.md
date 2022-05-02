@@ -38,8 +38,10 @@ Creating a class spy can be done as follows:
 ```ts
 import { Spy } from "./deps.ts";
 
+// Create the class that will become the spy
 class SomeClass {}
 
+// Create the spy from the class
 const spy = Spy(SomeClass);
 
 console.log(spy instanceof SomeClass); // true
