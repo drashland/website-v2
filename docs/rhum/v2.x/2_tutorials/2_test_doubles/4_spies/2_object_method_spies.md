@@ -5,11 +5,11 @@
 - [Before You Get Started](#before-you-get-started)
 - [Creating an Object Method Spy](#creating-an-object-method-spy)
 - [Verifying Calls](#verifying-calls)
-  - [Using .verify().toBeCalled(...)](#using-verify-themethodname-tobecalled)
+  - [Using .verify().toBeCalled(...)](#using-verify-tobecalled)
     - [Verifying at Least One Call](#verifying-at-least-one-call)
     - [Verifying a Specific Number of Calls](#verifying-a-specific-number-of-calls)
-  - [Using .verify().toBeCalledWithArgs(...)](#using-verify-themethodname-tobecalledwithargs)
-  - [Using .verify().toBeCalledWithoutArgs()](#using-verify-themethodname-tobecalledwithoutargs)
+  - [Using .verify().toBeCalledWithArgs(...)](#using-verify-tobecalledwithargs)
+  - [Using .verify().toBeCalledWithoutArgs()](#using-verify-tobecalledwithoutargs)
 
 ## Before You Get Started
 
