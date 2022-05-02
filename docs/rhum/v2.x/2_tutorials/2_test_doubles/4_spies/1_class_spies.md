@@ -10,8 +10,6 @@
     - [Verifying a Specific Number of Calls](#verifying-a-specific-number-of-calls)
   - [Using .verify("theMethodName").toBeCalledWithArgs(...)](#using-verify-themethodname-tobecalledwithargs)
   - [Using .verify("theMethodName").toBeCalledWithoutArgs()](#using-verify-themethodname-tobecalledwithoutargs)
-- [Class Spies with Mocks](#class-spies-with-mocks)
-- [Class Spies with Fakes](#class-spies-with-fakes)
 
 ## Before You Get Started
 
