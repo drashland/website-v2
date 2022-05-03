@@ -26,47 +26,47 @@ Let us finish off with an example!
 For the sake of simplicity, we will assume that you have a `users` table, and
 this table follows the following schema:
 
-    ```json
-    {
-      "id": "number",
-      "name": "string",
-      "email": "string"
-    }
-    ```
+```json
+{
+  "id": "number",
+  "name": "string",
+  "email": "string"
+}
+```
 
 To define your model for this table you would write it like so:
 
-    ```typescript
-    // ./models/user_model.ts
-    import { Model } from "../deps.ts";
-    class UserModel extends Model {
-      /**
-       * Tell Vital what table this model should be pointing to
-       */
-      protected tablename = "users";
+```typescript
+// ./models/user_model.ts
+import { Model } from "../deps.ts";
+class UserModel extends Model {
+  /**
+   * Tell Vital what table this model should be pointing to
+   */
+  protected tablename = "users";
 
-      /**
-       * The id of the row
-       *
-       * Default to 0
-       */
-      public id = 0;
+  /**
+   * The id of the row
+   *
+   * Default to 0
+   */
+  public id = 0;
 
-      /**
-       * The name of the user. Firstname + lastname
-       *
-       * Default to an empty string
-       */
-      public name = "";
+  /**
+   * The name of the user. Firstname + lastname
+   *
+   * Default to an empty string
+   */
+  public name = "";
 
-      /**
-       * The email address of the user
-       *
-       * Default to an empty string
-       */
-      public email = "";
-    }
-    ```
+  /**
+   * The email address of the user
+   *
+   * Default to an empty string
+   */
+  public email = "";
+}
+```
 
 That is the basics of creating a model. Like we have said above, now you have
 declared an `id`, `name` and `email` property, when you fetch a record, this
@@ -76,11 +76,11 @@ There is a powerful tool behind Vital: Generics. By the power of generics, you
 can call static methods from the `Model` class, on your own models, and Vital
 will understand what class is being used. Take the following example:
 
-    ```ts
-    class UserModel extends Model {
-      // ...
-    }
-    ```
+```ts
+class UserModel extends Model {
+  // ...
+}
+```
 
 A `factory()` method exists on the `Model` class, a public static method, which
 we will get into more later. But if you were to call `UserModel.factory()`,

@@ -12,34 +12,34 @@ method, to override any data.
 
 To support factories, you need to define a protected `factoryDefaults()` method:
 
-    ```ts
-    protected async factoryDefaults() {
-      return {
-        // ...
-      }
-    }
-    ```
+```ts
+protected async factoryDefaults() {
+  return {
+    // ...
+  }
+}
+```
 
 This method should return default data to insert into the database when creating
 a new record.
 
 You should define a parameter, so you're able to customise the data it returns:
 
-    ```ts
-    interface UserEntity {
-      id: number;
-      name: string;
-      email: string;
-    }
-    class UserModel extends Model {
-      protected factoryDefaults(data: Partial<UserEntity>): Partial<UserEntity> {
-        return {
-          name: data.username ?? "A random name",
-          email: data.email ?? "admin@example.com",
-        };
-      }
-    }
-    ```
+```ts
+interface UserEntity {
+  id: number;
+  name: string;
+  email: string;
+}
+class UserModel extends Model {
+  protected factoryDefaults(data: Partial<UserEntity>): Partial<UserEntity> {
+    return {
+      name: data.username ?? "A random name",
+      email: data.email ?? "admin@example.com",
+    };
+  }
+}
+```
 
 ## Process
 
@@ -61,36 +61,36 @@ Vital's `Model` class (which you extend), provides a public static method called
 
 An example would be:
 
-    ```ts
-    class UserModel extends Model {
-      // Assume you still have your definitions as declared above
-      ...
-    }
-    const user = UserModel.factory(); // UserModel { id: 1, name: "A random name", email: "admin@example.com" }
-    const user2 = await UserModel.factory({
-      email: "tets@test.com",
-    }); // UserModel { id: 2, name: "A random name", email: "test@test.com" }
-    ```
+```ts
+class UserModel extends Model {
+  // Assume you still have your definitions as declared above
+  ...
+}
+const user = UserModel.factory(); // UserModel { id: 1, name: "A random name", email: "admin@example.com" }
+const user2 = await UserModel.factory({
+  email: "tets@test.com",
+}); // UserModel { id: 2, name: "A random name", email: "test@test.com" }
+```
 
 You can also use relationships if you wish. We will go more in-depth with
 relationships later, but say the user belongs to a company:
 
-    ```ts
-    class UserModel {
-      ...
+```ts
+class UserModel {
+  ...
 
-      public company_id = 0;
+  public company_id = 0;
 
-      public async company(): Promise<CompanyModel> {
-        return await CompanyModel.where("id", this.company_id).first();
-      }
+  public async company(): Promise<CompanyModel> {
+    return await CompanyModel.where("id", this.company_id).first();
+  }
 
-      protected async factoryDefaults(data: Partial<UserEntity>) {
-        const companyId = data.company_id ?? (await CompanyModel.factory()).id;
-        return {
-          ...,
-          company_id,
-        }
-      }
+  protected async factoryDefaults(data: Partial<UserEntity>) {
+    const companyId = data.company_id ?? (await CompanyModel.factory()).id;
+    return {
+      ...,
+      company_id,
     }
-    ```
+  }
+}
+```
