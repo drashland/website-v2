@@ -95,8 +95,8 @@ module.exports = {
       vital: {
         versions: [
           "v1.x",
-        ]
-      }
+        ],
+      },
     },
   },
   reactStrictMode: false,
