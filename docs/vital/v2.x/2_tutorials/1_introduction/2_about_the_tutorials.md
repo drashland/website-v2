@@ -1,10 +1,9 @@
 # About the Tutorials
 
 The tutorials in the sidebar are ordered (from top to bottom) in a way that will
-help you understand how you would start using Vital, as an introduction to it. Since
-all tutorials have example code of setting up a model, it is not
-required that you read the tutorials in order. However, it is greatly
-recommended.
+help you understand how you would start using Vital, as an introduction to it.
+Since all tutorials have example code of setting up a model, it is not required
+that you read the tutorials in order. However, it is greatly recommended.
 
 Most tutorials will follow the format below:
 
