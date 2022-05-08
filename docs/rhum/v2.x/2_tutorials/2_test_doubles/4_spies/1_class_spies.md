@@ -246,6 +246,7 @@ try {
   spy.verify("doSomething").toBeCalledWithArgs("hello", true);
 } catch (error) {
   console.log(error);
+  // Outputs the following:
   //
   //     VerificationError: Method "doSomething" was called with 3 arg(s) instead of 2.
   //         at file:///some_test.ts:30:29
@@ -268,6 +269,7 @@ try {
   spy.verify("doSomething").toBeCalledWithArgs("hello", false, ["world"]);
 } catch (error) {
   console.log(error);
+  // Outputs the following:
   //
   //     VerificationError: Method "doSomething" received unexpected arg `false<boolean>` at parameter position 2.
   //         at file:///some_test.ts:52:29
