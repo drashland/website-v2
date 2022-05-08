@@ -34,6 +34,8 @@ return a different value. Object method spies are useful if:
 Creating an object method spy can be done as follows:
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
 // Create the class that contains the method the will be spied on
@@ -75,9 +77,10 @@ it. From there, you can chain one of the following verification methods:
 
 Unlike class spies, you do not need to pass in the method name to the
 `.verify()` call. Rhum already knows what method is being referred to when you
-create an object method spy using `const spy = Spy(obj, "methodName")`. Here,
-`methodName` is what Rhum keeps track of so when you call `spy.verify()`, Rhum
-calls `spy.verify("methodName")` under the hood.
+create an object method spy using `const spy = Spy(obj, "methodName")`. When
+Rhum performs `Spy(obj, "methodName")`, `"methodName"` is what Rhum keeps track
+of under the hood so when you call `spy.verify()`, Rhum ends up calling
+`spy.verify("methodName")`.
 
 _Note: Verification methods throw errors if expected results do not match actual
 results. They do not "fail" tests. This means when you see an error occur from
@@ -99,6 +102,8 @@ least once. This is done by calling `.toBeCalled()` without passing in a number
 arg.
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
 class MyClass {
@@ -127,11 +132,22 @@ spy.verify().toBeCalled();
 // Here, we can see what happens if we verify that the `doSomething()` method
 // was called 5 times as opposed to 3. As you can see, we have to wrap it in a
 // try-catch because it will throw an error. In the `catch` block, we log the
-// error message -- seeing that `doSomething()` was not called 5 times.
+// error -- seeing that `doSomething()` was not called 5 times.
 try {
   spy.verify().toBeCalled(5);
 } catch (error) {
-  console.log(error.message); // Outputs => Method "doSomething" was not called 5 time(s).
+  console.log(error); // Outputs => Method "doSomething" was not called 5 time(s).
+  // Outputs the following:
+  //
+  //     VerificationError: Method "doSomething" was not called 5 time(s).
+  //         at file:///some_test.ts:33:16
+  //
+  //     Verification Results:
+  //         Actual calls   -> 3
+  //         Expected calls -> 5
+  //
+  //     Check the above "some_test.ts" file at/around line 33 for code like the following to fix this error:
+  //         .verify("doSomething").toBeCalled(5)
 }
 ```
 
@@ -143,6 +159,8 @@ are now passing in `3` to `.toBeCalled()` to verify that `.doSomething()` was
 called 3 times.
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
 // Create the class that will be spied on
@@ -172,11 +190,22 @@ spy.verify().toBeCalled(3);
 // Here, we can see what happens if we verify that the `doSomething()` method
 // was called 5 times as opposed to 3. As you can see, we have to wrap it in a
 // try-catch because it will throw an error. In the `catch` block, we log the
-// error message -- seeing that `doSomething()` was not called 5 times.
+// error -- seeing that `doSomething()` was not called 5 times.
 try {
   spy.verify().toBeCalled(5);
 } catch (error) {
-  console.log(error.message); // Outputs => Method "doSomething" was not called 5 time(s).
+  console.log(error);
+  // Outputs the following:
+  //
+  //     VerificationError: Method "doSomething" was not called 5 time(s).
+  //         at file:///some_test.ts:34:16
+  //
+  //     Verification Results:
+  //         Actual calls   -> 3
+  //         Expected calls -> 5
+  //
+  //     Check the above "some_test.ts" file at/around line 34 for code like the following to fix this error:
+  //         .verify("doSomething").toBeCalled(5)
 }
 ```
 
@@ -193,8 +222,11 @@ In the below example, we are verifying that `.doSomething(...)` was called with
 the given args: `"hello", true, ["world"]`.
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
+// Create the class containing the method to be spied on
 class MyClass {
   public doSomething(arg1: string, arg2: boolean, arg3: string[]) {
     return "I did something!";
@@ -220,26 +252,50 @@ spy.verify().toBeCalledWithArgs("hello", true, ["world"]);
 // Here, we can see what happens if we verify that the `doSomething()` method
 // was called with only 2 args. As you can see, we have to wrap it in a
 // try-catch because it will throw an error. In the `catch` block, we log the
-// error message -- seeing that `doSomething()` was called with 3 args, not 2.
+// error -- seeing that `doSomething()` was called with 3 args, not 2.
 try {
   spy.verify().toBeCalledWithArgs("hello", true);
 } catch (error) {
-  console.log(error.message); // Outputs => Method "doSomething" was called with 3 arg(s) instead of 2.
+  console.log(error);
+  // Outputs the following:
+  //
+  //     VerificationError: Method "doSomething" was called with 3 arg(s) instead of 2.
+  //         at file:///some_test.ts:32:16
+  //
+  //     Verification Results:
+  //         Actual call   -> ("hello"<string>, true<boolean>, ["world"]<object>)
+  //         Expected call -> ("hello"<string>, true<boolean>)
+  //
+  //     Check the above "some_test.ts" file at/around line 32 for code like the following to fix this error:
+  //         .verify("doSomething").toBeCalledWithArgs("hello", true)
+  //
 }
 
 // Furthermore, we can see what happens if we verify that the `doSomething()`
 // method was called with 3 args, but one of them is incorrect. As you can see,
 // we have to wrap it in a try-catch because it will throw an error. In the
-// `catch` block, we log the error message -- seeing that `doSomething()` should
+// `catch` block, we log the error -- seeing that `doSomething()` should
 // not have received the `false` arg at parameter position 2.
 try {
   spy.verify().toBeCalledWithArgs("hello", false, ["world"]);
 } catch (error) {
-  console.log(error.message); // Outputs => Method "doSomething" received unexpected arg `false<boolean>` at parameter position 2.
+  console.log(error);
+  // Outputs the following:
+  //
+  //     VerificationError: Method "doSomething" received unexpected arg `true<boolean>` at parameter position 2.
+  //         at file:///some_test.ts:43:16
+  //
+  //     Verification Results:
+  //         Actual call   -> ("hello"<string>, true<boolean>, ["world"]<object>)
+  //         Expected call -> ("hello"<string>, false<boolean>, ["world"]<object>)
+  //
+  //     Check the above "some_test.ts" file at/around line 43 for code like the following to fix this error:
+  //         .verify("doSomething").toBeCalledWithArgs("hello", false, ["world"])
+  //
 }
 ```
 
-### Using .verify("theMethodName").toBeCalledWithoutArgs()
+### Using .verify().toBeCalledWithoutArgs()
 
 The `.toBeCalledWithoutArgs()` verification method can be used to verify the
 following:
@@ -251,8 +307,11 @@ In the below example, we are verifying that `.doSomething()` was called without
 args.
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
+// Create the class containing the method to be spied on
 class MyClass {
   public doSomething(arg1?: string) {
     return "I did something!";
@@ -277,12 +336,24 @@ spy.verify().toBeCalledWithoutArgs();
 // Here, we can see what happens if we verify that the `doSomething()` method
 // was called without args when it was called with 1 arg. As you can see, we
 // have to wrap it in a try-catch because it will throw an error. In the `catch`
-// block, we log the error message -- seeing that `doSomething()` was expected
-// to be called without args.
+// block, we log the error -- seeing that `doSomething()` was expected to be
+// called without args.
 try {
   myObj.doSomething("hello"); // Call it with args
   spy.verify().toBeCalledWithoutArgs(); // Verify that it was not called with args
 } catch (error) {
-  console.log(error.message); // Outputs => Method "doSomething" was called with args when expected to receive no args.
+  console.log(error);
+  // Outputs the following:
+  //
+  //     VerificationError: Method "doSomething" was called with args when expected to receive no args.
+  //         at file:///some_test.ts:34:16
+  //
+  //     Verification Results:
+  //         Actual args   -> ("hello")
+  //         Expected args -> (no args)
+  //
+  //     Check the above "some_test.ts" file at/around line 34 for code like the following to fix this error:
+  //         .verify("doSomething").toBeCalledWithoutArgs()
+  //
 }
 ```
