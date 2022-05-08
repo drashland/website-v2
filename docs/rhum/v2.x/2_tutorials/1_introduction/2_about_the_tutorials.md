@@ -1,22 +1,43 @@
 # About the Tutorials
 
-Most tutorials will follow the format below:
+## Format
 
-**Before You Get Started**
+All tutorials under Test Doubles will have a format similar to the follow:
 
-- This section has key things we feel you should know before you get started
-  with the tutorial.
+- The test double definition
+- How to create the test double
+- Examples on using the test double
+- How to do verification (if a test double has that capability)
 
-**Folder Structure End State**
+## Important Notes
 
-- This is what your project should look like at the end of the tutorial.
+- Since Rhum is an agnostic TypeScript library (e.g., it can be compiled down to
+  CommonJS), the Test Doubles tutorials _DO NOT_ show you how to use a test
+  double in a specific runtime (e.g., Deno or Node). Instead of seeing assertion
+  calls like Jest's `expect()` or Deno's testing module's `assertEquals()`, you
+  will see `console.log()` statements showing some output in example code
+  blocks. For example, the
+  [Test Doubles > Mocks](/rhum/v2.x/tutorials/test-doubles/mocks) tutorial will
+  show something like ...
 
-**Steps**
+  ```ts
+  const mock = Mock(SomeClass).create();
 
-- A list of steps to get you from start to finish -- meeting the Folder
-  Structure End State with a small, working application.
+  console.log(mock instanceof SomeClass); // true
+  ```
 
-**Verification**
+  ... instead of ...
 
-- After you follow the Steps section, you can use this Verification section to
-  test that your application is working.
+  ```ts
+  const mock = Mock(SomeClass).create();
+
+  // In Jest ...
+  expect(mock instanceof SomeClass).toBe(true);
+
+  // In Deno ...
+  assertEquals(mock instanceof SomeClass, true);
+  ```
+
+- There is work being done to provide tabbed exampled code blocks so you can see
+  how to use Rhum in a specific syntax in a specific runtime (e.g., Using Node
+  with TypeScript).
