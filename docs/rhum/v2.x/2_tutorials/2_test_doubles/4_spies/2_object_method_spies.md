@@ -147,7 +147,7 @@ try {
   //         Expected calls -> 5
   //
   //     Check the above "some_test.ts" file at/around line 33 for code like the following to fix this error:
-  //         .verify("doSomething").toBeCalled(5)
+  //         .verify().toBeCalled(5)
 }
 ```
 
@@ -205,7 +205,7 @@ try {
   //         Expected calls -> 5
   //
   //     Check the above "some_test.ts" file at/around line 34 for code like the following to fix this error:
-  //         .verify("doSomething").toBeCalled(5)
+  //         .verify().toBeCalled(5)
 }
 ```
 
@@ -267,7 +267,7 @@ try {
   //         Expected call -> ("hello"<string>, true<boolean>)
   //
   //     Check the above "some_test.ts" file at/around line 32 for code like the following to fix this error:
-  //         .verify("doSomething").toBeCalledWithArgs("hello", true)
+  //         .verify().toBeCalledWithArgs("hello", true)
   //
 }
 
@@ -290,7 +290,7 @@ try {
   //         Expected call -> ("hello"<string>, false<boolean>, ["world"]<object>)
   //
   //     Check the above "some_test.ts" file at/around line 43 for code like the following to fix this error:
-  //         .verify("doSomething").toBeCalledWithArgs("hello", false, ["world"])
+  //         .verify().toBeCalledWithArgs("hello", false, ["world"])
   //
 }
 ```
@@ -353,7 +353,7 @@ try {
   //         Expected args -> (no args)
   //
   //     Check the above "some_test.ts" file at/around line 34 for code like the following to fix this error:
-  //         .verify("doSomething").toBeCalledWithoutArgs()
+  //         .verify().toBeCalledWithoutArgs()
   //
 }
 ```
