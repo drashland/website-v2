@@ -38,6 +38,6 @@ All tutorials under Test Doubles will have a format similar to the follow:
   assertEquals(mock instanceof SomeClass, true);
   ```
 
-- There is work being done to provide tabbed exampled code blocks so you can see
+- There is work being done to provide tabbed example code blocks so you can see
   how to use Rhum in a specific syntax in a specific runtime (e.g., Using Node
   with TypeScript).
