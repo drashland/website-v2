@@ -122,7 +122,7 @@ spy.verify("doSomething").toBeCalled();
 // Here, we can see what happens if we verify that the `doSomething()` method
 // was called 5 times as opposed to 3. As you can see, we have to wrap it in a
 // try-catch because it will throw an error. In the `catch` block, we log the
-// error message -- seeing that `doSomething()` was not called 5 times.
+// error -- seeing that `doSomething()` was not called 5 times.
 try {
   spy.verify("doSomething").toBeCalled(5);
 } catch (error) {
