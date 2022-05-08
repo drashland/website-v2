@@ -264,14 +264,14 @@ try {
 // method was called with 3 args, but one of them is incorrect. As you can see,
 // we have to wrap it in a try-catch because it will throw an error. In the
 // `catch` block, we log the error -- seeing that `doSomething()` should not
-// have received the `false` arg at parameter position 2.
+// have received the `true` arg at parameter position 2.
 try {
   spy.verify("doSomething").toBeCalledWithArgs("hello", false, ["world"]);
 } catch (error) {
   console.log(error);
   // Outputs the following:
   //
-  //     VerificationError: Method "doSomething" received unexpected arg `false<boolean>` at parameter position 2.
+  //     VerificationError: Method "doSomething" received unexpected arg `true<boolean>` at parameter position 2.
   //         at file:///some_test.ts:52:29
   //
   //     Verification Results:
