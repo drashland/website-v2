@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [Before You Get Started](#before-you-get-started)
-- [Creating a Class Spy](#creating-a-spy)
+- [Creating a Class Spy](#creating-a-class-spy)
 - [Verifying Calls](#verifying-calls)
   - [Using .verify("theMethodName").toBeCalled(...)](#using-verify-themethodname-tobecalled)
     - [Verifying at Least One Call](#verifying-at-least-one-call)
