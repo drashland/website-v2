@@ -154,7 +154,7 @@ called 3 times.
 ```ts
 // some_test.ts
 
-import { Spy } from "../../mod.ts";
+import { Spy } from "./deps.ts";
 
 // Create the class that will be spied on
 class MyClass {
@@ -197,7 +197,7 @@ try {
   //         Actual calls   -> 3
   //         Expected calls -> 5
   //
-  //     Check the above "class_spies.ts" file at/around line 32 for code like the following to fix this error:
+  //     Check the above "some_test.ts" file at/around line 32 for code like the following to fix this error:
   //         .verify("doSomething").toBeCalled(5)
   //
 }
@@ -219,11 +219,13 @@ following:
 - The third arg is `["world"]`
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
-// Create that class that will be spied on
+// Create the class that will be spied on
 class MyClass {
-  public doSomething(arg1: string, arg2: boolean, arg3: string[]) {
+  public doSomething() {
     return "I did something!";
   }
 }
@@ -231,35 +233,40 @@ class MyClass {
 // Spy on the class
 const spy = Spy(MyClass);
 
-// Call its method with a specific set of args
-spy.doSomething("hello", true, ["world"]);
+// Call its method 3 times
+spy.doSomething();
+spy.doSomething();
+spy.doSomething();
 
-// Verify that the spy's `doSomething()` method was called with a specific set
-// of args. Calling `.toBeCalledWithArgs(...)` will throw an error if the
-// `doSomething()` method was not called with the given args in the given order.
-// Here, we are verifying that it was called with "hello", true, and ["world"].
-// Since we called it with these args above, this does not throw an error.
-spy.verify("doSomething").toBeCalledWithArgs("hello", true, ["world"]);
+// Verify that the spy's `doSomething()` method was called exactly 3 times.
+// Calling `.toBeCalled(3)` will throw an error if the `doSomething()` method
+// was not called exactly 3 times. Here, we are verifying that it was called
+// exactly 3 times. Since we called it 3 times above, this does not throw an
+// error.
+spy.verify("doSomething").toBeCalled(3);
 
 // Here, we can see what happens if we verify that the `doSomething()` method
-// was called with only 2 args. As you can see, we have to wrap it in a
+// was called 5 times as opposed to 3. As you can see, we have to wrap it in a
 // try-catch because it will throw an error. In the `catch` block, we log the
-// error message -- seeing that `doSomething()` was called with 3 args, not 2.
+// error message -- seeing that `doSomething()` was not called 5 times.
 try {
-  spy.verify("doSomething").toBeCalledWithArgs("hello", true);
+  spy.verify("doSomething").toBeCalled(5);
 } catch (error) {
-  console.log(error.message); // Outputs => Method "doSomething" was called with 3 arg(s) instead of 2.
-}
+  console.log(error.message); // Outputs => Method "doSomething" was not called 5 time(s).
 
-// Furthermore, we can see what happens if we verify that the `doSomething()`
-// method was called with 3 args, but one of them is incorrect. As you can see,
-// we have to wrap it in a try-catch because it will throw an error. In the
-// `catch` block, we log the error message -- seeing that `doSomething()` should
-// not have received the `false` arg at parameter position 2.
-try {
-  spy.verify("doSomething").toBeCalledWithArgs("hello", false, ["world"]);
-} catch (error) {
-  console.log(error.message); // Outputs => Method "doSomething" received unexpected arg `false<boolean>` at parameter position 2.
+  // ... or to see the full error:
+  console.log(error);
+  //
+  //     VerificationError: Method "doSomething" was not called 5 time(s).
+  //         at file:///some_test.ts:32:29
+  //
+  //     Verification Results:
+  //         Actual calls   -> 3
+  //         Expected calls -> 5
+  //
+  //     Check the above "some_test.ts" file at/around line 32 for code like the following to fix this error:
+  //         .verify("doSomething").toBeCalled(5)
+  //
 }
 ```
 
