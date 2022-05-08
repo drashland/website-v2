@@ -94,6 +94,8 @@ In the below example, we are verifying that `.doSomething()` was called at least
 once. This is done by calling `.toBeCalled()` without passing in a number arg.
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
 // Create the class that will be spied on
@@ -125,6 +127,20 @@ try {
   spy.verify("doSomething").toBeCalled(5);
 } catch (error) {
   console.log(error.message); // Outputs => Method "doSomething" was not called 5 time(s).
+
+  // ... or to see the full error:
+  console.log(error);
+  //
+  //     VerificationError: Method "doSomething" was not called 5 time(s).
+  //         at file:///some_test.ts:31:29
+  //
+  //     Verification Results:
+  //         Actual calls   -> 3
+  //         Expected calls -> 5
+  //
+  //     Check the above "some_test.ts" file at/around line 31 for code like the following to fix this error:
+  //         .verify("doSomething").toBeCalled(5)
+  //
 }
 ```
 
