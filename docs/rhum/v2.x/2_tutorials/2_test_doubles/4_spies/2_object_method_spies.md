@@ -36,13 +36,14 @@ Creating an object method spy can be done as follows:
 ```ts
 import { Spy } from "./deps.ts";
 
+// Create the class that contains the method the will be spied on
 class SomeClass {
   public doSomething() {
     return "Hello";
   }
 }
 
-// Create a real object
+// Create a real object (can also be a Mock or Fake)
 const someObj = new SomeClass();
 
 // Create a spy out of the object's `doSomething()` method. The method will now
@@ -79,8 +80,8 @@ create an object method spy using `const spy = Spy(obj, "methodName")`. Here,
 calls `spy.verify("methodName")` under the hood.
 
 _Note: Verification methods throw errors if expected results do not match actual
-results. They do not "fail" tests. This means when you see an error occur during
-your test runs, this is the expected behavior._
+results. They do not "fail" tests. This means when you see an error occur from
+Rhum during your test runs, this is the expected behavior._
 
 More in-depth examples of each verification method are below.
 
@@ -112,7 +113,7 @@ const myObj = new MyClass();
 // Spy on the object's method
 const spy = Spy(myObj, "doSomething");
 
-// Call the method a few times
+// Call the method 3 times
 myObj.doSomething();
 myObj.doSomething();
 myObj.doSomething();
@@ -144,6 +145,7 @@ called 3 times.
 ```ts
 import { Spy } from "./deps.ts";
 
+// Create the class that will be spied on
 class MyClass {
   public doSomething() {
     return "I did something!";
@@ -156,7 +158,7 @@ const myObj = new MyClass();
 // Spy on the object's method
 const spy = Spy(myObj, "doSomething");
 
-// Call the method a few times
+// Call the method 3 times
 myObj.doSomething();
 myObj.doSomething();
 myObj.doSomething();

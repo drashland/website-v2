@@ -38,24 +38,29 @@ Creating a class spy can be done as follows:
 ```ts
 import { Spy } from "./deps.ts";
 
-// Create the class that will become the spy
-class SomeClass {}
+// Create the class that will be spied on
+class SomeClass {
+  public greet() {
+    return "Hello";
+  }
+}
 
 // Create the spy from the class
 const spy = Spy(SomeClass);
 
 console.log(spy instanceof SomeClass); // true
 console.log(spy.is_spy); // true
+console.log(spy.greet()); // "spy-stubbed"
 ```
 
 Unlike mocks and fakes, you cannot pass in constructor args when creating a spy.
-Since all spies are stubs, Rhum stubs all data members in a spy during
+Since all spies are stubs, Rhum stubs all data members in a spy class during
 construction. This includes its constructor args.
 
 ## Verifying Calls
 
-When you spy on a class, all calls to its methods will be recorded so you can
-verify the following:
+Since spies record information on how they were called, spies will record all
+calls to all of its methods. This allows you to verify the following:
 
 - Methods were called at least once
 - Methods were called a specific number of times
@@ -71,8 +76,8 @@ verification methods:
 - `.toBeCalledWithoutArgs()`
 
 _Note: Verification methods throw errors if expected results do not match actual
-results. They do not "fail" tests. This means when you see an error occur during
-your test runs, this is the expected behavior._
+results. They do not "fail" tests. This means when you see an error occur from
+Rhum during your test runs, this is the expected behavior._
 
 More in-depth examples of each verification method are below.
 
@@ -89,6 +94,9 @@ In the below example, we are verifying that `.doSomething()` was called at least
 once. This is done by calling `.toBeCalled()` without passing in a number arg.
 
 ```ts
+import { Spy } from "./deps.ts";
+
+// Create the class that will be spied on
 class MyClass {
   public doSomething() {
     return "I did something!";
@@ -98,7 +106,7 @@ class MyClass {
 // Spy on the class
 const spy = Spy(MyClass);
 
-// Call the method a few times
+// Call its method 3 times
 spy.doSomething();
 spy.doSomething();
 spy.doSomething();
@@ -128,6 +136,9 @@ are now passing in `3` to `.toBeCalled()` to verify that `.doSomething()` was
 called 3 times.
 
 ```ts
+import { Spy } from "./deps.ts";
+
+// Create the class that will be spied on
 class MyClass {
   public doSomething() {
     return "I did something!";
@@ -137,7 +148,7 @@ class MyClass {
 // Spy on the class
 const spy = Spy(MyClass);
 
-// Call the method a few times
+// Call its method 3 times
 spy.doSomething();
 spy.doSomething();
 spy.doSomething();
@@ -165,16 +176,20 @@ try {
 The `.toBeCalledWithArgs(...)` verification method can be used to verify the
 following:
 
-- The method was called at least once;
-- The method was called with a specific number of args; and
-- The method was called with a specific set of args
+- The method was called with a specific set of args in a specific order
 
 In the below example, we are verifying that `.doSomething(...)` was called with
-the given args: `"hello", true, ["world"]`.
+the given args: `"hello", true, ["world"]`. Also, we are verifying the
+following:
+
+- The first arg is `"hello"`
+- The second arg is `true`; and
+- The third arg is `["world"]`
 
 ```ts
 import { Spy } from "./deps.ts";
 
+// Create that class that will be spied on
 class MyClass {
   public doSomething(arg1: string, arg2: boolean, arg3: string[]) {
     return "I did something!";
@@ -184,14 +199,14 @@ class MyClass {
 // Spy on the class
 const spy = Spy(MyClass);
 
-// Call the method with a specific set of args
+// Call its method with a specific set of args
 spy.doSomething("hello", true, ["world"]);
 
 // Verify that the spy's `doSomething()` method was called with a specific set
-// of args.  Calling `.toBeCalledWithArgs(...)` will throw an error if the
-// `doSomething()` method was not called with the given args. Here, we are
-// verifying that it was called with "hello", true, and ["world"]. Since we
-// called it with these args above, this does not throw an error.
+// of args. Calling `.toBeCalledWithArgs(...)` will throw an error if the
+// `doSomething()` method was not called with the given args in the given order.
+// Here, we are verifying that it was called with "hello", true, and ["world"].
+// Since we called it with these args above, this does not throw an error.
 spy.verify("doSomething").toBeCalledWithArgs("hello", true, ["world"]);
 
 // Here, we can see what happens if we verify that the `doSomething()` method
@@ -221,7 +236,6 @@ try {
 The `.toBeCalledWithoutArgs()` verification method can be used to verify the
 following:
 
-- The method was called at least once; and
 - The method was called without args
 
 In the below example, we are verifying that `.doSomething()` was called without
@@ -230,6 +244,7 @@ args.
 ```ts
 import { Spy } from "./deps.ts";
 
+// Create the class to be spied on
 class MyClass {
   public doSomething(arg1?: string) {
     return "I did something!";
@@ -239,7 +254,7 @@ class MyClass {
 // Spy on the class
 const spy = Spy(MyClass);
 
-// Call the method without args
+// Call its method without args
 spy.doSomething();
 
 // Verify that the spy's `doSomething()` method was called without args. Calling
