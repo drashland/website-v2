@@ -7,7 +7,7 @@ All tutorials under Test Doubles will have a format similar to the follow:
 - The test double definition
 - How to create the test double
 - Examples on using the test double
-- How to do verification (if a test double has that capability)
+- How to do verification (if a test double has verification capabilities)
 
 ## Important Notes
 
