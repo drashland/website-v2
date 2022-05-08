@@ -60,8 +60,8 @@ const spy = Spy(someObj, "doSomething");
 
 ## Verifying Calls
 
-When you spy on an object's method, all calls to it will be recorded so you can
-verify the following:
+Since spies record information on how they were called, object method spies will
+record all calls to itself. This allows you to verify the following:
 
 - The method was called at least once
 - The method was called a specific number of times
@@ -214,9 +214,7 @@ try {
 The `.toBeCalledWithArgs(...)` verification method can be used to verify the
 following:
 
-- The method was called at least once;
-- The method was called with a specific number of args; and
-- The method was called with a specific set of args
+- The method was called with a specific set of args in a specific order
 
 In the below example, we are verifying that `.doSomething(...)` was called with
 the given args: `"hello", true, ["world"]`.
@@ -275,7 +273,7 @@ try {
 // method was called with 3 args, but one of them is incorrect. As you can see,
 // we have to wrap it in a try-catch because it will throw an error. In the
 // `catch` block, we log the error -- seeing that `doSomething()` should
-// not have received the `false` arg at parameter position 2.
+// not have received the `true` arg at parameter position 2.
 try {
   spy.verify().toBeCalledWithArgs("hello", false, ["world"]);
 } catch (error) {
@@ -300,7 +298,6 @@ try {
 The `.toBeCalledWithoutArgs()` verification method can be used to verify the
 following:
 
-- The method was called at least once; and
 - The method was called without args
 
 In the below example, we are verifying that `.doSomething()` was called without

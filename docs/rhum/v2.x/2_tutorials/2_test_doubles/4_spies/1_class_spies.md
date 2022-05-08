@@ -59,8 +59,8 @@ construction. This includes its constructor args.
 
 ## Verifying Calls
 
-Since spies record information on how they were called, spies will record all
-calls to all of its methods. This allows you to verify the following:
+Since spies record information on how they were called, class spies will record
+all calls to all of its methods. This allows you to verify the following:
 
 - Methods were called at least once
 - Methods were called a specific number of times

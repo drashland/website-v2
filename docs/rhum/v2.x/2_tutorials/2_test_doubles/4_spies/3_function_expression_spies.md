@@ -42,7 +42,7 @@ Creating a function expression spy can be done as follows:
 ```ts
 import { Spy } from "./deps.ts";
 
-// Create the function expressions that will be spied on
+// Create the function expression that will be spied on
 const someFunc = () => {
   return "Hello!";
 };
@@ -53,12 +53,14 @@ const spy = Spy(someFunc);
 // Or you can provide a different return value other than `"spy-stubbed"`:
 //
 //     const spy = Spy(someFunc, "some return value");
+
+console.log(spy()); // "spy-stubbed"
 ```
 
 ## Verifying Calls
 
-When you spy on a function expression, all calls to it will be recorded so you
-can verify the following:
+Since spies record information on how they were called, function expression
+spies will record all calls to itself. This allows you to verify the following:
 
 - The function was called at least once
 - The function was called a specific number of times
@@ -92,14 +94,18 @@ In the below example, we are verifying that `doSomething()` was called at least
 once. This is done by calling `.toBeCalled()` without passing in a number arg.
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
+// Create the function expression to be spied on
 const someFunc = () => {
   return "Hello!";
 };
 
-// Create a higher order function to exercise `someFunc` -- simulating a more
-// real world use case
+// Create a higher order function to exercise the `someFunc` spy -- simulating a
+// more real world use case that a function expression spy can be called
+// indirectly
 function higherOrderFunction(callback: () => unknown): void {
   callback();
 }
@@ -107,8 +113,8 @@ function higherOrderFunction(callback: () => unknown): void {
 // Spy on the function expression
 const spy = Spy(someFunc);
 
-// Call the higher order function -- passing in the spy -- to verify that it was
-// called later
+// Call the higher order function -- passing in the spy -- to verify that the
+// spy gets called
 higherOrderFunction(spy);
 
 // Verify that `someFunc()` was called at least once. Calling `.toBeCalled()`
@@ -125,7 +131,19 @@ spy.verify().toBeCalled();
 try {
   spy.verify().toBeCalled(5);
 } catch (error) {
-  console.log(error.message); // Outputs => Function "someFunc" was not called 5 time(s).
+  console.log(error);
+  // Outputs the following:
+  //
+  //     VerificationError: Function "someFunc" was not called 5 time(s).
+  //         at file:///some_test.ts:35:16
+  //
+  //     Verification Results:
+  //         Actual calls   -> 1
+  //         Expected calls -> 5
+  //
+  //     Check the above "some_test.ts" file at/around line 35 for code like the following to fix this error:
+  //         .verify().toBeCalled(5)
+  //
 }
 ```
 
@@ -137,14 +155,18 @@ are now passing in `3` to `.toBeCalled()` to verify that `.doSomething()` was
 called 3 times.
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
+// Create the function expression to be spied on
 const someFunc = () => {
   return "Hello!";
 };
 
-// Create a higher order function to exercise `someFunc` -- simulating a more
-// real world use case
+// Create a higher order function to exercise the `someFunc` spy -- simulating a
+// more real world use case that a function expression spy can be called
+// indirectly
 function higherOrderFunction(callback: () => unknown): void {
   callback();
   callback();
@@ -154,8 +176,8 @@ function higherOrderFunction(callback: () => unknown): void {
 // Spy on the function expression
 const spy = Spy(someFunc);
 
-// Call the higher order function -- passing in the spy -- to verify that it was
-// called later
+// Call the higher order function -- passing in the spy -- to verify that the
+// spy gets called
 higherOrderFunction(spy);
 
 // Verify that `someFunc()` was called 3 times. Calling `.toBeCalled()` will
@@ -171,7 +193,19 @@ spy.verify().toBeCalled(3);
 try {
   spy.verify().toBeCalled(5);
 } catch (error) {
-  console.log(error.message); // Outputs => Function "someFunc" was not called 5 time(s).
+  console.log(error);
+  // Outputs the following:
+  //
+  //     VerificationError: Function "someFunc" was not called 5 time(s).
+  //         at file:///some_test.ts:37:16
+  //
+  //     Verification Results:
+  //         Actual calls   -> 3
+  //         Expected calls -> 5
+  //
+  //     Check the above "some_test.ts" file at/around line 37 for code like the following to fix this error:
+  //         .verify().toBeCalled(5)
+  //
 }
 ```
 
@@ -180,57 +214,85 @@ try {
 The `.toBeCalledWithArgs(...)` verification method can be used to verify the
 following:
 
-- The function was called at least once;
-- The function was called with a specific number of args; and
-- The function was called with a specific set of args
+- The function was called with a specific set of args in a specific order
 
 In the below example, we are verifying that `.doSomething(...)` was called with
 the given args: `"hello", true, ["world"]`.
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
-class MyClass {
-  public doSomething(arg1: string, arg2: boolean, arg3: string[]) {
-    return "I did something!";
-  }
+// Create the function expression to be spied on
+const someFunc = (arg1: string, arg2: boolean, arg3: string[]) => {
+  return "Hello!";
+};
+
+// Create a higher order function to exercise the `someFunc` spy -- simulating a
+// more real world use case that a function expression spy can be called
+// indirectly
+function higherOrderFunction(callback: (...args: any[]) => unknown): void {
+  callback("hello", true, ["world"]);
 }
 
-// Create the real object
-const myObj = new MyClass();
+// Spy on the function expression
+const spy = Spy(someFunc);
 
-// Spy on the object's method
-const spy = Spy(myObj, "doSomething");
+// Call the higher order function -- passing in the spy -- to verify that the
+// spy gets called
+higherOrderFunction(spy);
 
-// Call the method with a specific set of args
-myObj.doSomething("hello", true, ["world"]);
-
-// Verify that the `doSomething()` method was called with a specific set of
-// args.  Calling `.toBeCalledWithArgs(...)` will throw an error if the
-// `doSomething()` method was not called with the given args. Here, we are
-// verifying that it was called with "hello", true, and ["world"]. Since we
-// called it with these args above, this does not throw an error.
+// Verify that the spy was called with a specific set of args.  Calling
+// `.toBeCalledWithArgs(...)` will throw an error if the spy was not called with
+// the given args. Here, we are verifying that it was called with "hello", true,
+// and ["world"]. Since we called it with these args in the higher order
+// function, this does not throw an error.
 spy.verify().toBeCalledWithArgs("hello", true, ["world"]);
 
-// Here, we can see what happens if we verify that the `doSomething()` method
-// was called with only 2 args. As you can see, we have to wrap it in a
-// try-catch because it will throw an error. In the `catch` block, we log the
-// error message -- seeing that `doSomething()` was called with 3 args, not 2.
+// Here, we can see what happens if we verify that the spy was called with only
+// 2 args. As you can see, we have to wrap it in a try-catch because it will
+// throw an error. In the `catch` block, we log the error -- seeing that the spy
+// was called with 3 args, not 2.
 try {
   spy.verify().toBeCalledWithArgs("hello", true);
 } catch (error) {
-  console.log(error.message); // Outputs => Method "doSomething" was called with 3 arg(s) instead of 2.
+  console.log(error);
+  // Outputs the following:
+  //
+  //     VerificationError: Function "someFunc" was called with 3 arg(s) instead of 2.
+  //         at file:///some_test.ts:36:16
+  //
+  //     Verification Results:
+  //         Actual call   -> ("hello"<string>, true<boolean>, ["world"]<object>)
+  //         Expected call -> ("hello"<string>, true<boolean>)
+  //
+  //     Check the above "some_test.ts" file at/around line 36 for code like the following to fix this error:
+  //         .verify().toBeCalledWithArgs("hello", true)
+  //
 }
 
-// Furthermore, we can see what happens if we verify that the `doSomething()`
-// method was called with 3 args, but one of them is incorrect. As you can see,
+// Furthermore, we can see what happens if we verify that the spy
+// was called with 3 args, but one of them is incorrect. As you can see,
 // we have to wrap it in a try-catch because it will throw an error. In the
-// `catch` block, we log the error message -- seeing that `doSomething()` should
-// not have received the `false` arg at parameter position 2.
+// `catch` block, we log the error -- seeing that the spy should
+// not have received the `true` arg at parameter position 2.
 try {
   spy.verify().toBeCalledWithArgs("hello", false, ["world"]);
 } catch (error) {
-  console.log(error.message); // Outputs => Method "doSomething" received unexpected arg `false<boolean>` at parameter position 2.
+  console.log(error);
+  // Outputs the following:
+  //
+  //     VerificationError: Function "someFunc" received unexpected arg `true<boolean>` at parameter position 2.
+  //         at file:///some_test.ts:58:16
+  //
+  //     Verification Results:
+  //         Actual call   -> ("hello"<string>, true<boolean>, ["world"]<object>)
+  //         Expected call -> ("hello"<string>, false<boolean>, ["world"]<object>)
+  //
+  //     Check the above "some_test.ts" file at/around line 58 for code like the following to fix this error:
+  //         .verify().toBeCalledWithArgs("hello", false, ["world"])
+  //
 }
 ```
 
@@ -239,45 +301,64 @@ try {
 The `.toBeCalledWithoutArgs()` verification method can be used to verify the
 following:
 
-- The function was called at least once; and
 - The function was called without args
 
 In the below example, we are verifying that `.doSomething()` was called without
 args.
 
 ```ts
+// some_test.ts
+
 import { Spy } from "./deps.ts";
 
-class MyClass {
-  public doSomething(arg1?: string) {
-    return "I did something!";
-  }
+// Create the function expression to be spied on
+const someFunc = (arg1?: string) => {
+  return "Hello!";
+};
+
+// Create a higher order function to exercise the `someFunc` spy -- simulating a
+// more real world use case that a function expression spy can be called
+// indirectly
+function higherOrderFunction(callback: (...args: any[]) => unknown): void {
+  callback();
 }
 
-// Create the real object
-const myObj = new MyClass();
+// Spy on the function expression
+const spy = Spy(someFunc);
 
-// Spy on the object's method
-const spy = Spy(myObj, "doSomething");
+// Call the higher order function -- passing in the spy -- to verify that the
+// spy gets called
+higherOrderFunction(spy);
 
-// Call the method without args
-myObj.doSomething();
-
-// Verify that the `doSomething()` method was called without args. Calling
-// `.toBeCalledWithoutArgs()` will throw an error if the `doSomething()` method
-// was called with args. Here, we are verifying that it was not called with
-// args. Since we called it without args above, this does not throw an error.
+// Verify that the spy was called without args. Calling
+// `.toBeCalledWithoutArgs()` will throw an error if the spy was called with
+// args. Here, we are verifying that it was not called with args. Since it was
+// called in the higher order function without args above, this does not throw
+// an error.
 spy.verify().toBeCalledWithoutArgs();
 
-// Here, we can see what happens if we verify that the `doSomething()` method
-// was called without args when it was called with 1 arg. As you can see, we
-// have to wrap it in a try-catch because it will throw an error. In the `catch`
-// block, we log the error message -- seeing that `doSomething()` was expected
-// to be called without args.
+// Here, we can see what happens if we verify that the spy was called without
+// args when it was called with 1 arg. As you can see, we have to wrap it in a
+// try-catch because it will throw an error. In the `catch` block, we log the
+// error -- seeing that the spy was expected to be called without args.
 try {
-  myObj.doSomething("hello"); // Call it with args
-  spy.verify().toBeCalledWithoutArgs(); // Verify that it was not called with args
+  // Also, instead of using the higher order function, let's call the spy
+  // directly and pass in the optional arg that it takes
+  spy("Woop woop!");
+  spy.verify().toBeCalledWithoutArgs();
 } catch (error) {
-  console.log(error.message); // Outputs => Method "doSomething" was called with args when expected to receive no args.
+  console.log(error);
+  // Outputs the following:
+  //
+  //     VerificationError: Function "someFunc" was called with args when expected to receive no args.
+  //         at file:///some_test.ts:39:16
+  //
+  //     Verification Results:
+  //         Actual args   -> ("Woop woop!")
+  //         Expected args -> (no args)
+  //
+  //     Check the above "some_test.ts" file at/around line 39 for code like the following to fix this error:
+  //         .verify().toBeCalledWithoutArgs()
+  //
 }
 ```
