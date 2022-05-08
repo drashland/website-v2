@@ -32,17 +32,16 @@ The `deps.ts` file is **_required_** for all tutorials. Tutorials will reference
 the `deps.ts` file in code blocks like so:
 
 ```typescript
-// some_file.ts
+// some_test.ts
 
 import { Dummy, Fake, Mock, Spy, Stub } from "./deps.ts";
-```
 
-You will also notice that this file is referenced in the **Folder Structure End
-State** section in the tutorials like so:
-
-```text
-▾ /path/to/your/project/
-  deps.ts
+// Now you can call the test doubles
+const dummy = Dummy(...);
+const fake = Fake(...);
+const mock = Mock(...);
+const spy = Spy(...);
+const stub = Stub(...);
 ```
 
 Please make sure you have this file created and set up properly.
