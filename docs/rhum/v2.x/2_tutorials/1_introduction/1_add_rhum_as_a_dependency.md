@@ -18,6 +18,7 @@ export {
   Dummy,
   Fake,
   Mock,
+  Spy,
   Stub,
 } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 // or
@@ -33,7 +34,7 @@ the `deps.ts` file in code blocks like so:
 ```typescript
 // some_file.ts
 
-import { Dummy, Fake, Mock, Stub } from "./deps.ts";
+import { Dummy, Fake, Mock, Spy, Stub } from "./deps.ts";
 ```
 
 You will also notice that this file is referenced in the **Folder Structure End
