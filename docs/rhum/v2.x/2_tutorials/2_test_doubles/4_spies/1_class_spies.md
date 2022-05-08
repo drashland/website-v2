@@ -152,7 +152,9 @@ are now passing in `3` to `.toBeCalled()` to verify that `.doSomething()` was
 called 3 times.
 
 ```ts
-import { Spy } from "./deps.ts";
+// some_test.ts
+
+import { Spy } from "../../mod.ts";
 
 // Create the class that will be spied on
 class MyClass {
@@ -184,6 +186,20 @@ try {
   spy.verify("doSomething").toBeCalled(5);
 } catch (error) {
   console.log(error.message); // Outputs => Method "doSomething" was not called 5 time(s).
+
+  // ... or to see the full error:
+  console.log(error);
+  //
+  //     VerificationError: Method "doSomething" was not called 5 time(s).
+  //         at file:///some_test.ts:32:29
+  //
+  //     Verification Results:
+  //         Actual calls   -> 3
+  //         Expected calls -> 5
+  //
+  //     Check the above "class_spies.ts" file at/around line 32 for code like the following to fix this error:
+  //         .verify("doSomething").toBeCalled(5)
+  //
 }
 ```
 
