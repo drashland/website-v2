@@ -234,7 +234,7 @@ try {
 }
 ```
 
-### Using .verify("theMethodName").toBeCalledWithoutArgs()
+### Using .verify().toBeCalledWithoutArgs()
 
 The `.toBeCalledWithoutArgs()` verification method can be used to verify the
 following:
