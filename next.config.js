@@ -95,6 +95,7 @@ module.exports = {
       vital: {
         versions: [
           "v1.x",
+          "v2.x",
         ],
       },
     },
