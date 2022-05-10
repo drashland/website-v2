@@ -2,22 +2,21 @@
 
 There are two ways to end a request early in a service:
 
-1. Calling `this.end()`; and/or
+1. Calling `request.end()`; and/or
 2. Throwing an error (e.g., `throw new Error("Something")`)
 
 ## Table of Contents
 
-- [Calling this.end()](#calling-this-end)
+- [Calling request.end()](#calling-request-end)
 - [Throwing an Error](#throwing-an-error)
 
-## Calling this.end()
+## Calling request.end()
 
-Calling `this.end()` was introduced in v2.6.0. Please make sure you are using
-v2.6.0 (or higher) before calling `this.end()`.
+Calling `request.end()` was introduced in v2.6.0. Please make sure you are using
+v2.6.0 (or higher) before calling `request.end()`.
 
-When you create a service and extend the `Drash.Service` class, your service
-inherits the `end()` method from `Drash.Service`. This method is useful if you
-want to make your service end a request early -- short-circuiting the
+All requests can be ended early via its `.end()` method. This method is useful
+if you want to make your service end a request early -- short-circuiting the
 request-resource-response lifecycle.
 
 For example, the below code ends the request if the request passes in
@@ -38,7 +37,7 @@ class CacheService extends Drash.Service {
     if (useCache && useCache === "true") {
       console.log("Client requested cached values. Ending lifecycle early.");
       response.text("Hello! (cached)");
-      return this.end();
+      return request.end();
     }
 
     // If we get here, then the request continues through the

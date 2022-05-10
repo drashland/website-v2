@@ -33,8 +33,9 @@ diagram:
     response that was generated throughout the request-resource-response
     lifecycle.
   - Connector C means a service threw an error or ended early (via calling
-    `this.end()`). If an error was thrown, then the flow will lead to Connector
-    A. If the service ended early, then the flow will lead to Connector B.
+    `request.end()`). If an error was thrown, then the flow will lead to
+    Connector A. If the service ended early, then the flow will lead to
+    Connector B.
 - Click on the diagram to view the full image.
 
 ## Diagram
