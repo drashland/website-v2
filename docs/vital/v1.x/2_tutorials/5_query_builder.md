@@ -55,11 +55,11 @@ It takes 2-3 parameters:
 - 2 given for: "column name" and "value"
 - 3 given for: "column name", "operator" and "value"
 
-```ts
-UserModel
-  .where("id", 1)
-  .where("company_id", ">", 0);
-```
+  ```ts
+  UserModel
+    .where("id", 1)
+    .where("company_id", ">", 0);
+  ```
 
 ## `select()`
 

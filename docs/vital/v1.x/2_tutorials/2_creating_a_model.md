@@ -39,6 +39,7 @@ To define your model for this table you would write it like so:
 ```typescript
 // ./models/user_model.ts
 import { Model } from "../deps.ts";
+
 class UserModel extends Model {
   /**
    * Tell Vital what table this model should be pointing to
@@ -74,7 +75,7 @@ properties will be filled. It also means you can update them as you wish.
 
 There is a powerful tool behind Vital: Generics. By the power of generics, you
 can call static methods from the `Model` class, on your own models, and Vital
-will understand what class is being used. Take the following example:
+will understand what class is being used. Take the following example.
 
 ```ts
 class UserModel extends Model {

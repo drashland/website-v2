@@ -14,9 +14,9 @@ To support factories, you need to define a protected `factoryDefaults()` method:
 
 ```ts
 protected async factoryDefaults() {
-  return {
-    // ...
-  }
+return {
+   // ...
+}
 }
 ```
 
@@ -63,12 +63,12 @@ An example would be:
 
 ```ts
 class UserModel extends Model {
-  // Assume you still have your definitions as declared above
-  ...
+// Assume you still have your definitions as declared above
+...
 }
 const user = UserModel.factory(); // UserModel { id: 1, name: "A random name", email: "admin@example.com" }
 const user2 = await UserModel.factory({
-  email: "tets@test.com",
+email: "tets@test.com",
 }); // UserModel { id: 2, name: "A random name", email: "test@test.com" }
 ```
 
@@ -77,20 +77,20 @@ relationships later, but say the user belongs to a company:
 
 ```ts
 class UserModel {
-  ...
+...
 
-  public company_id = 0;
+public company_id = 0;
 
-  public async company(): Promise<CompanyModel> {
-    return await CompanyModel.where("id", this.company_id).first();
-  }
+public async company(): Promise<CompanyModel> {
+   return await CompanyModel.where("id", this.company_id).first();
+}
 
-  protected async factoryDefaults(data: Partial<UserEntity>) {
-    const companyId = data.company_id ?? (await CompanyModel.factory()).id;
-    return {
+protected async factoryDefaults(data: Partial<UserEntity>) {
+   const companyId = data.company_id ?? (await CompanyModel.factory()).id;
+   return {
       ...,
       company_id,
-    }
-  }
+   }
+}
 }
 ```
