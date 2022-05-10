@@ -118,7 +118,7 @@ export default function Page(props) {
 
 export function getStaticProps({ params }) {
   const paths = getAllPaths("docs");
-  
+
   const moduleName = params.path_params.slice().shift().replace("/", "");
 
   const pageUri = "/" + params.path_params.join("/");
