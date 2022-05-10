@@ -90,7 +90,7 @@ The `.toBeCalled(...)` verification method can be used to verify the following:
 
 #### Verifying at Least One Call
 
-In the below example, we are verifying that `doSomething()` was called at least
+In the below example, we are verifying that `someFunc()` was called at least
 once. This is done by calling `.toBeCalled()` without passing in a number arg.
 
 ```ts
@@ -149,10 +149,10 @@ try {
 
 #### Verifying a Specific Number of Calls
 
-In the below example, we are verifying that `.doSomething()` was called a
-specific number of times. This is done by calling `.toBeCalled(3)`. Notice we
-are now passing in `3` to `.toBeCalled()` to verify that `.doSomething()` was
-called 3 times.
+In the below example, we are verifying that `someFunc()` was called a specific
+number of times. This is done by calling `.toBeCalled(3)`. Notice we are now
+passing in `3` to `.toBeCalled()` to verify that `someFunc()` was called 3
+times.
 
 ```ts
 // some_test.ts
@@ -216,8 +216,8 @@ following:
 
 - The function was called with a specific set of args in a specific order
 
-In the below example, we are verifying that `.doSomething(...)` was called with
-the given args: `"hello", true, ["world"]`.
+In the below example, we are verifying that `someFunc(...)` was called with the
+given args: `"hello", true, ["world"]`.
 
 ```ts
 // some_test.ts
@@ -303,7 +303,7 @@ following:
 
 - The function was called without args
 
-In the below example, we are verifying that `.doSomething()` was called without
+In the below example, we are verifying that `someFunc()` was called without
 args.
 
 ```ts
