@@ -26,6 +26,7 @@ module.exports = {
       "sinco",
       "wocket",
       "rhum",
+      "vital",
     ],
     docDenoLandUrls: {
       dmm: "https://doc.deno.land/https/deno.land/x/dmm/mod.ts",
@@ -34,6 +35,7 @@ module.exports = {
       rhum: "https://doc.deno.land/https/deno.land/x/rhum/mod.ts",
       sinco: "https://doc.deno.land/https/deno.land/x/sinco/mod.ts",
       wocket: "https://doc.deno.land/https/deno.land/x/wocket/mod.ts",
+      vital: "https://doc.deno.land/https/deno.land/x/vital/mod.ts",
     },
     gitHubUrls: {
       dmm: "https://github.com/drashland/dmm",
@@ -43,6 +45,7 @@ module.exports = {
       rhum: "https://github.com/drashland/rhum",
       wocket: "https://github.com/drashland/wocket",
       website: "https://github.com/drashland/website-v2",
+      vital: "https://github.com/drashland/vital",
     },
     roadmapsUrls: {
       drash:
@@ -87,6 +90,11 @@ module.exports = {
         versions: [
           "v1.x",
           "v2.x",
+        ],
+      },
+      vital: {
+        versions: [
+          "v1.x",
         ],
       },
     },
