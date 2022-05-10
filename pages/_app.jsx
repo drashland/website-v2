@@ -6,7 +6,7 @@ import Head from "next/head";
 export default function MyApp({ Component, pageProps }) {
   const title = "Drash Land";
   const module = pageProps.topBarModuleName?.toLowerCase() ?? "drash";
-  const url = `https://drash.land/${module}`
+  const url = `https://drash.land/${module}`;
   return (
     <>
       <Head>
@@ -15,7 +15,10 @@ export default function MyApp({ Component, pageProps }) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
         <meta property="og:title" content={"Drash Land - " + module} />
-        <meta property="og:description" content="Drash Land is a collection of modules for the Deno ecosystem" />
+        <meta
+          property="og:description"
+          content="Drash Land is a collection of modules for the Deno ecosystem"
+        />
         <meta property="og:image" content={"/logo-" + module + ".svg"} />
         <meta name="twitter:card" content="summary_medium_image" />
         <meta name="twitter:domain" content="drash.land" />
