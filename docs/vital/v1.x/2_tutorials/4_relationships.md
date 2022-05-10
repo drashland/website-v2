@@ -13,67 +13,67 @@ Say `users` can belong to a company:
 import { Model, QueryBuilder } from "../deps.ts"
 
 interface CompanyEntity {
-id: number;
-name: string;
+   id: number;
+   name: string;
 }
 class CompanyModel extends Model {
-protected tablename = "companies";
+   protected tablename = "companies";
 
-public id = 0;
+   public id = 0;
 
-public name = "";
+   public name = "";
 
-public factoryDefaults(data: Partial<CompanyEntity>): Partial<CompanyEntity> {
-   return {
-      name: data.name ?? "A company";
+   public factoryDefaults(data: Partial<CompanyEntity>): Partial<CompanyEntity> {
+      return {
+         name: data.name ?? "A company";
+      }
    }
-}
 
-/**
-   * A company can have many users
-   * 
-   * @returns A query builder for users, defaulting to select by company id
-   */
-public users(): QueryBuilder {
-   // Default to querying Users where the company id matches the one against the current model
-   return UserModel.where('company_id', this.id);
-} 
+   /**
+      * A company can have many users
+      * 
+      * @returns A query builder for users, defaulting to select by company id
+      */
+   public users(): QueryBuilder {
+      // Default to querying Users where the company id matches the one against the current model
+      return UserModel.where('company_id', this.id);
+   } 
 }
 
 interface UserEntity {
-id: number;
-name: string;
-email: string;
-company_id: number;
+   id: number;
+   name: string;
+   email: string;
+   company_id: number;
 }
 class UserModel extends Model {
-protected tablename = "users";
+   protected tablename = "users";
 
-public id = 0;
+   public id = 0;
 
-public name = "";
+   public name = "";
 
-public email = "";
+   public email = "";
 
-public company_id = 0;
+   public company_id = 0;
 
-public async factoryDefaults(data: Partial<UserEntity>): Promise<Partial<UserEntity>> {
-   const companyId = data.company_id ?? (await CompanyModel.factory()).id;
-   return {
-      name: data.name ?? "name";
-      email: data.email ?? "email";
-      company_id: companyId,
-   };
-}
+   public async factoryDefaults(data: Partial<UserEntity>): Promise<Partial<UserEntity>> {
+      const companyId = data.company_id ?? (await CompanyModel.factory()).id;
+      return {
+         name: data.name ?? "name";
+         email: data.email ?? "email";
+         company_id: companyId,
+      };
+   }
 
-/**
-   * Gets the company associated with this user
-   * 
-   * @returns The company if there is a relationship, else null if not
-   */
-public async company(): Promise<CompanyModel | null> {
-   return await CompanyModel.where('id', this.company_id).first();
-}
+   /**
+      * Gets the company associated with this user
+      * 
+      * @returns The company if there is a relationship, else null if not
+      */
+   public async company(): Promise<CompanyModel | null> {
+      return await CompanyModel.where('id', this.company_id).first();
+   }
 }
 ```
 
@@ -111,9 +111,9 @@ properties like you would a `Model` instance.
 class UserModel {
 ...
 
-public async company() {
-   return await CompanyModel.where('id', this.company_id).first();
-}
+   public async company() {
+      return await CompanyModel.where('id', this.company_id).first();
+   }
 }
 const user = await UserModel.factory();
 const userEntity = await user.withRelationships('company'); // { id: 1, ..., company: { id: 1, ... } }
@@ -130,14 +130,14 @@ model instance:
 
 ```ts
 public async withRelationships(...relations: string[]) {
-const relationships = {};
-for (const relation of relations) {
-   relationships[relation] = await this[relation]()
-}
-return {
-   ...this,
-   ...relationships
-}
+   const relationships = {};
+   for (const relation of relations) {
+      relationships[relation] = await this[relation]()
+   }
+   return {
+      ...this,
+      ...relationships
+   }
 }
 ```
 
