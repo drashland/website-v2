@@ -8,7 +8,7 @@ export default function MyApp({ Component, pageProps }) {
   const module = pageProps.topBarModuleName?.toLowerCase() ?? "drash";
   const url = `https://drash.land/${module}`;
   const moduleVersion = pageProps.moduleVersion ?? '';
-  const moduleAndVersion = `${module}${moduleVersion ? " " + moduleAndVersion : ''}`
+  const moduleAndVersion = `${module}${moduleVersion ? " " + moduleVersion : ''}`
   return (
     <>
       <Head>
