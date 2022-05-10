@@ -1,6 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as fs from "fs";
+import path from "path";
 import Layout from "../src/components/Layout";
+import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
 import {
@@ -115,6 +117,8 @@ export default function Page(props) {
 ////////////////////////////////////////////////////////////////////////////////
 
 export function getStaticProps({ params }) {
+  const paths = getAllPaths("docs");
+  
   const moduleName = params.path_params.slice().shift().replace("/", "");
 
   const pageUri = "/" + params.path_params.join("/");
