@@ -18,7 +18,6 @@
   "devDependencies": {
     "@styled-icons/bootstrap": "10.x",
     "@styled-icons/octicons": "10.x",
-    "eslint": "^8.14.0",
     "react-markdown": "8.x",
     "title-case": "3.x"
   }
