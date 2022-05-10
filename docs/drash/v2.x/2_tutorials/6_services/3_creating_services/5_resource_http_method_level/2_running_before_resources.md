@@ -51,7 +51,7 @@ resource that uses the service.
      resources: [
        FilesResource,
      ],
-     hostname: "0.0.0.0",
+     hostname: "localhost",
      port: 1447,
      protocol: "http",
    });

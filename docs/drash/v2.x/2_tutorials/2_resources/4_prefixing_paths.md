@@ -46,7 +46,7 @@ import { UsersResource as v1UsersResource } from "./resources/api/v1/users_resou
 import { UsersResource as v2UsersResource } from "./resources/api/v2/users_resource.ts";
 
 const server = new Drash.Server({
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [

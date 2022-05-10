@@ -50,7 +50,7 @@ proof of concept.
      services: [
        authenticationService,
      ],
-     hostname: "0.0.0.0",
+     hostname: "localhost",
      port: 1447,
      protocol: "http",
    });

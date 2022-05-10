@@ -55,7 +55,7 @@ common requests: `GET`, `POST`, `PUT`, and `DELETE`.
    // Create and run your server
 
    const server = new Drash.Server({
-     hostname: "0.0.0.0",
+     hostname: "localhost",
      port: 1447,
      protocol: "http",
      resources: [

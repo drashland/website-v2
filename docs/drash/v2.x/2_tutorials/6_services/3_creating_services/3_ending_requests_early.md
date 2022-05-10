@@ -62,7 +62,7 @@ const server = new Drash.Server({
   services: [
     new CacheService(),
   ],
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
 });
@@ -143,7 +143,7 @@ const server = new Drash.Server({
   services: [
     new TokenService(),
   ],
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
 });

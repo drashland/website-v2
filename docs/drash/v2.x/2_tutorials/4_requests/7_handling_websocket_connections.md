@@ -114,7 +114,7 @@ class HomeResource extends Drash.Resource {
 // Create and run your server
 
 const server = new Drash.Server({
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [
@@ -167,7 +167,7 @@ undefined
    the following:
 
 ```text
-Server running at http://0.0.0.0:1447.
+Server running at http://localhost:1447.
 WebSocket connection opened!
 ```
 

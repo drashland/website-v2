@@ -51,7 +51,7 @@ field in the `services` property in the resource that uses the service.
        ResponseModifiedResource,
        ResponseNotModifiedResource,
      ],
-     hostname: "0.0.0.0",
+     hostname: "localhost",
      port: 1447,
      protocol: "http",
    });

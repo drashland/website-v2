@@ -61,7 +61,7 @@ class HomeResource extends Drash.Resource {
 // Create and run your server (with ResponseTimeServer instantiated)
 
 const server = new Drash.Server({
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [

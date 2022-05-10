@@ -446,7 +446,7 @@ class ServicesResource extends Drash.Resource {
 //
 
 const server = new Drash.Server({
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [

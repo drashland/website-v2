@@ -160,7 +160,7 @@ using `... extends Drash.ErrorHandler`._
 
    const server = new Drash.Server({
      error_handler: MyErrorHandler,
-     hostname: "0.0.0.0",
+     hostname: "localhost",
      port: 1447,
      protocol: "http",
      resources: [
@@ -212,7 +212,7 @@ using `... extends Drash.ErrorHandler`._
         const server = new Drash.Server({
    -     error_handler: MyErrorHandler,
    + //  error_handler: MyErrorHandler,
-         hostname: "0.0.0.0",
+         hostname: "localhost",
          port: 1447,
          protocol: "http",
          resources: [
@@ -317,7 +317,7 @@ class MyErrorHandler extends Drash.ErrorHandler {
 
 const server = new Drash.Server({
   error_handler: MyErrorHandler,
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [
@@ -488,7 +488,7 @@ class MyErrorHandler extends Drash.ErrorHandler {
 
 const server = new Drash.Server({
   error_handler: MyErrorHandler,
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [

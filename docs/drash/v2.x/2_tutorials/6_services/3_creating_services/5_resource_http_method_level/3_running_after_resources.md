@@ -46,7 +46,7 @@ resource that uses the service.
      resources: [
        ResponseModifiedForPostResource,
      ],
-     hostname: "0.0.0.0",
+     hostname: "localhost",
      port: 1447,
      protocol: "http",
    });
@@ -197,14 +197,14 @@ resource that uses the service.
    > Host: localhost:1447
    > User-Agent: curl/7.64.1
    > Accept: */*
-   > 
+   >
    < HTTP/1.1 200 OK
    < content-type: text/plain
    < x-custom-header: Got modified!
    < vary: Accept-Encoding
    < content-length: 43
    < date: Sun, 03 Apr 2022 20:42:48 GMT
-   < 
+   <
    * Connection #0 to host localhost left intact
    X-CUSTOM-HEADER is present in the response.* Closing connection 0
    ```

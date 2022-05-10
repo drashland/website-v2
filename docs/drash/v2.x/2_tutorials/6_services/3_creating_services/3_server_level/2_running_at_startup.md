@@ -59,7 +59,7 @@ Specifically, it will show you how you can:
      services: [
        compiledFilesService,
      ],
-     hostname: "0.0.0.0",
+     hostname: "localhost",
      port: 1447,
      protocol: "http",
    });
