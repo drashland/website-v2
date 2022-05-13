@@ -131,7 +131,7 @@ export function injectStepCreateDepsTsFile(markdown) {
     return markdown.replace("{{ create_deps_ts_file_drash }}", `1. Create your \`deps.ts\` file.`);
   }
 
-  if (markdown.includes("// @Import drash_deno_land_x")) {
+  if (markdown.includes("// @Import drash")) {
     return markdown.replace(/.+drash_deno_land_x/g, `import * as Drash from "https://deno.land/x/drash@v2.0.0/mod.ts"`);
   }
 
