@@ -125,3 +125,15 @@ export function formatLabel(label) {
 
   return label;
 }
+
+export function injectStepCreateDepsTsFile(markdown) {
+  if (markdown.includes("{{ create_deps_ts_file_drash }}")) {
+    return markdown.replace("{{ create_deps_ts_file_drash }}", `1. Create your \`deps.ts\` file.`);
+  }
+
+  if (markdown.includes("// @Import drash_deno_land_x")) {
+    return markdown.replace(/.+drash_deno_land_x/g, `import * as Drash from "https://deno.land/x/drash@v2.0.0/mod.ts"`);
+  }
+
+  return markdown;
+}

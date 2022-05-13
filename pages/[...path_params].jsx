@@ -6,6 +6,7 @@ import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
 import {
+  injectStepCreateDepsTsFile,
   convertFilenameToURL,
   formatLabel,
 } from "../src/services/string_service";
@@ -43,12 +44,15 @@ const FILES = {};
 export default function Page(props) {
   const {
     editThisPageUrl,
-    markdown,
     moduleVersion,
     moduleVersions,
     redirectUri,
     sideBarCategories,
     topBarModuleName,
+  } = props;
+
+  let {
+    markdown,
   } = props;
 
   const router = useRouter();
@@ -80,6 +84,8 @@ export default function Page(props) {
       formatLabel(titleCase(breadcrumbs[breadcrumbs.length - 1]))
     }`;
   }
+
+  markdown = injectStepCreateDepsTsFile(markdown);
 
   return (
     <Layout
