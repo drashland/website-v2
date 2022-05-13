@@ -83,6 +83,14 @@ This method is used to fetch the first record from the table:
 const user = await UserModel.first();
 ```
 
+## `all()`
+
+This method is used to fetch all records from the table:
+
+```ts
+const users = await UserModel.all();
+```
+
 ## `latest()`
 
 This method will fetch the latest record from the database, using the id:
