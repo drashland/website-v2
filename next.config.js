@@ -167,6 +167,43 @@ module.exports = {
         destination: "/sinco/v1.x/index.html",
         permanent: false,
       },
+      // Redirect pages that have their URLs changed and document when the redirection should be
+      // removed.  Redirections should be removed at least 2 months out.
+      permanentRedirect(
+        // Remove on 07-01-2022
+        "/drash/v2.x/tutorials/services/introduction",
+        "/drash/v2.x/tutorials/services/basics",
+      ),
+      permanentRedirect(
+        // Remove on 07-01-2022
+        "/drash/v2.x/tutorials/services/creating-services",
+        "/drash/v2.x/tutorials/services/creating-services/introduction",
+      ),
+      permanentRedirect(
+        // Remove on 07-01-2022
+        "/drash/v2.x/tutorials/services/adding-server-level-services",
+        "/drash/v2.x/tutorials/services/creating-services/server-level/introduction",
+      ),
+      permanentRedirect(
+        // Remove on 07-01-2022
+        "/drash/v2.x/tutorials/services/adding-resource-level-services",
+        "/drash/v2.x/tutorials/services/creating-services/resource-level/introduction",
+      ),
     ];
   },
 };
+
+/**
+ * Create a permanent redirect.
+ *
+ * @param {string} source - Where are we redirecting from?
+ * @param {string} destination - Where are we redirecting to?
+ * @returns {object} - Object with source, destination, and permanent fields.
+ */
+function permanentRedirect(source, destination) {
+  return {
+    source,
+    destination,
+    permanent: true,
+  };
+}

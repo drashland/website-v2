@@ -119,7 +119,7 @@ export const Heading2 = styled(Heading(2))`
 `;
 
 export const Heading3 = styled(Heading(3))`
-  margin-top: 1.6rem !important;
+  margin-top: 2.5rem !important;
   h3 {
     color: ${({ theme }) => theme.layout.text.color};
     font-size: 1.5rem;

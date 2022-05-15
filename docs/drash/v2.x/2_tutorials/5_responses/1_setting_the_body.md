@@ -24,7 +24,7 @@ to use each one in a resource.
 You are able to pass in a custom response status, and any extra response headers
 for all of the methods below (bar `download()`), though these are optional. The
 status defaults to `200` and the `headers` defaults to an empty array. For
-example, we'll use `json()` for this demonstration:
+example, we will use `json()` for this demonstration:
 
 ```ts
 response.json(
@@ -32,7 +32,9 @@ response.json(
     success: false,
     message: "Authentication failed",
   },
+  // Set a custom response status (this feature was introduced in v2.5.0)
   403,
+  // Set custom response headers (this feature was introduced in v2.5.0)
   {
     "X-REQUEST-FAILED": "true",
     "X-TRY-AGAIN": "6s",
@@ -40,9 +42,9 @@ response.json(
 );
 ```
 
-Upon calling the above, when the response is sent, the status will now be 403,
-and on top of the content-type header these methods set, two extra headers will
-be present.
+Upon calling the above, when the response is sent, the status will now be `403`,
+and on top of the `Content-Type` header these methods set, two extra headers
+will be present: `X-REQUEST-FAILED` and `X-TRY-AGAIN`.
 
 ### download()
 

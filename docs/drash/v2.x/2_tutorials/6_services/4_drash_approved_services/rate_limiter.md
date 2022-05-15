@@ -1,5 +1,8 @@
 # Rate Limiter
 
+This service was introduced in v2.2.0. Please make sure you are using v2.2.0 (or
+higher) before proceeding with this tutorial.
+
 This service will add rate limits to requests from an IP address.
 
 ## Table of Contents
@@ -55,7 +58,7 @@ class HomeResource extends Drash.Resource {
 // Create and run your server (with RateLimiterService instantiated)
 
 const server = new Drash.Server({
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [

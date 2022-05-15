@@ -1,5 +1,8 @@
 # ETag
 
+This service was introduced in v2.3.0. Please make sure you are using v2.3.0 (or
+higher) before proceeding with this tutorial.
+
 This service can help improve response times by caching responses for certain
 requests by setting the `ETag` header. It abides by the
 [RFC](https://datatracker.ietf.org/doc/html/rfc7232). If you are unaware of what
@@ -82,7 +85,7 @@ class HomeResource extends Drash.Resource {
 // Create and run your server
 
 const server = new Drash.Server({
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [

@@ -1,44 +1,20 @@
-# Introduction
+# Order of Operations
 
 ## Table of Contents
 
-- [Basics](#basics)
-- [Order of Operations](#order-of-operations)
-  - [High Level Overview](#high-level-overview)
-  - [Server-Level](#server-level)
-  - [Resource-Level](#resource-level)
-- [Creating Your Own Service](#creating-your-own-service)
+- [High Level Overview](#high-level-overview)
+- [Server-Level](#server-level)
+- [Resource-Level](#resource-level)
 
-## Basics
+## High Level Overview
 
-_**Note: Some of Drash's services use third-party software. For example, instead
-of reinventing the wheel, Drash's GraphQL service uses
-[GraphQL.js](https://www.npmjs.com/package/graphql).**_
+At startup time (when you run `deno run [deno flags] your_app.ts`), the
+following services/methods will run.
 
-Drash uses the term "services" to encapsulate any software used in a Drash
-application that is not part of Drash's core functionality. This includes
-services you create, Drash-approved middleware, middleware you create, etc.
+- Server-level `runAtStartup()`
 
-Adding services to your application can make your application more feature rich.
-Services can add ...
-
-- request filtering
-- caching
-- logging
-- response transforming
-- third-party software integrations
-
-... and more.
-
-You can add services throughout your Drash application's
-request-resource-response lifecycle at the server level, resource level, and/or
-(if you want to be more granular) the resource HTTP method level.
-
-## Order of Operations
-
-### High Level Overview
-
-Briefly stated, at a high level, services execute in the following order:
+At runtime (when your `your_app.ts` is running), the following services/methods
+will run in the following order.
 
 1. Server-level `runBeforeResource()`
 2. Resource-level `runBeforeResource()`
@@ -51,10 +27,11 @@ Check out the
 [Drash Lifecycle Diagram](/drash/v2.x/getting-started/lifecycle-diagram) for a
 visual diagram of when services are executed by the server.
 
-### Server-Level
+## Server-Level
 
 In addition to the high level order of operations, server-level services will
-execute in the order they are placed in the array. For example ...
+execute in the order they are placed in the server's `services` config. For
+example, the following services ...
 
 ```typescript
 const server = new Drash.Server({
@@ -77,10 +54,11 @@ const server = new Drash.Server({
 - `RedService`
 - `BlueService`
 
-### Resource-Level
+## Resource-Level
 
 In addition to the high level order of operations, resource-level services will
-execute in the order they are placed in the arrays. For example ...
+execute in the order they are placed in a resource's `services` property. For
+example, the following services ...
 
 ```typescript
 class HomeResource extends Drash.Resource {
@@ -130,8 +108,6 @@ class HomeResource extends Drash.Resource {
 - `GetRedService`
 - `GetBlueService`
 
-## Creating Your Own Service
-
-If you want to create your own service to be plugged into your server or
-resource, follow
-[Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services).
+If you had other HTTP methods defined in the `services` property above (e.g.,
+`POST`, `PUT`), then those HTTP methods' services will run in the same orders as
+shown above for `ALL` and `GET` services.

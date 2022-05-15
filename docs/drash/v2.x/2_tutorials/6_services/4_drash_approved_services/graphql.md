@@ -1,5 +1,8 @@
 # GraphQL
 
+This service was introduced in v2.2.0. Please make sure you are using v2.2.0 (or
+higher) before proceeding with this tutorial.
+
 This service allows your Drash application to use
 [GraphQL](https://graphql.org/).
 
@@ -113,7 +116,7 @@ class GraphQLResource extends Drash.Resource {
 // Create and run your server
 
 const server = new Drash.Server({
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [GraphQLResource],

@@ -6,8 +6,8 @@ application. Why? Because these services have many benefits for every single
 Drash application.
 
 If you are not familiar with services, please read the
-[services documentation](/drash/v2.x/tutorials/services/introduction) before
-reading on.
+[Services > Basics](/drash/v2.x/tutorials/services/introduction) documentation
+before reading on.
 
 ## List of Services to Use
 

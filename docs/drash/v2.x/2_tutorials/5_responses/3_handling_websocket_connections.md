@@ -1,5 +1,8 @@
 # Handling WebSocket Connections
 
+This feature was introduced in v2.1.0. Please make sure you are using v2.1.0 (or
+higher) before proceeding with this tutorial.
+
 Drash's `response` object comes with an `upgrade()` method to help you handle
 requests that want to upgrade to a WebSocket.
 
