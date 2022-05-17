@@ -126,14 +126,28 @@ export function formatLabel(label) {
   return label;
 }
 
-export function injectStepCreateDepsTsFile(markdown) {
-  if (markdown.includes("{{ create_deps_ts_file_drash }}")) {
-    return markdown.replace("{{ create_deps_ts_file_drash }}", `1. Create your \`deps.ts\` file.`);
-  }
-
-  if (markdown.includes("// @Import drash")) {
-    return markdown.replace(/.+drash_deno_land_x/g, `import * as Drash from "https://deno.land/x/drash@v2.0.0/mod.ts"`);
-  }
+export function hydrateMarkdown(markdown, moduleVersion) {
+  markdown = markdown
+    .split("\n")
+    .map((markdownLine) => {
+      return fillMarkdownPlaceholders(markdownLine, moduleVersion)
+    })
+    .join("\n");
 
   return markdown;
+}
+
+function fillMarkdownPlaceholders(markdownLine, moduleVersion) {
+  if (markdownLine.includes("{{ step: create deps drash }}")) {
+    markdownLine = markdownLine.replace("{{ create_deps_ts_file_drash }}", `1. Create your \`deps.ts\` file.`);
+  }
+
+  if (markdownLine.includes("// @Import drash")) {
+    markdownLine = markdownLine.replace(
+      `// @Import drash`,
+      `import * as Drash from "https://deno.land/x/drash@<LATEST ${moduleVersion} VERSION>/mod.ts"`
+    );
+  }
+
+  return markdownLine;
 }

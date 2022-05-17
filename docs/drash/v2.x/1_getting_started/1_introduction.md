@@ -8,21 +8,19 @@ Learn more about Drash [here](about-drash).
 
 1. Install [Deno](https://deno.land/).
 
-2. Create your project directory.
+1. Create your project directory.
 
    ```shell
    $ mkdir my-project
    $ cd my-project
    ```
 
-3. Create your `app.ts` file.
+1. Create your `app.ts` file.
 
    ```typescript
    // app.ts
 
-   // Replace `<VERSION>` with the latest version of Drash v2.x. The latest
-   // version can be found at https://github.com/drashland/drash/releases/latest
-   import * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
+   // @Import drash
 
    // Create your resource
 
@@ -51,13 +49,13 @@ Learn more about Drash [here](about-drash).
    console.log(`Server running at ${server.address}.`);
    ```
 
-4. Run your `app.ts` file.
+1. Run your `app.ts` file.
 
    ```shell
    $ deno run --allow-net app.ts
    ```
 
-5. Go to `http://localhost:1447` in your web browser.
+1. Go to `http://localhost:1447` in your web browser.
 
    You should see something like the following:
 

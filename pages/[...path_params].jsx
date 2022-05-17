@@ -6,7 +6,7 @@ import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
 import {
-  injectStepCreateDepsTsFile,
+  hydrateMarkdown,
   convertFilenameToURL,
   formatLabel,
 } from "../src/services/string_service";
@@ -85,7 +85,7 @@ export default function Page(props) {
     }`;
   }
 
-  markdown = injectStepCreateDepsTsFile(markdown);
+  markdown = hydrateMarkdown(markdown, moduleVersion);
 
   return (
     <Layout

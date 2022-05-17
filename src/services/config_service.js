@@ -14,6 +14,7 @@ export { publicRuntimeConfig };
  * @returns {string} - The API reference URL for the given module.
  */
 export function getApiReferenceUrl(moduleName) {
+  moduleName = moduleName.toLowerCase();
   return publicRuntimeConfig.docDenoLandUrls[moduleName.toLowerCase()];
 }
 
@@ -45,7 +46,9 @@ export function getGitHubUrl(moduleName) {
     return "https://github.com/drashland";
   }
 
-  return publicRuntimeConfig.gitHubUrls[moduleName.toLowerCase()];
+  moduleName = moduleName.toLowerCase();
+
+  return publicRuntimeConfig.gitHubUrls[moduleName];
 }
 
 /**
@@ -57,9 +60,46 @@ export function getGitHubUrl(moduleName) {
  * @returns {string} - The roadmaps URL for the given module.
  */
 export function getRoadmapsUrl(moduleName) {
-  if (!publicRuntimeConfig.roadmapsUrls[moduleName.toLowerCase()]) {
+  moduleName = moduleName.toLowerCase();
+
+  if (!publicRuntimeConfig.roadmapsUrls[moduleName]) {
     return false;
   }
 
-  return publicRuntimeConfig.roadmapsUrls[moduleName.toLowerCase()];
+  return publicRuntimeConfig.roadmapsUrls[moduleName];
+}
+
+/**
+ * Get all of the module's versions.
+ *
+ * @param {string} moduleName - The module's name (e.g., "Drash"). This gets
+ * lowercased so that it's used correctly against the configs.
+ *
+ * @returns The latest version.
+ */
+export function getVersions(moduleName) {
+  moduleName = moduleName.toLowerCase();
+
+  return publicRuntimeConfig.versions[moduleName].versions;
+}
+
+/**
+ * Get the latest version for the module.
+ *
+ * @param {string} moduleName - The module's name (e.g., "Drash"). This gets
+ * lowercased so that it's used correctly against the configs.
+ *
+ * @returns The latest version.
+ */
+export function getLatestVersion(moduleName) {
+  moduleName = moduleName.toLowerCase();
+
+  const versions = getVersions(moduleName);
+
+  if (!versions || versions.length <= 0) {
+    throw new Error(`Versions array for ${moduleName} is empty or does not exist.`);
+  }
+
+  // Last version is the latest
+  return versions[versions.length - 1];
 }
