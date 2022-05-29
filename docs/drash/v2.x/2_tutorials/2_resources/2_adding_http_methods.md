@@ -12,7 +12,7 @@ resource does not have a `PATCH` method defined.
 ```typescript
 // home_resource.ts
 
-// @Import drash
+// @Import drash_from_deps
 
 export default class HomeResource extends Drash.Resource {
   public paths = ["/"];

@@ -6,9 +6,9 @@ import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
 import {
-  hydrateMarkdown,
   convertFilenameToURL,
   formatLabel,
+  replaceMarkdownPlaceholders,
 } from "../src/services/string_service";
 import { publicRuntimeConfig } from "../src/services/config_service";
 import ReactMarkdown from "react-markdown";
@@ -85,7 +85,7 @@ export default function Page(props) {
     }`;
   }
 
-  markdown = hydrateMarkdown(markdown, moduleVersion);
+  markdown = replaceMarkdownPlaceholders(markdown, moduleVersion);
 
   return (
     <Layout

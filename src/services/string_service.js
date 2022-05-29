@@ -126,26 +126,43 @@ export function formatLabel(label) {
   return label;
 }
 
-export function hydrateMarkdown(markdown, moduleVersion) {
+export function replaceMarkdownPlaceholders(markdown, moduleVersion) {
   markdown = markdown
     .split("\n")
     .map((markdownLine) => {
-      return fillMarkdownPlaceholders(markdownLine, moduleVersion)
+      return replaceMarkdownLine(markdownLine, moduleVersion);
     })
     .join("\n");
 
   return markdown;
 }
 
-function fillMarkdownPlaceholders(markdownLine, moduleVersion) {
-  if (markdownLine.includes("{{ step: create deps drash }}")) {
-    markdownLine = markdownLine.replace("{{ create_deps_ts_file_drash }}", `1. Create your \`deps.ts\` file.`);
+function replaceMarkdownLine(markdownLine, moduleVersion) {
+  if (markdownLine.includes("{{ step: create_deps_drash }}")) {
+    markdownLine = markdownLine.replace(
+      "{{ step: create_deps_drash }}",
+      `1. Create your \`deps.ts\` file.
+
+   \`\`\`typescript
+   // deps.ts
+
+   export * as Drash from "https://deno.land/x/drash@<LATEST ${moduleVersion} VERSION>/mod.ts";
+   \`\`\`
+`,
+    );
   }
 
   if (markdownLine.includes("// @Import drash")) {
     markdownLine = markdownLine.replace(
       `// @Import drash`,
-      `import * as Drash from "https://deno.land/x/drash@<LATEST ${moduleVersion} VERSION>/mod.ts"`
+      `import * as Drash from "https://deno.land/x/drash@<LATEST ${moduleVersion} VERSION>/mod.ts";`,
+    );
+  }
+
+  if (markdownLine.includes("// @Import drash_from_deps")) {
+    markdownLine = markdownLine.replace(
+      `// @Import drash_from_deps`,
+      `import { Drash } "./deps.ts"`,
     );
   }
 

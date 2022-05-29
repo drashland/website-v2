@@ -7,39 +7,25 @@
 
 ## Add Drash as a Dependency
 
-Before you get started with any tutorial, make sure you create a `deps.ts` file
-(at the root of your project) for the tutorial you are viewing and **_add Drash
-as a dependency_** in the file like so:
+All tutorials will either reference a `deps.ts` file in example code blocks or
+have a "Create your `deps.ts` file" step.
+
+The `deps.ts` file is a Deno convention. You can read more about managing
+dependencies and the use of a `deps.ts` file in Deno
+[here](https://deno.land/manual/examples/manage_dependencies).
+
+## Please Replace the Version Placeholder!
+
+All tutorials with example code blocks that import or export `Drash` will have a
+version placeholder. See the example below with the `<LATEST v2.x VERSION>`
+placeholder.
 
 ```typescript
 // deps.ts
 
-export * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
+export * as Drash from "https://deno.land/x/drash@<LATEST v2.x VERSION>/mod.ts";
 ```
 
-Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest
-version can be found [here](https://github.com/drashland/drash/releases/latest).
-
-The `deps.ts` file is **_required_** for all tutorials. Tutorials will reference
-the `deps.ts` file in code blocks like so:
-
-```typescript
-// some_file.ts
-
-import { Drash } from "./deps.ts";
-```
-
-You will also notice that this file is referenced in the **Folder Structure End
-State** section in the tutorials like so:
-
-```text
-▾ /path/to/your/project/
-  deps.ts
-```
-
-Please make sure you have this file created and set up properly.
-
-## Managing Dependencies
-
-You can read more about managing dependencies and the use of a `deps.ts` file in
-Deno [here](https://deno.land/manual/examples/manage_dependencies).
+Please make sure you replace this `<LATEST v2.x VERSION>` placeholder with the
+latest version of **Drash v2.x**. The latest version can be found
+[here](https://github.com/drashland/drash/releases/latest).

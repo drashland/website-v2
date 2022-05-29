@@ -21,7 +21,7 @@ will be regisrered by the server.
 ```typescript
 // app.ts
 
-import { Drash } from "./deps.ts";
+// @Import drash
 
 // Create your resource
 

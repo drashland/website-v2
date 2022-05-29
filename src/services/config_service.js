@@ -97,7 +97,9 @@ export function getLatestVersion(moduleName) {
   const versions = getVersions(moduleName);
 
   if (!versions || versions.length <= 0) {
-    throw new Error(`Versions array for ${moduleName} is empty or does not exist.`);
+    throw new Error(
+      `Versions array for ${moduleName} is empty or does not exist.`,
+    );
   }
 
   // Last version is the latest

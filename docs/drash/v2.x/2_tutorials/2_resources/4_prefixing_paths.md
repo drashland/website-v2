@@ -23,95 +23,99 @@ implementation.
 ## Folder Structure End State
 
 ```text
-▾  website/
-  ▾  resources/api/
-    ▾  v1/
-         users_resource.ts
-    ▾  v2/
-         users_resource.ts
-       base_resource.ts
-     app.ts
-     deps.ts
+▾  website/
+  ▾  resources/api/
+    ▾  v1/
+          users_resource.ts
+     ▾  v2/
+          users_resource.ts
+     base_resource.ts
+   app.ts
+   deps.ts
 ```
 
 ## Steps
 
+{{ step: create_deps_drash }}
+
 1. Create your `app.ts` file.
 
-```typescript
-// app.ts
+   ```typescript
+   // app.ts
 
-import { Drash } from "./deps.ts";
-import { UsersResource as v1UsersResource } from "./resources/api/v1/users_resource.ts";
-import { UsersResource as v2UsersResource } from "./resources/api/v2/users_resource.ts";
+   import { Drash } from "./deps.ts";
+   import { UsersResource as v1UsersResource } from "./resources/api/v1/users_resource.ts";
+   import { UsersResource as v2UsersResource } from "./resources/api/v2/users_resource.ts";
 
-const server = new Drash.Server({
-  hostname: "0.0.0.0",
-  port: 1447,
-  protocol: "http",
-  resources: [
-    v1UsersResource,
-    v2UsersResource,
-  ],
-});
+   // Create and run your server
 
-server.run();
+   const server = new Drash.Server({
+     hostname: "0.0.0.0",
+     port: 1447,
+     protocol: "http",
+     resources: [
+       v1UsersResource,
+       v2UsersResource,
+     ],
+   });
 
-console.log(`Server running at ${server.address}.`);
-```
+   server.run();
+
+   console.log(`Server running at ${server.address}.`);
+   ```
 
 2. Create your `BaseResource` class. When resources extend this class, they can
    use the `prefixPaths()` method to prefix their paths.
 
-```ts
-// resources/api/base_resource.ts
+   ```typescript
+   // resources/api/base_resource.ts
 
-import { Drash } from "../../deps.ts";
+   import { Drash } from "../../deps.ts";
 
-export class BaseResource extends Drash.Resource {
-  /**
-   * Define a list of prefixes that can be used by resources that extend this class.
-   */
-  #prefixes: { [k: string]: string } = {
-    api_v1: "/api/v1",
-    api_v2: "/api/v2",
-  };
+   export class BaseResource extends Drash.Resource {
+     /**
+      * Define a list of prefixes that can be used by resources that extend this class.
+      */
+     #prefixes: { [k: string]: string } = {
+       api_v1: "/api/v1",
+       api_v2: "/api/v2",
+     };
 
-  /**
-   * Returns the passed in array with each path being prefixed
-   *
-   * @param prefix - The prefix to use
-   * @param paths - The resource paths to prefix
-   *
-   * @returns The `paths` parameter, but with every item prefixed with `this.#prefix`
-   */
-  protected prefixPaths(prefix: string, paths: string[]) {
-    return paths.map((path) => this.#prefixes[prefix] + path);
-  }
-}
-```
+     /**
+      * Returns the passed in array with each path being prefixed
+      *
+      * @param prefix - The prefix to use
+      * @param paths - The resource paths to prefix
+      *
+      * @returns The `paths` parameter, but with every item prefixed with `this.#prefix`
+      */
+     protected prefixPaths(prefix: string, paths: string[]) {
+       return paths.map((path) => this.#prefixes[prefix] + path);
+     }
+   }
+   ```
 
 3. Add a v1 `UsersResource` by extending `BaseResource` and choosing the
    `/api/v1` prefix.
 
-```ts
-// resources/api/v1/users_resource.ts
+   ```typescript
+   // resources/api/v1/users_resource.ts
 
-import { Drash } from "../../../deps.ts";
-import { BaseResource } from "../base_resource.ts";
+   import { Drash } from "../../../deps.ts";
+   import { BaseResource } from "../base_resource.ts";
 
-export class UsersResource extends BaseResource {
-  public paths = this.prefixPaths("api_v1", ["/users", "/users/:id"]);
-  // The above will be transformed to the following:
-  //
-  //   - /api/v1/users
-  //   - /api/v1/users/:id
+   export class UsersResource extends BaseResource {
+     public paths = this.prefixPaths("api_v1", ["/users", "/users/:id"]);
+     // The above will be transformed to the following:
+     //
+     //   - /api/v1/users
+     //   - /api/v1/users/:id
 
-  public GET(request: Drash.Request, response: Drash.Response): void {
-    return response.text("Hello from v1!");
-  }
-}
-```
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       return response.text("Hello from v1!");
+     }
+   }
+   ```
 
 4. Add a v2 `UsersResource` by extending `BaseResource` and choosing the
    `/api/v2` prefix.
