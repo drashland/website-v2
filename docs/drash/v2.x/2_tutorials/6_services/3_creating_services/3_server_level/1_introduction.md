@@ -1,4 +1,4 @@
-# Adding Server-Level Services
+# Introduction
 
 Server-level services execute on all requests.
 
@@ -12,7 +12,7 @@ import SomeService from "./some/path/some_service.ts";
 import SomeOtherService from "./some/path/some_other_service.ts";
 
 const server = new Drash.Server({
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [ ... ],

@@ -59,3 +59,8 @@ generally speaking, each test case (if you are using Sinco to run tests) would
 take 50% longer if the browser chosen is Firefox. This is why we would suggest
 Chrome if you have no specific preferences, as it will drastically speed up your
 tests. -->
+
+## Acknowledgements
+
+- [@caspervonb](https://github.com/caspervonb) - A huge help in getting this
+  project working by helping understand how we can interact with the browser

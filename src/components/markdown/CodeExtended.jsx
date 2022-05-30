@@ -133,6 +133,7 @@ export default function CodeExtension({
   function renderSingleCodeBlock() {
     return (
       <code
+        key={children.toString()}
         className={getPrismJsClassNameForCodeBlock(className)}
       >
         {children}

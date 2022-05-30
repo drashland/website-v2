@@ -126,7 +126,7 @@ When using services, there are quite a few differences:
 - Decorators have been removed from resource-level services and a
   `tsconfig.json` file is not required
 - All services must follow the new `Drash.Service` syntax (see
-  [Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services))
+  [Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services/introduction))
 
 You can learn more about using Drash services in the left sidebar under
 Tutorials > Services.
@@ -198,7 +198,7 @@ To use a service in your resource, change to the following:
 If you have any custom middleware that you have plugged into your Drash
 application, they must be converted to the new `Drash.Services` syntax. To learn
 more about creating services, read
-[Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services).
+[Tutorials > Services > Creating Services](/drash/v2.x/tutorials/services/creating-services/introduction).
 
 To learn more about resource-level services, see
 [Tutorials > Services > Adding Resource-Level Services](/drash/v2.x/tutorials/services/adding-resource-level-services).
@@ -446,7 +446,7 @@ class ServicesResource extends Drash.Resource {
 //
 
 const server = new Drash.Server({
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [

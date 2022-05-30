@@ -1,5 +1,8 @@
 # Response Time
 
+This service was introduced in v2.2.0. Please make sure you are using v2.2.0 (or
+higher) before proceeding with this tutorial.
+
 This service will record how long a response takes for any given request, by
 setting a `X-Response-Time` header on the response.
 
@@ -58,7 +61,7 @@ class HomeResource extends Drash.Resource {
 // Create and run your server (with ResponseTimeServer instantiated)
 
 const server = new Drash.Server({
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
   resources: [

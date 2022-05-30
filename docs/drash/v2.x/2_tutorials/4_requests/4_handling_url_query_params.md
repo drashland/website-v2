@@ -59,7 +59,7 @@ const param = request.queryParam("param_name");
    // Create and run your server
 
    const server = new Drash.Server({
-     hostname: "0.0.0.0",
+     hostname: "localhost",
      port: 1447,
      protocol: "http",
      resources: [

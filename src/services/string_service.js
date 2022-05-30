@@ -89,7 +89,7 @@ export function formatLabel(label) {
       to: "Resource-Level",
     },
     {
-      from: /(Server Level)/g,
+      from: /Server Level/g,
       to: "Server-Level",
     },
     {
@@ -113,15 +113,35 @@ export function formatLabel(label) {
       to: "v3",
     },
     {
+      from: /V4/g,
+      to: "v4",
+    },
+    {
       from: /Websocket/g,
       to: "WebSocket",
     },
   ];
 
+  let formattedLabel;
+
   replacements.forEach((replacement) => {
+    // All labels come in with hyphens (e.g., Hello-World). We need to remove these hypens first.
     label = label.replace(/-/g, " ");
-    label = label.replace(replacement.from, replacement.to);
+
+    // If the unhyphenated label does not match the current replacement object being iterated on,
+    // then go to the next one
+    if (!label.match(replacement.from)) {
+      return;
+    }
+
+    // If we get here, then the unhyphenated label matched. That means we can perform a replacement.
+    // We only perform the replacement once.
+    if (!formattedLabel) {
+      formattedLabel = label.replace(replacement.from, replacement.to);
+    }
   });
 
-  return label;
+  // If we made a replacement, then return the formatted label. Otherwise, return the label that was
+  // passed in.
+  return formattedLabel ?? label;
 }

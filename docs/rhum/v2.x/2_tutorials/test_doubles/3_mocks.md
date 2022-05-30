@@ -192,33 +192,6 @@ console.log(mockRepositoryNotDoingShortcut.do_something_called === true); // tru
 console.log(mockRepositoryNotDoingShortcut.do_something_else_called === true); // true
 ```
 
-```ts
-class MathService {
-  add(num1: number, num2: number): number {
-    return num1 + num2;
-  }
-}
-
-class MyObj {
-  protected service: MathService;
-  constructor(service: MathService) { ... }
-  add(num1: number, num2: number): number {
-    return this.service.add(num1, num2);
-  }
-}
-
-const mock = Mock(MathService).create();
-
-const myObj = new MyObj(mock);
-
-// Assert that the service's add() method was not called yet
-assertEquals(mock.calls.add, 0); // pass
-
-// Assert that the service's add() method was called once
-myObj.add(1, 1);
-assertEquals(mock.calls.add, 1); // pass
-```
-
 ### .method(...).willThrow(...)
 
 Just like fakes, you can cause a mock to have one of its method throw an error

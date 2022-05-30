@@ -30,7 +30,7 @@ these.
   import { Drash } from "./deps.ts";
 
   const server = new Drash.Server({
-    hostname: "0.0.0.0", // <--- See here
+    hostname: "localhost", // <--- See here
     port: 1447,
     protocol: "http",
     resources: [ ... ]
@@ -46,7 +46,7 @@ these.
   import { Drash } from "./deps.ts";
 
   const server = new Drash.Server({
-    hostname: "0.0.0.0",
+    hostname: "localhost",
     port: 1447,  // <--- See here
     protocol: "http",
     resources: [ ... ]
@@ -63,7 +63,7 @@ these.
   import { Drash } from "./deps.ts";
 
   const server = new Drash.Server({
-    hostname: "0.0.0.0",
+    hostname: "localhost",
     port: 1447,
     protocol: "http", // <--- See here (also notice cert_file and key_file are not present)
     resources: [ ... ]
@@ -77,7 +77,7 @@ these.
 
   const server = new Drash.Server({
     cert_file: "/path/to/cert/file.crt", // <--- Required if using protocol is "https"
-    hostname: "0.0.0.0",
+    hostname: "localhost",
     key_file: "/path/to/cert/file.key", // <--- Required if using protocol is "https"
     port: 1447,
     protocol: "https", // <--- See here (also notice cert_file and key_file are present)
@@ -102,7 +102,7 @@ these.
   }
 
   const server = new Drash.Server({
-    hostname: "0.0.0.0",
+    hostname: "localhost",
     port: 1447,
     protocol: "http",
     resources: [
@@ -127,7 +127,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
 
   const server = new Drash.Server({
     cert_file: "/path/to/cert/file.crt", // <--- See here (also notice key_file is present and protocol is "https")
-    hostname: "0.0.0.0",
+    hostname: "localhost",
     key_file: "/path/to/cert/file.key",
     port: 1447,
     protocol: "https",
@@ -191,7 +191,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
   }
 
   const server = new Drash.Server({
-    hostname: "0.0.0.0",
+    hostname: "localhost",
     port: 1447,
     protocol: "http",
     resources: [ ... ]
@@ -209,7 +209,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
 
   const server = new Drash.Server({
     cert_file: "/path/to/cert/file.crt",
-    hostname: "0.0.0.0",
+    hostname: "localhost",
     key_file: "/path/to/cert/file.key", // <--- See here (also notice cert_file is present and protocol is "https")
     port: 1447,
     protocol: "https",
@@ -235,7 +235,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
   }
 
   const server = new Drash.Server({
-    hostname: "0.0.0.0",
+    hostname: "localhost",
     port: 1447,
     protocol: "http",
     resources: [ ... ]

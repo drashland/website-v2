@@ -407,6 +407,7 @@ export default function Home() {
                 <TagsContainer>
                   <Tag>Deno</Tag>
                   <Tag>Node</Tag>
+                  <Tag>Browser</Tag>
                 </TagsContainer>
               </Card>
               <Card
@@ -420,6 +421,19 @@ export default function Home() {
                 <TagsContainer>
                   <Tag>Deno</Tag>
                   <Tag>Node</Tag>
+                  <Tag>Browser</Tag>
+                </TagsContainer>
+              </Card>
+              <Card onClick={() => router.push("/vital")}>
+                <ImageContainer>
+                  <img src="/logo-vital.svg" />
+                </ImageContainer>
+                <CardTitle>Vital</CardTitle>
+                <CardDescription>
+                  Postgres ORM for Deno
+                </CardDescription>
+                <TagsContainer>
+                  <Tag>Deno</Tag>
                 </TagsContainer>
               </Card>
             </CardsContainer>

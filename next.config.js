@@ -26,6 +26,7 @@ module.exports = {
       "sinco",
       "wocket",
       "rhum",
+      "vital",
     ],
     docDenoLandUrls: {
       dmm: "https://doc.deno.land/https/deno.land/x/dmm/mod.ts",
@@ -34,6 +35,7 @@ module.exports = {
       rhum: "https://doc.deno.land/https/deno.land/x/rhum/mod.ts",
       sinco: "https://doc.deno.land/https/deno.land/x/sinco/mod.ts",
       wocket: "https://doc.deno.land/https/deno.land/x/wocket/mod.ts",
+      vital: "https://doc.deno.land/https/deno.land/x/vital/mod.ts",
     },
     gitHubUrls: {
       dmm: "https://github.com/drashland/dmm",
@@ -43,6 +45,7 @@ module.exports = {
       rhum: "https://github.com/drashland/rhum",
       wocket: "https://github.com/drashland/wocket",
       website: "https://github.com/drashland/website-v2",
+      vital: "https://github.com/drashland/vital",
     },
     roadmapsUrls: {
       drash:
@@ -87,6 +90,11 @@ module.exports = {
         versions: [
           "v1.x",
           "v2.x",
+        ],
+      },
+      vital: {
+        versions: [
+          "v1.x",
         ],
       },
     },
@@ -159,6 +167,43 @@ module.exports = {
         destination: "/sinco/v1.x/index.html",
         permanent: false,
       },
+      // Redirect pages that have their URLs changed and document when the redirection should be
+      // removed.  Redirections should be removed at least 2 months out.
+      permanentRedirect(
+        // Remove on 07-01-2022
+        "/drash/v2.x/tutorials/services/introduction",
+        "/drash/v2.x/tutorials/services/basics",
+      ),
+      permanentRedirect(
+        // Remove on 07-01-2022
+        "/drash/v2.x/tutorials/services/creating-services",
+        "/drash/v2.x/tutorials/services/creating-services/introduction",
+      ),
+      permanentRedirect(
+        // Remove on 07-01-2022
+        "/drash/v2.x/tutorials/services/adding-server-level-services",
+        "/drash/v2.x/tutorials/services/creating-services/server-level/introduction",
+      ),
+      permanentRedirect(
+        // Remove on 07-01-2022
+        "/drash/v2.x/tutorials/services/adding-resource-level-services",
+        "/drash/v2.x/tutorials/services/creating-services/resource-level/introduction",
+      ),
     ];
   },
 };
+
+/**
+ * Create a permanent redirect.
+ *
+ * @param {string} source - Where are we redirecting from?
+ * @param {string} destination - Where are we redirecting to?
+ * @returns {object} - Object with source, destination, and permanent fields.
+ */
+function permanentRedirect(source, destination) {
+  return {
+    source,
+    destination,
+    permanent: true,
+  };
+}

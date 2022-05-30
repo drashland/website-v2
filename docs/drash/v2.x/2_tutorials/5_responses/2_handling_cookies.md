@@ -76,7 +76,7 @@ Drash uses Deno Standard Modules for cookie handling.
 
    const server = new Drash.Server({
      resources: [HomeResource],
-     hostname: "0.0.0.0",
+     hostname: "localhost",
      protocol: "http",
      port: 1447,
    });

@@ -59,7 +59,7 @@ const server = new Drash.Server({
   services: [
     dexter,
   ],
-  hostname: "0.0.0.0",
+  hostname: "localhost",
   port: 1447,
   protocol: "http",
 });
@@ -140,7 +140,7 @@ you want to use Dexter in one of your resources, then do the following:
      ],
      protocol: "http",
      port: 1447,
-     hostname: "0.0.0.0",
+     hostname: "localhost",
    });
 
    server.run();
