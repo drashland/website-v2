@@ -29,7 +29,7 @@ In this tutorial, you will:
 - Go to a website;
 - Submit a form;
 - Wait for that request to finish; and
-- Assert that you have waited and receieved a response.
+- Assert that you have waited and received a response.
 
 ## Folder Structure End State
 
@@ -49,8 +49,8 @@ In this tutorial, you will:
    import { buildFor } from "./deps.ts";
 
    // So we can mock up a playground with a place to send long running HTTP requests.
-   import { serve } from "https://deno.land/std@0.136.0/http/server.ts";
-   import { delay } from "https://deno.land/std@0.136.0/async/delay.ts";
+   import { serve } from "https://deno.land/std@<LATEST VERSION>/http/server.ts";
+   import { delay } from "https://deno.land/std@<LATEST VERSION>/async/delay.ts";
    serve(async function (request: Request) {
      if (request.method === "POST") {
        await delay(2000);
@@ -85,14 +85,17 @@ In this tutorial, you will:
    });
    ```
 
-Here you are going to create your headless browser instance, and navigate to
-`http://localhost:8000`, a page you setup to produce . Once the page has loaded,
-you will select the button from the DOM. You will then tell Sinco it is
-expecting a request (so it can correctly wait for it), and click the button
-which if you check the response from our server, will generate a script to send
-a HTTP request. You will wait for this request to finish to carry out assertions
-following the request. To assert this, you will check that the response from the
-server is present in the DOM.
+   _Note: Make sure you change `<LATEST VERSION>` to the latest Deno Standard
+   Modules version._
+
+   Here you are going to create your headless browser instance, and navigate to
+   `http://localhost:8000`, a page you setup to produce . Once the page has
+   loaded, you will select the button from the DOM. You will then tell Sinco it
+   is expecting a request (so it can correctly wait for it), and click the
+   button which if you check the response from our server, will generate a
+   script to send a HTTP request. You will wait for this request to finish to
+   carry out assertions following the request. To assert this, you will check
+   that the response from the server is present in the DOM.
 
 ## Verification
 
