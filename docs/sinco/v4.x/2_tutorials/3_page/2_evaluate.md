@@ -17,7 +17,7 @@ You can pass in a string (`.evaluate('1 + 2')`) or a function
 
 When passing a callback, you can also pass in a list of arguments you wish to
 use inside the scope of the evaluation, and these will be received as parameters
-in the callback, for example:
+in the callback. For example:
 
 ```ts
 await page.evaluate((name: string) => {
@@ -30,11 +30,15 @@ Any arguments you pass, they will be injected into the callback:
 interface User {
   name: string;
 }
+
 const user: User = {
   name: string;
 }
+
 type Answer = "yes" | "no"
+
 const answer: Answer = "yes":
+
 await page.evaluate((user: User, answer: Answer) => {
   return `${user.name} - ${answer}`; // "Sinco - yes"
 }, user, answer)
@@ -82,14 +86,19 @@ In this tutorial, you will:
 
    Deno.test("My web app works as expected", async () => {
      const { browser, page } = await buildFor("chrome");
+
      await page.location("https://drash.land");
+
      const pageTitle = await page.evaluate(() => {
        return document.title;
      });
+
      const sum = await page.evaluate(`1 + 10`);
+
      const oldBodyLength = await page.evaluate(() => {
        return document.body.children.length;
      });
+
      const newBodyLength = await page.evaluate(() => {
        const p = document.createElement("p");
        p.textContent = "Hello world!";
