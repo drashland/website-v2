@@ -11,7 +11,7 @@
 
 `Element` also provides the method `.file()` and `.files()` that will allow you
 to upload files to an input file element, just like how you would when clicking
-the input, and choosing a file yourself.
+the input and choosing a file yourself.
 
 Example usage would be:
 
@@ -22,7 +22,8 @@ Note that the following may occur:
 
 - If `.files()` is called but the element does not have the `multiple`
   attribute, Sinco will throw an error.
-- If either are called and the element is not an `input`, Sinco will throw.
+- If either are called and the element is not an input element, Sinco will
+  throw.
 - If either are called and the element is not of type `file`, Sinco will throw.
 
 In this tutorial, you will:
@@ -46,10 +47,10 @@ In this tutorial, you will:
    // app_test.ts
 
    import { buildFor } from "./deps.ts";
-   import { resolve } from "https://deno.land/std@0.136.0/path/mod.ts";
+   import { resolve } from "https://deno.land/std@<LATEST VERSION>/path/mod.ts";
 
    // So we can mock up a playground with a place to upload files.
-   import { serve } from "https://deno.land/std@0.136.0/http/server.ts";
+   import { serve } from "https://deno.land/std@<LATEST VERSION>/http/server.ts";
    serve(function (request: Request) {
      return new Response(`
          <input type="file" multiple id="file" />
@@ -59,18 +60,19 @@ In this tutorial, you will:
    const { browser, page } = await buildFor("chrome");
    await page.location("http://localhost:8000");
    const fileInput = await page.querySelector("#file");
+
    // We need `resolve` because Sinco requires an absolute path
    await fileInput.file(resolve("./hello.json"));
    await browser.close();
    ```
 
-Here you are going to create your headless browser instance, and navigate to
-your local web server. Once the page has loaded, you will select the element you
-created, and upload a file to it.
+   Here you are going to create your headless browser instance and navigate to
+   your local web server. Once the page has loaded, you will select the element
+   you created and upload a file to it.
 
-2. Create your `hello.json`
+2. Create your `hello.json` file to use with the `fileInput.file()` call.
 
-   This is a placeholder used to attach to your file input, given we can't
+   This is a placeholder used to attach to your file input, given we cannot
    expect every person to have the same file at the same location!
 
    ```json
