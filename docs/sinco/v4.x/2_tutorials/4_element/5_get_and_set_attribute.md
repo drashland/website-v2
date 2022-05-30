@@ -34,7 +34,7 @@ In this tutorial, you will:
 1. Create your `app_test.ts` file.
 
    ```typescript
-   // app.ts
+   // app_test.ts
 
    // Note that you will need to import assertEquals from https://deno.land/std/testing/asserts.ts
    import { assertEquals, buildFor } from "./deps.ts";
