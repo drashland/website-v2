@@ -9,7 +9,7 @@
 
 ## Before You Get Started
 
-Whilst Sinco doesn't provide much to help you log-in to apps, we will explain
+Whilst Sinco doesn't provide much to help you log in to apps, we will explain
 how you can do it via Sinco.
 
 We are going to cover two areas:
