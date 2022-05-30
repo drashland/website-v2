@@ -39,7 +39,7 @@ await page.location("my.authenticated.app");
 
 ## Forms
 
-Forms are slightly different. What you wwill want to do, is go through the login
+Forms are slightly different. What you will want to do, is go through the login
 process yourself, controlling the flow via Sinco instead of directly interacting
 with the page via your mouse and keyboard.
 
