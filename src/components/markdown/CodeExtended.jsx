@@ -8,10 +8,12 @@ import { Pre } from "../Markdown";
 
 const ACCEPTED_CODE_TAB_NAMES = [
   "Browser",
+  "CommonJS",
   "Deno",
-  "Node (CJS)",
-  "Node (ESM JS)",
-  "Node (ESM TS)",
+  "JavaScript (ESM)",
+  "TypeScript (ESM)",
+  "Yarn",
+  "npm",
 ];
 
 const Code = styled.code`
@@ -56,7 +58,7 @@ export default function CodeExtension({
   // Let's make sure we always have a string as a class name before running
   // through this component's functions
   className = className?.replace("lang-", " language-") || "";
-  const [activeTab, setActiveTab] = useState("Deno");
+  const [activeTab, setActiveTab] = useState(null);
 
   /**
    * Get the Prims.js class name for the a code block.
@@ -68,11 +70,13 @@ export default function CodeExtension({
     }
 
     if (isNodeTab(name)) {
+      // Default to JavaScript
       let language = "language-javascript";
       if (isNodeTabForTypeScript(name)) {
+        console.log("yup for typescript", name);
         language = "language-typescript";
       }
-      return className.replace(/language-typescript/g, language);
+      return className.replace(/language-(ts|typescript)/g, language);
     }
 
     // If we get here, let's make sure we check that a language was specified.
@@ -93,7 +97,13 @@ export default function CodeExtension({
    * @returns True if yes, false if no.
    */
   function isNodeTab(codeTabName) {
-    return codeTabName?.includes("Node");
+    if (!codeTabName) {
+      return false;
+    }
+
+    return codeTabName.includes("TypeScript (ESM)")
+      || codeTabName.includes("JavaScript (ESM)")
+      || codeTabName.includes("CommonJS")
   }
 
   /**
@@ -102,7 +112,8 @@ export default function CodeExtension({
    * @returns True if yes, false if no.
    */
   function isNodeTabForTypeScript(codeTabName) {
-    return codeTabName?.toLowerCase().includes("ESM TS");
+    console.log(codeTabName);
+    return codeTabName?.includes("TypeScript");
   }
 
   /**
@@ -230,6 +241,10 @@ export default function CodeExtension({
 
     // If `tabs` is greater than 0, then the code block has // @Tab sections
     if (tabs.length > 0) {
+      // Set the first tab as the active tab
+      if (!activeTab) {
+        setActiveTab(getTabNameFromCodeBlock(tabs[0]));
+      }
       return renderTabbedCodeBlocks(tabs);
     }
   }
