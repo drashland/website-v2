@@ -54,31 +54,38 @@ In this tutorial, you will:
 
    Deno.test("My web app works as expected", async () => {
      const { browser, page } = await buildFor("chrome");
+
      await page.location("http://localhost:8000");
+
      const button = await page.querySelector("#button");
+
      page.expectDialog();
-     elem.click(); // If clicking produces a dialog, you shound't await it
+     elem.click(); // If clicking produces a dialog, you should not await it
+
      await page.dialog(true, "Sinco dialogs!"); // Will wait for the dialog to appear to accept it with the given text
+
      // "Sinco dialogs!" should now be the button's text.
      const buttonText = await page.evaluate(
        `document.querySelector("#button").textContent`,
      );
+
      await page.close(); // Closes the tab
      await browser.close(); // This is different, as this closes the browser process.
      console.log(buttonText);
    });
    ```
 
-Here you are going to create your headless browser instance, and navigate to
-`http://localhost:8000`, a page you setup to produce a dialog. Once the page has
-loaded, you will select the button from the DOM. You will then tell Sinco it is
-expecting a dialog (so it can correctly wait for it), and click the button which
-if you check the response from our server, will generate a dialog. You will
-notice we aren't awaiting here - when clicking an element produces a dialog, it
-will also wait for the dialog to be accepted, which we haven't done yet and
-won't ever do because the execution cannot pass this `await`. You will then
-accept this dialog and provide some text. To assert this, you will check that
-the text provided in the `prompt()` is set as the text for the button.
+   Here you are going to create your headless browser instance, and navigate to
+   `http://localhost:8000`, a page you setup to produce a dialog. Once the page
+   has loaded, you will select the button from the DOM. You will then tell Sinco
+   it is expecting a dialog (so it can correctly wait for it), and click the
+   button which if you check the response from our server, will generate a
+   dialog. You will notice we aren't awaiting here - when clicking an element
+   produces a dialog, it will also wait for the dialog to be accepted, which we
+   haven't done yet and won't ever do because the execution cannot pass this
+   `await`. You will then accept this dialog and provide some text. To assert
+   this, you will check that the text provided in the `prompt()` is set as the
+   text for the button.
 
 ## Verification
 
