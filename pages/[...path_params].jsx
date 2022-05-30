@@ -218,7 +218,7 @@ function getDirectoryTree(path, paths = []) {
     is_directory: stats.isDirectory(),
     label: getCategoryLabel(
       baseName
-        .replace(/[0-9]_/, "")
+        .replace(/[0-9]+_/, "")
         .replace("docs", "/")
         .replace(/_/g, " ")
         .replace(".md", "")
