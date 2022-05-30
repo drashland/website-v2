@@ -1,5 +1,12 @@
 # Class Spies
 
+This feature was introduced in v2.1.0-rc.1. Please make sure you are using
+v2.1.0-rc.1 (or higher) before proceeding with this tutorial. Since this feature
+is in a release candidate, its code and documentation may change. However, all
+changes made will be documented on the
+[GitHub Release](https://github.com/drashland/rhum/releases) page until this
+feature is considered stable. No breaking changes are expected to occur.
+
 ## Table of Contents
 
 - [Before You Get Started](#before-you-get-started)
