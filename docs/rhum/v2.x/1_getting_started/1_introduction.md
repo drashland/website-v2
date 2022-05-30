@@ -8,6 +8,9 @@ Learn more about Rhum [here](./about-rhum).
 
 ## Getting Started
 
+The below example shows you how to create a mock of a class _**in Deno**_. More
+tutorials (test doubles and Node tutorials) can be found in the left navigation.
+
 1. Install [Deno](https://deno.land/).
 
 2. Create your project directory.
