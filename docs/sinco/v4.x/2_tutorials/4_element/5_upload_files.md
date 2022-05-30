@@ -66,6 +66,9 @@ In this tutorial, you will:
    await browser.close();
    ```
 
+   _Note: Make sure you change `<LATEST VERSION>` to the latest Deno Standard
+   Modules version._
+
    Here you are going to create your headless browser instance and navigate to
    your local web server. Once the page has loaded, you will select the element
    you created and upload a file to it.
