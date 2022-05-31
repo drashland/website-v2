@@ -22,7 +22,7 @@ Unlike mocks, fakes do not verify calls. For example, you cannot verify that a
 fake's method was called once. Fakes are used to verify state whereas mocks are
 used to verify behavior (e.g., verifying that a call was made). If you want to
 verify calls made during a test or verify behavior in general, then you should
-use a [Mock](/rhum/v2.x/tutorials/test-doubles/mocks).
+use a [Mock](/rhum/v2.x/tutorials-node/test-doubles/mocks).
 
 In this tutorial, you will learn how to create fakes:
 
