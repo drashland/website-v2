@@ -73,7 +73,6 @@ export default function CodeExtension({
       // Default to JavaScript
       let language = "language-javascript";
       if (isNodeTabForTypeScript(name)) {
-        console.log("yup for typescript", name);
         language = "language-typescript";
       }
       return className.replace(/language-(ts|typescript)/g, language);
@@ -112,7 +111,6 @@ export default function CodeExtension({
    * @returns True if yes, false if no.
    */
   function isNodeTabForTypeScript(codeTabName) {
-    console.log(codeTabName);
     return codeTabName?.includes("TypeScript");
   }
 
