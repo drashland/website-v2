@@ -60,6 +60,10 @@ export default function CodeExtension({
   className = className?.replace("lang-", " language-") || "";
   const [activeTab, setActiveTab] = useState(null);
 
+  window.addEventListener("changeCodeBlockActiveTab", (e) => {
+    setActiveTab(e.data);
+  });
+
   /**
    * Get the Prims.js class name for the a code block.
    */
@@ -166,7 +170,12 @@ export default function CodeExtension({
                 activeTab={activeTab}
                 key={`tab-name-${tab}`}
                 name={tabName}
-                onClick={() => setActiveTab(tabName)}
+                onClick={() => {
+                  window.dispatchEvent(new MessageEvent("changeCodeBlockActiveTab", {
+                    data: tabName
+                  }));
+                  // setActiveTab(tabName)
+                }}
               >
                 {tabName}
               </Tab>
