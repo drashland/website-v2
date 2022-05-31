@@ -36,8 +36,27 @@ In this tutorial, you will learn how to create fakes:
 Creating a fake of an object without constructor arguments can be done as
 follows:
 
-```ts
-import { Fake } from "./deps.ts";
+```typescript
+// @Tab TypeScript (ESM)
+import { Fake } from "@drashland/rhum";
+
+class SomeClassWithoutConstructor {}
+
+const fakeWithoutConstructor = Fake(SomeClassWithoutConstructor).create();
+
+console.log(fakeWithoutConstructor instanceof SomeClassWithoutConstructor); // true
+
+// @Tab JavaScript (ESM)
+import { Fake } from "@drashland/rhum";
+
+class SomeClassWithoutConstructor {}
+
+const fakeWithoutConstructor = Fake(SomeClassWithoutConstructor).create();
+
+console.log(fakeWithoutConstructor instanceof SomeClassWithoutConstructor); // true
+
+// @Tab CommonJS
+const { Fake } = require("@drashland/rhum");
 
 class SomeClassWithoutConstructor {}
 
@@ -50,8 +69,9 @@ console.log(fakeWithoutConstructor instanceof SomeClassWithoutConstructor); // t
 
 Creating a fake of an object with constructor arguments can be done as follows:
 
-```ts
-import { Fake } from "./deps.ts";
+```typescript
+// @Tab TypeScript (ESM)
+import { Fake } from "@drashland/rhum";
 
 class SomeClassWithConstructor {
   public name: string;
@@ -62,6 +82,64 @@ class SomeClassWithConstructor {
     name: string,
     type: "dog" | "cat",
     colors: string[],
+  ) {
+    this.name = name;
+    this.type = type;
+    this.colors = colors;
+  }
+}
+
+const fakeWithConstructor = Fake(SomeClassWithConstructor)
+  .withConstructorArgs(
+    "Missy",
+    "dog",
+    ["brown", "white"],
+  )
+  .create();
+
+console.log(fakeWithConstructor instanceof SomeClassWithConstructor); // true
+console.log(fakeWithConstructor.name === "Missy"); // true
+console.log(fakeWithConstructor.type === "dog"); // true
+console.log(fakeWithConstructor.colors.includes("brown")); // true
+console.log(fakeWithConstructor.colors.includes("white")); // true
+
+// @Tab JavaScript (ESM)
+import { Fake } from "@drashland/rhum";
+
+class SomeClassWithConstructor {
+  constructor(
+    name,
+    type,
+    colors,
+  ) {
+    this.name = name;
+    this.type = type;
+    this.colors = colors;
+  }
+}
+
+const fakeWithConstructor = Fake(SomeClassWithConstructor)
+  .withConstructorArgs(
+    "Missy",
+    "dog",
+    ["brown", "white"],
+  )
+  .create();
+
+console.log(fakeWithConstructor instanceof SomeClassWithConstructor); // true
+console.log(fakeWithConstructor.name === "Missy"); // true
+console.log(fakeWithConstructor.type === "dog"); // true
+console.log(fakeWithConstructor.colors.includes("brown")); // true
+console.log(fakeWithConstructor.colors.includes("white")); // true
+
+// @Tab CommonJS
+const { Fake } = require("@drashland/rhum");
+
+class SomeClassWithConstructor {
+  constructor(
+    name, // string,
+    type, // "dog" | "cat",
+    colors, // string[],
   ) {
     this.name = name;
     this.type = type;
@@ -98,8 +176,9 @@ a shortcut" in the context of fakes and is useful if you do not care how the
 method gets the value and just want it to return the value you want it to
 return.
 
-```ts
-import { Fake } from "./deps.ts";
+```typescript
+// @Tab TypeScript (ESM)
+import { Fake } from "@drashland/rhum";
 
 class Service {
   #repository: Repository;
@@ -187,6 +266,186 @@ console.log(actualOriginal); // [ { name: "Totoro" }, { name: "Domo-kun" } ]
 console.log(fakeRepositoryNotDoingShortcut.anotha_one_called === true); // true
 console.log(fakeRepositoryNotDoingShortcut.do_something_called === true); // true
 console.log(fakeRepositoryNotDoingShortcut.do_something_else_called === true); // true
+
+// @Tab JavaScript (ESM)
+import { Fake } from "@drashland/rhum";
+
+class Service {
+  constructor(
+    serviceOne,
+  ) {
+    this.repository = serviceOne;
+  }
+
+  getUsers() {
+    return this.repository.findAllUsers();
+  }
+
+  getUser(id) {
+    return this.repository.findUserById(id);
+  }
+}
+
+class Repository {
+  constructor() {
+    this.anotha_one_called = false;
+    this.do_something_called = false;
+    this.do_something_else_called = false;
+  }
+
+  findAllUsers() {
+    this.doSomething();
+    this.doSomethingElse();
+    this.anothaOne();
+    return [
+      { name: "Totoro" },
+      { name: "Domo-kun" },
+    ];
+  }
+
+  findUserById(id) {
+    this.doSomething();
+    this.doSomethingElse();
+    this.anothaOne();
+    return { name: "Totoro" };
+  }
+
+  anothaOne() {
+    this.anotha_one_called = true;
+  }
+
+  doSomething() {
+    this.do_something_called = true;
+  }
+
+  doSomethingElse() {
+    this.do_something_else_called = true;
+  }
+}
+
+// Assert that a fake can make a class take a shortcut
+
+const fakeRepositoryDoingShortcut = Fake(Repository).create();
+
+fakeRepositoryDoingShortcut
+  .method("findAllUsers")
+  .willReturn([{ name: "someone else" }]);
+
+const serviceWithShortcut = new Service(
+  fakeRepositoryDoingShortcut,
+);
+
+const actualShortcutValue = serviceWithShortcut.getUsers();
+
+console.log(actualShortcutValue); // [ { name: "someone else" } ]
+console.log(fakeRepositoryDoingShortcut.anotha_one_called === false); // true
+console.log(fakeRepositoryDoingShortcut.do_something_called === false); // true
+console.log(fakeRepositoryDoingShortcut.do_something_else_called === false); // true
+
+// Assert that the fake can call original implementations
+
+const fakeRepositoryNotDoingShortcut = Fake(Repository).create();
+
+const serviceWithoutShortcut = new Service(
+  fakeRepositoryNotDoingShortcut,
+);
+
+const actualOriginal = serviceWithoutShortcut.getUsers();
+
+console.log(actualOriginal); // [ { name: "Totoro" }, { name: "Domo-kun" } ]
+console.log(fakeRepositoryNotDoingShortcut.anotha_one_called === true); // true
+console.log(fakeRepositoryNotDoingShortcut.do_something_called === true); // true
+console.log(fakeRepositoryNotDoingShortcut.do_something_else_called === true); // true
+
+// @Tab CommonJS
+const { Fake } = require("@drashland/rhum");
+
+class Service {
+  constructor(
+    serviceOne,
+  ) {
+    this.repository = serviceOne;
+  }
+
+  getUsers() {
+    return this.repository.findAllUsers();
+  }
+
+  getUser(id) {
+    return this.repository.findUserById(id);
+  }
+}
+
+class Repository {
+  constructor() {
+    this.anotha_one_called = false;
+    this.do_something_called = false;
+    this.do_something_else_called = false;
+  }
+
+  findAllUsers() {
+    this.doSomething();
+    this.doSomethingElse();
+    this.anothaOne();
+    return [
+      { name: "Totoro" },
+      { name: "Domo-kun" },
+    ];
+  }
+
+  findUserById(id) {
+    this.doSomething();
+    this.doSomethingElse();
+    this.anothaOne();
+    return { name: "Totoro" };
+  }
+
+  anothaOne() {
+    this.anotha_one_called = true;
+  }
+
+  doSomething() {
+    this.do_something_called = true;
+  }
+
+  doSomethingElse() {
+    this.do_something_else_called = true;
+  }
+}
+
+// Assert that a fake can make a class take a shortcut
+
+const fakeRepositoryDoingShortcut = Fake(Repository).create();
+
+fakeRepositoryDoingShortcut
+  .method("findAllUsers")
+  .willReturn([{ name: "someone else" }]);
+
+const serviceWithShortcut = new Service(
+  fakeRepositoryDoingShortcut,
+);
+
+const actualShortcutValue = serviceWithShortcut.getUsers();
+
+console.log(actualShortcutValue); // [ { name: "someone else" } ]
+console.log(fakeRepositoryDoingShortcut.anotha_one_called === false); // true
+console.log(fakeRepositoryDoingShortcut.do_something_called === false); // true
+console.log(fakeRepositoryDoingShortcut.do_something_else_called === false); // true
+
+// Assert that the fake can call original implementations
+
+const fakeRepositoryNotDoingShortcut = Fake(Repository).create();
+
+const serviceWithoutShortcut = new Service(
+  fakeRepositoryNotDoingShortcut,
+);
+
+const actualOriginal = serviceWithoutShortcut.getUsers();
+
+console.log(actualOriginal); // [ { name: "Totoro" }, { name: "Domo-kun" } ]
+console.log(fakeRepositoryNotDoingShortcut.anotha_one_called === true); // true
+console.log(fakeRepositoryNotDoingShortcut.do_something_called === true); // true
+console.log(fakeRepositoryNotDoingShortcut.do_something_else_called === true); // true
 ```
 
 ### .method(...).willThrow(...)
@@ -196,8 +455,9 @@ Just like mocks, you can cause a fake to have one of its method throw an error
 `.method(...).willThrow(...)`. This is useful if you do not care how the method
 gets to the error and just want to throw the error immediately.
 
-```ts
-import { Fake } from "./deps.ts";
+```typescript
+// @Tab TypeScript (ESM)
+import { Fake } from "@drashland/rhum";
 
 class Service {
   #repository: Repository;
@@ -252,6 +512,170 @@ class Repository {
   }
 
   #doSomethingElse() {
+    this.do_something_else_called = true;
+  }
+}
+
+// Assert that the fake can throw an error immediately
+
+const fakeRepositoryThrowingError = Fake(Repository).create();
+
+fakeRepositoryThrowingError
+  .method("findAllUsers")
+  .willThrow(new Error("Database connection issue."));
+
+const resourceWithShortcut = new Service(
+  fakeRepositoryThrowingError,
+);
+
+try {
+  resourceWithShortcut.getUsers();
+} catch (error) {
+  console.log(error.message === "Database connection issue."); // true
+}
+
+console.log(fakeRepositoryThrowingError.anotha_one_called === false); // true
+console.log(fakeRepositoryThrowingError.do_something_called === false); // true
+console.log(fakeRepositoryThrowingError.do_something_else_called === false); // true
+
+// @Tab JavaScript (ESM)
+import { Fake } from "@drashland/rhum";
+
+class Service {
+  constructor(
+    serviceOne,
+  ) {
+    this.repository = serviceOne;
+  }
+
+  getUsers() {
+    return this.repository.findAllUsers();
+  }
+
+  getUser(id) {
+    return this.repository.findUserById(id);
+  }
+}
+
+class Repository {
+  constructor() {
+    this.anotha_one_called = false;
+    this.do_something_called = false;
+    this.do_something_else_called = false;
+    this.db_connection = null;
+  }
+
+  findAllUsers() {
+    if (!this.db_connection) {
+      throw new Error("Database connection issue.");
+    }
+    this.doSomething();
+    this.doSomethingElse();
+    this.anothaOne();
+    return [
+      { name: "Totoro" },
+      { name: "Domo-kun" },
+    ];
+  }
+
+  findUserById(id) {
+    this.doSomething();
+    this.doSomethingElse();
+    this.anothaOne();
+    return { name: "Totoro" };
+  }
+
+  anothaOne() {
+    this.anotha_one_called = true;
+  }
+
+  doSomething() {
+    this.do_something_called = true;
+  }
+
+  doSomethingElse() {
+    this.do_something_else_called = true;
+  }
+}
+
+// Assert that the fake can throw an error immediately
+
+const fakeRepositoryThrowingError = Fake(Repository).create();
+
+fakeRepositoryThrowingError
+  .method("findAllUsers")
+  .willThrow(new Error("Database connection issue."));
+
+const resourceWithShortcut = new Service(
+  fakeRepositoryThrowingError,
+);
+
+try {
+  resourceWithShortcut.getUsers();
+} catch (error) {
+  console.log(error.message === "Database connection issue."); // true
+}
+
+console.log(fakeRepositoryThrowingError.anotha_one_called === false); // true
+console.log(fakeRepositoryThrowingError.do_something_called === false); // true
+console.log(fakeRepositoryThrowingError.do_something_else_called === false); // true
+
+// @Tab CommonJS
+const { Fake } = require("@drashland/rhum");
+
+class Service {
+  constructor(
+    serviceOne,
+  ) {
+    this.repository = serviceOne;
+  }
+
+  getUsers() {
+    return this.repository.findAllUsers();
+  }
+
+  getUser(id) {
+    return this.repository.findUserById(id);
+  }
+}
+
+class Repository {
+  constructor() {
+    this.anotha_one_called = false;
+    this.do_something_called = false;
+    this.do_something_else_called = false;
+    this.db_connection = null;
+  }
+
+  findAllUsers() {
+    if (!this.db_connection) {
+      throw new Error("Database connection issue.");
+    }
+    this.doSomething();
+    this.doSomethingElse();
+    this.anothaOne();
+    return [
+      { name: "Totoro" },
+      { name: "Domo-kun" },
+    ];
+  }
+
+  findUserById(id) {
+    this.doSomething();
+    this.doSomethingElse();
+    this.anothaOne();
+    return { name: "Totoro" };
+  }
+
+  anothaOne() {
+    this.anotha_one_called = true;
+  }
+
+  doSomething() {
+    this.do_something_called = true;
+  }
+
+  doSomethingElse() {
     this.do_something_else_called = true;
   }
 }
