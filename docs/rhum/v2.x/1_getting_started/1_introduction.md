@@ -8,8 +8,8 @@ Learn more about Rhum [here](./about-rhum).
 
 ## Getting Started
 
-The below example shows you how to create a mock of a class _**in Deno**_. More
-tutorials (test doubles and Node tutorials) can be found in the left navigation.
+The below example shows you how to create a mock of a class. More test double
+tutorials can be found in the left navigation.
 
 1. Install [Deno](https://deno.land/).
 
@@ -20,9 +20,10 @@ tutorials (test doubles and Node tutorials) can be found in the left navigation.
    $ cd my-project
    ```
 
-3. Create your `my_class_test.ts` file.
+3. Create your test file.
 
    ```typescript
+   // @Tab Deno
    // my_class_test.ts
 
    // Replace `<VERSION>` with the latest version of Rhum v2.x. The latest
@@ -72,22 +73,159 @@ tutorials (test doubles and Node tutorials) can be found in the left navigation.
        assertEquals(actual, "214");
      },
    });
+
+   // @Tab TypeScript (ESM)
+   // my_class.test.ts
+   import { Mock } from "@drashland/rhum";
+
+   class MyClass {
+     public methodOne(): string {
+       return "1";
+     }
+
+     public methodTwo(): string {
+       let ret = "2";
+       ret += this.methodOne();
+       ret += this.methodFour();
+       return ret;
+     }
+
+     public methodThree(): string {
+       return "3";
+     }
+
+     public methodFour(): string {
+       return "4";
+     }
+   }
+
+   const mock = Mock(MyClass).create();
+   expect(mock.is_mock).toBe(true); // We can check if this is a mock after calling Mock(...).create()
+
+   // We expect methodOne and methodFour to be called once
+   mock.expects("methodOne").toBeCalled(1);
+   mock.expects("methodFour").toBeCalled(1);
+
+   // Do the thing that we want to test
+   const actual = mock.methodTwo(); // We expect this to be "214" down below
+
+   // Make assertions
+   mock.verifyExpectations(); // Will verify .expect(...).toBeCalled(...) expectations
+   expect(actual).toBe("214");
+
+   // @Tab JavaScript (ESM)
+   // my_test.test.js
+   import { Mock } from "@drashland/rhum";
+
+   class MyClass {
+     methodOne() {
+       return "1";
+     }
+
+     methodTwo() {
+       let ret = "2";
+       ret += this.methodOne();
+       ret += this.methodFour();
+       return ret;
+     }
+
+     methodThree() {
+       return "3";
+     }
+
+     methodFour() {
+       return "4";
+     }
+   }
+
+   const mock = Mock(MyClass).create();
+   expect(mock.is_mock).toBe(true); // We can check if this is a mock after calling Mock(...).create()
+
+   // We expect methodOne and methodFour to be called once
+   mock.expects("methodOne").toBeCalled(1);
+   mock.expects("methodFour").toBeCalled(1);
+
+   // Do the thing that we want to test
+   const actual = mock.methodTwo(); // We expect this to be "214" down below
+
+   // Make assertions
+   mock.verifyExpectations(); // Will verify .expect(...).toBeCalled(...) expectations
+   expect(actual).toBe("214");
+
+   // @Tab CommonJS
+   // my_test.test.js
+   const { Mock } = require("@drashland/rhum");
+
+   class MyClass {
+     methodOne() {
+       return "1";
+     }
+
+     methodTwo() {
+       let ret = "2";
+       ret += this.methodOne();
+       ret += this.methodFour();
+       return ret;
+     }
+
+     methodThree() {
+       return "3";
+     }
+
+     methodFour() {
+       return "4";
+     }
+   }
+
+   const mock = Mock(MyClass).create();
+   expect(mock.is_mock).toBe(true); // We can check if this is a mock after calling Mock(...).create()
+
+   // We expect methodOne and methodFour to be called once
+   mock.expects("methodOne").toBeCalled(1);
+   mock.expects("methodFour").toBeCalled(1);
+
+   // Do the thing that we want to test
+   const actual = mock.methodTwo(); // We expect this to be "214" down below
+
+   // Make assertions
+   mock.verifyExpectations(); // Will verify .expect(...).toBeCalled(...) expectations
+   expect(actual).toBe("214");
    ```
 
-4. Run your `my_class_test.ts` file.
+4. Run your test file.
 
    ```shell
+   // @Tab Deno
    $ deno run app.ts
+
+   // @Tab TypeScript (ESM)
+   $ yarn test # Assumes you have your Node project set up with yarn test, ts-node, and the expect library
+
+   // @Tab JavaScript (ESM)
+   $ yarn test # Assumes you have your Node project set up with yarn test and the expect library
+
+   // @Tab CommonJS
+   $ yar test # Assumes you have your Node project set up with yarn test and the expect library
    ```
 
 5. You should see something like the following:
 
    ```text
+   // @Tab Deno
    Check file:///my_class_test.ts
    running 1 test from file:///my_class_test.ts
    test MyClass.methodTwo() should make some calls and return a string ... ok (5ms)
 
    test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (18ms)
+
+   // @Tab TypeScript (ESM)
+   Test pass
+
+   // @Tab JavaScript (ESM)
+   Test pass
+
+   // @Tab CommonJS
+   Test pass
    ```
 
 ## Features
