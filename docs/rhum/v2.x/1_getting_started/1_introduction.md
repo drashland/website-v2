@@ -9,9 +9,15 @@ Learn more about Rhum [here](./about-rhum).
 ## Getting Started
 
 The below example shows you how to create a mock of a class. More test double
-tutorials can be found in the left navigation.
+tutorials can be found in the left navigation. Also, the Node examples assume
+you are using Jest. If you are not using Jest, just replace the `test()`
+function in the example code blocks with the function your framework uses.
 
-1. Install [Deno](https://deno.land/).
+1. Install the runtime you use:
+
+   - [Deno](https://deno.land/)
+   - [Node](https://nodejs.org/en/download/) (Rhum is compatible with Node v14,
+     v16, v17, and v18)
 
 2. Create your project directory.
 
@@ -34,6 +40,7 @@ tutorials can be found in the left navigation.
      assertThrows,
    } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
+   // Create the class to be mocked
    class MyClass {
      public methodOne(): string {
        return "1";
@@ -74,10 +81,17 @@ tutorials can be found in the left navigation.
      },
    });
 
-   // @Tab TypeScript (ESM)
+   // @Tab Node - TypeScript (ESM)
    // my_class.test.ts
+   //
+   // The below code assumes you are using Jest with:
+   //
+   //   - ts-jest
+   //   - ts-node
+
    import { Mock } from "@drashland/rhum";
 
+   // Create the class to be mocked
    class MyClass {
      public methodOne(): string {
        return "1";
@@ -99,24 +113,32 @@ tutorials can be found in the left navigation.
      }
    }
 
-   const mock = Mock(MyClass).create();
-   expect(mock.is_mock).toBe(true); // We can check if this is a mock after calling Mock(...).create()
+   test("MyClass.methodTwo() should make some calls and return a string", () => {
+     const mock = Mock(MyClass).create();
 
-   // We expect methodOne and methodFour to be called once
-   mock.expects("methodOne").toBeCalled(1);
-   mock.expects("methodFour").toBeCalled(1);
+     expect(mock.is_mock).toBe(true); // We can check if this is a mock after calling Mock(...).create()
 
-   // Do the thing that we want to test
-   const actual = mock.methodTwo(); // We expect this to be "214" down below
+     // We expect methodOne and methodFour to be called once
+     mock.expects("methodOne").toBeCalled(1);
+     mock.expects("methodFour").toBeCalled(1);
 
-   // Make assertions
-   mock.verifyExpectations(); // Will verify .expect(...).toBeCalled(...) expectations
-   expect(actual).toBe("214");
+     // Do the thing that we want to test
+     const actual = mock.methodTwo(); // We expect this to be "214" down below
 
-   // @Tab JavaScript (ESM)
+     // Make assertions
+     mock.verifyExpectations(); // Will verify .expect(...).toBeCalled(...) expectations
+     expect(actual).toBe("214");
+   });
+
+   // @Tab Node - JavaScript (ESM)
    // my_test.test.js
+   //
+   // The below code assumes you are using Jest
+   //
+
    import { Mock } from "@drashland/rhum";
 
+   // Create the class to be mocked
    class MyClass {
      methodOne() {
        return "1";
@@ -138,24 +160,32 @@ tutorials can be found in the left navigation.
      }
    }
 
-   const mock = Mock(MyClass).create();
-   expect(mock.is_mock).toBe(true); // We can check if this is a mock after calling Mock(...).create()
+   test("MyClass.methodTwo() should make some calls and return a string", () => {
+     const mock = Mock(MyClass).create();
 
-   // We expect methodOne and methodFour to be called once
-   mock.expects("methodOne").toBeCalled(1);
-   mock.expects("methodFour").toBeCalled(1);
+     expect(mock.is_mock).toBe(true); // We can check if this is a mock after calling Mock(...).create()
 
-   // Do the thing that we want to test
-   const actual = mock.methodTwo(); // We expect this to be "214" down below
+     // We expect methodOne and methodFour to be called once
+     mock.expects("methodOne").toBeCalled(1);
+     mock.expects("methodFour").toBeCalled(1);
 
-   // Make assertions
-   mock.verifyExpectations(); // Will verify .expect(...).toBeCalled(...) expectations
-   expect(actual).toBe("214");
+     // Do the thing that we want to test
+     const actual = mock.methodTwo(); // We expect this to be "214" down below
 
-   // @Tab CommonJS
+     // Make assertions
+     mock.verifyExpectations(); // Will verify .expect(...).toBeCalled(...) expectations
+     expect(actual).toBe("214");
+   });
+
+   // @Tab Node - CommonJS
    // my_test.test.js
+   //
+   // The below code assumes you are using Jest
+   //
+
    const { Mock } = require("@drashland/rhum");
 
+   // Create the class to be mocked
    class MyClass {
      methodOne() {
        return "1";
@@ -177,19 +207,22 @@ tutorials can be found in the left navigation.
      }
    }
 
-   const mock = Mock(MyClass).create();
-   expect(mock.is_mock).toBe(true); // We can check if this is a mock after calling Mock(...).create()
+   test("MyClass.methodTwo() should make some calls and return a string", () => {
+     const mock = Mock(MyClass).create();
 
-   // We expect methodOne and methodFour to be called once
-   mock.expects("methodOne").toBeCalled(1);
-   mock.expects("methodFour").toBeCalled(1);
+     expect(mock.is_mock).toBe(true); // We can check if this is a mock after calling Mock(...).create()
 
-   // Do the thing that we want to test
-   const actual = mock.methodTwo(); // We expect this to be "214" down below
+     // We expect methodOne and methodFour to be called once
+     mock.expects("methodOne").toBeCalled(1);
+     mock.expects("methodFour").toBeCalled(1);
 
-   // Make assertions
-   mock.verifyExpectations(); // Will verify .expect(...).toBeCalled(...) expectations
-   expect(actual).toBe("214");
+     // Do the thing that we want to test
+     const actual = mock.methodTwo(); // We expect this to be "214" down below
+
+     // Make assertions
+     mock.verifyExpectations(); // Will verify .expect(...).toBeCalled(...) expectations
+     expect(actual).toBe("214");
+   });
    ```
 
 4. Run your test file.
@@ -198,14 +231,17 @@ tutorials can be found in the left navigation.
    // @Tab Deno
    $ deno run app.ts
 
-   // @Tab TypeScript (ESM)
-   $ yarn test # Assumes you have your Node project set up with yarn test, ts-node, and the expect library
+   // @Tab Node - TypeScript (ESM)
+   # Assumes you have your Node project set up with `yarn test` using Jest, ts-jest, and ts-node
+   $ yarn test
 
-   // @Tab JavaScript (ESM)
-   $ yarn test # Assumes you have your Node project set up with yarn test and the expect library
+   // @Tab Node - JavaScript (ESM)
+   # Assumes you have your Node project set up with `yarn test` using Jest
+   $ yarn test
 
-   // @Tab CommonJS
-   $ yar test # Assumes you have your Node project set up with yarn test and the expect library
+   // @Tab Node - CommonJS
+   # Assumes you have your Node project set up with `yarn test` using Jest
+   $ yarn test
    ```
 
 5. You should see something like the following:
@@ -218,14 +254,32 @@ tutorials can be found in the left navigation.
 
    test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (18ms)
 
-   // @Tab TypeScript (ESM)
-   Test pass
+   // @Tab Node - TypeScript (ESM)
+   PASS  my_class.test.ts
+    ✓ MyClass.methodTwo() should make some calls and return a string (3 ms)
 
-   // @Tab JavaScript (ESM)
-   Test pass
+   Test Suites: 1 passed, 1 total
+   Tests:       1 passed, 1 total
+   Snapshots:   0 total
+   Time:        1.167 s, estimated 2 s
 
-   // @Tab CommonJS
-   Test pass
+   // @Tab Node - JavaScript (ESM)
+   PASS  my_class.test.js
+    ✓ MyClass.methodTwo() should make some calls and return a string (3 ms)
+
+   Test Suites: 1 passed, 1 total
+   Tests:       1 passed, 1 total
+   Snapshots:   0 total
+   Time:        1.167 s, estimated 2 s
+
+   // @Tab Node - CommonJS
+   PASS  my_class.test.js
+    ✓ MyClass.methodTwo() should make some calls and return a string (3 ms)
+
+   Test Suites: 1 passed, 1 total
+   Tests:       1 passed, 1 total
+   Snapshots:   0 total
+   Time:        1.167 s, estimated 2 s
    ```
 
 ## Features
@@ -233,9 +287,11 @@ tutorials can be found in the left navigation.
 - Zero third-party dependencies
 - Lightweight
 - Simple and easy to use
+- Smart type-hinting
 - Dummy support
 - Fake support
 - Mock support
+- Spy support
 - Stub support
 
 ## Badge
