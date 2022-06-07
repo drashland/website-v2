@@ -105,9 +105,9 @@ class Service {
   #repository: Repository;
 
   constructor(
-    serviceOne: Repository,
+    repository: Repository,
   ) {
-    this.#repository = serviceOne;
+    this.#repository = repository;
   }
 
   public getUsers(): { name: string }[] {
@@ -203,9 +203,9 @@ class Service {
   #repository: Repository;
 
   constructor(
-    serviceOne: Repository,
+    repository: Repository,
   ) {
-    this.#repository = serviceOne;
+    this.#repository = repository;
   }
 
   public getUsers(): { name: string }[] {
@@ -221,12 +221,13 @@ class Repository {
   public anotha_one_called = false;
   public do_something_called = false;
   public do_something_else_called = false;
-  #db_connection = null;
+  #database_connection;
+
+  constructor(databaseConnection: any) {
+    this.#database_connection = databaseConnection;
+  }
 
   public findAllUsers(): { name: string }[] {
-    if (!this.#db_connection) {
-      throw new Error("Database connection issue.");
-    }
     this.#doSomething();
     this.#doSomethingElse();
     this.#anothaOne();
@@ -244,22 +245,50 @@ class Repository {
   }
 
   #anothaOne() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
     this.anotha_one_called = true;
   }
 
   #doSomething() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
     this.do_something_called = true;
   }
 
   #doSomethingElse() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
     this.do_something_else_called = true;
   }
 }
 
 // Assert that the fake can throw an error immediately
 
-const fakeRepositoryThrowingError = Fake(Repository).create();
+const fakeRepositoryThrowingError = Fake(Repository)
+  .withConstructorArgs("some database connection")
+  .create();
 
+// Make the Fake throw an `Error` with the `Database connection issue.`
+// message when `findAllUsers()` is called.
+//
+// Since the Fake was created with the `databaseConnection` constructor arg,
+// its implementation will have `this.#database_connection` as truthy. This
+// means the Fake (by default) will NOT throw errors when the following
+// calls in the Fake are made:
+//
+//     - this.#doSomething();
+//     - this.#doSomethingElse();
+//     - this.#anothaOne();
+//
+// So here we are telling the Fake to throw an error instead of calling its
+// original `findAllUsers()` implementation.
 fakeRepositoryThrowingError
   .method("findAllUsers")
   .willThrow(new Error("Database connection issue."));

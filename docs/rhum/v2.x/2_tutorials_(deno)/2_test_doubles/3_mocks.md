@@ -108,9 +108,9 @@ class Service {
   #repository: Repository;
 
   constructor(
-    serviceOne: Repository,
+    repository: Repository,
   ) {
-    this.#repository = serviceOne;
+    this.#repository = repository;
   }
 
   public getUsers(): { name: string }[] {
@@ -206,9 +206,9 @@ class Service {
   #repository: Repository;
 
   constructor(
-    serviceOne: Repository,
+    repository: Repository,
   ) {
-    this.#repository = serviceOne;
+    this.#repository = repository;
   }
 
   public getUsers(): { name: string }[] {
@@ -224,12 +224,13 @@ class Repository {
   public anotha_one_called = false;
   public do_something_called = false;
   public do_something_else_called = false;
-  #db_connection = null;
+  #database_connection;
+
+  constructor(databaseConnection: any) {
+    this.#database_connection = databaseConnection;
+  }
 
   public findAllUsers(): { name: string }[] {
-    if (!this.#db_connection) {
-      throw new Error("Database connection issue.");
-    }
     this.#doSomething();
     this.#doSomethingElse();
     this.#anothaOne();
@@ -247,14 +248,26 @@ class Repository {
   }
 
   #anothaOne() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
     this.anotha_one_called = true;
   }
 
   #doSomething() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
     this.do_something_called = true;
   }
 
   #doSomethingElse() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
     this.do_something_else_called = true;
   }
 }
