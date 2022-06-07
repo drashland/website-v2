@@ -21,32 +21,44 @@ them in to fill a constructor's parameter list.
 Creating a dummy can be done as follows:
 
 ```typescript
-// @Tab TypeScript (ESM)
+// @Tab Node - TypeScript (ESM)
 import { Dummy } from "@drashland/rhum";
 
+// Create the class that will become a dummy
 class SomeClass {}
 
-const dummy = Dummy(SomeClass);
+describe("Dummy", () => {
+  test("Dummy() creates a dummy", () => {
+    const dummy = Dummy(SomeClass);
+    expect(Object.getPrototypeOf(dummy)).toBe(true);
+  });
+});
 
-console.log((Object.getPrototypeOf(dummy) === SomeClass) === true);
-
-// @Tab JavaScript (ESM)
+// @Tab Node - JavaScript (ESM)
 import { Dummy } from "@drashland/rhum";
 
+// Create the class that will become a dummy
 class SomeClass {}
 
-const dummy = Dummy(SomeClass);
+describe("Dummy", () => {
+  test("Dummy() creates a dummy", () => {
+    const dummy = Dummy(SomeClass);
+    expect(Object.getPrototypeOf(dummy)).toBe(true);
+  });
+});
 
-console.log((Object.getPrototypeOf(dummy) === SomeClass) === true);
-
-// @Tab CommonJS
+// @Tab Node - CommonJS
 const { Dummy } = require("@drashland/rhum");
 
+// Create the class that will become a dummy
 class SomeClass {}
 
-const dummy = Dummy(SomeClass);
-
-console.log((Object.getPrototypeOf(dummy) === SomeClass) === true);
+describe("Dummy", () => {
+  test("Dummy() creates a dummy", () => {
+    const dummy = Dummy(SomeClass);
+    expect(Object.getPrototypeOf(dummy)).toBe(true);
+  });
+});
 ```
 
 ## Filling Parameter Lists
@@ -60,10 +72,10 @@ the following classes to its constructor:
 - `ServiceTwo`
 - `ServiceThree`
 
-Dummies make this task trivial.
+Dummies make this task trivial. See how below:
 
 ```typescript
-// @Tab TypeScript (ESM)
+// @Tab Node - TypeScript (ESM)
 import { Dummy } from "@drashland/rhum";
 
 // This is the class we want to test
@@ -72,6 +84,8 @@ class Resource {
   #service_two: ServiceTwo;
   #service_three: ServiceThree;
 
+  // These parameters will become dummies since all we need is to fill this
+  // parameter list
   constructor(
     serviceOne: ServiceOne,
     serviceTwo: ServiceTwo,
@@ -82,6 +96,7 @@ class Resource {
     this.#service_three = serviceThree;
   }
 
+  // This is the method we want to test
   doSomething(): string {
     return "I did something!";
   }
@@ -91,19 +106,25 @@ class ServiceOne {}
 class ServiceTwo {}
 class ServiceThree {}
 
-const resource = new Resource(
-  Dummy(ServiceOne),
-  Dummy(ServiceTwo),
-  Dummy(ServiceThree),
-);
+describe("Dummy", () => {
+  test("should allow dummies to be passed into a class' constructor", () => {
+    const resource = new Resource(
+      Dummy(ServiceOne),
+      Dummy(ServiceTwo),
+      Dummy(ServiceThree),
+    );
 
-console.log(resource.doSomething() === "I did something!"); // true
+    expect(resource.doSomething()).toBe("I did something!");
+  });
+});
 
-// @Tab JavaScript (ESM)
+// @Tab Node - JavaScript (ESM)
 import { Dummy } from "@drashland/rhum";
 
 // This is the class we want to test
 class Resource {
+  // These parameters will become dummies since all we need is to fill this
+  // parameter list
   constructor(
     serviceOne,
     serviceTwo,
@@ -114,28 +135,36 @@ class Resource {
     this.service_three = serviceThree;
   }
 
+  // This is the method we want to test
   doSomething() {
     return "I did something!";
   }
 }
 
+// Create the classes that will become dummies
 class ServiceOne {}
 class ServiceTwo {}
 class ServiceThree {}
 
-const resource = new Resource(
-  Dummy(ServiceOne),
-  Dummy(ServiceTwo),
-  Dummy(ServiceThree),
-);
+describe("Dummy", () => {
+  test("should allow dummies to be passed into a class' constructor", () => {
+    const resource = new Resource(
+      Dummy(ServiceOne),
+      Dummy(ServiceTwo),
+      Dummy(ServiceThree),
+    );
 
-console.log(resource.doSomething() === "I did something!"); // true
+    expect(resource.doSomething()).toBe("I did something!");
+  });
+});
 
-// @Tab CommonJS
+// @Tab Node - CommonJS
 const { Dummy } = require("@drashland/rhum");
 
 // This is the class we want to test
 class Resource {
+  // These parameters will become dummies since all we need is to fill this
+  // parameter list
   constructor(
     serviceOne,
     serviceTwo,
@@ -146,20 +175,26 @@ class Resource {
     this.service_three = serviceThree;
   }
 
+  // This is the method we want to test
   doSomething() {
     return "I did something!";
   }
 }
 
+// Create the classes that will become dummies
 class ServiceOne {}
 class ServiceTwo {}
 class ServiceThree {}
 
-const resource = new Resource(
-  Dummy(ServiceOne),
-  Dummy(ServiceTwo),
-  Dummy(ServiceThree),
-);
+describe("Dummy", () => {
+  test("should allow dummies to be passed into a class' constructor", () => {
+    const resource = new Resource(
+      Dummy(ServiceOne),
+      Dummy(ServiceTwo),
+      Dummy(ServiceThree),
+    );
 
-console.log(resource.doSomething() === "I did something!"); // true
+    expect(resource.doSomething()).toBe("I did something!");
+  });
+});
 ```
