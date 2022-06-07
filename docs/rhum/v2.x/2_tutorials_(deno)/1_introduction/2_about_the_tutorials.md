@@ -9,35 +9,49 @@ All tutorials under Test Doubles will have a format similar to the follow:
 - Examples on using the test double
 - How to do verification (if a test double has verification capabilities)
 
-## Important Notes
+## Assumptions
 
-- Since Rhum is an agnostic TypeScript library (e.g., it can be compiled down to
-  CommonJS), the Test Doubles tutorials _DO NOT_ show you how to use a test
-  double in a specific runtime (e.g., Deno or Node). Instead of seeing assertion
-  calls like Jest's `expect()` or Deno's testing module's `assertEquals()`, you
-  will see `console.log()` statements showing some output in example code
-  blocks. For example, the
-  [Test Doubles > Mocks](/rhum/v2.x/tutorials/test-doubles/mocks) tutorial will
-  show something like ...
+The tutorials will assume you are using `Deno.test()`. If you are not using
+`Deno.test()`, you can replace the `Deno.test()` calls with the calls required
+by your test files.
 
-  ```ts
-  const mock = Mock(SomeClass).create();
+## Testing Example Code Blocks
 
-  console.log(mock instanceof SomeClass); // true
-  ```
+When copying and pasting example code blocks, you can run the code by using the
+`deno test` command. For example:
 
-  ... instead of ...
+1. Copy the following into a `my_class_test.ts` file.
 
-  ```ts
-  const mock = Mock(SomeClass).create();
+   ```typescript
+   // my_class_test.ts
 
-  // In Jest ...
-  expect(mock instanceof SomeClass).toBe(true);
+   class MyClass {
+     // Some class members go here
+   }
 
-  // In Deno ...
-  assertEquals(mock instanceof SomeClass, true);
-  ```
+   Deno.test({
+     name: "Some cool test name",
+     fn(): void {
+       return;
+       // An actual implementation of a test is not written here just so we can
+       // be concise about this example. In the real world, this `fn()` block
+       // would have your assertion calls (e.g., `assertEquals(a, b)`).
+     },
+   });
+   ```
 
-- There is work being done to provide tabbed example code blocks so you can see
-  how to use Rhum in a specific syntax in a specific runtime (e.g., Using Node
-  with TypeScript).
+2. Run the following command in the terminal.
+
+   ```bash
+   $ deno test my_class_test.ts
+   ```
+
+   You should see something like the following:
+
+   ```text
+   Check file:///my_class_test.ts
+   running 1 test from ./my_class_test.ts
+   Some cool test name ... ok (6ms)
+
+   test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (51ms)
+   ```

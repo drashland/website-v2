@@ -229,7 +229,7 @@ function in the example code blocks with the function your framework uses.
 
    ```shell
    // @Tab Deno
-   $ deno run app.ts
+   $ deno test
 
    // @Tab Node - TypeScript (ESM)
    # Assumes you have your Node project set up with `yarn test` using Jest, ts-jest, and ts-node
