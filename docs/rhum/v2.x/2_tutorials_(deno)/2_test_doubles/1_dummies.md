@@ -41,7 +41,7 @@ the following classes to its constructor:
 - `ServiceTwo`
 - `ServiceThree`
 
-Dummies make this task trivial.
+Dummies make this task trivial. See how below:
 
 ```ts
 import { Dummy } from "./deps.ts";
