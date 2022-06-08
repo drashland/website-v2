@@ -22,7 +22,7 @@ Per Martin Fowler, based on (Gerard Meszaros):
 > receive a call they don't expect and are checked during verification to ensure
 > they got all the calls they were expecting.
 
-Unlike mocks, mocks are pre-programmed with expectations and verify calls they
+Unlike fakes, mocks are pre-programmed with expectations and verify calls they
 expect to receive. Mocks do not have verification logic. Furthermore, mocks are
 used to verify behavior. If you want to verify state, then you should use a
 [Mock](/rhum/v2.x/tutorials/test-doubles/mocks).
