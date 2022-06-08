@@ -102,7 +102,7 @@ console.log(myObject.some_property === "YOU GOT CHANGED!!!!"); // true
 
 ### Methods
 
-Below is how you can stub a method wit ha given value.
+Below is how you can stub a method with a given value.
 
 ```ts
 class MyClass {
