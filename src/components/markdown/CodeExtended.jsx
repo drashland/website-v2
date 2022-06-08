@@ -8,10 +8,10 @@ import { Pre } from "../Markdown";
 
 const ACCEPTED_CODE_TAB_NAMES = [
   "Browser",
-  "CommonJS",
+  "Node - CommonJS",
   "Deno",
-  "JavaScript (ESM)",
-  "TypeScript (ESM)",
+  "Node - JavaScript (ESM)",
+  "Node - TypeScript (ESM)",
   "Yarn",
   "npm",
 ];
@@ -104,9 +104,7 @@ export default function CodeExtension({
       return false;
     }
 
-    return codeTabName.includes("TypeScript (ESM)")
-      || codeTabName.includes("JavaScript (ESM)")
-      || codeTabName.includes("CommonJS")
+    return codeTabName.includes("Node");
   }
 
   /**
