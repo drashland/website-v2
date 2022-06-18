@@ -502,7 +502,7 @@ In the below example, we are verifying that `someFunc(...)` was called with the
 given args: `"hello", true, ["world"]`.
 
 ```typescript
-// @Tab Node - TypesScript (ESM)
+// @Tab Node - TypeScript (ESM)
 // some.test.ts
 
 import { Spy } from "@drashland/rhum";
