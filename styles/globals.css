@@ -186,3 +186,7 @@ pre.code {
   display: block;
   width: 100%;
 }
+
+pre.language-ts {
+  padding: 0;
+}

@@ -158,7 +158,7 @@ least once. This is done by calling `.toBeCalled()` without passing in a number
 arg.
 
 ```typescript
-// @Tab - TypeScript (ESM)
+// @Tab Node - TypeScript (ESM)
 // some.test.ts
 
 import { Spy } from "@drashland/rhum";

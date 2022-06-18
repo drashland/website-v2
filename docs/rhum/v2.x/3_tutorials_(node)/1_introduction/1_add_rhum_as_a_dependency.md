@@ -27,18 +27,18 @@ since they will contain `import` or `require` statements using `@drashland/rhum`
 in code blocks like so:
 
 ```typescript
-// @Tab Node (ESM TS)
-// some_file.ts
+// @Tab Node - TypeScript (ESM)
+// some.test.ts
 
 import { Dummy, Fake, Mock, Spy, Stub } from "@drashland/rhum";
 
-// @Tab Node (ESM JS)
-// some_file.js
+// @Tab Node - JavaScript (ESM)
+// some.test.js
 
 import { Dummy, Fake, Mock, Spy, Stub } from "@drashland/rhum";
 
-// @Tab Node (CJS)
-// some_file.js
+// @Tab Node - CommonJS
+// some.test.js
 
 const { Dummy, Fake, Mock, Spy, Stub } = require("@drashland/rhum");
 ```
