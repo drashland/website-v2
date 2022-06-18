@@ -131,7 +131,7 @@ function in the example code blocks with the function your framework uses.
    });
 
    // @Tab Node - JavaScript (ESM)
-   // my_test.test.js
+   // my_class.test.js
    //
    // The below code assumes you are using Jest
    //
@@ -178,7 +178,7 @@ function in the example code blocks with the function your framework uses.
    });
 
    // @Tab Node - CommonJS
-   // my_test.test.js
+   // my_class.test.js
    //
    // The below code assumes you are using Jest
    //

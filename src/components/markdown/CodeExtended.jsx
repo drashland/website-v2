@@ -182,7 +182,7 @@ export default function CodeExtension({
             );
           })}
         </div>
-        <div style={{ padding: "1rem" }}>
+        <div className="code-blocks">
           {tabs.map((codeBlock, index) => {
             const tabName = getTabNameFromCodeBlock(codeBlock);
 

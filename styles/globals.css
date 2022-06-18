@@ -201,3 +201,7 @@ pre pre {
 pre pre code {
   padding: 0 !important;
 }
+
+.code-blocks code {
+  padding: 1rem !important;
+}
