@@ -60,6 +60,7 @@ export default function CodeExtension({
   className = className?.replace("lang-", " language-") || "";
   const [activeTab, setActiveTab] = useState(null);
 
+  // deno-lint-ignore no-window-prefix
   window.addEventListener("changeCodeBlockActiveTab", (e) => {
     setActiveTab(e.data);
   });
@@ -169,6 +170,7 @@ export default function CodeExtension({
                 key={`tab-name-${tab}`}
                 name={tabName}
                 onClick={() => {
+                  // deno-lint-ignore no-window-prefix
                   window.dispatchEvent(new MessageEvent("changeCodeBlockActiveTab", {
                     data: tabName
                   }));
