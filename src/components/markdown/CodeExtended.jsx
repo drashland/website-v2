@@ -180,26 +180,28 @@ export default function CodeExtension({
             );
           })}
         </div>
-        {tabs.map((codeBlock, index) => {
-          const tabName = getTabNameFromCodeBlock(codeBlock);
+        <div style={{ padding: "1rem" }}>
+          {tabs.map((codeBlock, index) => {
+            const tabName = getTabNameFromCodeBlock(codeBlock);
 
-          return (
-            <div
-              key={codeBlock + index}
-              style={{
-                display: activeTab === tabName ? "block" : "none",
-              }}
-            >
-              <Pre>
-                <code
-                  className={getPrismJsClassNameForCodeBlock(tabName)}
-                >
-                  {renderCodeBlockWithoutTabName(codeBlock, tabName)}
-                </code>
-              </Pre>
-            </div>
-          );
-        })}
+            return (
+              <div
+                key={codeBlock + index}
+                style={{
+                  display: activeTab === tabName ? "block" : "none",
+                }}
+              >
+                <Pre>
+                  <code
+                    className={getPrismJsClassNameForCodeBlock(tabName)}
+                  >
+                    {renderCodeBlockWithoutTabName(codeBlock, tabName)}
+                  </code>
+                </Pre>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }

@@ -182,11 +182,22 @@ select {
   user-select: none;
 }
 
-pre.code {
-  display: block;
-  width: 100%;
+pre[class*=language-] {
+  padding: 0 !important;
+  margin: 0.5em 0 !important;
+  overflow: auto !important;
 }
 
-pre.language-ts {
-  padding: 0;
+pre code {
+  display: block;
+  width: 100%;
+  padding: 1rem !important;
+}
+
+pre pre {
+  border-radius: 0 !important;
+}
+
+pre pre code {
+  padding: 0 !important;
 }
