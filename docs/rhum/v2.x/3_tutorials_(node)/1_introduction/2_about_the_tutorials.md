@@ -2,14 +2,10 @@
 
 ## Assumptions
 
-The tutorials will assume you have a testing framework installed (e.g., Jest,
-Jasmine, something using `describe()/it()/test()` functions). When copying and
-pasting code from example code blocks, please make sure you correct the syntax
-to match your testing framework's syntax.
-
-If you are not yet using a testing framework, you can see how to set up
-different kinds in the left navigation under
-[Test Framework Setup](/rhum/v2.x/tutorials-node/test-framework-setup).
+The tutorials will assume you have a testing framework installed (e.g., Jest or
+something using `describe()/it()/test()` functions). When copying and pasting
+code from example code blocks, please make sure you correct the syntax to match
+your testing framework's syntax.
 
 ## Tabbed Example Code Blocks
 
