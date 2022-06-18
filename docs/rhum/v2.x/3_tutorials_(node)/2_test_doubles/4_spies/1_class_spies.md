@@ -35,8 +35,7 @@ members with `"spy-stubbed"` (e.g., calling a method on the spy will result in a
 
 - You do not need a class with working implementations
 - You just want to know how the class was used (e.g., what args were used when
-  one of its methods were called or how many times one of its methods was
-  called)
+  one of its methods were was or how many times one of its methods was called)
 
 ## Creating a Class Spy
 
@@ -85,7 +84,7 @@ describe("Spy", () => {
   });
 });
 
-// @Tab - CommonJS
+// @Tab Node - CommonJS
 const { Spy } = require("@drashland/rhum");
 
 // Create the class that will be spied on
@@ -419,7 +418,7 @@ describe("Spy", () => {
 // @Tab Node - CommonJS
 // some.test.js
 
-import { Spy } from "@drashland/rhum";
+const { Spy } = require("@drashland/rhum");
 
 // Create the class that will be spied on
 class MyClass {
