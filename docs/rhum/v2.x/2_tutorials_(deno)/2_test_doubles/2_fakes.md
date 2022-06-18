@@ -22,7 +22,7 @@ Unlike mocks, fakes do not verify calls. For example, you cannot verify that a
 fake's method was called once. Fakes are used to verify state whereas mocks are
 used to verify behavior (e.g., verifying that a call was made). If you want to
 verify calls made during a test or verify behavior in general, then you should
-use a [Mock](/rhum/v2.x/tutorials/test-doubles/mocks).
+use a [Mock](/rhum/v2.x/tutorials-deno/test-doubles/mocks).
 
 In this tutorial, you will learn how to create fakes:
 
@@ -105,9 +105,9 @@ class Service {
   #repository: Repository;
 
   constructor(
-    serviceOne: Repository,
+    repository: Repository,
   ) {
-    this.#repository = serviceOne;
+    this.#repository = repository;
   }
 
   public getUsers(): { name: string }[] {
@@ -203,9 +203,9 @@ class Service {
   #repository: Repository;
 
   constructor(
-    serviceOne: Repository,
+    repository: Repository,
   ) {
-    this.#repository = serviceOne;
+    this.#repository = repository;
   }
 
   public getUsers(): { name: string }[] {
@@ -221,12 +221,13 @@ class Repository {
   public anotha_one_called = false;
   public do_something_called = false;
   public do_something_else_called = false;
-  #db_connection = null;
+  #database_connection;
+
+  constructor(databaseConnection: any) {
+    this.#database_connection = databaseConnection;
+  }
 
   public findAllUsers(): { name: string }[] {
-    if (!this.#db_connection) {
-      throw new Error("Database connection issue.");
-    }
     this.#doSomething();
     this.#doSomethingElse();
     this.#anothaOne();
@@ -244,22 +245,50 @@ class Repository {
   }
 
   #anothaOne() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
     this.anotha_one_called = true;
   }
 
   #doSomething() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
     this.do_something_called = true;
   }
 
   #doSomethingElse() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
     this.do_something_else_called = true;
   }
 }
 
 // Assert that the fake can throw an error immediately
 
-const fakeRepositoryThrowingError = Fake(Repository).create();
+const fakeRepositoryThrowingError = Fake(Repository)
+  .withConstructorArgs("some database connection")
+  .create();
 
+// Make the Fake throw an `Error` with the `Database connection issue.`
+// message when `findAllUsers()` is called.
+//
+// Since the Fake was created with the `databaseConnection` constructor arg,
+// its implementation will have `this.#database_connection` as truthy. This
+// means the Fake (by default) will NOT throw errors when the following
+// calls in the Fake are made:
+//
+//     - this.#doSomething();
+//     - this.#doSomethingElse();
+//     - this.#anothaOne();
+//
+// So here we are telling the Fake to throw an error instead of calling its
+// original `findAllUsers()` implementation.
 fakeRepositoryThrowingError
   .method("findAllUsers")
   .willThrow(new Error("Database connection issue."));

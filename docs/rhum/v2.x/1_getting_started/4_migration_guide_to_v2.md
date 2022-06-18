@@ -1,5 +1,8 @@
 # Migration Guide to v2
 
+_Note: This migration guide is for Deno users using Rhum v1 and wanting to
+migrate to Rhum v2. Rhum v1 was not released in the Node ecosystem._
+
 Below are sections pertaining to parts of Rhum that have changed. There are
 example code blocks highlighted similarly to Git diffs. The `-` red lines are
 what was removed and the `+` green lines are what was added. The `+` green lines

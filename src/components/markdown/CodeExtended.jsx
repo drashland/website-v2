@@ -8,10 +8,12 @@ import { Pre } from "../Markdown";
 
 const ACCEPTED_CODE_TAB_NAMES = [
   "Browser",
+  "Node - CommonJS",
   "Deno",
-  "Node (CJS)",
-  "Node (ESM JS)",
-  "Node (ESM TS)",
+  "Node - JavaScript (ESM)",
+  "Node - TypeScript (ESM)",
+  "Yarn",
+  "npm",
 ];
 
 const Code = styled.code`
@@ -56,7 +58,12 @@ export default function CodeExtension({
   // Let's make sure we always have a string as a class name before running
   // through this component's functions
   className = className?.replace("lang-", " language-") || "";
-  const [activeTab, setActiveTab] = useState("Deno");
+  const [activeTab, setActiveTab] = useState(null);
+
+  // deno-lint-ignore no-window-prefix
+  window.addEventListener("changeCodeBlockActiveTab", (e) => {
+    setActiveTab(e.data);
+  });
 
   /**
    * Get the Prims.js class name for the a code block.
@@ -68,11 +75,12 @@ export default function CodeExtension({
     }
 
     if (isNodeTab(name)) {
+      // Default to JavaScript
       let language = "language-javascript";
       if (isNodeTabForTypeScript(name)) {
         language = "language-typescript";
       }
-      return className.replace(/language-typescript/g, language);
+      return className.replace(/language-(ts|typescript)/g, language);
     }
 
     // If we get here, let's make sure we check that a language was specified.
@@ -93,7 +101,11 @@ export default function CodeExtension({
    * @returns True if yes, false if no.
    */
   function isNodeTab(codeTabName) {
-    return codeTabName?.includes("Node");
+    if (!codeTabName) {
+      return false;
+    }
+
+    return codeTabName.includes("Node");
   }
 
   /**
@@ -102,7 +114,7 @@ export default function CodeExtension({
    * @returns True if yes, false if no.
    */
   function isNodeTabForTypeScript(codeTabName) {
-    return codeTabName?.toLowerCase().includes("ESM TS");
+    return codeTabName?.includes("TypeScript");
   }
 
   /**
@@ -157,33 +169,41 @@ export default function CodeExtension({
                 activeTab={activeTab}
                 key={`tab-name-${tab}`}
                 name={tabName}
-                onClick={() => setActiveTab(tabName)}
+                onClick={() => {
+                  // deno-lint-ignore no-window-prefix
+                  window.dispatchEvent(new MessageEvent("changeCodeBlockActiveTab", {
+                    data: tabName
+                  }));
+                  // setActiveTab(tabName)
+                }}
               >
                 {tabName}
               </Tab>
             );
           })}
         </div>
-        {tabs.map((codeBlock, index) => {
-          const tabName = getTabNameFromCodeBlock(codeBlock);
+        <div className="code-blocks">
+          {tabs.map((codeBlock, index) => {
+            const tabName = getTabNameFromCodeBlock(codeBlock);
 
-          return (
-            <div
-              key={codeBlock + index}
-              style={{
-                display: activeTab === tabName ? "block" : "none",
-              }}
-            >
-              <Pre>
-                <code
-                  className={getPrismJsClassNameForCodeBlock(tabName)}
-                >
-                  {renderCodeBlockWithoutTabName(codeBlock, tabName)}
-                </code>
-              </Pre>
-            </div>
-          );
-        })}
+            return (
+              <div
+                key={codeBlock + index}
+                style={{
+                  display: activeTab === tabName ? "block" : "none",
+                }}
+              >
+                <Pre>
+                  <code
+                    className={getPrismJsClassNameForCodeBlock(tabName)}
+                  >
+                    {renderCodeBlockWithoutTabName(codeBlock, tabName)}
+                  </code>
+                </Pre>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
@@ -230,6 +250,10 @@ export default function CodeExtension({
 
     // If `tabs` is greater than 0, then the code block has // @Tab sections
     if (tabs.length > 0) {
+      // Set the first tab as the active tab
+      if (!activeTab) {
+        setActiveTab(getTabNameFromCodeBlock(tabs[0]));
+      }
       return renderTabbedCodeBlocks(tabs);
     }
   }

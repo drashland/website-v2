@@ -17,6 +17,8 @@ export function convertFilenameToURL(filename) {
     })
     .join("/") // Put back the filename with number prefixes removed
     .replace("docs", "/") // The `/docs` part of the filename is not used in the URL
+    .replace("(node)", "node") // The `(node)` part of the filename should not have parens
+    .replace("(deno)", "deno") // The `(deno)` part of the filename should not have parens
     .replace(/_/g, "-") // Make URLs look like `/some-path` and not `/some_path`
     .replace(".md", "") // The `.md` extension of the filename is not used in the URL
     .replace(/\/\//g, "/"); // In case we ended up with double slashes, clean them up
