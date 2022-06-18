@@ -35,8 +35,7 @@ members with `"spy-stubbed"` (e.g., calling a method on the spy will result in a
 
 - You do not need a class with working implementations
 - You just want to know how the class was used (e.g., what args were used when
-  one of its methods were called or how many times one of its methods was
-  called)
+  one of its methods was called or how many times one of its methods was called)
 
 ## Creating a Class Spy
 
