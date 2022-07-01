@@ -35,6 +35,23 @@ export { ResourceLoaderService } from "https://deno.land/x/drash@<VERSION>/src/s
 Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest
 version can be found [here](https://github.com/drashland/drash/releases/latest).
 
+If you are using this service to load ALL of your resources, then the
+`resources` server config is not required. For example:
+
+```typescript
+...
+...
+...
+
+const server = new Drash.Server({
+  hostname: "0.0.0.0",
+  port: 1447,
+  protocol: "http",
+  // resources: [] <--- Not required anymore if you are loading all of your resources via ResourceLoaderService
+  services: [resourceLoaderService],
+});
+```
+
 ## Folder Structure End State
 
 ```text
