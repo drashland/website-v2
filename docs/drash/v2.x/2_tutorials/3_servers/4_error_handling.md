@@ -99,7 +99,8 @@ Things to note:
     of one.
   - The `connInfo` parameter is the connection info of the current request. See
     [the documentation page for this in Deno](https://doc.deno.land/https://deno.land/std/http/mod.ts/~/ConnInfo).
-    This parameter is optional should you wish to omit it if you are not planning to use it.
+    This parameter is optional should you wish to omit it if you are not
+    planning to use it.
 
 ## Folder Structure End State
 
