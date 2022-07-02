@@ -32,13 +32,34 @@ in code blocks like so:
 
 import { Dummy, Fake, Mock, Spy, Stub } from "@drashland/rhum";
 
+// Now you can call the test doubles
+const dummy = Dummy(...);
+const fake = Fake(...);
+const mock = Mock(...);
+const spy = Spy(...);
+const stub = Stub(...);
+
 // @Tab Node - JavaScript (ESM)
 // some.test.js
 
 import { Dummy, Fake, Mock, Spy, Stub } from "@drashland/rhum";
 
+// Now you can call the test doubles
+const dummy = Dummy(...);
+const fake = Fake(...);
+const mock = Mock(...);
+const spy = Spy(...);
+const stub = Stub(...);
+
 // @Tab Node - CommonJS
 // some.test.js
 
 const { Dummy, Fake, Mock, Spy, Stub } = require("@drashland/rhum");
+
+// Now you can call the test doubles
+const dummy = Dummy(...);
+const fake = Fake(...);
+const mock = Mock(...);
+const spy = Spy(...);
+const stub = Stub(...);
 ```

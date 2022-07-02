@@ -21,6 +21,20 @@ them in to fill a constructor's parameter list.
 Creating a dummy can be done as follows:
 
 ```typescript
+// @Tab Deno
+import { assertEquals, Dummy } from "./deps.ts";
+
+class SomeClass {}
+
+const dummy = Dummy(SomeClass);
+
+Deno.test("Dummy", async (t) => {
+  await t.step("Dummy() creates a dummy", async (t) => {
+    const dummy = Dummy(SomeClass);
+    assertEquals(Object.getPrototypeOf(dummy), true);
+  });
+});
+
 // @Tab Node - TypeScript (ESM)
 import { Dummy } from "@drashland/rhum";
 
@@ -75,6 +89,49 @@ the following classes to its constructor:
 Dummies make this task trivial. See how below:
 
 ```typescript
+// @Tab Deno
+import { assertEquals, Dummy } from "./deps.ts";
+
+// This is the class we want to test
+class Resource {
+  #service_one: ServiceOne;
+  #service_two: ServiceTwo;
+  #service_three: ServiceThree;
+
+  constructor(
+    serviceOne: ServiceOne,
+    serviceTwo: ServiceTwo,
+    serviceThree: ServiceThree,
+  ) {
+    this.#service_one = serviceOne;
+    this.#service_two = serviceTwo;
+    this.#service_three = serviceThree;
+  }
+
+  public doSomething(): string {
+    return "I did something!";
+  }
+}
+
+class ServiceOne {}
+class ServiceTwo {}
+class ServiceThree {}
+
+Deno.test("Dummy", async (t) => {
+  await t.step(
+    "should allow dummies to be passed into a class' constructor",
+    async (t) => {
+      const resource = new Resource(
+        Dummy(ServiceOne),
+        Dummy(ServiceTwo),
+        Dummy(ServiceThree),
+      );
+
+      assertEquals(resource.doSomething(), "I did something!");
+    },
+  );
+});
+
 // @Tab Node - TypeScript (ESM)
 import { Dummy } from "@drashland/rhum";
 

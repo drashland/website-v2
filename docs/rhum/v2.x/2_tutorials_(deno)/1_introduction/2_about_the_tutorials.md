@@ -11,47 +11,82 @@ All tutorials under Test Doubles will have a format similar to the follow:
 
 ## Assumptions
 
-The tutorials will assume you are using `Deno.test()`. If you are not using
-`Deno.test()`, you can replace the `Deno.test()` calls with the calls required
-by your test files.
+### Deno Code Blocks
 
-## Testing Example Code Blocks
+The Deno code blocks will assume you are using `Deno.test()`. If you are not
+using `Deno.test()`, you can replace the `Deno.test()` calls with the calls
+required by your test files.
 
-When copying and pasting example code blocks, you can run the code by using the
-`deno test` command. For example:
+### Node Code Blocks
 
-1. Copy the following into a `my_class_test.ts` file.
+The Node code blocks will assume you have a testing framework installed (e.g.,
+Jest or something using `describe()/it()/test()` functions). When copying and
+pasting code from example code blocks, please make sure you correct the syntax
+to match your testing framework's syntax.
+
+## Tabbed Example Code Blocks
+
+Most tutorials will contain example code blocks with tabs. These tabs will be
+labeled as follows:
+
+- Deno: Used to show how to use Rhum in Deno
+- Node - TypeScript (ESM): Used to show how to use Rhum with TypeScript in
+  [JavaScript module syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+  (e.g., using `import` statements and `ts-node`).
+- Node - JavaScript (ESM): Used to show how to use Rhum with JavaScript in
+  [JavaScript module syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+  (e.g., using `import` statements).
+- Node - CommonJS: Used to show how to use Rhum with JavaScript using `require`
+  statements.
+
+An example of a tutorial seen below:
+
+1. Write your test.
 
    ```typescript
-   // my_class_test.ts
+   // @Tab Deno
+   import { Fake } from "./deps.ts";
+   // my_test.ts
 
-   class MyClass {
-     // Some class members go here
-   }
+   // ... rest of code
 
-   Deno.test({
-     name: "Some cool test name",
-     fn(): void {
-       return;
-       // An actual implementation of a test is not written here just so we can
-       // be concise about this example. In the real world, this `fn()` block
-       // would have your assertion calls (e.g., `assertEquals(a, b)`).
-     },
-   });
+   // @Tab Node - TypeScript (ESM)
+   // my.test.ts
+
+   import { Fake } from "@drashland/rhum";
+
+   // ... rest of code
+
+   // @Tab Node - JavaScript (ESM)
+   // my.test.js
+
+   import { Fake } from "@drashland/rhum";
+
+   // ... rest of code
+
+   // @Tab Node - CommonJS
+   // my.test.js
+
+   const { Fake } = require("@drashland/rhum");
+
+   // ... rest of code
    ```
 
-2. Run the following command in the terminal.
+1. Run your test.
 
    ```bash
-   $ deno test my_class_test.ts
-   ```
+   // @Tab Deno
+   $ deno test my_test.ts
 
-   You should see something like the following:
+   // @Tab Node - TypeScript (ESM)
 
-   ```text
-   Check file:///my_class_test.ts
-   running 1 test from ./my_class_test.ts
-   Some cool test name ... ok (6ms)
+   $ ts-node my.test.ts
 
-   test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (51ms)
+   // @Tab Node - JavaScript (ESM)
+
+   $ node my.test.js
+
+   // @Tab Node - CommonJS
+
+   $ node my.test.js
    ```
