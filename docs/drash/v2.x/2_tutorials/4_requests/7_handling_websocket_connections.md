@@ -9,7 +9,8 @@
 
 ## Before You Get Started
 
-You can upgrade connections to a WebSocket using the following in a resource:
+You can upgrade connections to a WebSocket using the following in a resource's
+HTTP method:
 
 ```typescript
 const { socket, response: socketResponse } = Deno.upgradeWebSocket(request);
@@ -46,172 +47,176 @@ In this tutorial, you will learn how to create a WebSocket connection using
 
 ## Steps
 
+1. {{ placeholder: create_deps_file_step_drash }}
+
 1. Create your `app.ts` file. Your resource in this file will check to see if a
    request wants to upgrade to a WebSocket connection.
 
-```typescript
-import { Drash } from "./deps.ts";
+   ```typescript
+   // File: app.ts
 
-// Create your resource
+   import { Drash } from "./deps.ts";
 
-class HomeResource extends Drash.Resource {
-  public paths = ["/"];
+   // Create your resource
 
-  public GET(request: Drash.Request, response: Drash.Response): void {
-    // If all of the requirements to upgrade a connection to a WebSocket are
-    // met, then upgrade the connection to a WebSocket
-    if (
-      request.headers.has("connection") &&
-      request.headers.has("upgrade") &&
-      request.headers.get("connection")!.toLowerCase().includes("upgrade") &&
-      request.headers.get("upgrade")!.toLowerCase() == "websocket"
-    ) {
-      try {
-        const {
-          socket,
-          response: socketResponse,
-        } = Deno.upgradeWebSocket(request);
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
 
-        this.#addEventHandlers(socket);
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       // If all of the requirements to upgrade a connection to a WebSocket are
+       // met, then upgrade the connection to a WebSocket
+       if (
+         request.headers.has("connection") &&
+         request.headers.has("upgrade") &&
+         request.headers.get("connection")!.toLowerCase().includes("upgrade") &&
+         request.headers.get("upgrade")!.toLowerCase() == "websocket"
+       ) {
+         try {
+           const {
+             socket,
+             response: socketResponse,
+           } = Deno.upgradeWebSocket(request);
 
-        return response.upgrade(socketResponse);
-      } catch (error) {
-        console.log(error);
-        return response.text(error);
-      }
-    }
+           this.#addEventHandlers(socket);
 
-    // Otherwise, just send a message
-    return response.text("Hello!");
-  }
+           return response.upgrade(socketResponse);
+         } catch (error) {
+           console.log(error);
+           return response.text(error);
+         }
+       }
 
-  #addEventHandlers(socket: WebSocket): void {
-    // When the connection opens, log that it has been opened
-    socket.onopen = () => {
-      console.log("WebSocket connection opened!");
-    };
+       // Otherwise, just send a message
+       return response.text("Hello!");
+     }
 
-    // When a message is received from the client, log it and send a message to
-    // the client confirming that the message was received
-    socket.onmessage = (e: MessageEvent) => {
-      console.log(`Message received:`, e.data);
-      socket.send(`We received your message! You sent: ${e.data}`);
-    };
+     #addEventHandlers(socket: WebSocket): void {
+       // When the connection opens, log that it has been opened
+       socket.onopen = () => {
+         console.log("WebSocket connection opened!");
+       };
 
-    // When the connection closes, log that it has been closed
-    socket.onclose = () => {
-      console.log("Connection closed.");
-    };
+       // When a message is received from the client, log it and send a message to
+       // the client confirming that the message was received
+       socket.onmessage = (e: MessageEvent) => {
+         console.log(`Message received:`, e.data);
+         socket.send(`We received your message! You sent: ${e.data}`);
+       };
 
-    // When an error occurs during the connection, log the error
-    socket.onerror = (e: Event) => {
-      console.log("WebSocket error:", e);
-      socket.send(`Woops! We hit a snag: ${e}`);
-    };
-  }
-}
+       // When the connection closes, log that it has been closed
+       socket.onclose = () => {
+         console.log("Connection closed.");
+       };
 
-// Create and run your server
+       // When an error occurs during the connection, log the error
+       socket.onerror = (e: Event) => {
+         console.log("WebSocket error:", e);
+         socket.send(`Woops! We hit a snag: ${e}`);
+       };
+     }
+   }
 
-const server = new Drash.Server({
-  hostname: "localhost",
-  port: 1447,
-  protocol: "http",
-  resources: [
-    HomeResource,
-  ],
-});
+   // Create and run your server
 
-server.run();
+   const server = new Drash.Server({
+     hostname: "localhost",
+     port: 1447,
+     protocol: "http",
+     resources: [
+       HomeResource,
+     ],
+   });
 
-console.log(`Server running at ${server.address}.`);
-```
+   server.run();
+
+   console.log(`Server running at ${server.address}.`);
+   ```
 
 ## Verification
 
 1. Run your app.
 
-```shell
-$ deno run --allow-net app.ts
-```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Open up the Deno REPL using the `deno` command.
 
-```shell
-$ deno
-```
+   ```shell
+   $ deno
+   ```
 
-You should something similar to the following after entering the command:
+   You should something similar to the following after entering the command:
 
-```text
-Deno <your Deno version here>
-exit using ctrl+d or close()
->
-```
+   ```text
+   Deno <your Deno version here>
+   exit using ctrl+d or close()
+   >
+   ```
 
 3. Create a WebSocket connection in the Deno REPL.
 
-```shell
-> const ws = new WebSocket("ws://localhost:1447");
-```
+   ```shell
+   > const ws = new WebSocket("ws://localhost:1447");
+   ```
 
-You should see the following after creating the connection:
+   You should see the following after creating the connection:
 
-```text
-> const ws = new WebSocket("ws://localhost:1447");
-undefined
->
-```
+   ```text
+   > const ws = new WebSocket("ws://localhost:1447");
+   undefined
+   >
+   ```
 
 4. Check the terminal that you used to run your `app.ts` file. You should see
    the following:
 
-```text
-Server running at http://localhost:1447.
-WebSocket connection opened!
-```
+   ```text
+   Server running at http://localhost:1447.
+   WebSocket connection opened!
+   ```
 
 5. Go back to the terminal where you created your WebSocket connection in the
    Deno REPL.
 
 6. Create an event handler to receive messages from the server.
 
-```text
-> ws.onmessage = (e) => console.log(e.data);
-```
+   ```text
+   > ws.onmessage = (e) => console.log(e.data);
+   ```
 
-You should see the following:
+   You should see the following:
 
-```text
-> ws.onmessage = (e) => console.log(e.data);
-[Function]
->
-```
+   ```text
+   > ws.onmessage = (e) => console.log(e.data);
+   [Function]
+   >
+   ```
 
 7. Now send a message to the server from the Deno REPL.
 
-```text
-> ws.send("Is there anybody out there?!");
-```
+   ```text
+   > ws.send("Is there anybody out there?!");
+   ```
 
-Since the server has the following code ...
+   Since the server has the following code ...
 
-```typescript
-socket.onmessage = (e: MessageEvent) => {
-  console.log(`Message received:`, e.data);
-  socket.send(`We received your message! You sent: ${e.data}`);
-};
-```
+   ```typescript
+   socket.onmessage = (e: MessageEvent) => {
+     console.log(`Message received:`, e.data);
+     socket.send(`We received your message! You sent: ${e.data}`);
+   };
+   ```
 
-... you should receive the following message back:
+   ... you should receive the following message back:
 
-```text
-> We received your message! You sent: Is there anybody out there?!
-```
+   ```text
+   > We received your message! You sent: Is there anybody out there?!
+   ```
 
 8. Go to the terminal that you used to run your `app.ts` file. You should see
    the following:
 
-```text
-Message received: Is there anybody out there?!
-```
+   ```text
+   Message received: Is there anybody out there?!
+   ```

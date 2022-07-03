@@ -25,19 +25,18 @@ with serving static files such as CSS and JavaScript files.
 
 ## Before You Get Started
 
-To use this service, edit your `deps.ts` file to include the service.
+{{ placeholder: edit_your_deps_file_to_include_the_service }}
 
 ```typescript
-// deps.ts
+// File: deps.ts
 
-...
-...
-...
-export { ETagService } from "https://deno.land/x/drash@<VERSION>/src/services/etag/etag.ts";
+// @Export drash_from_deno_no_version_comment
+// @Export etag_service_from_deno_no_version_comment
+// ... rest
+// ... of
+// ... your
+// ... deps
 ```
-
-Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest
-version can be found [here](https://github.com/drashland/drash/releases/latest).
 
 ## Folder Structure End State
 
@@ -49,100 +48,100 @@ version can be found [here](https://github.com/drashland/drash/releases/latest).
 
 ## Steps
 
-1. Create your `app.ts` file.
+1. Create your `app.ts` file. This assumes you edited your `deps.ts` file above.
 
-```typescript
-// app.ts
+   ```typescript
+   // File: app.ts
 
-import { Drash, ETagService } from "./deps.ts";
+   import { Drash, ETagService } from "./deps.ts";
 
-// Instantiate the service
-//
-// By default, this will set ETags to use a "strong validator". You can supply
-// the `weak` config to make this service use a "weak validator" like so:
-//
-//     const etag = new ETagService({ weak: true });
-//
-const etag = new ETagService();
+   // Instantiate the service
+   //
+   // By default, this will set ETags to use a "strong validator". You can supply
+   // the `weak` config to make this service use a "weak validator" like so:
+   //
+   //     const etag = new ETagService({ weak: true });
+   //
+   const etag = new ETagService();
 
-// Create your resource
+   // Create your resource
 
-class HomeResource extends Drash.Resource {
-  public paths = ["/"];
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
 
-  // Tell the resource what HTTP methods should have an ETag header set. In this
-  // case, we are telling the resource to set it on the GET method. This means
-  // all responses to GET requests will contain an ETag header.
-  public services = {
-    GET: [etag],
-  };
+     // Tell the resource what HTTP methods should have an ETag header set. In this
+     // case, we are telling the resource to set it on the GET method. This means
+     // all responses to GET requests will contain an ETag header.
+     public services = {
+       GET: [etag],
+     };
 
-  public GET(request: Drash.Request, response: Drash.Response): void {
-    return response.html(`<p>Hello world!</p>`);
-  }
-}
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       return response.html(`<p>Hello world!</p>`);
+     }
+   }
 
-// Create and run your server
+   // Create and run your server
 
-const server = new Drash.Server({
-  hostname: "localhost",
-  port: 1447,
-  protocol: "http",
-  resources: [
-    HomeResource,
-  ],
-});
+   const server = new Drash.Server({
+     hostname: "localhost",
+     port: 1447,
+     protocol: "http",
+     resources: [
+       HomeResource,
+     ],
+   });
 
-server.run();
+   server.run();
 
-console.log(`Server running at ${server.address}.`);
-```
+   console.log(`Server running at ${server.address}.`);
+   ```
 
 ## Verification
 
 1. Run your app.
 
-```shell
-$ deno run --allow-net app.ts
-```
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
 
 2. Using `curl` (or similar command), make a `GET` request to
    `http://localhost:1447`.
 
-```shell
-$ curl -v http://localhost:1447
-```
+   ```shell
+   $ curl -v http://localhost:1447
+   ```
 
-You should receive a response similar to the following:
+   You should receive a response similar to the following:
 
-```text
-*   Trying ::1...
-* TCP_NODELAY set
-* Connection failed
-* connect to ::1 port 1447 failed: Connection refused
-*   Trying 127.0.0.1...
-* TCP_NODELAY set
-* Connected to localhost (127.0.0.1) port 1447 (#0)
-> GET / HTTP/1.1
-> Host: localhost:1447
-> User-Agent: curl/7.64.1
-> Accept: */*
->
-< HTTP/1.1 200
-< content-type: text/html;charset=UTF-8
-< content-length: 19
-< date: Tue, 19 Oct 2021 12:21:20 GMT
-< etag: "25-abcdefghijk"
-< last-modified: Tue, 19 Oct 2021 12:21:20 GMT
-<
-```
+   ```text
+   *   Trying ::1...
+   * TCP_NODELAY set
+   * Connection failed
+   * connect to ::1 port 1447 failed: Connection refused
+   *   Trying 127.0.0.1...
+   * TCP_NODELAY set
+   * Connected to localhost (127.0.0.1) port 1447 (#0)
+   > GET / HTTP/1.1
+   > Host: localhost:1447
+   > User-Agent: curl/7.64.1
+   > Accept: */*
+   >
+   < HTTP/1.1 200
+   < content-type: text/html;charset=UTF-8
+   < content-length: 19
+   < date: Tue, 19 Oct 2021 12:21:20 GMT
+   < etag: "25-abcdefghijk"
+   < last-modified: Tue, 19 Oct 2021 12:21:20 GMT
+   <
+   ```
 
-As you can see, the response supplied the `ETag` header. This means that this
-exact response body is identified by that value. Should you make another
-request, the response time should be faster, though in our case it may not be
-because our resource is very small. If you change the content of the response
-body and make a new request, you no longer receive a cached response, but a new
-`ETag` is set for this body to follow up subsequent requests.
+   As you can see, the response supplied the `ETag` header. This means that this
+   exact response body is identified by that value. Should you make another
+   request, the response time should be faster, though in our case it may not be
+   because our resource is very small. If you change the content of the response
+   body and make a new request, you no longer receive a cached response, but a
+   new `ETag` is set for this body to follow up subsequent requests.
 
 ## How It Works
 

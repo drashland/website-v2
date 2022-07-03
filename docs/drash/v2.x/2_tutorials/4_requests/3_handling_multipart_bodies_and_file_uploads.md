@@ -49,12 +49,14 @@ To interact with the file, you need to access `.content`.
 
 ## Steps
 
+1. {{ placeholder: create_deps_file_step_drash }}
+
 1. Create your `app.ts` file. Your resource in this file will render a basic
    HTML page to include a form, and handle a POST request, that will save the
    file from the request body.
 
    ```typescript
-   // app.ts
+   // File: app.ts
 
    import { Drash } from "./deps.ts";
 

@@ -37,7 +37,9 @@ State** section in the tutorials like so:
   deps.ts
 ```
 
-Please make sure you have this file created and set up properly.
+Please make sure you have this file created and set up properly. Most of the
+tutorials with steps will have creating this `deps.ts` file as the first step as
+a reminder.
 
 ## Managing Dependencies
 

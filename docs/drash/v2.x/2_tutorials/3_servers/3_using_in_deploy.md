@@ -31,9 +31,9 @@ server `(server.run())` the same way as it would run if it were being developed
 without using Deno Deploy.
 
 ```typescript
-// app.ts
+// File: app.ts
 
-import { Drash } from "./deps.ts";
+// @Import drash_from_deno
 
 class HomeResource extends Drash.Resource {
   paths = ["/"];
@@ -59,23 +59,23 @@ To use this Drash application with Deno Deploy, all you need to do is change the
 value of `hostname` from `"localhost"` to `""`. For example:
 
 ```diff-typescript
-const server = new Drash.Server({
-    resources: [
-      HomeResource,
-    ],
-    protocol: "http",
--   hostname: "localhost",
-+   hostname: "",
-    port: 3000,
-  });
+   const server = new Drash.Server({
+       resources: [
+         HomeResource,
+       ],
+       protocol: "http",
+-      hostname: "localhost",
++      hostname: "",
+       port: 3000,
+     });
 ```
 
 Below is what you would end up with:
 
 ```typescript
-// app.ts
+// File: app.ts
 
-import * as Drash from "./deps.ts";
+// @Import drash_from_deno
 
 class HomeResource extends Drash.Resource {
   paths = ["/"];

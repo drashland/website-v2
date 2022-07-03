@@ -24,43 +24,77 @@ The choice is still yours!
 
 ## Example
 
-Here is an example of how you may construct your Drash server to use these
-services:
+Below is a simple example of how you may construct your Drash server to use
+these services.
 
-```typescript
-import {
-  Drash,
-  PaladinService,
-  DexterService,
-  RateLimiterService,
-  CSRFService
-} from "./deps.ts";
+### Steps
 
-const csrf = new CSRFService({
-  cookie: true,
-});
+1. {{ placeholder: create_deps_file_step_text_only }}
 
-const rateLimiter = new RateLimiterService({
-  timeframe: 60 / 1000, // 60m (60m divided by 1000 = 60 minutes in milliseconds)
-  max_requests: 50,
-});
+   ```typescript
+   // File: deps.ts
 
-const dexter = new Dexter({
-  url: true,
-  datetime: true,
-  method: true,
-});
+   // @Export drash_from_deno_no_version_comment
+   // @Export csrf_service_from_deno_no_version_comment
+   // @Export dexter_service_from_deno_no_version_comment
+   // @Export paladin_service_from_deno_no_version_comment
+   // @Export rate_limiter_service_from_deno_no_version_comment
+   ```
 
-const paladin = new PaladinService();
+1. Set up your `app.ts` file to use the services.
 
-const server = new Drash.Server({
-  ...,
-  services: [
-    paladin,
-    csrf,
-    dexter,
-    rateLimiter,
-  ],
-  ...
-})
-```
+   ```typescript
+   // File: app.ts
+
+   import {
+     CSRFService,
+     DexterService,
+     Drash,
+     PaladinService,
+     RateLimiterService,
+   } from "./deps.ts";
+
+   const csrf = new CSRFService({
+     cookie: true,
+   });
+
+   const rateLimiter = new RateLimiterService({
+     timeframe: 60 / 1000, // 60m (60m divided by 1000 = 60 minutes in milliseconds)
+     max_requests: 50,
+   });
+
+   const dexter = new DexterService({
+     url: true,
+     datetime: true,
+     method: true,
+   });
+
+   const paladin = new PaladinService();
+
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
+
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       response.text("Hello!");
+     }
+   }
+
+   const server = new Drash.Server({
+     hostname: "localhost",
+     port: 1447,
+     protocol: "http",
+     resources: [
+       HomeResource,
+     ],
+     services: [
+       paladin,
+       csrf,
+       dexter,
+       rateLimiter,
+     ],
+   });
+
+   server.run();
+
+   console.log(`Server running at ${server.address}.`);
+   ```

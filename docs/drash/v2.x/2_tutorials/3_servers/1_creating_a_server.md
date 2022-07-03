@@ -22,11 +22,13 @@ common requests: `GET`, `POST`, `PUT`, and `DELETE`.
 
 ## Steps
 
+1. {{ placeholder: create_deps_file_step_drash }}
+
 1. Create your `app.ts` file. Your resource in this file will be able to handle
    `GET`, `POST`, `PUT`, and `DELETE` requests at the `/` URI.
 
    ```typescript
-   // app.ts
+   // File: app.ts
 
    import { Drash } from "./deps.ts";
 
@@ -85,9 +87,9 @@ common requests: `GET`, `POST`, `PUT`, and `DELETE`.
 
 3. Try some other requests using `curl` (or similar command):
 
-- `$ curl -X POST http://localhost:1447`
-  - Returns `POST request received!`
-- `$ curl -X PUT http://localhost:1447`
-  - Returns `PUT request received!`
-- `$ curl -X DELETE http://localhost:1447`
-  - Returns `DELETE request received!`
+   - `$ curl -X POST http://localhost:1447`
+     - Returns `POST request received!`
+   - `$ curl -X PUT http://localhost:1447`
+     - Returns `PUT request received!`
+   - `$ curl -X DELETE http://localhost:1447`
+     - Returns `DELETE request received!`

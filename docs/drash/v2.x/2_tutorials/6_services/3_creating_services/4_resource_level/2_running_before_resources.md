@@ -40,6 +40,8 @@ field in the `services` property in the resource that uses the service.
 
 ## Steps
 
+1. {{ placeholder: create_deps_file_step_drash }}
+
 1. Create your `app.ts` file.
 
    ```typescript
@@ -66,7 +68,7 @@ field in the `services` property in the resource that uses the service.
    console.log(`Server running at ${server.address}`);
    ```
 
-2. Create your `services/authentication_service.ts` file.
+1. Create your `services/authentication_service.ts` file.
 
    The service in this file will be in charge of making sure all requests to
    `AuthResource` have the `username` and `token` query parameters; and they
@@ -127,7 +129,7 @@ field in the `services` property in the resource that uses the service.
    export default new AuthenticationService();
    ```
 
-3. Create your `resources/auth_resource.ts` file.
+1. Create your `resources/auth_resource.ts` file.
 
    The resource in this file will be protected by the `AuthenticationService`
    class. Since the `AuthenticationService` class will be applied to this
@@ -161,7 +163,7 @@ field in the `services` property in the resource that uses the service.
    }
    ```
 
-4. Create your `resources/non_auth_resource.ts` file.
+1. Create your `resources/non_auth_resource.ts` file.
 
    The resource in this file will not be protected by the
    `AuthenticationService` class. Therefore, requests will not require a

@@ -39,6 +39,8 @@ resource that uses the service.
 
 ## Steps
 
+1. {{ placeholder: create_deps_file_step_drash }}
+
 1. Create your `app.ts` file.
 
    ```typescript
@@ -63,7 +65,7 @@ resource that uses the service.
    console.log(`Server running at ${server.address}`);
    ```
 
-2. Create your `services/can_upload_service.ts` file.
+1. Create your `services/can_upload_service.ts` file.
 
    The service in this file will be used in the `FilesResource` (created in the
    next step) to check if a user can upload files via `POST` requests.
@@ -115,7 +117,7 @@ resource that uses the service.
    export default new CanUploadService();
    ```
 
-3. Create your `resources/files_resource.ts` file.
+1. Create your `resources/files_resource.ts` file.
 
    The resource in this file will have its `POST` method protected by the
    `CanUploadService` class. Since the `CanUploadService` class will be applied

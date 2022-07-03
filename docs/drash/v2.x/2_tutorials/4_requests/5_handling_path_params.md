@@ -27,13 +27,15 @@ const param = request.pathParam("param_name");
 
 ## Steps
 
+1. {{ placeholder: create_deps_file_step_drash }}
+
 1. Create your `app.ts` file. Your resource in this file will check for the
    `:id` path param in the request's URL. If it exists and is a `number`, then
    it will return what was passed in. If it is `NaN`, then it will throw a
    `400 Bad Request` response.
 
    ```typescript
-   // app.ts
+   // File: app.ts
 
    import { Drash } from "./deps.ts";
 
@@ -115,7 +117,7 @@ The above tutorial exercises a required param. If you want to test out using an
 optional param, then change your `app.ts` file to the following ...
 
 ```typescript
-// app.ts
+// File: app.ts
 
 import { Drash } from "./deps.ts";
 

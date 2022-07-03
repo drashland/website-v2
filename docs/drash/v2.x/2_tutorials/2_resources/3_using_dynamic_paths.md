@@ -19,7 +19,9 @@ Resources are able to specify path params in their paths to allow them to cover
 multiple endpoints. For example:
 
 ```typescript
-import { Drash } from "./deps.ts";
+// home_resource.ts
+
+// @Import drash_from_deno
 
 export default class HomeResource extends Drash.Resource {
   public paths = [
@@ -53,7 +55,9 @@ Path params can also be optional. This allows a resource to accept a request
 with a URI that does not depend on path params. For example:
 
 ```typescript
-import { Drash } from "./deps.ts";
+// File: users_resource.ts
+
+// @Import drash_from_deno
 
 export default class UsersResource extends Drash.Resource {
   // id = required
@@ -122,7 +126,9 @@ Resources are able to specify regular expressions in their paths to allow them
 to cover multiple endpoints.
 
 ```typescript
-import { Drash } from "./deps.ts";
+// File: home_resource.ts
+
+// @Import drash_from_deno
 
 export default class HomeResource extends Drash.Resource {
   public paths = [

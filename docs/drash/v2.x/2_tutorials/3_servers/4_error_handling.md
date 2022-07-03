@@ -67,8 +67,10 @@ Things to note:
   in `Drash.Server` so _**it is required**_. For example:
 
   ```typescript
-  // Example of extending Drash.ErrorHandler
-  class MyErrorHandler extends Drash.ErrorHandler {
+  // @Import drash_from_deno
+
+  // Example of extending Drash.ErrorHandler and defining the catch() method
+  class MyErrorHandlerExtending extends Drash.ErrorHandler {
     public catch(
       error: Error,
       request: Request,
@@ -78,8 +80,8 @@ Things to note:
     }
   }
 
-  // Example of implementing Drash.Interfaces.IErrorHandler
-  class MyErrorHandler implements Drash.Interfaces.IErrorHandler {
+  // Example of implementing Drash.Interfaces.IErrorHandler and defining the catch() method
+  class MyErrorHandlerUsingInterface implements Drash.Interfaces.IErrorHandler {
     public catch(
       error: Error,
       request: Request,
@@ -109,9 +111,13 @@ Things to note:
 _Note: The steps shown below will make use of the `Drash.ErrorHandler` class by
 using `... extends Drash.ErrorHandler`._
 
+1. {{ placeholder: create_deps_file_step_drash }}
+
 1. Create your `app.ts` file.
 
    ```typescript
+   // File: app.ts
+
    import { Drash } from "./deps.ts";
 
    // Create your resource
@@ -248,87 +254,91 @@ in your resource and catch it in your error handler? Again, the process is
 simple. Just make your resource throw that error and handle the error in your
 error handler class like so:
 
-```typescript
-// app.ts
+1. {{ placeholder: create_deps_file_step_drash }}
 
-import { Drash } from "./deps.ts";
+1. Create your `app.ts` file.
 
-// Create your custom error. This MUST be an extension of Error.
+   ```typescript
+   // File: app.ts
 
-class BadRequestError extends Error {
-  // It is a good idea to associate the HTTP status code in your custom error
-  // so you can retrieve it as `error.code` in your error handler class
-  public code = 400;
+   import { Drash } from "./deps.ts";
 
-  constructor(message?: string) {
-    // Use the message provided or default to a generic error message
-    super(message ?? "Invalid request params received.");
-  }
-}
+   // Create your custom error. This MUST be an extension of Error.
 
-// Create your resource and have it throw your custom BadRequestError
+   class BadRequestError extends Error {
+     // It is a good idea to associate the HTTP status code in your custom error
+     // so you can retrieve it as `error.code` in your error handler class
+     public code = 400;
 
-class HomeResource extends Drash.Resource {
-  public paths = ["/"];
+     constructor(message?: string) {
+       // Use the message provided or default to a generic error message
+       super(message ?? "Invalid request params received.");
+     }
+   }
 
-  public GET(request: Drash.Request, response: Drash.Response): void {
-    const name = request.queryParam("name");
+   // Create your resource and have it throw your custom BadRequestError
 
-    // If the `?name={value}` is not provided, then throw a bad request error
-    if (!name) {
-      throw new BadRequestError();
-    }
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
 
-    return response.json({
-      message: `Hello, ${name}!`,
-    });
-  }
-}
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       const name = request.queryParam("name");
 
-// Create your error handler to send JSON responses
+       // If the `?name={value}` is not provided, then throw a bad request error
+       if (!name) {
+         throw new BadRequestError();
+       }
 
-class MyErrorHandler extends Drash.ErrorHandler {
-  public catch(error: Error, request: Request, response: Drash.Response) {
-    // Handle all built-in Drash errors
-    if (error instanceof Drash.Errors.HttpError) {
-      response.status = error.code;
-      return response.json({
-        message: error.message,
-      });
-    }
+       return response.json({
+         message: `Hello, ${name}!`,
+       });
+     }
+   }
 
-    // Handle your custom error that you can throw in resources and catch here
-    if (error instanceof BadRequestError) {
-      response.status = error.code;
-      return response.json({
-        message: error.message,
-      });
-    }
+   // Create your error handler to send JSON responses
 
-    // Default to 500
-    response.status = 500;
-    return response.json({
-      message: "Server failed to process the request.",
-    });
-  }
-}
+   class MyErrorHandler extends Drash.ErrorHandler {
+     public catch(error: Error, request: Request, response: Drash.Response) {
+       // Handle all built-in Drash errors
+       if (error instanceof Drash.Errors.HttpError) {
+         response.status = error.code;
+         return response.json({
+           message: error.message,
+         });
+       }
 
-// Create and run your server
+       // Handle your custom error that you can throw in resources and catch here
+       if (error instanceof BadRequestError) {
+         response.status = error.code;
+         return response.json({
+           message: error.message,
+         });
+       }
 
-const server = new Drash.Server({
-  error_handler: MyErrorHandler,
-  hostname: "localhost",
-  port: 1447,
-  protocol: "http",
-  resources: [
-    HomeResource,
-  ],
-});
+       // Default to 500
+       response.status = 500;
+       return response.json({
+         message: "Server failed to process the request.",
+       });
+     }
+   }
 
-server.run();
+   // Create and run your server
 
-console.log(`Server running at ${server.address}.`);
-```
+   const server = new Drash.Server({
+     error_handler: MyErrorHandler,
+     hostname: "localhost",
+     port: 1447,
+     protocol: "http",
+     resources: [
+       HomeResource,
+     ],
+   });
+
+   server.run();
+
+   console.log(`Server running at ${server.address}.`);
+   ```
 
 #### Verification
 
@@ -410,99 +420,103 @@ throw in a `RequestBodyValidationService` to accommodate your request validation
 process? No problem! Just make your service throw that error and handle the
 error in your error handler class like so:
 
-```typescript
-// app.ts
+1. {{ placeholder: create_deps_file_step_drash }}
 
-import { Drash } from "./deps.ts";
+1. Create your `app.ts` file.
 
-// Create your custom error. This MUST be an extension of Error.
+   ```typescript
+   // File: app.ts
 
-class BadRequestBodyError extends Error {
-  // It is a good idea to associate the HTTP status code in your custom error
-  // so you can retrieve it as `error.code` in your error handler class
-  public code = 400;
+   import { Drash } from "./deps.ts";
 
-  constructor(message?: string) {
-    // Use the message provided or default to a generic error message
-    super(message ?? "Missing required body params.");
-  }
-}
+   // Create your custom error. This MUST be an extension of Error.
 
-// Create your service that handles request body validation on POST requests
+   class BadRequestBodyError extends Error {
+     // It is a good idea to associate the HTTP status code in your custom error
+     // so you can retrieve it as `error.code` in your error handler class
+     public code = 400;
 
-class RequestBodyValidationService extends Drash.Service {
-  public runBeforeResource(
-    request: Drash.Request,
-    response: Drash.Response,
-  ): void {
-    if (
-      request.method === "POST" &&
-      !request.bodyParam("params")
-    ) {
-      throw new BadRequestBodyError("Body field `params` is required.");
-    }
-  }
-}
+     constructor(message?: string) {
+       // Use the message provided or default to a generic error message
+       super(message ?? "Missing required body params.");
+     }
+   }
 
-// Create your resource
+   // Create your service that handles request body validation on POST requests
 
-class UsersResource extends Drash.Resource {
-  public paths = ["/users"];
+   class RequestBodyValidationService extends Drash.Service {
+     public runBeforeResource(
+       request: Drash.Request,
+       response: Drash.Response,
+     ): void {
+       if (
+         request.method === "POST" &&
+         !request.bodyParam("params")
+       ) {
+         throw new BadRequestBodyError("Body field `params` is required.");
+       }
+     }
+   }
 
-  public POST(request: Drash.Request, response: Drash.Response): void {
-    return response.json({
-      message: `You made it to the UsersResource!`,
-    });
-  }
-}
+   // Create your resource
 
-// Create your error handler to send JSON responses
+   class UsersResource extends Drash.Resource {
+     public paths = ["/users"];
 
-class MyErrorHandler extends Drash.ErrorHandler {
-  public catch(error: Error, request: Request, response: Drash.Response) {
-    // Handle all built-in Drash errors
-    if (error instanceof Drash.Errors.HttpError) {
-      response.status = error.code;
-      return response.json({
-        message: error.message,
-      });
-    }
+     public POST(request: Drash.Request, response: Drash.Response): void {
+       return response.json({
+         message: `You made it to the UsersResource!`,
+       });
+     }
+   }
 
-    // Handle your custom error that you can throw in resources and catch here
-    if (error instanceof BadRequestBodyError) {
-      response.status = error.code;
-      return response.json({
-        message: error.message,
-      });
-    }
+   // Create your error handler to send JSON responses
 
-    // Default to 500
-    response.status = 500;
-    return response.json({
-      message: "Server failed to process the request.",
-    });
-  }
-}
+   class MyErrorHandler extends Drash.ErrorHandler {
+     public catch(error: Error, request: Request, response: Drash.Response) {
+       // Handle all built-in Drash errors
+       if (error instanceof Drash.Errors.HttpError) {
+         response.status = error.code;
+         return response.json({
+           message: error.message,
+         });
+       }
 
-// Create and run your server
+       // Handle your custom error that you can throw in resources and catch here
+       if (error instanceof BadRequestBodyError) {
+         response.status = error.code;
+         return response.json({
+           message: error.message,
+         });
+       }
 
-const server = new Drash.Server({
-  error_handler: MyErrorHandler,
-  hostname: "localhost",
-  port: 1447,
-  protocol: "http",
-  resources: [
-    UsersResource,
-  ],
-  services: [
-    new RequestBodyValidationService(),
-  ],
-});
+       // Default to 500
+       response.status = 500;
+       return response.json({
+         message: "Server failed to process the request.",
+       });
+     }
+   }
 
-server.run();
+   // Create and run your server
 
-console.log(`Server running at ${server.address}.`);
-```
+   const server = new Drash.Server({
+     error_handler: MyErrorHandler,
+     hostname: "localhost",
+     port: 1447,
+     protocol: "http",
+     resources: [
+       UsersResource,
+     ],
+     services: [
+       new RequestBodyValidationService(),
+     ],
+   });
+
+   server.run();
+
+   console.log(`Server running at ${server.address}.`);
+   ```
 
 #### Verification
 
@@ -582,36 +596,42 @@ verify that it handles errors as expected:
 Creating an error handler class can be done easily by extending
 `Drash.ErrorHandler`. For example:
 
-```typescript
-import { Drash } from "./deps.ts";
+1. {{ placeholder: create_deps_file_step_drash }}
 
-class MyErrorHandler extends Drash.ErrorHandler {
-  public catch(
-    error: Error,
-    request: Request,
-    response: Drash.Response,
-  ): void {
-    // Handle all built-in Drash errors. This means any error that Drash
-    // throws internally will be handled in this block. This also means any
-    // resource that throws Drash.Errors.HttpError will be handled here.
-    if (error instanceof Drash.Errors.HttpError) {
-      response.status = error.code;
-      return response.json({
-        message: error.message,
-      });
-    }
+1. Create your `app.ts` file.
 
-    // If the error is not of type Drash.Errors.HttpError, then default to a
-    // HTTP 500 error response. This is useful if you cannot ensure that
-    // third-party dependencies (e.g., some database dependency) will throw
-    // an error object that can be converted to an HTTP response.
-    response.status = 500;
-    return response.json({
-      message: "Server failed to process the request.",
-    });
-  }
-}
-```
+   ```typescript
+   // File: app.ts
+
+   import { Drash } from "./deps.ts";
+
+   class MyErrorHandler extends Drash.ErrorHandler {
+     public catch(
+       error: Error,
+       request: Request,
+       response: Drash.Response,
+     ): void {
+       // Handle all built-in Drash errors. This means any error that Drash
+       // throws internally will be handled in this block. This also means any
+       // resource that throws Drash.Errors.HttpError will be handled here.
+       if (error instanceof Drash.Errors.HttpError) {
+         response.status = error.code;
+         return response.json({
+           message: error.message,
+         });
+       }
+
+       // If the error is not of type Drash.Errors.HttpError, then default to a
+       // HTTP 500 error response. This is useful if you cannot ensure that
+       // third-party dependencies (e.g., some database dependency) will throw
+       // an error object that can be converted to an HTTP response.
+       response.status = 500;
+       return response.json({
+         message: "Server failed to process the request.",
+       });
+     }
+   }
+   ```
 
 Key benefits to this method:
 
@@ -636,6 +656,8 @@ Key benefits to this method:
   For example:
 
   ```typescript
+  import { Drash } from "./deps.ts";
+
   class MyErrorHandler extends Drash.ErrorHandler {
     public catch(
       error: Error,

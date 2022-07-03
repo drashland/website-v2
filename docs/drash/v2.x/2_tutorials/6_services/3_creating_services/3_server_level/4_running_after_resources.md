@@ -29,6 +29,8 @@ responses to all requests.
 
 ## Steps
 
+1. {{ placeholder: create_deps_file_step_drash }}
+
 1. Create your `app.ts` file.
 
    ```typescript
@@ -59,7 +61,7 @@ responses to all requests.
    console.log(`Server running at ${server.address}`);
    ```
 
-2. Create your `services/response_header_service.ts` file.
+1. Create your `services/response_header_service.ts` file.
 
    The service in this file will be in charge of making sure all responses
    contain the `X-CUSTOM-HEADER` header.
@@ -84,7 +86,7 @@ responses to all requests.
    export default new ResponseHeaderService();
    ```
 
-3. Create your `resources/response_modified_resource.ts` file.
+1. Create your `resources/response_modified_resource.ts` file.
 
    The resource in this file sends a response without modifying its headers.
    After this resource is run by the server, the `ResponseHeaderService` class

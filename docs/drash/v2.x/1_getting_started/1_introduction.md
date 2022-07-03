@@ -18,7 +18,7 @@ Learn more about Drash [here](about-drash).
 3. Create your `app.ts` file.
 
    ```typescript
-   // app.ts
+   // File: app.ts
 
    // Replace `<VERSION>` with the latest version of Drash v2.x. The latest
    // version can be found at https://github.com/drashland/drash/releases/latest

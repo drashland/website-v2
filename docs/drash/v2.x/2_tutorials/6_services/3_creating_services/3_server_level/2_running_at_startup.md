@@ -39,6 +39,8 @@ Specifically, it will show you how you can:
 
 ## Steps
 
+1. {{ placeholder: create_deps_file_step_drash }}
+
 1. Create your `app.ts` file.
 
    ```typescript
@@ -71,7 +73,7 @@ Specifically, it will show you how you can:
    console.log(`Server running at ${server.address}`);
    ```
 
-2. Create your `services/compiled_files_service.ts` file.
+1. Create your `services/compiled_files_service.ts` file.
 
    The service in this file will be in charge of taking `public/greeter.ts` and
    `public/math_utils.ts` and compiling their code to JavaScript so that they
@@ -133,7 +135,7 @@ Specifically, it will show you how you can:
    export default new CompiledFilesService();
    ```
 
-3. Create your `resources/home_resource.ts` file.
+1. Create your `resources/home_resource.ts` file.
 
    The resource in this file will be in charge of sending an HTML document for
    `GET /` requests. The HTML document will contain `script` tags that request
@@ -191,7 +193,7 @@ Specifically, it will show you how you can:
    }
    ```
 
-4. Create your `resources/files_resource.ts` file.
+1. Create your `resources/files_resource.ts` file.
 
    The resource in this file will be in charge of handling
    `GET /pubilc/:filename` requests. The `:filename` path param will be used to
@@ -239,7 +241,7 @@ Specifically, it will show you how you can:
    }
    ```
 
-5. Create your `public/greeter.ts` file.
+1. Create your `public/greeter.ts` file.
 
    Although this file is written in TypeScript, it will be available as
    JavaScript during runtime and used in the browser.
@@ -254,7 +256,7 @@ Specifically, it will show you how you can:
    }
    ```
 
-6. Create your `public/math_utils.ts` file.
+1. Create your `public/math_utils.ts` file.
 
    Although this is written in TypeScript, it will be available as JavaScript
    during runtime and used in the browser.

@@ -28,20 +28,18 @@ only adds extra security layers.
 
 ## Before You Get Started
 
-To use this service, edit your `deps.ts` file to include the service.
+{{ placeholder: edit_your_deps_file_to_include_the_service }}
 
 ```typescript
-// deps.ts
+// File: deps.ts
 
-...
-...
-...
-export { PaladinService } from "https://deno.land/x/drash@<VERSION>/src/services/paladin/paladin.ts";
+// @Export drash_from_deno_no_version_comment
+// @Export paladin_service_from_deno_no_version_comment
+// ... rest
+// ... of
+// ... your
+// ... deps
 ```
-
-Replace `<VERSION>` with the **Drash v2.x** version you want to use. All
-versions can be found
-[here](https://github.com/drashland/drash/releases?q=v2&expanded=true).
 
 ## Folder Structure End State
 
@@ -53,41 +51,41 @@ versions can be found
 
 ## Steps
 
-1. Create your `app.ts` file.
+1. Create your `app.ts` file. This assumes you edited your `deps.ts` file above.
 
-```typescript
-// app.ts
+   ```typescript
+   // File: app.ts
 
-import { Drash, PaladinService } from "./deps.ts";
+   import { Drash, PaladinService } from "./deps.ts";
 
-// Create your resource
+   // Create your resource
 
-class HomeResource extends Drash.Resource {
-  public paths = ["/"];
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
 
-  public GET(request: Drash.Request, response: Drash.Response): void {
-    return response.text("Hello, world!");
-  }
-}
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       return response.text("Hello, world!");
+     }
+   }
 
-// Create and run your server (with PaladinService instantiated)
+   // Create and run your server (with PaladinService instantiated)
 
-const server = new Drash.Server({
-  hostname: "localhost",
-  port: 1447,
-  protocol: "http",
-  resources: [
-    HomeResource,
-  ],
-  services: [
-    new PaladinService(),
-  ],
-});
+   const server = new Drash.Server({
+     hostname: "localhost",
+     port: 1447,
+     protocol: "http",
+     resources: [
+       HomeResource,
+     ],
+     services: [
+       new PaladinService(),
+     ],
+   });
 
-server.run();
+   server.run();
 
-console.log(`Server running at ${server.address}.`);
-```
+   console.log(`Server running at ${server.address}.`);
+   ```
 
 ## Verification
 

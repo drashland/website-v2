@@ -6,7 +6,9 @@ To add resource-level services, use the `ALL` field in the `services` property
 in your resource class. For example:
 
 ```typescript
-import { Drash } from "./deps.ts";
+// File: app.ts
+
+// @Import drash_from_deno
 
 import {
   ServiceOne,

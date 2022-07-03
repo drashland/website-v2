@@ -4,9 +4,9 @@ Dexter is a logging service inspired by
 [expressjs/morgan](https://github.com/expressjs/morgan). It is configurable and
 can be used throughout the request-resource-response lifecycle.
 
-When used, it will log information on a request to the stdout, such as request
-method and request URL, response time. This service will run before and after a
-resource method is called.
+When used, it will log information on a request to the stdout, such as the
+request method, request URL, and response time. This service will run before and
+after a resource method is called.
 
 ## Table of Contents
 
@@ -17,57 +17,92 @@ resource method is called.
 
 ## Before You Get Started
 
-To use this service, edit your `deps.ts` file to include the service.
+{{ placeholder: edit_your_deps_file_to_include_the_service }}
 
 ```typescript
-// deps.ts
+// File: deps.ts
 
-...
-...
-...
-export { DexterService } from "https://deno.land/x/drash@<VERSION>/src/services/dexter/dexter.ts";
+// @Export drash_from_deno_no_version_comment
+// @Export dexter_service_from_deno_no_version_comment
+// ... rest
+// ... of
+// ... your
+// ... deps
 ```
 
-Replace `<VERSION>` with the **Drash v2.x** version you want to use. All
-versions can be found
-[here](https://github.com/drashland/drash/releases?q=v2&expanded=true).
+## Folder Structure End State
 
-## Example
-
-```typescript
-import { Drash } from "./deps.ts";
-
-// Import the Dexter service
-import { DexterService } from "./deps.ts";
-
-// Instantiate dexter
-const dexter = new DexterService(); // By default, will display the date and time of the request
-
-class HomeResource extends Drash.Resource {
-  public paths = ["/"];
-
-  public GET(request: Drash.Request, response: Drash.Response): void {
-    return response.text("Hello");
-  }
-}
-
-// Create your server and plug in dexter to the middleware config
-const server = new Drash.Server({
-  resources: [
-    HomeResource,
-  ],
-  services: [
-    dexter,
-  ],
-  hostname: "localhost",
-  port: 1447,
-  protocol: "http",
-});
-
-server.run();
-
-console.log(`Server running at ${server.address}`);
+```text
+▾ /path/to/your/project/
+  app.ts
+  deps.ts
 ```
+
+## Steps
+
+1. Create your `app.ts` file. This assumes you edited your `deps.ts` file above.
+
+   ```typescript
+   // File: app.ts
+
+   import { DexterService, Drash } from "./deps.ts";
+
+   // Instantiate dexter
+   const dexter = new DexterService(); // By default, will display the date and time of the request
+
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
+
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       return response.text("Hello");
+     }
+   }
+
+   // Create your server and plug in dexter to the middleware config
+   const server = new Drash.Server({
+     resources: [
+       HomeResource,
+     ],
+     services: [
+       dexter,
+     ],
+     hostname: "localhost",
+     port: 1447,
+     protocol: "http",
+   });
+
+   server.run();
+
+   console.log(`Server running at ${server.address}`);
+   ```
+
+## Verification
+
+1. Run your app.
+
+   ```shell
+   $ deno run --allow-net app.ts
+   ```
+
+2. Using `curl` (or similar command), make a `POST` request to
+   `http://localhost:1447`.
+
+   ```shell
+   $ curl http://localhost:1447
+   ```
+
+   You should receive a response similar to the following:
+
+   ```text
+   Hello
+   ```
+
+   Also, if you look in the terminal where you ran your app, you should see
+   something similar to the following:
+
+   ```text
+   [INFO] 2022-07-03 04:28:17 | Request received
+   ```
 
 ## Configuration
 
@@ -126,7 +161,7 @@ you want to use Dexter in one of your resources, then do the following:
 2. Create your `app.ts` file.
 
    ```typescript
-   // app.ts
+   // File: app.ts
 
    import { dexter, Drash } from "./deps.ts";
    import { HomeResource } from "./home_resource.ts";

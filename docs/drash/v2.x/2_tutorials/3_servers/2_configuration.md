@@ -27,7 +27,7 @@ these.
 - Example Usage
 
   ```typescript
-  import { Drash } from "./deps.ts";
+  // @Import drash_from_deno
 
   const server = new Drash.Server({
     hostname: "localhost", // <--- See here
@@ -43,7 +43,7 @@ these.
 - Example Usage
 
   ```typescript
-  import { Drash } from "./deps.ts";
+  // @Import drash_from_deno
 
   const server = new Drash.Server({
     hostname: "localhost",
@@ -60,7 +60,7 @@ these.
 - Example Usage (if using `http`)
 
   ```typescript
-  import { Drash } from "./deps.ts";
+  // @Import drash_from_deno
 
   const server = new Drash.Server({
     hostname: "localhost",
@@ -73,7 +73,7 @@ these.
 - Example Usage (if using `https`)
 
   ```typescript
-  import { Drash } from "./deps.ts";
+  // @Import drash_from_deno
 
   const server = new Drash.Server({
     cert_file: "/path/to/cert/file.crt", // <--- Required if using protocol is "https"
@@ -93,7 +93,7 @@ these.
 - Example Usage
 
   ```typescript
-  import { Drash } from "./deps.ts";
+  // @Import drash_from_deno
 
   class MyResource extends Drash.Resource {
     ...
@@ -123,7 +123,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
 - Example Usage
 
   ```typescript
-  import { Drash } from "./deps.ts";
+  // @Import drash_from_deno
 
   const server = new Drash.Server({
     cert_file: "/path/to/cert/file.crt", // <--- See here (also notice key_file is present and protocol is "https")
@@ -144,7 +144,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
 - Example Usage
 
   ```typescript
-  import { Drash } from "./deps.ts";
+  // @Import drash_from_deno
 
   class MyErrorHandler extends Drash.ErrorHandler {
     public catch(error: Error, _request: Drash.Request, response: Drash.Response) {
@@ -205,7 +205,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
 - Example Usage
 
   ```typescript
-  import { Drash } from "./deps.ts";
+  // @Import drash_from_deno
 
   const server = new Drash.Server({
     cert_file: "/path/to/cert/file.crt",
@@ -226,7 +226,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
 - Example Usage
 
   ```typescript
-  import { Drash } from "./deps.ts";
+  // @Import drash_from_deno
 
   class MyService extends Drash.Service {
     ...

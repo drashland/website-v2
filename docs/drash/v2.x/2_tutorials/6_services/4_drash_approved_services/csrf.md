@@ -4,10 +4,8 @@ This service is a
 [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery) protection
 service inspired by
 [expressjs/csurf](http://expressjs.com/en/resources/middleware/csurf.html). It
-can be simply placed as a middleware for your resources and you are all set!
-
-Simply add it to your resources that require CSRF protection and you are all
-set!
+can be placed as a middleware for your resources. Simply add it to your
+resources that require CSRF protection and you are all set!
 
 ## Table of Contents
 
@@ -19,20 +17,18 @@ set!
 
 ## Before You Get Started
 
-To use this service, edit your `deps.ts` file to include the service.
+{{ placeholder: edit_your_deps_file_to_include_the_service }}
 
 ```typescript
-// deps.ts
+// File: deps.ts
 
-...
-...
-...
-export { CSRFService } from "https://deno.land/x/drash@<VERSION>/src/services/csrf/csrf.ts";
+// @Export drash_from_deno_no_version_comment
+// @Export csrf_service_from_deno_no_version_comment
+// ... rest
+// ... of
+// ... your
+// ... deps
 ```
-
-Replace `<VERSION>` with the **Drash v2.x** version you want to use. All
-versions can be found
-[here](https://github.com/drashland/drash/releases?q=v2&expanded=true).
 
 ## Folder Structure End State
 
@@ -44,77 +40,77 @@ versions can be found
 
 ## Steps
 
-1. Create your `app.ts` file.
+1. Create your `app.ts` file. This assumes you edited your `deps.ts` file above.
 
-```typescript
-// app.ts
+   ```typescript
+   // File: app.ts
 
-import { CSRFService, Drash } from "./deps.ts";
+   import { CSRFService, Drash } from "./deps.ts";
 
-// Instantiate the service and generate the token. The token can be accessed
-// via `csrf.token`.
-const csrf = new CSRFService();
+   // Instantiate the service and generate the token. The token can be accessed
+   // via `csrf.token`.
+   const csrf = new CSRFService();
 
-// Create your resource
+   // Create your resource
 
-class HomeResource extends Drash.Resource {
-  public paths = ["/"];
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
 
-  // Tell the resource what HTTP methods should have CSRF protection. In this
-  // case, we are telling the resource to protect the POST method. This means
-  // the POST method will require the CSRF token.
-  public services = {
-    POST: [csrf],
-  };
+     // Tell the resource what HTTP methods should have CSRF protection. In this
+     // case, we are telling the resource to protect the POST method. This means
+     // the POST method will require the CSRF token.
+     public services = {
+       POST: [csrf],
+     };
 
-  public GET(request: Drash.Request, response: Drash.Response): void {
-    // Set the token on the response headers
-    response.headers.set("X-CSRF-TOKEN", csrf.token);
-    // or set it in a cookie like so:
-    //
-    //     response.setCookie({
-    //       name: "X-CSRF-TOKEN",
-    //       value: csrf.token,
-    //     });
+     public GET(request: Drash.Request, response: Drash.Response): void {
+       // Set the token on the response headers
+       response.headers.set("X-CSRF-TOKEN", csrf.token);
+       // or set it in a cookie like so:
+       //
+       //     response.setCookie({
+       //       name: "X-CSRF-TOKEN",
+       //       value: csrf.token,
+       //     });
 
-    // No need to return anything here. Clients should make a GET request to
-    // this resource to get the token (or cookie) and handle it appropriately.
-  }
+       // No need to return anything here. Clients should make a GET request to
+       // this resource to get the token (or cookie) and handle it appropriately.
+     }
 
-  public POST(request: Drash.Request, response: Drash.Response): void {
-    const token = request.headers.get("X-CSRF-TOKEN");
-    // or get the token from the cookie if it is set there
-    //
-    //     const token = request.getCookie("X-CSRF-TOKEN");
+     public POST(request: Drash.Request, response: Drash.Response): void {
+       const token = request.headers.get("X-CSRF-TOKEN");
+       // or get the token from the cookie if it is set there
+       //
+       //     const token = request.getCookie("X-CSRF-TOKEN");
 
-    if (token) {
-      return response.text(token);
-    }
+       if (token) {
+         return response.text(token);
+       }
 
-    // No need to return a response or throw an error. Since we are protecting
-    // this POST method using csrf, csrf will throw a 400 Bad Request
-  }
+       // No need to return a response or throw an error. Since we are protecting
+       // this POST method using csrf, csrf will throw a 400 Bad Request
+     }
 
-  public DELETE(request: Drash.Request, response: Drash.Response): void {
-    return response.text("Hello! You made a DELETE request.");
-  }
-}
+     public DELETE(request: Drash.Request, response: Drash.Response): void {
+       return response.text("Hello! You made a DELETE request.");
+     }
+   }
 
-// Create and run your server
+   // Create and run your server
 
-const server = new Drash.Server({
-  hostname: "localhost",
-  port: 1447,
-  protocol: "http",
-  resources: [
-    HomeResource,
-  ],
-});
+   const server = new Drash.Server({
+     hostname: "localhost",
+     port: 1447,
+     protocol: "http",
+     resources: [
+       HomeResource,
+     ],
+   });
 
-server.run();
+   server.run();
 
-console.log(`Server running at ${server.address}.`);
-```
+   console.log(`Server running at ${server.address}.`);
+   ```
 
 ## Verification
 
@@ -159,10 +155,10 @@ console.log(`Server running at ${server.address}.`);
        at async Server.#respond (https://deno.land/std@0.111.0/http/server.ts:350:24)* Closing connection 0
    ```
 
-As you can see, the response is a `400 Bad Request` response and the response
-body contains `Error: NO CSRF token was passed in`. Since `CSRFService` is
-protecting the `POST` method, `POST` requests require the token generated by
-`CSRFService`.
+   As you can see, the response is a `400 Bad Request` response and the response
+   body contains `Error: NO CSRF token was passed in`. Since `CSRFService` is
+   protecting the `POST` method, `POST` requests require the token generated by
+   `CSRFService`.
 
 3. Try to forge the token by passing in some random value.
 
@@ -197,13 +193,13 @@ protecting the `POST` method, `POST` requests require the token generated by
        at async Server.#respond (https://deno.land/std@0.111.0/http/server.ts:350:24)* Closing connection 0
    ```
 
-As you can see, the response is a `403 Forbidden` response and the response body
-contains `Error: The CSRF tokens do not match`. When `CSRFService` is
-instantiated, it generates a token and tokens from requests are checked against
-that generated token. Since the `f0rg3d` token does not match the `CSRFService`
-generated token, the `403` response is returned.
+   As you can see, the response is a `403 Forbidden` response and the response
+   body contains `Error: The CSRF tokens do not match`. When `CSRFService` is
+   instantiated, it generates a token and tokens from requests are checked
+   against that generated token. Since the `f0rg3d` token does not match the
+   `CSRFService` generated token, the `403` response is returned.
 
-2. Now, get the the token using `curl` (or similar command) by making a `GET`
+4. Now, get the the token using `curl` (or similar command) by making a `GET`
    request to `http://localhost:1447`.
 
    ```shell
@@ -234,10 +230,10 @@ generated token, the `403` response is returned.
    * Closing connection 0
    ```
 
-As you can see, the `x-csrf-token` header containing the CSRF token generated by
-`CSRFService` is present.
+   As you can see, the `x-csrf-token` header containing the CSRF token generated
+   by `CSRFService` is present.
 
-3. Now that we have the token, we can make a `POST` request. So, copy the value
+5. Now that we have the token, we can make a `POST` request. So, copy the value
    of `x-csrf-token` and use it when making a `POST` request.
 
    _Note that YOUR `x-csrf-token` will be different from the one shown in this
@@ -275,10 +271,10 @@ As you can see, the `x-csrf-token` header containing the CSRF token generated by
    Nice! Your POST request was received and processed because you passed in the correct token.* Closing connection 0
    ```
 
-As you can see, the response is a `200 OK` response. Since the correct token was
-passed in, the `POST` method was able to process the request.
+   As you can see, the response is a `200 OK` response. Since the correct token
+   was passed in, the `POST` method was able to process the request.
 
-4. To further exercise that all is working, try making a `DELETE` request
+6. To further exercise that all is working, try making a `DELETE` request
    without the token. The `DELETE` method in the resource is NOT protected by
    `CSRFService` so requests should not fail if a token is not present in the
    headers.
@@ -311,8 +307,8 @@ passed in, the `POST` method was able to process the request.
     Hello! You made a DELETE request.* Closing connection 0
    ```
 
-As you can see, the response is a `200 OK` response. Since the `DELETE` method
-is not protected, `DELETE` requests do not require the token.
+   As you can see, the response is a `200 OK` response. Since the `DELETE`
+   method is not protected, `DELETE` requests do not require the token.
 
 ## How It Works
 

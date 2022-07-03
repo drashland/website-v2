@@ -25,7 +25,7 @@ For example, the below code ends the request if the request passes in
 ```typescript
 // File: app.ts
 
-import { Drash } from "./deps.ts";
+// @Import drash_from_deno
 
 class CacheService extends Drash.Service {
   public runBeforeResource(
@@ -102,7 +102,7 @@ a request.
 ```typescript
 // File: app.ts
 
-import { Drash } from "./deps.ts";
+// @Import drash_from_deno
 
 class TokenService extends Drash.Service {
   public runBeforeResource(
