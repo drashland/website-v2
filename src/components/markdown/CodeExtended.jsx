@@ -86,7 +86,7 @@ export default function CodeExtension({
     CODE_BLOCK_COMMENT_REPLACEMENTS.forEach((replacementData, index) => {
       line = line.replace(
         replacementData.from,
-        replacementData.to
+        replacementData.to,
       );
     });
 
