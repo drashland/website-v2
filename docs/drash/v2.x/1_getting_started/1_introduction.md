@@ -15,13 +15,13 @@ Learn more about Drash [here](about-drash).
    $ cd my-project
    ```
 
-3. Create your `app.ts` file.
+3. Create your `app.ts` file. Replace `<VERSION>` with the latest version of
+   Drash v2.x. The latest version can be found at
+   [the Drash latest release page](https://github.com/drashland/drash/releases/latest).
 
    ```typescript
    // File: app.ts
 
-   // Replace `<VERSION>` with the latest version of Drash v2.x. The latest
-   // version can be found at https://github.com/drashland/drash/releases/latest
    import * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
 
    // Create your resource

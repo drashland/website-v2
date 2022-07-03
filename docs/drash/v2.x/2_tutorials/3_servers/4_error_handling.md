@@ -111,7 +111,7 @@ Things to note:
 _Note: The steps shown below will make use of the `Drash.ErrorHandler` class by
 using `... extends Drash.ErrorHandler`._
 
-1. {{ placeholder: create_deps_file_step_drash }}
+1. {{ placeholder: drash_create_deps_file_step }}
 
 1. Create your `app.ts` file.
 
@@ -254,7 +254,7 @@ in your resource and catch it in your error handler? Again, the process is
 simple. Just make your resource throw that error and handle the error in your
 error handler class like so:
 
-1. {{ placeholder: create_deps_file_step_drash }}
+1. {{ placeholder: drash_create_deps_file_step }}
 
 1. Create your `app.ts` file.
 
@@ -420,7 +420,7 @@ throw in a `RequestBodyValidationService` to accommodate your request validation
 process? No problem! Just make your service throw that error and handle the
 error in your error handler class like so:
 
-1. {{ placeholder: create_deps_file_step_drash }}
+1. {{ placeholder: drash_create_deps_file_step }}
 
 1. Create your `app.ts` file.
 
@@ -596,7 +596,7 @@ verify that it handles errors as expected:
 Creating an error handler class can be done easily by extending
 `Drash.ErrorHandler`. For example:
 
-1. {{ placeholder: create_deps_file_step_drash }}
+1. {{ placeholder: drash_create_deps_file_step }}
 
 1. Create your `app.ts` file.
 

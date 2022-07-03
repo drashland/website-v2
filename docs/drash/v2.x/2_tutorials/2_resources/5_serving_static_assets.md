@@ -38,7 +38,7 @@ this could be anything you want to serve! JavaScript? CSS? Favicons? User
 images? You can serve all of that! However, here we are going to be using
 JavaScript, CSS, and Favicons.
 
-1. {{ placeholder: create_deps_file_step_drash }}
+1. {{ placeholder: drash_create_deps_file_step }}
 
 1. Create your resource file that will handle your static assets.
 

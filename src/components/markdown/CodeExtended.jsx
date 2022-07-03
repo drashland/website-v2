@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import styled from "styled-components";
 import { Pre } from "../Markdown";
+import { CODE_BLOCK_COMMENT_REPLACEMENTS } from "../../services/content_replacer_service.js";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -69,58 +70,27 @@ export default function CodeExtension({
     setActiveTab(e.data);
   });
 
-  function replaceImportExportLines(codeBlock) {
+  function replaceImportExportComments(codeBlock) {
     if (Array.isArray(codeBlock)) {
-      return codeBlock.map(replaceImportExportLine);
+      return codeBlock.map(replaceImportExportComment);
     }
 
-    return replaceImportExportLine(codeBlock);
+    return replaceImportExportComment(codeBlock);
   }
 
-  function replaceImportExportLine(line) {
-    return line && line
-      .replace(
-        /\/\/ @Import drash_from_deno$/gm,
-        `// Replace \`<VERSION>\` with the latest version of Drash v2.x. The latest\n` +
-          `// version can be found at https://github.com/drashland/drash/releases/latest\n` +
-          `import * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";`,
-      )
-      .replace(
-        /\/\/ @Export drash_from_deno_no_version_comment$/gm,
-        `export * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";`,
-      )
-      .replace(
-        /\/\/ @Export csrf_service_from_deno_no_version_comment$/gm,
-        `export { CSRFService } from "https://deno.land/x/drash@<VERSION>/src/services/csrf/csrf.ts";`,
-      )
-      .replace(
-        /\/\/ @Export dexter_service_from_deno_no_version_comment$/gm,
-        `export { DexterService } from "https://deno.land/x/drash@<VERSION>/src/services/dexter/dexter.ts";`,
-      )
-      .replace(
-        /\/\/ @Export etag_service_from_deno_no_version_comment$/gm,
-        `export { ETagService } from "https://deno.land/x/drash@<VERSION>/src/services/etag/etag.ts";`,
-      )
-      .replace(
-        /\/\/ @Export graphql_service_from_deno_no_version_comment$/gm,
-        `export { GraphQL, GraphQLService } from "https://deno.land/x/drash@<VERSION>/src/services/graphql/graphql.ts";`,
-      )
-      .replace(
-        /\/\/ @Export paladin_service_from_deno_no_version_comment$/gm,
-        `export { PaladinService } from "https://deno.land/x/drash@<VERSION>/src/services/paladin/paladin.ts";`,
-      )
-      .replace(
-        /\/\/ @Export rate_limiter_service_from_deno_no_version_comment$/gm,
-        `export { RateLimiterService } from "https://deno.land/x/drash@<VERSION>/src/services/rate_limiter/rate_limiter.ts";`,
-      )
-      .replace(
-        /\/\/ @Export response_time_service_from_deno_no_version_comment$/gm,
-        `export { ResponseTimeService } from "https://deno.land/x/drash@<VERSION>/src/services/response_time/response_time.ts";`,
-      )
-      .replace(
-        /\/\/ @Export tengine_service_from_deno_no_version_comment$/gm,
-        `export { TengineService } from "https://deno.land/x/drash@<VERSION>/src/services/tengine/tengine.ts";`,
+  function replaceImportExportComment(line) {
+    if (!line) {
+      return;
+    }
+
+    CODE_BLOCK_COMMENT_REPLACEMENTS.forEach((replacementData, index) => {
+      line = line.replace(
+        replacementData.from,
+        replacementData.to
       );
+    });
+
+    return line;
   }
 
   /**
@@ -194,7 +164,7 @@ export default function CodeExtension({
    * @returns The code without the tab name.
    */
   function renderCodeBlockWithoutTabName(codeBlock, tabName) {
-    return replaceImportExportLines(codeBlock).replace(tabName, "").trim();
+    return replaceImportExportComments(codeBlock).replace(tabName, "").trim();
   }
 
   /**
@@ -206,7 +176,7 @@ export default function CodeExtension({
         key={children.toString()}
         className={getPrismJsClassNameForCodeBlock(className)}
       >
-        {replaceImportExportLines(children)}
+        {replaceImportExportComments(children)}
       </code>
     );
   }

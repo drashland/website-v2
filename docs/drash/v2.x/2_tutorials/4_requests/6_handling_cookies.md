@@ -30,7 +30,7 @@ Drash uses Deno Standard Modules for cookie handling.
 
 ## Steps
 
-1. {{ placeholder: create_deps_file_step_drash }}
+1. {{ placeholder: drash_create_deps_file_step }}
 
 1. Create your `app.ts` file. Your resource in this file will get the
    `my_cookie` value and use it in the response body.

@@ -26,7 +26,7 @@ const param = request.queryParam("param_name");
 
 ## Steps
 
-1. {{ placeholder: create_deps_file_step_drash }}
+1. {{ placeholder: drash_create_deps_file_step }}
 
 1. Create your `app.ts` file.
 

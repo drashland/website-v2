@@ -22,7 +22,7 @@ common requests: `GET`, `POST`, `PUT`, and `DELETE`.
 
 ## Steps
 
-1. {{ placeholder: create_deps_file_step_drash }}
+1. {{ placeholder: drash_create_deps_file_step }}
 
 1. Create your `app.ts` file. Your resource in this file will be able to handle
    `GET`, `POST`, `PUT`, and `DELETE` requests at the `/` URI.

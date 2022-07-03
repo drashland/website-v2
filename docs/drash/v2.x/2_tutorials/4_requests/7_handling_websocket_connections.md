@@ -47,7 +47,7 @@ In this tutorial, you will learn how to create a WebSocket connection using
 
 ## Steps
 
-1. {{ placeholder: create_deps_file_step_drash }}
+1. {{ placeholder: drash_create_deps_file_step }}
 
 1. Create your `app.ts` file. Your resource in this file will check to see if a
    request wants to upgrade to a WebSocket connection.

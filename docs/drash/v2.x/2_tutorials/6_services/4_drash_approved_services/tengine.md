@@ -12,7 +12,7 @@ engine.
 
 ## Before You Get Started
 
-{{ placeholder: edit_your_deps_file_to_include_the_service }}
+{{ placeholder: drash_edit_your_deps_file_to_include_the_service }}
 
 ```typescript
 // File: deps.ts

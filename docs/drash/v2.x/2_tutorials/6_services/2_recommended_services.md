@@ -29,7 +29,9 @@ these services.
 
 ### Steps
 
-1. {{ placeholder: create_deps_file_step_text_only }}
+1. Create your `deps.ts` file. Replace `<VERSION>` with the latest version of
+   Drash v2.x. The latest version can be found at
+   [the Drash latest release page](https://github.com/drashland/drash/releases/latest).
 
    ```typescript
    // File: deps.ts
