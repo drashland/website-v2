@@ -60,7 +60,7 @@ export const CODE_BLOCK_COMMENT_REPLACEMENTS = [
 export const PLACEHOLDER_REPLACEMENTS = [
   {
     from: "{{ placeholder: drash_edit_your_deps_file_to_include_the_service }}",
-    to: (<DrashEditYourDepsFileToIncludeTheService />),
+    to: <DrashEditYourDepsFileToIncludeTheService />,
   },
   {
     from: "{{ placeholder: drash_create_deps_file_step }}",
