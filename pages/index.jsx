@@ -153,7 +153,7 @@ const CardsContainer = styled.div`
 const Card = styled.div`
   cursor: pointer;
   background: #ffffff;
-  border-radius: 2rem;
+  border-radius: .5rem;
   padding: 1.5rem;
   color: #333333;
   display: flex;
