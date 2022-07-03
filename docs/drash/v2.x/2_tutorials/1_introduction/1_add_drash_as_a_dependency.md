@@ -20,8 +20,8 @@ export * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";
 Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest
 version can be found [here](https://github.com/drashland/drash/releases/latest).
 
-The `deps.ts` file is **_required_** for all tutorials. Tutorials will reference
-the `deps.ts` file in code blocks like so:
+The `deps.ts` file is **_required_** for all tutorials referencing the `deps.ts`
+file. Tutorials will reference the `deps.ts` file in code blocks like so:
 
 ```typescript
 // some_file.ts
@@ -38,8 +38,8 @@ State** section in the tutorials like so:
 ```
 
 Please make sure you have this file created and set up properly. Most of the
-tutorials with steps will have creating this `deps.ts` file as the first step as
-a reminder.
+tutorials with a **Steps** section will have the first step stating to create
+the `deps.ts` file as a reminder (just in case you forget!).
 
 ## Managing Dependencies
 
