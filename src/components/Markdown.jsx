@@ -3,10 +3,13 @@
 // used to replace the default components in our markdown package that we use
 // in `[...path_params].jsx`.
 //
-import React from "react";
+import React, { Fragment } from "react";
 import { Link } from "@styled-icons/bootstrap";
 import styled from "styled-components";
 import CodeExtended from "./markdown/CodeExtended";
+import CreateDepsFileStepDrash from "./placeholders/CreateDepsFileStepDrash";
+import CreateDepsFileStepTextOnly from "./placeholders/CreateDepsFileStepTextOnly";
+import EditYourDepsFileToIncludeTheService from "./placeholders/EditYourDepsFileToIncludeTheService";
 
 const flatten = (text, child) => {
   return typeof child === "string"
@@ -168,7 +171,23 @@ export const PreExtended = function ({ className, children }) {
   );
 };
 
-export const Paragraph = styled.p`
+const ParagraphExtended = function ({ className, children }) {
+  if (Array.isArray(children)) {
+    if (children.includes("{{ placeholder: edit_your_deps_file_to_include_the_service }}")) {
+      return <EditYourDepsFileToIncludeTheService />;
+    }
+    if (children.includes("{{ placeholder: create_deps_file_step_text_only }}")) {
+      return <CreateDepsFileStepTextOnly />;
+    }
+    if (children.includes("{{ placeholder: create_deps_file_step_drash }}")) {
+      return <CreateDepsFileStepDrash />;
+    }
+  }
+
+  return <p className={className}>{children}</p>;
+};
+
+export const Paragraph = styled(ParagraphExtended)`
   ${MARGIN_BOTTOM};
   transition-duration: 0.25s;
   transition-property: color;

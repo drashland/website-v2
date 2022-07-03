@@ -7,9 +7,11 @@ import { Pre } from "../Markdown";
 ////////////////////////////////////////////////////////////////////////////////
 
 const ACCEPTED_CODE_TAB_NAMES = [
+  "Async Code",
   "Browser",
-  "Node - CommonJS",
   "Deno",
+  "Sync Code",
+  "Node - CommonJS",
   "Node - JavaScript (ESM)",
   "Node - TypeScript (ESM)",
   "Yarn",
@@ -39,6 +41,8 @@ const Tab = styled.button`
   margin: 0;
 `;
 
+// TODO(crookse) Split this component up. Hella code. I wrote it and even I'm
+// confused.
 export default function CodeExtension({
   className,
   children,
@@ -64,6 +68,65 @@ export default function CodeExtension({
   window.addEventListener("changeCodeBlockActiveTab", (e) => {
     setActiveTab(e.data);
   });
+
+  function replaceImportExportLines(codeBlock) {
+    if (Array.isArray(codeBlock)) {
+      return codeBlock.map(replaceImportExportLine);
+    }
+
+    return replaceImportExportLine(codeBlock);
+  }
+
+
+  //
+  //
+  //
+  //
+  function replaceImportExportLine(line) {
+    return line && line
+      .replace(
+        /\/\/ @Import drash_from_deno$/gm,
+        `// Replace \`<VERSION>\` with the latest version of Drash v2.x. The latest\n` +
+          `// version can be found at https://github.com/drashland/drash/releases/latest\n` +
+          `import * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";`,
+      )
+      .replace(
+        /\/\/ @Export drash_from_deno_no_version_comment$/gm,
+        `export * as Drash from "https://deno.land/x/drash@<VERSION>/mod.ts";`,
+      )
+      .replace(
+        /\/\/ @Export csrf_service_from_deno_no_version_comment$/gm,
+        `export { CSRFService } from "https://deno.land/x/drash@<VERSION>/src/services/csrf/csrf.ts";`
+      )
+      .replace(
+        /\/\/ @Export dexter_service_from_deno_no_version_comment$/gm,
+        `export { DexterService } from "https://deno.land/x/drash@<VERSION>/src/services/dexter/dexter.ts";`
+      )
+      .replace(
+        /\/\/ @Export etag_service_from_deno_no_version_comment$/gm,
+        `export { ETagService } from "https://deno.land/x/drash@<VERSION>/src/services/etag/etag.ts";`
+      )
+      .replace(
+        /\/\/ @Export graphql_service_from_deno_no_version_comment$/gm,
+        `export { GraphQL, GraphQLService } from "https://deno.land/x/drash@<VERSION>/src/services/graphql/graphql.ts";`
+      )
+      .replace(
+        /\/\/ @Export paladin_service_from_deno_no_version_comment$/gm,
+        `export { PaladinService } from "https://deno.land/x/drash@<VERSION>/src/services/paladin/paladin.ts";`
+      )
+      .replace(
+        /\/\/ @Export rate_limiter_service_from_deno_no_version_comment$/gm,
+        `export { RateLimiterService } from "https://deno.land/x/drash@<VERSION>/src/services/rate_limiter/rate_limiter.ts";`
+      )
+      .replace(
+        /\/\/ @Export response_time_service_from_deno_no_version_comment$/gm,
+        `export { ResponseTimeService } from "https://deno.land/x/drash@<VERSION>/src/services/response_time/response_time.ts";`
+      )
+      .replace(
+        /\/\/ @Export tengine_service_from_deno_no_version_comment$/gm,
+        `export { TengineService } from "https://deno.land/x/drash@<VERSION>/src/services/tengine/tengine.ts";`
+      );
+  }
 
   /**
    * Get the Prims.js class name for the a code block.
@@ -136,7 +199,7 @@ export default function CodeExtension({
    * @returns The code without the tab name.
    */
   function renderCodeBlockWithoutTabName(codeBlock, tabName) {
-    return codeBlock.replace(tabName, "").trim();
+    return replaceImportExportLines(codeBlock).replace(tabName, "").trim();
   }
 
   /**
@@ -148,7 +211,7 @@ export default function CodeExtension({
         key={children.toString()}
         className={getPrismJsClassNameForCodeBlock(className)}
       >
-        {children}
+        {replaceImportExportLines(children)}
       </code>
     );
   }
@@ -171,9 +234,11 @@ export default function CodeExtension({
                 name={tabName}
                 onClick={() => {
                   // deno-lint-ignore no-window-prefix
-                  window.dispatchEvent(new MessageEvent("changeCodeBlockActiveTab", {
-                    data: tabName
-                  }));
+                  window.dispatchEvent(
+                    new MessageEvent("changeCodeBlockActiveTab", {
+                      data: tabName,
+                    }),
+                  );
                   // setActiveTab(tabName)
                 }}
               >
