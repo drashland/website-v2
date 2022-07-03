@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import styled from "styled-components";
 import { Pre } from "../Markdown";
-import { CODE_BLOCK_COMMENT_REPLACEMENTS } from "../../services/content_replacer_service.js";
+import { CODE_BLOCK_COMMENT_REPLACEMENTS } from "../../services/content_replacer_service";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////

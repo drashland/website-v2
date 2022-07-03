@@ -7,7 +7,7 @@ import React, { Fragment } from "react";
 import { Link } from "@styled-icons/bootstrap";
 import styled from "styled-components";
 import CodeExtended from "./markdown/CodeExtended";
-import { PLACEHOLDER_REPLACEMENTS } from "../services/content_replacer_service.js";
+import { PLACEHOLDER_REPLACEMENTS } from "../services/content_replacer_service";
 
 const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
