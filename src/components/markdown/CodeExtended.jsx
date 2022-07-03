@@ -77,7 +77,6 @@ export default function CodeExtension({
     return replaceImportExportLine(codeBlock);
   }
 
-
   //
   //
   //
@@ -96,35 +95,35 @@ export default function CodeExtension({
       )
       .replace(
         /\/\/ @Export csrf_service_from_deno_no_version_comment$/gm,
-        `export { CSRFService } from "https://deno.land/x/drash@<VERSION>/src/services/csrf/csrf.ts";`
+        `export { CSRFService } from "https://deno.land/x/drash@<VERSION>/src/services/csrf/csrf.ts";`,
       )
       .replace(
         /\/\/ @Export dexter_service_from_deno_no_version_comment$/gm,
-        `export { DexterService } from "https://deno.land/x/drash@<VERSION>/src/services/dexter/dexter.ts";`
+        `export { DexterService } from "https://deno.land/x/drash@<VERSION>/src/services/dexter/dexter.ts";`,
       )
       .replace(
         /\/\/ @Export etag_service_from_deno_no_version_comment$/gm,
-        `export { ETagService } from "https://deno.land/x/drash@<VERSION>/src/services/etag/etag.ts";`
+        `export { ETagService } from "https://deno.land/x/drash@<VERSION>/src/services/etag/etag.ts";`,
       )
       .replace(
         /\/\/ @Export graphql_service_from_deno_no_version_comment$/gm,
-        `export { GraphQL, GraphQLService } from "https://deno.land/x/drash@<VERSION>/src/services/graphql/graphql.ts";`
+        `export { GraphQL, GraphQLService } from "https://deno.land/x/drash@<VERSION>/src/services/graphql/graphql.ts";`,
       )
       .replace(
         /\/\/ @Export paladin_service_from_deno_no_version_comment$/gm,
-        `export { PaladinService } from "https://deno.land/x/drash@<VERSION>/src/services/paladin/paladin.ts";`
+        `export { PaladinService } from "https://deno.land/x/drash@<VERSION>/src/services/paladin/paladin.ts";`,
       )
       .replace(
         /\/\/ @Export rate_limiter_service_from_deno_no_version_comment$/gm,
-        `export { RateLimiterService } from "https://deno.land/x/drash@<VERSION>/src/services/rate_limiter/rate_limiter.ts";`
+        `export { RateLimiterService } from "https://deno.land/x/drash@<VERSION>/src/services/rate_limiter/rate_limiter.ts";`,
       )
       .replace(
         /\/\/ @Export response_time_service_from_deno_no_version_comment$/gm,
-        `export { ResponseTimeService } from "https://deno.land/x/drash@<VERSION>/src/services/response_time/response_time.ts";`
+        `export { ResponseTimeService } from "https://deno.land/x/drash@<VERSION>/src/services/response_time/response_time.ts";`,
       )
       .replace(
         /\/\/ @Export tengine_service_from_deno_no_version_comment$/gm,
-        `export { TengineService } from "https://deno.land/x/drash@<VERSION>/src/services/tengine/tengine.ts";`
+        `export { TengineService } from "https://deno.land/x/drash@<VERSION>/src/services/tengine/tengine.ts";`,
       );
   }
 

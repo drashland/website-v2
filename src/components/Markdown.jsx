@@ -173,10 +173,16 @@ export const PreExtended = function ({ className, children }) {
 
 const ParagraphExtended = function ({ className, children }) {
   if (Array.isArray(children)) {
-    if (children.includes("{{ placeholder: edit_your_deps_file_to_include_the_service }}")) {
+    if (
+      children.includes(
+        "{{ placeholder: edit_your_deps_file_to_include_the_service }}",
+      )
+    ) {
       return <EditYourDepsFileToIncludeTheService />;
     }
-    if (children.includes("{{ placeholder: create_deps_file_step_text_only }}")) {
+    if (
+      children.includes("{{ placeholder: create_deps_file_step_text_only }}")
+    ) {
       return <CreateDepsFileStepTextOnly />;
     }
     if (children.includes("{{ placeholder: create_deps_file_step_drash }}")) {
