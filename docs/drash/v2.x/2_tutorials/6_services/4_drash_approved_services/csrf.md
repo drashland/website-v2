@@ -3,8 +3,7 @@
 This service is a
 [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery) protection
 service inspired by
-[expressjs/csurf](http://expressjs.com/en/resources/middleware/csurf.html). It
-can be simply placed as a middleware for your resources and you are all set!
+[expressjs/csurf](http://expressjs.com/en/resources/middleware/csurf.html).
 
 Simply add it to your resources that require CSRF protection and you are all
 set!
