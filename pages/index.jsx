@@ -465,7 +465,7 @@ export default function Home() {
             </p>
             <ul>
               <li>
-                Zero Dependencies: Every Drash Land project has zero
+                Zero Dependencies: Every Drash Land project (above) has zero
                 dependencies (with the exception of Deno and Node, of course).
               </li>
               <li>
