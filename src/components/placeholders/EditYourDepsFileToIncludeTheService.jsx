@@ -12,7 +12,7 @@ export default function EditYourDepsFileToIncludeTheService() {
           href="https://github.com/drashland/drash/releases/latest"
           target="_BLANK"
         >
-          https://github.com/drashland/drash/releases/latest
+          the Drash latest release page
         </a>.
       </Paragraph>
     </>
