@@ -77,10 +77,6 @@ export default function CodeExtension({
     return replaceImportExportLine(codeBlock);
   }
 
-  //
-  //
-  //
-  //
   function replaceImportExportLine(line) {
     return line && line
       .replace(
