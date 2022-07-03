@@ -32,9 +32,10 @@ versions can be found
 
 ## Configuration Options
 
-You can use `CorsService` without passing in any configs. If you do not pass in any
-configs, then `Cors` will use its default configs. Also, you should note that
-not passing in any configs will enable CORS for all requests from any origin.
+You can use `CorsService` without passing in any configs. If you do not pass in
+any configs, then `Cors` will use its default configs. Also, you should note
+that not passing in any configs will enable CORS for all requests from any
+origin.
 
 ### `allowedHeaders`
 
@@ -71,8 +72,8 @@ If this config is not specified, then no custom headers are exposed.
 This config is optional. This config manages the
 [`Access-Control-Allow-Origin` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
 This config tells `Cors` what origins to allow requests from. For example, if
-the value is `"https://google.com"`, then `CorsService` will not allow requests from
-`"https://stackoverflow.com"`.
+the value is `"https://google.com"`, then `CorsService` will not allow requests
+from `"https://stackoverflow.com"`.
 
 The `origin` config can be of the following types:
 
@@ -116,7 +117,6 @@ This config is optional. If needed, you can disable preflight entirely by
 setting this config to `false`.
 
 If this config is not specified, then it defaults to `true`.
-
 
 ## Example
 
@@ -166,8 +166,12 @@ console.log(`Server running at ${server.address}.`);
 
 `CorsService` will determine if you server will allow Cors.
 
-By default, the server will allow all and any requests for any method and any origin, but you can cutomise this by [changing the configuration options](#configuration-options).
+By default, the server will allow all and any requests for any method and any
+origin, but you can cutomise this by
+[changing the configuration options](#configuration-options).
 
-This service checks a variety of headers on the request to see if they match what the default config or passed in config allows.
+This service checks a variety of headers on the request to see if they match
+what the default config or passed in config allows.
 
-Be sure to inspect the specifications of Cors to understand how this service would act for you.
+Be sure to inspect the specifications of Cors to understand how this service
+would act for you.
