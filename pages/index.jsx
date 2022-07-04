@@ -153,7 +153,7 @@ const CardsContainer = styled.div`
 const Card = styled.div`
   cursor: pointer;
   background: #ffffff;
-  border-radius: 2rem;
+  border-radius: .5rem;
   padding: 1.5rem;
   color: #333333;
   display: flex;
@@ -465,7 +465,7 @@ export default function Home() {
             </p>
             <ul>
               <li>
-                Zero Dependencies: Every Drash Land project has zero
+                Zero Dependencies: Every Drash Land project (above) has zero
                 dependencies (with the exception of Deno and Node, of course).
               </li>
               <li>

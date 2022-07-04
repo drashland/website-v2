@@ -20,7 +20,7 @@ A full example looks like:
 ```typescript
 // File: my_resource.ts
 
-import { Drash } from "./deps.ts";
+// @Import drash_from_deno
 
 export class MyResource extends Drash.Resource {
   public paths = ["/my-resource"];
@@ -71,7 +71,7 @@ A full example looks like:
 ```typescript
 // File: my_resource.ts
 
-import { Drash } from "./deps.ts";
+// @Import drash_from_deno
 
 export class MyResource extends Drash.Resource {
   public paths = ["/my-resource"];
@@ -102,7 +102,7 @@ A full example looks like:
 ```typescript
 // File: my_resource.ts
 
-import { Drash } from "./deps.ts";
+// @Import drash_from_deno
 
 export class MyResource extends Drash.Resource {
   public paths = ["/my-resource"];

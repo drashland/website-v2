@@ -38,7 +38,9 @@ this could be anything you want to serve! JavaScript? CSS? Favicons? User
 images? You can serve all of that! However, here we are going to be using
 JavaScript, CSS, and Favicons.
 
-1. First, you will want to create your resource:
+1. {{ placeholder: drash_create_deps_file_step }}
+
+1. Create your resource file that will handle your static assets.
 
    ```typescript
    // File: files_resource.ts
@@ -88,10 +90,10 @@ JavaScript, CSS, and Favicons.
    }
    ```
 
-2. Next, add it to your server just like any other resource:
+1. Next, add it to your server just like any other resource:
 
    ```typescript
-   // app.ts
+   // File: app.ts
 
    import { Drash } from "./deps.ts";
    import { FilesResource } from "./files_resource.ts";

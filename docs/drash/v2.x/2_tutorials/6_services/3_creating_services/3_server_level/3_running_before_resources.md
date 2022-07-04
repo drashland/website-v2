@@ -32,6 +32,8 @@ proof of concept.
 
 ## Steps
 
+1. {{ placeholder: drash_create_deps_file_step }}
+
 1. Create your `app.ts` file.
 
    ```typescript
@@ -62,7 +64,7 @@ proof of concept.
    console.log(`Server running at ${server.address}`);
    ```
 
-2. Create your `services/authentication_service.ts` file.
+1. Create your `services/authentication_service.ts` file.
 
    The service in this file will be in charge of making sure all requests have
    the `username` and `token` query parameters; and they must match the ones
@@ -123,7 +125,7 @@ proof of concept.
    export default new AuthenticationService();
    ```
 
-3. Create your `resources/protected_resource.ts` file.
+1. Create your `resources/protected_resource.ts` file.
 
    The resource in this file will be protected by the `AuthenticationService`
    class. Since the `AuthenticationService` class will be filtering all

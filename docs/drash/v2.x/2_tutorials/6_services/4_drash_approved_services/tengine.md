@@ -12,19 +12,18 @@ engine.
 
 ## Before You Get Started
 
-To use this service, edit your `deps.ts` file to include the service.
+{{ placeholder: drash_edit_your_deps_file_to_include_the_service }}
 
 ```typescript
-// deps.ts
+// File: deps.ts
 
-...
-...
-...
-export { TengineService } from "https://deno.land/x/drash@<VERSION>/src/services/tengine/tengine.ts";
+// @Export drash_from_deno_no_version_comment
+// @Export tengine_service_from_deno_no_version_comment
+// ... rest
+// ... of
+// ... your
+// ... deps
 ```
-
-Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest
-version can be found [here](https://github.com/drashland/drash/releases/latest).
 
 This service can do the following:
 
@@ -59,111 +58,112 @@ This tutorial will go over the following:
    template, the template that uses the `<% extends() %>` tag will be placed
    into the `<% yield %>` tag of the extended template.
 
-```html
-<!DOCTYPE html>
-<html class="h-full w-full">
-  <head>
-    <title>Drash + Tengine</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
-  </head>
-  <body style="background: #f4f4f4">
-    <% yield %>
-  </body>
-</html>
-```
+   ```html
+   <!DOCTYPE html>
+   <html class="h-full w-full">
+     <head>
+       <title>Drash + Tengine</title>
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+     </head>
+     <body style="background: #f4f4f4">
+       <% yield %>
+     </body>
+   </html>
+   ```
 
-2. Create your `user_details.html` template partial. This will be included in
+1. Create your `user_details.html` template partial. This will be included in
    `index.html`. As you can see, this template partial uses in-template
    JavaScript (`for` loop and `if/else` conditional). All in-template JavaScript
    will be evaluated by Tengine at runtime and rendered appropriately.
 
-```html
-<ul>
-  <% for (let field in user.details) { %>
-    <!-- Do not show the Phone field -->
-    <% if (field !== "Phone") { %>
-  <li><% field %>: <% user.details[field] %></li>
-    <% } %>
-  <% } %>
-</ul>
-```
+   ```html
+   <ul>
+     <% for (let field in user.details) { %>
+       <!-- Do not show the Phone field -->
+       <% if (field !== "Phone") { %>
+     <li><% field %>: <% user.details[field] %></li>
+       <% } %>
+     <% } %>
+   </ul>
+   ```
 
-3. Create your `index.html` template. This template will extend `layout.html`
+1. Create your `index.html` template. This template will extend `layout.html`
    via the `<% extends() %>` tag. This template will also include the
    `user_details.html` template partial via the `<% includes() %>` tag.
 
-```html
-<% extends("/layout.html") %>
+   ```html
+   <% extends("/layout.html") %>
 
-<div style="max-width: 640px; margin: 50px auto;">
-  <h1 class="text-5xl mb-5"><% user.name %></h1>
-  <% include_partial("/user_details.html") %>
-</div>
-```
+   <div style="max-width: 640px; margin: 50px auto;">
+     <h1 class="text-5xl mb-5"><% user.name %></h1>
+     <% include_partial("/user_details.html") %>
+   </div>
+   ```
 
-4. Create your `app.ts` file.
+1. Create your `app.ts` file. This assumes you edited your `deps.ts` file above.
 
-```typescript
-// app.ts
+   ```typescript
+   // File: app.ts
 
-import { Drash, TengineService } from "./deps.ts";
+   import { Drash, TengineService } from "./deps.ts";
 
-// Instantiate and configure TengineService
+   // Instantiate and configure TengineService
 
-const tengine = new TengineService({
-  views_path: "./views",
-});
+   const tengine = new TengineService({
+     views_path: "./views",
+   });
 
-// Create your resource with TengineService enabled on GET requests
+   // Create your resource with TengineService enabled on GET requests
 
-class HomeResource extends Drash.Resource {
-  public paths = ["/"];
+   class HomeResource extends Drash.Resource {
+     public paths = ["/"];
 
-  public GET(_request: Drash.Request, response: Drash.Response): void {
-    const templateVariables = {
-      user: {
-        name: "Jae",
-        details: {
-          "Role": "Software Engineer",
-          "Phone": "(555) 555-5555",
-          "E-mail": "jae@example.com",
-        },
-      },
-    };
+     public GET(_request: Drash.Request, response: Drash.Response): void {
+       const templateVariables = {
+         user: {
+           name: "Jae",
+           details: {
+             "Role": "Software Engineer",
+             "Phone": "(555) 555-5555",
+             "E-mail": "jae@example.com",
+           },
+         },
+       };
 
-    const html = response.render("/index.html", templateVariables) as string;
+       const html = response.render("/index.html", templateVariables) as string;
 
-    response.html(html);
-  }
-}
+       response.html(html);
+     }
+   }
 
-// Create and run your server
+   // Create and run your server
 
-const server = new Drash.Server({
-  hostname: "localhost",
-  port: 1447,
-  protocol: "http",
-  resources: [HomeResource],
-  services: [tengine],
-});
+   const server = new Drash.Server({
+     hostname: "localhost",
+     port: 1447,
+     protocol: "http",
+     resources: [HomeResource],
+     services: [tengine],
+   });
 
-server.run();
+   server.run();
 
-console.log(`Server running at ${server.address}.`);
-```
+   console.log(`Server running at ${server.address}.`);
+   ```
 
 ## Verification
 
 1. Run your app.
 
-```shell
-$ deno run --allow-net --allow-read app.ts
-```
+   ```shell
+   $ deno run --allow-net --allow-read app.ts
+   ```
 
 2. Open up your web browser and navigate to `http://localhost:1447`. You should
    see the following:
 
-![Drash and Tengine](/drash/v2.x/tengine.png "Drash and Tengine")
+   ![Drash and Tengine](/drash/v2.x/tengine.png "Drash and Tengine")
 
-As you can see, everything has been rendered except for the `Phone` field since
-the in-template JavaScript in `user_details.html` conditionally removes it.
+   As you can see, everything has been rendered except for the `Phone` field
+   since the in-template JavaScript in `user_details.html` conditionally removes
+   it.

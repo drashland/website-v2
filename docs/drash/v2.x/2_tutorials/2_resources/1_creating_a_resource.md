@@ -19,9 +19,9 @@ In the example code below, the `HomeResource` class is the only resource that
 will be regisrered by the server.
 
 ```typescript
-// app.ts
+// File: app.ts
 
-import { Drash } from "./deps.ts";
+// @Import drash_from_deno
 
 // Create your resource
 

@@ -10,7 +10,9 @@ To add resource HTTP method level services, use the HTTP method field (e.g.,
 example:
 
 ```typescript
-import { Drash } from "./deps.ts";
+// File: app.ts
+
+// @Import drash_from_deno
 
 import {
   GETService,

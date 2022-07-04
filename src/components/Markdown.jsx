@@ -3,18 +3,19 @@
 // used to replace the default components in our markdown package that we use
 // in `[...path_params].jsx`.
 //
-import React from "react";
+import React, { Fragment } from "react";
 import { Link } from "@styled-icons/bootstrap";
 import styled from "styled-components";
 import CodeExtended from "./markdown/CodeExtended";
+import { PLACEHOLDER_REPLACEMENTS } from "../services/content_replacer_service";
+
+const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
 const flatten = (text, child) => {
   return typeof child === "string"
     ? text + child
     : React.Children.toArray(child.props.children).reduce(flatten, text);
 };
-
-const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
 
 const LinkIcon = styled(Link)`
   color: ${({ theme }) => theme.headingLinkIcon.color};
@@ -168,7 +169,49 @@ export const PreExtended = function ({ className, children }) {
   );
 };
 
-export const Paragraph = styled.p`
+/**
+ * In the documentation pages, there are placeholders that look like the
+ * following:
+ *
+ *     {{ placeholder: some_slug_here }}
+ *
+ * These placeholders exist to prevent us from having to write the same
+ * statements over and over and having to make sure they all say the same thing.
+ * For example, having to write "Create your `deps.ts` file." and showing
+ * example code would suck. This function helps in this area.
+ *
+ * @param {string} text - The text possibly containing the placeholder.
+ * @returns The text with the placeholder replaced.
+ */
+const ParagraphExtended = ({ className, children: text }) => {
+  let paragraphContainsPlaceholder = false;
+
+  PLACEHOLDER_REPLACEMENTS.forEach((replacementData) => {
+    text = text.map((line, index) => {
+      // Exclude trying to replace undefined elements and React elements
+      if (!line || typeof line === "object") {
+        return line;
+      }
+
+      if (line.includes(replacementData.from)) {
+        paragraphContainsPlaceholder = true;
+        return <Fragment key={line + index}>{replacementData.to}</Fragment>;
+      }
+
+      return line;
+    });
+  });
+
+  // If the paragraph includes placeholders, then we need to make sure we do not
+  // wrap the replaced placeholder in a <p> tag. Otherwise we will end up with
+  // nested <p> tags and that will throw a React error in the console. It's not
+  // problematic per se, but annoying af.
+  return paragraphContainsPlaceholder
+    ? text
+    : <p className={className}>{text}</p>;
+};
+
+export const Paragraph = styled(ParagraphExtended)`
   ${MARGIN_BOTTOM};
   transition-duration: 0.25s;
   transition-property: color;

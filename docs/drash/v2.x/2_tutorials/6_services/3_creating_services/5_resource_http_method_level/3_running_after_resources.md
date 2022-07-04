@@ -34,6 +34,8 @@ resource that uses the service.
 
 ## Steps
 
+1. {{ placeholder: drash_create_deps_file_step }}
+
 1. Create your `app.ts` file.
 
    ```typescript
@@ -58,7 +60,7 @@ resource that uses the service.
    console.log(`Server running at ${server.address}`);
    ```
 
-2. Create your `services/response_header_service.ts` file.
+1. Create your `services/response_header_service.ts` file.
 
    The service in this file will be used in the
    `ResponseModifiedForPostResource` (created in the next step) to add a
@@ -87,7 +89,7 @@ resource that uses the service.
    export default new ResponseHeaderService();
    ```
 
-3. Create your `resources/response_modified_for_post_resource.ts` file.
+1. Create your `resources/response_modified_for_post_resource.ts` file.
 
    The resource in this file will have its `POST` method using the
    `ResponseHeaderService`. Any `POST` request to this resource will receive a

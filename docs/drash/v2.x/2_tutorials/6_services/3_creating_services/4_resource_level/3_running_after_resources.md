@@ -37,6 +37,8 @@ field in the `services` property in the resource that uses the service.
 
 ## Steps
 
+1. {{ placeholder: drash_create_deps_file_step }}
+
 1. Create your `app.ts` file.
 
    ```typescript
@@ -63,7 +65,7 @@ field in the `services` property in the resource that uses the service.
    console.log(`Server running at ${server.address}`);
    ```
 
-2. Create your `services/response_header_service.ts` file.
+1. Create your `services/response_header_service.ts` file.
 
    The service in this file will be in charge of making sure responses have the
    `X-CUSTOM-HEADER` header.
@@ -91,7 +93,7 @@ field in the `services` property in the resource that uses the service.
    export default new ResponseHeaderService();
    ```
 
-3. Create your `resources/resonse_modified_resource.ts` file.
+1. Create your `resources/resonse_modified_resource.ts` file.
 
    The resource in this file will have its responses modified by the
    `ResponseHeaderService` class. Specifically, all responses will have the
@@ -125,7 +127,7 @@ field in the `services` property in the resource that uses the service.
    }
    ```
 
-4. Create your `resources/response_not_modified_resource.ts` file.
+1. Create your `resources/response_not_modified_resource.ts` file.
 
    The resource in this file will not be be using the `ResponseHeaderService`.
    This means all responses from this resource will not have the

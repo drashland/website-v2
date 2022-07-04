@@ -6,7 +6,9 @@ To add server-level services, use the `services` config when you create your
 `server` object. For example:
 
 ```typescript
-import { Drash } from "./deps.ts";
+// File: app.ts
+
+// @Import drash_from_deno
 
 import SomeService from "./some/path/some_service.ts";
 import SomeOtherService from "./some/path/some_other_service.ts";
