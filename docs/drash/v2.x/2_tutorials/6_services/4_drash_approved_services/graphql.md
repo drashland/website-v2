@@ -14,6 +14,11 @@ _**Note: This service uses third-party software.**_
 - [Folder Structure End State](#folder-structure-end-state)
 - [Steps](#steps)
 - [Verification](#verification)
+- [Configuration](#configuration)
+  - [Required](#required)
+    - [graphiql: boolean | string](#graphiql-boolean-string)
+    - [rootValue: Record<string, (...args: any) => string>](#rootvalue-record-string-args-any-string)
+    - [schema: GraphQL.GraphQLSchema](#schema-graphql-graphqlschema)
 
 ## Before You Get Started
 
@@ -73,52 +78,11 @@ GraphQL. To learn more about using GraphQL, please refer to the
      rootValue: root,
    });
 
-   // Create your GraphQL resource so that:
-   //
-   //   1. The playground can be viewed and used.
-   //   2. Clients can make queries to your graph.
-   //
-   // Also, note that `services` includes the instantiated GraphQLService.
-
-   class GraphQLResource extends Drash.Resource {
-     public paths = ["/graphql"];
-
-     public services = {
-       ALL: [graphQl],
-     };
-
-     public GET(request: Drash.Request, response: Drash.Response): void {
-       // This is intentionally left blank.
-       //
-       // This is only defined to allow GET requests to the front-end playground.
-       // Without this, Drash will throw a 405 Method Not Allowed error when
-       // requesting to view the playground at /graphql.
-       //
-       // If you want to secure your playground, then you can fill in this method
-       // with logic to secure it. For example:
-       //
-       // if (request.headers.get("some-token")! !== "someSecret") {
-       //   response.status = 401;
-       //   return response.text("You do not have access to this resource.");
-       // }
-     }
-
-     public POST(request: Drash.Request, response: Drash.Response): void {
-       // This is intentionally left blank.
-       //
-       // This is only defined so that POST requests to this resource can be
-       // processed. Without this, Drash will throw a 405 Method Not Allowed error
-       // when clients try to make GraphQL queries.
-     }
-   }
-
-   // Create and run your server
-
    const server = new Drash.Server({
      hostname: "localhost",
      port: 1447,
      protocol: "http",
-     resources: [GraphQLResource],
+     services: [graphQl],
    });
 
    server.run();
@@ -134,9 +98,9 @@ GraphQL. To learn more about using GraphQL, please refer to the
    $ deno run --allow-net app.ts
    ```
 
-2. View your front-end playground by going to `http://localhost:1447/graphql`.
+1. View your front-end playground by going to `http://localhost:1447/graphql`.
 
-3. Make a query by entering the following in the left pane of your playground.
+1. Make a query by entering the following in the left pane of your playground.
 
    ```text
    {
@@ -154,3 +118,78 @@ GraphQL. To learn more about using GraphQL, please refer to the
      }
    }
    ```
+
+## Configuration
+
+### Required
+
+Below are the required configurations. You cannot use this service without
+these.
+
+#### graphiql: boolean | string
+
+- This config enables or disables the
+  [GraphQL playground](https://github.com/graphql/graphql-playground).
+- Values:
+  - If set to `true`, then the GraphQL playground will be enabled and accessible
+    at `/graphql`.
+  - If set to `false`, then the GraphQL playground will be disabled.
+  - If set to a `string`, then it _**must**_ be a proper
+    [pathname](https://developer.mozilla.org/en-US/docs/Web/API/URL/pathname)
+    (e.g., `/graphql-playground`). This will change the location of the GraphQL
+    playground. For example, if set to `/graphql-playground`, then the GraphQL
+    playground will be accessible at `/graphql-playground` and not `/graphql`.
+- Example Usage on changing the GraphQL playground path to
+  `/graphql-playground`:
+
+  ```typescript
+  // app.ts
+
+  import { Drash, GraphQL, GraphQLService } from "./deps.ts";
+
+  // Set up your GraphQL environment
+
+  const schema = GraphQL.buildSchema(`
+    type Query {
+      greeting: String
+    }
+  `);
+
+  const root = {
+    greeting: () => { // or greeting: (source, args, context, info) => {
+      return "Hello world!";
+    },
+  };
+
+  // Instantiate the GraphQL service
+
+  const graphQl = new GraphQLService({
+    schema,
+    graphiql: "/graphql-playground", // <--- Now the GraphQL playground will be accessible at http://localhost:1447/graphql-playground and not http://localhost:1447/graphql
+    rootValue: root,
+  });
+
+  const server = new Drash.Server({
+    hostname: "localhost",
+    port: 1447,
+    protocol: "http",
+    resources: [],
+    services: [graphQl],
+  });
+
+  server.run();
+
+  console.log(`Server running at ${server.address}.`);
+  ```
+
+### rootValue: Record<string, (...args: any) => string>
+
+- This config provides a resolver function for each API endpoint.
+- Please refer to
+  [GraphQL's documentation on root fields and resolvers](https://graphql.org/learn/execution/#root-fields-resolvers).
+
+#### schema: GraphQL.GraphQLSchema
+
+- This config defines your GraphQL's schema
+- Please refer to
+  [GraphQL's documentation on schemas](https://graphql.org/learn/schema/).
