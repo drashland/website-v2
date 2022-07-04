@@ -21,19 +21,18 @@ server.
 
 ## Before You Get Started
 
-To use this service, edit your `deps.ts` file to include the service.
+{{ placeholder: drash_edit_your_deps_file_to_include_the_service }}
 
 ```typescript
-// deps.ts
+// File: deps.ts
 
-...
-...
-...
-export { ResourceLoaderService } from "https://deno.land/x/drash@<VERSION>/src/services/resource_loader/resource_loader.ts";
+// @Export drash_from_deno_no_version_comment
+// @Export resource_loader_service_from_deno_no_version_comment
+// ... rest
+// ... of
+// ... your
+// ... deps
 ```
-
-Replace `<VERSION>` with the latest version of **Drash v2.x**. The latest
-version can be found [here](https://github.com/drashland/drash/releases/latest).
 
 If you are using this service to load ALL of your resources, then the
 `resources` server config is not required. For example:
@@ -47,7 +46,7 @@ const server = new Drash.Server({
   hostname: "0.0.0.0",
   port: 1447,
   protocol: "http",
-  // resources: [] <--- Not required anymore if you are loading all of your resources via ResourceLoaderService
+  // resources: [] <--- Not required anymore if you are loading all of your resources via ResourceLoaderService unless you like the empty array here :)
   services: [resourceLoaderService],
 });
 ```
@@ -66,10 +65,10 @@ const server = new Drash.Server({
 
 ## Steps
 
-1. Create your `app.ts` file.
+1. Create your `app.ts` file. This assumes you edited your `deps.ts` file above.
 
    ```typescript
-   // app.ts
+   // File: app.ts
 
    import { Drash, ResourceLoaderService } from "./deps.ts";
 
@@ -98,6 +97,8 @@ const server = new Drash.Server({
 1. Create your `./api_resources/users_resource.ts` file.
 
    ```typescript
+   // File: api_resources/users_resource.ts
+
    import { Drash } from "../deps.ts";
 
    export class UsersResource extends Drash.Resource {
@@ -125,6 +126,8 @@ const server = new Drash.Server({
 1. Create your `./ssr_resources/home_resource.ts` file.
 
    ```typescript
+   // File: ssr_resources/home_resource.ts
+
    import { Drash } from "../deps.ts";
 
    export class HomeResource extends Drash.Resource {
