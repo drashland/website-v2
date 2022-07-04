@@ -43,6 +43,12 @@ export const CODE_BLOCK_COMMENT_REPLACEMENTS = [
       `export { RateLimiterService } from "https://deno.land/x/drash@<VERSION>/src/services/rate_limiter/rate_limiter.ts";`,
   },
   {
+    from:
+      /\/\/ @Export resource_loader_service_from_deno_no_version_comment$/gm,
+    to:
+      `export { ResourceLoaderService } from "https://deno.land/x/drash@<VERSION>/src/services/resource_loader/resource_loader.ts";`,
+  },
+  {
     from: /\/\/ @Export response_time_service_from_deno_no_version_comment$/gm,
     to:
       `export { ResponseTimeService } from "https://deno.land/x/drash@<VERSION>/src/services/response_time/response_time.ts";`,
