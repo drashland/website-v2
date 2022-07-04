@@ -46,7 +46,7 @@ const server = new Drash.Server({
   hostname: "0.0.0.0",
   port: 1447,
   protocol: "http",
-  // resources: [] <--- Not required anymore if you are loading all of your resources via ResourceLoaderService unless you like the empty array here
+  // resources: [] <--- Not required anymore if you are loading all of your resources via ResourceLoaderService unless you like the empty array here :)
   services: [resourceLoaderService],
 });
 ```
@@ -68,7 +68,7 @@ const server = new Drash.Server({
 1. Create your `app.ts` file. This assumes you edited your `deps.ts` file above.
 
    ```typescript
-   // app.ts
+   // File: app.ts
 
    import { Drash, ResourceLoaderService } from "./deps.ts";
 
@@ -97,6 +97,8 @@ const server = new Drash.Server({
 1. Create your `./api_resources/users_resource.ts` file.
 
    ```typescript
+   // File: api_resources/users_resource.ts
+
    import { Drash } from "../deps.ts";
 
    export class UsersResource extends Drash.Resource {
@@ -124,6 +126,8 @@ const server = new Drash.Server({
 1. Create your `./ssr_resources/home_resource.ts` file.
 
    ```typescript
+   // File: ssr_resources/home_resource.ts
+
    import { Drash } from "../deps.ts";
 
    export class HomeResource extends Drash.Resource {
