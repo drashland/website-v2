@@ -75,6 +75,7 @@ Things to note:
       error: Error,
       request: Request,
       response: Drash.Response,
+      connInfo: ConnInfo,
     ): void {
       // ... rest of implementation goes here
     }
@@ -86,6 +87,7 @@ Things to note:
       error: Error,
       request: Request,
       response: Drash.Response,
+      connInfo: ConnInfo,
     ): void {
       // ... rest of implementation goes here
     }
@@ -97,6 +99,10 @@ Things to note:
     one.
   - The `response` parameter expects Drash's `Response` object or an extension
     of one.
+  - The `connInfo` parameter is the connection info of the current request. See
+    [the documentation page for this in Deno](https://doc.deno.land/https://deno.land/std/http/mod.ts/~/ConnInfo).
+    This parameter is optional should you wish to omit it if you are not
+    planning to use it.
 
 ## Folder Structure End State
 
