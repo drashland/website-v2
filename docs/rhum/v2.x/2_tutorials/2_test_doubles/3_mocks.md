@@ -284,12 +284,16 @@ console.log(mockRepositoryThrowingError.do_something_else_called === false); // 
 
 ## Verifying Calls
 
-Since mocks register calls they receive, you can check to see how many times a
-mocked object's methods were called by doing one of two things:
+Since mocks register calls they receive, you can verify how many times a mocked
+object's methods were called by doing one of two things:
 
-- Accessing the mock objects `calls`; or
-- Using the mock object's `.verifyExpectations()` method (after using
+- Accessing the mocked objects's `calls`; or
+- Using the mocked object's `.verifyExpectations()` method (after using
   `.expects(...).toBeCalled(...)`)
+
+_Note: Verification methods throw errors if expected results do not match actual
+results. They do not "fail" tests. This means when you see an error occur from
+Rhum during your test runs, this is the expected behavior._
 
 ### Using .calls
 
@@ -324,12 +328,12 @@ console.log(mock.calls.world === 1); // true
 ```
 
 You might notice the following syntax: `mock.calls[theMethodName]`. To clarify
-how this works, when you create a mock object, the mock object will create its
-`calls` property. Its `calls` property is a key-value pair object where the keys
-are the names of all public methods on the mock and the values are the number of
-calls that the methods have received.
+how this works, when you create a mocked object, the mocked object will create
+its `calls` property. Its `calls` property is a key-value pair object where the
+keys are the names of all public methods on the mock and the values are the
+number of calls that the methods have received.
 
-Take the following example:
+Take the following class:
 
 ```ts
 class MyClass {
@@ -354,7 +358,7 @@ All calls start with `0` and increment as they are called during tests.
 
 ### Using .expects(...).toBeCalled(...) and .verifyExpectations()
 
-You can add call expectations to methods on a mock object by using
+You can add call expectations to methods on a mocked object by using
 `.expects(...).toBeCalled(...)` method, which can be verified later using
 `.verifyExpectations()`.
 
@@ -445,7 +449,7 @@ Using `.expects(...).toBeCalled(...)` _is exactly the same as verifying calls
 manually using the `calls` property_. Both `calls` and
 `expects(...).toBeCalled(...)` exist strictly for different use cases:
 
-- Use `calls` to verify calls as well as incrementally verify calls while
+- Use `calls` to verify calls as well as incrementally verifying calls while
   debugging a test.
 - Use `expects(...).toBeCalled(...)` and `verifyExpectations()` to verify calls
   all at once _at the end of a test_. This means you cannot use it to debug
@@ -453,6 +457,6 @@ manually using the `calls` property_. Both `calls` and
 
 Furthermore, `expects(...).toBeCalled(...)` uses the builder pattern so that we
 can introduce further verification logic on top of it. For example,
-`.toBeCalledWith(...)` will be introduced in a future release so that you can
-expect a certain number of calls and that methods were called with expected
-arguments.
+`.toBeCalledWithArgs(...)` and `.toBeCalledWithoutArgs()` will be introduced in
+a future release so that you can expect a certain number of calls and that
+methods were called with expected arguments.
