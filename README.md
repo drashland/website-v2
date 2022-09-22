@@ -103,14 +103,14 @@ import { Mock } from "./deps.ts";
 // ...
 // ...
 
-// @Tab Node (ESM)
+// @Tab Node - JavaScript (ESM)
 import { Mock } from "@drashland/rhum";
 
 // Some cool code goes here
 // ...
 // ...
 
-// @Tab Node (CJS)
+// @Tab Node - CommonJS
 const { Mock } = require("@drashland/rhum");
 
 // Some cool code goes here
