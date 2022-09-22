@@ -460,13 +460,17 @@ export default function Home() {
               think coding should be fun.
             </p>
             <p>
-              When we release software in the Deno or Node ecosystem, you can
-              count on these three things:
+              When we release software in the JavaScript/TypeScript ecosystem,
+              you can count on these three things:
             </p>
             <ul>
               <li>
-                Zero Dependencies: Every Drash Land project (above) has zero
-                dependencies (with the exception of Deno and Node, of course).
+                Zero Dependencies (mostly): Every Drash Land project (above)
+                starts with zero dependencies. We believe our software should be
+                easy to use and users of our software should&apos;have to worry
+                about dependencies in dependencies. If something we create has
+                dependencies, we&apos;be sure to let you know in the
+                documentation pages.
               </li>
               <li>
                 Extensive Documentation: We love a good challenge, but working
@@ -486,9 +490,10 @@ export default function Home() {
                 and we&apos;ll gladly help you!
               </li>
               <li>
-                Thorough Testing: To put it bluntly, we test the shiz out of our
-                software. We know it works. Every example code block and every
-                tutorial we write is tested end-to-end.
+                Thorough Testing: We hella test our software and put them
+                through all of the use cases we can think of. We know it works.
+                Every example code block and every tutorial we write is tested
+                end-to-end.
               </li>
             </ul>
             <p style={{ marginBottom: "3rem" }}>
