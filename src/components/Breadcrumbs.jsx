@@ -66,7 +66,11 @@ export default function Breadcrumbs(props) {
             index={index}
             key={`${JSON.stringify(breadcrumb)}_${index}`}
           >
-            <span className="label">{addParensToTutorialsBreadcrumb(formatLabel(titleCase(breadcrumb)))}</span>
+            <span className="label">
+              {addParensToTutorialsBreadcrumb(
+                formatLabel(titleCase(breadcrumb)),
+              )}
+            </span>
             <span className="slash">/</span>
           </Breadcrumb>
         );
