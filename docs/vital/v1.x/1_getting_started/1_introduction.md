@@ -58,7 +58,7 @@ to know where the database is, and how to connect to it.
 
    // Create a new user
 
-   const user = await User.factory();
+   const user = await UserModel.factory();
    console.log(user);
    ```
 
@@ -81,7 +81,7 @@ example adding new fields to the model.
 
    ```shell
    UserModel {
-   id: 1
+     id: 1
    }
    ```
 
