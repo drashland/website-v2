@@ -7,6 +7,9 @@ service inspired by
 can be placed as a middleware for your resources. Simply add it to your
 resources that require CSRF protection and you are all set!
 
+Simply add it to your resources that require CSRF protection and you are all
+set!
+
 ## Table of Contents
 
 - [Before You Get Started](#before-you-get-started)
