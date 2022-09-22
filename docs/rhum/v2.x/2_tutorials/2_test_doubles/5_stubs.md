@@ -27,6 +27,22 @@ read [Stubbing and Providing Values](#stubbing-and-providing-values) on this
 page.
 
 ```typescript
+// @Tab Deno
+class MyClass {
+  public some_property = "hello";
+}
+
+const myObject = new MyClass();
+
+// Check that the property is not yet stubbed
+console.log(myObject.some_property === "hello"); // true
+
+// Now stub the property
+Stub(myObject, "some_property");
+
+// Check that the property was stubbed
+console.log(myObject.some_property === "stubbed"); // true
+
 // @Tab Node - TypeScript (ESM)
 import { Stub } from "@drashland/rhum";
 
@@ -103,6 +119,24 @@ read [Stubbing and Providing Values](#stubbing-and-providing-values) on this
 page.
 
 ```typescript
+// @Tab Deno
+class MyClass {
+  public someMethod(): string {
+    return "This is the original value.";
+  }
+}
+
+const myObject = new MyClass();
+
+// Check that the property is not yet stubbed
+console.log(myObject.someMethod() === "This is the original value."); // true
+
+// Now stub the property
+Stub(myObject, "someMethod");
+
+// Check that the property was stubbed
+console.log(myObject.someMethod() === "stubbed"); // true
+
 // @Tab Node - TypeScript (ESM)
 import { Stub } from "@drashland/rhum";
 
@@ -191,6 +225,22 @@ See the examples below for stubbing properties and methods and providing values.
 Below is how you can stub a property with a given value.
 
 ```typescript
+// @Tab Deno
+class MyClass {
+  public some_property = "hello";
+}
+
+const myObject = new MyClass();
+
+// Check that the property is not yet stubbed
+console.log(myObject.some_property === "hello"); // true
+
+// Now stub the property
+Stub(myObject, "some_property", "YOU GOT CHANGED!!!!");
+
+// Check that the property was stubbed
+console.log(myObject.some_property === "YOU GOT CHANGED!!!!"); // true
+
 // @Tab Node - TypeScript (ESM)
 import { Stub } from "@drashland/rhum";
 
@@ -264,6 +314,24 @@ describe("Stub", () => {
 Below is how you can stub a method with a given value.
 
 ```typescript
+// @Tab Deno
+class MyClass {
+  public someMethod(): string {
+    return "This is the original value.";
+  }
+}
+
+const myObject = new MyClass();
+
+// Check that the property is not yet stubbed
+console.log(myObject.someMethod() === "This is the original value."); // true
+
+// Now stub the property
+Stub(myObject, "someMethod", "SOME NEW VALUE!!!!");
+
+// Check that the property was stubbed
+console.log(myObject.someMethod() === "SOME NEW VALUE!!!!"); // true
+
 // @Tab Node - TypeScript (ESM)
 import { Stub } from "@drashland/rhum";
 
