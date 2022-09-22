@@ -118,9 +118,7 @@ const { Mock } = require("@drashland/rhum");
 // ...
 ```
 
-... renders as ...
-
-![Tabbed Code Blocks](https://user-images.githubusercontent.com/12766301/163728514-978a901f-01e8-47df-9fd2-e5b03f1387e0.png)
+... renders like the tabbed code blocks on this page: https://drash.land/rhum/v2.x/getting-started/introduction
 
 ## Tech Stack
 
