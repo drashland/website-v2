@@ -49,6 +49,12 @@ export default function Breadcrumbs(props) {
     breadcrumbs,
   } = props;
 
+  function addParensToTutorialsBreadcrumb(breadcrumb) {
+    return breadcrumb
+      .replace("Tutorials Node", "Tutorials (Node)")
+      .replace("Tutorials Deno", "Tutorials (Deno)");
+  }
+
   return (
     <Container>
       {breadcrumbs.map((breadcrumb, index) => {
@@ -60,7 +66,11 @@ export default function Breadcrumbs(props) {
             index={index}
             key={`${JSON.stringify(breadcrumb)}_${index}`}
           >
-            <span className="label">{formatLabel(titleCase(breadcrumb))}</span>
+            <span className="label">
+              {addParensToTutorialsBreadcrumb(
+                formatLabel(titleCase(breadcrumb)),
+              )}
+            </span>
             <span className="slash">/</span>
           </Breadcrumb>
         );

@@ -182,7 +182,26 @@ select {
   user-select: none;
 }
 
-pre.code {
+pre[class*=language-] {
+  padding: 0 !important;
+  margin: 0.5em 0 !important;
+  overflow: auto !important;
+}
+
+pre code {
   display: block;
   width: 100%;
+  padding: 1rem !important;
+}
+
+pre pre {
+  border-radius: 0 !important;
+}
+
+pre pre code {
+  padding: 0 !important;
+}
+
+.code-blocks code {
+  padding: 1rem !important;
 }

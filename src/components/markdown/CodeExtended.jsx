@@ -11,10 +11,12 @@ const ACCEPTED_CODE_TAB_NAMES = [
   "Async Code",
   "Browser",
   "Deno",
-  "Sync Code",
+  "JavaScript (ESM)",
   "Node - CommonJS",
   "Node - JavaScript (ESM)",
   "Node - TypeScript (ESM)",
+  "Sync Code",
+  "TypeScript (ESM)",
   "Yarn",
   "npm",
 ];
