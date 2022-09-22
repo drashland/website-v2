@@ -443,19 +443,7 @@ export default function Home() {
         </Section>
         <Section>
           <InnerContainer>
-            <SectionTitle>The Drash Land Team</SectionTitle>
-            <MaintainersContainer>
-              {MAINTAINERS.map((maintainer, index) => {
-                return (
-                  <Maintainer
-                    key={`${JSON.stringify(maintainer)}_${index}`}
-                    onClick={() =>
-                      handleTeamMemberClick(maintainer.github_username)}
-                    src={maintainer.image_src}
-                  />
-                );
-              })}
-            </MaintainersContainer>
+            <SectionTitle>Who We Are</SectionTitle>
             <p>
               We&apos;re a small squad of software engineers who code a lot of
               really cool stuff. We focus heavily on the developer UX because we
@@ -467,11 +455,11 @@ export default function Home() {
             </p>
             <ul>
               <li>
-                Zero Dependencies (mostly): Every Drash Land project (above)
-                starts with zero dependencies. We believe our software should be
-                easy to use and users of our software shouldn&apos;t have to
-                worry about dependencies in dependencies. If something we create
-                has dependencies, we&apos;be sure to let you know in the
+                Zero Dependencies (mostly): Every Drash Land project starts with
+                zero dependencies. We believe our software should be easy to use
+                and users of our software shouldn&apos;t have to worry about
+                dependencies in dependencies. If something we create has
+                dependencies, we&apos;ll be sure to let you know in the
                 documentation pages.
               </li>
               <li>
@@ -489,13 +477,18 @@ export default function Home() {
                 >
                   Discord
                 </a>{" "}
-                and we&apos;ll gladly help you!
+                and we&apos;ll gladly help you! Seriously! We respond fast.
               </li>
               <li>
-                Thorough Testing: We hella test our software and put them
-                through all of the use cases we can think of. We know it works.
-                Every example code block and every tutorial we write is tested
-                end-to-end.
+                Thorough Testing: We HELLA test our software. We put our
+                software through all of the use cases we can think of and find
+                edge cases on edge cases. We know our software works -- the
+                happy path and more. Every example code block and every tutorial
+                we write is tested end-to-end (Caveat here... Sometimes we test
+                them, make a{" "}
+                <code className="manual-code">chore: clean up</code>{" "}
+                commit update afterwards, and voila -- we have a typo. Apologies
+                in advance!).
               </li>
             </ul>
             <p style={{ marginBottom: "3rem" }}>
@@ -503,6 +496,19 @@ export default function Home() {
               our whole selves (and lots of energy drinks) into this. Does that
               make us nerds? We hope so. Because nerds make the best stuff.
             </p>
+            <SectionTitle>Core Team</SectionTitle>
+            <MaintainersContainer>
+              {MAINTAINERS.map((maintainer, index) => {
+                return (
+                  <Maintainer
+                    key={`${JSON.stringify(maintainer)}_${index}`}
+                    onClick={() =>
+                      handleTeamMemberClick(maintainer.github_username)}
+                    src={maintainer.image_src}
+                  />
+                );
+              })}
+            </MaintainersContainer>
             <SectionTitle>Key Contributors</SectionTitle>
             <MaintainersContainer>
               {KEY_CONTRIBUTORS.map((maintainer, index) => {

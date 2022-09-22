@@ -78,6 +78,14 @@ code {
   font-family: 'Menlo Regular', monospace !important;
 }
 
+.manual-code {
+  font-size: .85rem;
+  background-color: #f4f4f4;
+  padding: .25rem;
+  border-radius: .9rem;
+  color: inherit;
+}
+
 img {
   max-width: 100%;
 }
