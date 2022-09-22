@@ -371,6 +371,8 @@ export default function Home() {
                 <CardDescription>A test double library</CardDescription>
                 <TagsContainer>
                   <Tag>Deno</Tag>
+                  <Tag>Node</Tag>
+                  <Tag>Browser</Tag>
                 </TagsContainer>
               </Card>
               <Card onClick={() => router.push("/sinco")}>
