@@ -10,11 +10,14 @@ import { CODE_BLOCK_COMMENT_REPLACEMENTS } from "../../services/content_replacer
 const ACCEPTED_CODE_TAB_NAMES = [
   "Async Code",
   "Browser",
+  "CommonJS",
   "Deno",
   "Sync Code",
   "Node - CommonJS",
   "Node - JavaScript (ESM)",
   "Node - TypeScript (ESM)",
+  "JavaScript (ESM)",
+  "TypeScript (ESM)",
   "Yarn",
   "npm",
 ];
