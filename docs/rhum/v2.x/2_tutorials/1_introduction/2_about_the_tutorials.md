@@ -45,8 +45,9 @@ An example of a tutorial seen below:
 
    ```typescript
    // @Tab Deno
-   import { Fake } from "./deps.ts";
    // my_test.ts
+
+   import { Fake } from "./deps.ts";
 
    // ... rest of code
 

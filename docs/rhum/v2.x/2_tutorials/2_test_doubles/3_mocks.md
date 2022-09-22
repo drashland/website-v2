@@ -40,6 +40,15 @@ Creating a mock of an object without constructor arguments can be done as
 follows:
 
 ```typescript
+// @Tab Deno
+import { Mock } from "./deps.ts";
+
+class SomeClassWithoutConstructor {}
+
+const mockWithoutConstructor = Mock(SomeClassWithoutConstructor).create();
+
+console.log(mockWithoutConstructor instanceof SomeClassWithoutConstructor); // true
+
 // @Tab Node - TypeScript (ESM)
 import { Mock } from "@drashland/rhum";
 
@@ -103,6 +112,39 @@ describe("Mock", () => {
 Creating a mock of an object with constructor arguments can be done as follows:
 
 ```typescript
+// @Tab Deno
+import { Mock } from "./deps.ts";
+
+class SomeClassWithConstructor {
+  public name: string;
+  public type: "dog" | "cat";
+  public colors: string[];
+
+  constructor(
+    name: string,
+    type: "dog" | "cat",
+    colors: string[],
+  ) {
+    this.name = name;
+    this.type = type;
+    this.colors = colors;
+  }
+}
+
+const mockWithConstructor = Mock(SomeClassWithConstructor)
+  .withConstructorArgs(
+    "Missy",
+    "dog",
+    ["brown", "white"],
+  )
+  .create();
+
+console.log(mockWithConstructor instanceof SomeClassWithConstructor); // true
+console.log(mockWithConstructor.name === "Missy"); // true
+console.log(mockWithConstructor.type === "dog"); // true
+console.log(mockWithConstructor.colors.includes("brown")); // true
+console.log(mockWithConstructor.colors.includes("white")); // true
+
 // @Tab Node - TypeScript (ESM)
 import { Mock } from "@drashland/rhum";
 
@@ -276,6 +318,96 @@ care how the method gets the value and just want it to return the value you want
 it to return.
 
 ```typescript
+// @Tab Deno
+import { Mock } from "./deps.ts";
+
+class Service {
+  #repository: Repository;
+
+  constructor(
+    repository: Repository,
+  ) {
+    this.#repository = repository;
+  }
+
+  public getUsers(): { name: string }[] {
+    return this.#repository.findAllUsers();
+  }
+
+  public getUser(id: number): { name: string } {
+    return this.#repository.findUserById(id);
+  }
+}
+
+class Repository {
+  public anotha_one_called = false;
+  public do_something_called = false;
+  public do_something_else_called = false;
+
+  public findAllUsers(): { name: string }[] {
+    this.#doSomething();
+    this.#doSomethingElse();
+    this.#anothaOne();
+    return [
+      { name: "Totoro" },
+      { name: "Domo-kun" },
+    ];
+  }
+
+  public findUserById(id: number): { name: string } {
+    this.#doSomething();
+    this.#doSomethingElse();
+    this.#anothaOne();
+    return { name: "Totoro" };
+  }
+
+  #anothaOne() {
+    this.anotha_one_called = true;
+  }
+
+  #doSomething() {
+    this.do_something_called = true;
+  }
+
+  #doSomethingElse() {
+    this.do_something_else_called = true;
+  }
+}
+
+// Assert that a mock can pre-program a method call in a class
+
+const mockRepositoryDoingShortcut = Mock(Repository).create();
+
+mockRepositoryDoingShortcut
+  .method("findAllUsers")
+  .willReturn([{ name: "someone else" }]);
+
+const serviceWithShortcut = new Service(
+  mockRepositoryDoingShortcut,
+);
+
+const actualShortcutValue = serviceWithShortcut.getUsers();
+
+console.log(actualShortcutValue); // [ { name: "someone else" } ]
+console.log(mockRepositoryDoingShortcut.anotha_one_called === false); // true
+console.log(mockRepositoryDoingShortcut.do_something_called === false); // true
+console.log(mockRepositoryDoingShortcut.do_something_else_called === false); // true
+
+// Assert that the mock can call original implementations
+
+const mockRepositoryNotDoingShortcut = Mock(Repository).create();
+
+const serviceWithoutShortcut = new Service(
+  mockRepositoryNotDoingShortcut,
+);
+
+const actualOriginal = serviceWithoutShortcut.getUsers();
+
+console.log(actualOriginal); // [ { name: "Totoro" }, { name: "Domo-kun" } ]
+console.log(mockRepositoryNotDoingShortcut.anotha_one_called === true); // true
+console.log(mockRepositoryNotDoingShortcut.do_something_called === true); // true
+console.log(mockRepositoryNotDoingShortcut.do_something_else_called === true); // true
+
 // @Tab Node - TypeScript (ESM)
 import { Mock } from "@drashland/rhum";
 
@@ -724,6 +856,101 @@ Just like fakes, you can cause a mock to have one of its method throw an error
 gets to the error and just want to throw the error immediately.
 
 ```typescript
+// @Tab Deno
+import { Mock } from "./deps.ts";
+
+class Service {
+  #repository: Repository;
+
+  constructor(
+    repository: Repository,
+  ) {
+    this.#repository = repository;
+  }
+
+  public getUsers(): { name: string }[] {
+    return this.#repository.findAllUsers();
+  }
+
+  public getUser(id: number): { name: string } {
+    return this.#repository.findUserById(id);
+  }
+}
+
+class Repository {
+  public anotha_one_called = false;
+  public do_something_called = false;
+  public do_something_else_called = false;
+  #database_connection;
+
+  constructor(databaseConnection: any) {
+    this.#database_connection = databaseConnection;
+  }
+
+  public findAllUsers(): { name: string }[] {
+    this.#doSomething();
+    this.#doSomethingElse();
+    this.#anothaOne();
+    return [
+      { name: "Totoro" },
+      { name: "Domo-kun" },
+    ];
+  }
+
+  public findUserById(id: number): { name: string } {
+    this.#doSomething();
+    this.#doSomethingElse();
+    this.#anothaOne();
+    return { name: "Totoro" };
+  }
+
+  #anothaOne() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
+    this.anotha_one_called = true;
+  }
+
+  #doSomething() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
+    this.do_something_called = true;
+  }
+
+  #doSomethingElse() {
+    if (!this.#database_connection) {
+      throw new Error("Database connection issue.");
+    }
+
+    this.do_something_else_called = true;
+  }
+}
+
+// Assert that the mock can throw an error immediately
+
+const mockRepositoryThrowingError = Mock(Repository).create();
+
+mockRepositoryThrowingError
+  .method("findAllUsers")
+  .willThrow(new Error("Database connection issue."));
+
+const resourceWithShortcut = new Service(
+  mockRepositoryThrowingError,
+);
+
+try {
+  resourceWithShortcut.getUsers();
+} catch (error) {
+  console.log(error.message === "Database connection issue."); // true
+}
+
+console.log(mockRepositoryThrowingError.anotha_one_called === false); // true
+console.log(mockRepositoryThrowingError.do_something_called === false); // true
+console.log(mockRepositoryThrowingError.do_something_else_called === false); // true
+
 // @Tab Node - TypeScript (ESM)
 import { Mock } from "@drashland/rhum";
 
@@ -1106,6 +1333,32 @@ You can verify that methods were called a certain number of times using the
 `calls` property on the mock.
 
 ```typescript
+// @Tab Deno
+class ObjectThatHasNestedCalls {
+  public hello(): void {
+    return;
+  }
+
+  public run(): string {
+    this.hello();
+    this.world();
+    return "This method calls hello() and world().";
+  }
+
+  public world(): void {
+    return;
+  }
+}
+
+const mock = Mock(ObjectThatHasNestedCalls).create();
+
+// Run the method that calls hello() and world()
+mock.run();
+
+// Verify the number of calls for hello() and world()
+console.log(mock.calls.hello === 1); // true
+console.log(mock.calls.world === 1); // true
+
 // @Tab Node - TypeScript (ESM)
 import { Mock } from "@drashland/rhum";
 
@@ -1233,6 +1486,13 @@ calls that the methods have received.
 Take the following example:
 
 ```typescript
+// @Tab Deno
+class MyClass {
+  public doSomething() { ... }
+  public doSomethingElse() { ... }
+  public anothaOne() { ... }
+}
+
 // @Tab Node - TypeScript (ESM)
 class MyClass {
   public doSomething() { ... }
@@ -1280,6 +1540,37 @@ called more than their expected times, then `.verifyExpectations()` will throw
 an error.
 
 ```typescript
+// @Tab Deno
+class ObjectThatHasNestedCalls {
+  public hello(): void {
+    return;
+  }
+
+  public run(): string {
+    this.hello();
+    this.world();
+    return "This method calls hello() and world().";
+  }
+
+  public world(): void {
+    return;
+  }
+}
+
+const mock = Mock(ObjectThatHasNestedCalls).create();
+
+// We expect hello() to be called exactly one time when calling run()
+mock.expects("hello").toBeCalled(1);
+
+// We expect world to be called exactly one time when calling run()
+mock.expects("world").toBeCalled(1);
+
+// Run the method that calls hello() and world()
+mock.run();
+
+// This should not throw an error because hello() and world() are called once
+mock.verifyExpectations();
+
 // @Tab Node - TypeScript (ESM)
 import { Mock } from "@drashland/rhum";
 
@@ -1405,6 +1696,39 @@ Taking the same example above, we can make `.verifyExpectations()` throw an
 error by putting in a different number of calls for `hello()`.
 
 ```typescript
+// @Tab Deno
+class ObjectThatHasNestedCalls {
+  public hello(): void {
+    return;
+  }
+
+  public run(): string {
+    this.hello();
+    this.world();
+    return "This method calls hello() and world().";
+  }
+
+  public world(): void {
+    return;
+  }
+}
+
+const mock = Mock(ObjectThatHasNestedCalls).create();
+
+// We expect hello() to be called twice when calling run()
+// This will cause an error to be thrown during verification
+mock.expects("hello").toBeCalled(2);
+
+// We expect world to be called exactly one time when calling run()
+mock.expects("world").toBeCalled(1);
+
+// Run the method to check that
+mock.run();
+
+// This should throw an error because hello() is only called once
+// and we expected it to be called twice
+mock.verifyExpectations();
+
 // @Tab Node - TypeScript (ESM)
 import { Mock } from "@drashland/rhum";
 
