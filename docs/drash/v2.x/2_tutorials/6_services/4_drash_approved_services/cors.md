@@ -1,10 +1,10 @@
-# Cors
+# CORS
 
-Cors is a [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+CORS is a [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 HTTP-based middleware inspired by
 [expressjs/cors](https://expressjs.com/en/resources/middleware/cors.html).
 
-Simply add it to your server that needs Cors and you're good to go!
+Simply add it to your server that needs CORS and you're good to go!
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ To use this service, edit your `deps.ts` file to include the service.
 ...
 ...
 ...
-export { CorsService } from "https://deno.land/x/drash@<VERSION>/src/services/cors/cors.ts";
+export { CORSService } from "https://deno.land/x/drash@<VERSION>/src/services/cors/cors.ts";
 ```
 
 Replace `<VERSION>` with the **Drash v2.x** version you want to use. All
@@ -32,9 +32,9 @@ versions can be found
 
 ## Configuration Options
 
-You can use `CorsService` without passing in any configs. If you do not pass in
-any configs, then `Cors` will use its default configs. Also, you should note
-that not passing in any configs will enable CORS for all requests from any
+You can use `CORSService` without passing in any configs. If you do not pass in
+any configs, then `CORSService` will use its default configs. Also, you should
+note that not passing in any configs will enable CORS for all requests from any
 origin.
 
 ### `allowedHeaders`
@@ -71,9 +71,9 @@ If this config is not specified, then no custom headers are exposed.
 
 This config is optional. This config manages the
 [`Access-Control-Allow-Origin` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin).
-This config tells `Cors` what origins to allow requests from. For example, if
-the value is `"https://google.com"`, then `CorsService` will not allow requests
-from `"https://stackoverflow.com"`.
+This config tells `CORSService` what origins to allow requests from. For
+example, if the value is `"https://google.com"`, then `CORSService` will not
+allow requests from `"https://stackoverflow.com"`.
 
 The `origin` config can be of the following types:
 
@@ -125,11 +125,11 @@ If this config is not specified, then it defaults to `true`.
 ```typescript
 // app.ts
 
-import { CorsService, Drash } from "./deps.ts";
+import { CORSService, Drash } from "./deps.ts";
 
 // Instantiate the service and generate the token. The token can be accessed
 // via `csrf.token`.
-const cors = new CorsService();
+const cors = new CORSService();
 
 // Create your resource
 
@@ -143,7 +143,7 @@ class HomeResource extends Drash.Resource {
 
 // Create and run your server
 // You wil be passing in `cors` as a service to the server,
-// as Cors is mainly a server-level service, applied to every request
+// as CORSService is mainly a server-level service, applied to every request
 // accepted, and will run *after* request is handled and a resource
 // is called, but before a response is sent as it uses the
 // `runAfterResource` method.
@@ -164,7 +164,7 @@ console.log(`Server running at ${server.address}.`);
 
 ## How It Works
 
-`CorsService` will determine if you server will allow Cors.
+`CORSService` will determine if you server will allow CORS.
 
 By default, the server will allow all and any requests for any method and any
 origin, but you can cutomise this by
@@ -173,5 +173,5 @@ origin, but you can cutomise this by
 This service checks a variety of headers on the request to see if they match
 what the default config or passed in config allows.
 
-Be sure to inspect the specifications of Cors to understand how this service
+Be sure to inspect the specifications of CORS to understand how this service
 would act for you.
