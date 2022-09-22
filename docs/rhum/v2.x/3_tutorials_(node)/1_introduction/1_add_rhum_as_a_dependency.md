@@ -24,7 +24,7 @@ can be found [here](https://github.com/drashland/rhum/releases/latest).
 
 Tutorials will assume you have the latest version of **Rhum v2.x** pulled down
 since they will contain `import` or `require` statements using `@drashland/rhum`
-dd in code blocks like so:
+in code blocks like so:
 
 ```typescript
 // @Tab Node - TypeScript (ESM)
