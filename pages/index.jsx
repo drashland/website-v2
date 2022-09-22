@@ -469,9 +469,9 @@ export default function Home() {
               <li>
                 Zero Dependencies (mostly): Every Drash Land project (above)
                 starts with zero dependencies. We believe our software should be
-                easy to use and users of our software should&apos;have to worry
-                about dependencies in dependencies. If something we create has
-                dependencies, we&apos;be sure to let you know in the
+                easy to use and users of our software shouldn&apos;t have to
+                worry about dependencies in dependencies. If something we create
+                has dependencies, we&apos;be sure to let you know in the
                 documentation pages.
               </li>
               <li>
