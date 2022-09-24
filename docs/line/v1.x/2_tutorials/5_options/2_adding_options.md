@@ -46,9 +46,9 @@ noticeable at first glance.
 ## Complete Example
 
 ```typescript
-// cli.ts
+// File: cli.ts
 
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 // Create your main command
 

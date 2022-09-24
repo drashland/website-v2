@@ -39,7 +39,7 @@ To learn more about subcommands, read the
 1. Add a `MakeSubcommand` class and plug it into your _**main**_ command.
 
    ```diff-typescript
-      // cli.ts
+      // File: cli.ts
 
       import { Line } from "./deps.ts";
 

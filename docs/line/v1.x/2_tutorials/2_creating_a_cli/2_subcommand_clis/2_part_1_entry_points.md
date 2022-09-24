@@ -25,10 +25,12 @@ a help menu and verison.
 
 ## Steps
 
+1. {{ placeholder: line_v1_create_deps_file_step }}
+
 1. Create your `cli.ts` file.
 
    ```typescript
-   // cli.ts
+   // File: cli.ts
 
    import { Line } from "./deps.ts";
 
@@ -52,7 +54,7 @@ a help menu and verison.
    cli.run();
    ```
 
-2. Install your CLI. Notice the `--name` option. Caveats on this can be found on
+1. Install your CLI. Notice the `--name` option. Caveats on this can be found on
    the
    [Commands > Main Commands](/line/v1.x/tutorials/commands/main-commands#caveats)
    page under the "Caveats" section.
