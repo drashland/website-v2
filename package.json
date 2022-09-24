@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "clean": "rm -rf node_modules && rm yarn.lock && yarn",
+    "fmt": "deno fmt src/ docs/ pages/ tests/ styles/ README.md",
     "start": "next start"
   },
   "dependencies": {
