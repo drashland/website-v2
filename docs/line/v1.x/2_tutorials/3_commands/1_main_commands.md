@@ -38,7 +38,7 @@ a `signature`:
 ```typescript
 // main_command.ts
 
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 export class SomeMainCommandClass extends Line.MainCommand {
   public signature = "greet";
@@ -187,7 +187,7 @@ Also take note that this approach may cause ambiguity to some users beacuse
 To add/modify a main command's signature, add/modify its `signature` property:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 class MyMainCommand extends Line.MainCommand {
   public signature = "greet";
@@ -205,7 +205,7 @@ class MyMainCommand extends Line.MainCommand {
 To add/modify a main command's arguments, add/modify its `signature` property:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 class MyMainCommand extends Line.MainCommand {
   public signature = "greet [some_arg]";
@@ -222,7 +222,7 @@ If your main command takes arguments, it must have a `handle()` method in order
 to handle them:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 class MyMainCommand extends Line.MainCommand {
   ...
@@ -254,7 +254,7 @@ page.
 To add/modify a main command's options, add/modify its `options` property:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 class MyMainCommand extends Line.MainCommand {
   ...
@@ -277,7 +277,7 @@ If your main command takes options, it must have a `handle()` method in order to
 handle them:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 class MyMainCommand extends Line.MainCommand {
   ...
@@ -300,11 +300,11 @@ respective tutorials (under "Options" in the side bar).
 
 ### Subcommands
 
-To add/modify subcommands a main command's subcommands, add/modify its
+To add/modify subcommands to a main command's subcommands, add/modify its
 `subcommands` property:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 import { SomeSubcommand } from "./some_subcommand.ts";
 
 class MyMainCommand extends Line.MainCommand {

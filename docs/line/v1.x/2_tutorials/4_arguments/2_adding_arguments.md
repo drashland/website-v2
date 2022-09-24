@@ -31,9 +31,9 @@ in the signature. Otherwise, the value will be `undefined`.
 ## Complete Example
 
 ```typescript
-// cli.ts
+// File: cli.ts
 
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 // Create your main command
 

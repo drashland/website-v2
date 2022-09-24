@@ -35,7 +35,7 @@ To learn more about options, read the
    the `--debug` option.
 
    ```diff-typescript
-      // cli.ts
+      // File: cli.ts
 
       import { Line } from "./deps.ts";
 

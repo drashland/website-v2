@@ -38,7 +38,7 @@ To learn more about arguments, read the
    tests.
 
    ```diff-typescript
-     // cli.ts
+     // File: cli.ts
 
      import { Line } from "./deps.ts";
 
@@ -66,7 +66,7 @@ To learn more about arguments, read the
 2. Add a description to your argument.
 
    ```diff-typescript
-     // cli.ts
+     // File: cli.ts
 
      import { Line } from "./deps.ts";
 
@@ -100,7 +100,7 @@ To learn more about arguments, read the
    argument).**
 
    ```diff-typescript
-     // cli.ts
+     // File: cli.ts
 
      import { Line } from "./deps.ts";
 

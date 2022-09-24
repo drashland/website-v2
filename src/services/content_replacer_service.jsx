@@ -58,6 +58,13 @@ export const CODE_BLOCK_COMMENT_REPLACEMENTS = [
     to:
       `export { TengineService } from "https://deno.land/x/drash@<VERSION>/src/services/tengine/tengine.ts";`,
   },
+  {
+    from: /\/\/ @Import line_v1_from_deno$/gm,
+    to:
+      `// Replace \`<VERSION>\` with the latest version of Line v1.x. The latest\n` +
+      `// version can be found at https://github.com/drashland/line/releases/latest\n` +
+      `import * as Line from "https://deno.land/x/line@<VERSION>/mod.ts";`,
+  },
 ];
 
 /**
@@ -77,7 +84,62 @@ export const PLACEHOLDER_REPLACEMENTS = [
       </>
     ),
   },
+  {
+    from: "{{ placeholder: line_v1_create_deps_file_step }}",
+    to: (
+      <>
+        <CreateDepsFileStepText
+          moduleName="Line"
+          moduleVersion="v1.x"
+          releasesPageUrl="https://github.com/drashland/line/releases/latest"
+        />
+        <CreateDepsFileStepCodeBlock
+          exportStatement={`export * as Line from "https://deno.land/x/line@&lt;VERSION&gt;/mod.ts";`}
+        />
+      </>
+    ),
+  },
 ];
+
+export function CreateDepsFileStepCodeBlock({ exportStatement }) {
+  return (
+    <>
+      <Pre className="language-typescript">
+        <code
+          className="language-typescript"
+          dangerouslySetInnerHTML={{
+            __html: `// File: deps.ts
+
+${exportStatement}`,
+          }}
+        />
+      </Pre>
+    </>
+  );
+}
+
+export function CreateDepsFileStepText({
+  moduleName,
+  moduleVersion,
+  releasesPageUrl,
+}) {
+  return (
+    <>
+      <Paragraph>
+        Create your <Code>deps.ts</Code> file. Replace{" "}
+        <Code>&lt;VERSION&gt;</Code> with the latest version of {moduleName}
+        {" "}
+        {moduleVersion}. The latest version can be found at the{" "}
+        <a
+          href={releasesPageUrl}
+          target="_BLANK"
+        >
+          {moduleName} latest release page
+        </a>.
+      </Paragraph>
+    </>
+  );
+}
 
 export function DrashCreateDepsFileStepCodeBlock() {
   return (

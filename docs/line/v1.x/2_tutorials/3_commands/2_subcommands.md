@@ -45,7 +45,7 @@ To create a subcommand class, extend the `Line.Subcommand` class and provide a
 ```typescript
 // subcommand.ts
 
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 export class SomeSubcommandClass extends Line.Subcommand {
   public signature = "greet";
@@ -69,7 +69,7 @@ arguments and options:
 To add/modify a subcommand's signature, add/modify its `signature` property:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 class MySubcommand extends Line.Subcommand {
   public signature = "greet";
@@ -87,7 +87,7 @@ class MySubcommand extends Line.Subcommand {
 To add/modify a subcommand's arguments, add/modify its `signature` property:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 class MySubcommand extends Line.Subcommand {
   public signature = "greet [some_arg]";
@@ -104,7 +104,7 @@ If your subcommand takes arguments, it must have a `handle()` method in order to
 handle them:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 class MySubcommand extends Line.Subcommand {
   ...
@@ -136,7 +136,7 @@ page.
 To add/modify a subcommand's options, add/modify its `options` property:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 class MySubcommand extends Line.Subcommand {
   ...
@@ -159,7 +159,7 @@ If your subcommand takes options, it must have a `handle()` method in order to
 handle them:
 
 ```typescript
-import { Line } from "./deps.ts";
+// @Import line_v1_from_deno
 
 class MySubcommand extends Line.Subcommand {
   ...
