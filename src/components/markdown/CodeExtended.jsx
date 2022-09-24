@@ -191,7 +191,9 @@ export default function CodeExtension({
   function renderTabbedCodeBlocks(tabs) {
     return (
       <div className="tabbed-code" style={{ overflow: "auto" }}>
-        <div style={{ display: "flex", background: "#202328" }}>
+        <div
+          style={{ overflow: "auto", display: "flex", background: "#202328" }}
+        >
           {tabs.map((tab) => {
             const tabName = tab.match(/.+\n/)[0].trim();
             return (
