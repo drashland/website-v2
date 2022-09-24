@@ -36,11 +36,11 @@ these services.
    ```typescript
    // File: deps.ts
 
-   // @Export drash_from_deno_no_version_comment
-   // @Export csrf_service_from_deno_no_version_comment
-   // @Export dexter_service_from_deno_no_version_comment
-   // @Export paladin_service_from_deno_no_version_comment
-   // @Export rate_limiter_service_from_deno_no_version_comment
+   // @Export drash_v2_from_deno_no_version_comment
+   // @Export drash_v2_csrf_service_from_deno_no_version_comment
+   // @Export drash_v2_dexter_service_from_deno_no_version_comment
+   // @Export drash_v2_paladin_service_from_deno_no_version_comment
+   // @Export drash_v2_rate_limiter_service_from_deno_no_version_comment
    ```
 
 1. Set up your `app.ts` file to use the services.

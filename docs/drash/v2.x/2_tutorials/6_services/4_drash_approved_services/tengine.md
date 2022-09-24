@@ -12,13 +12,13 @@ engine.
 
 ## Before You Get Started
 
-{{ placeholder: drash_edit_your_deps_file_to_include_the_service }}
+{{ placeholder: drash_v2_edit_your_deps_file_to_include_the_service }}
 
 ```typescript
 // File: deps.ts
 
-// @Export drash_from_deno_no_version_comment
-// @Export tengine_service_from_deno_no_version_comment
+// @Export drash_v2_from_deno_no_version_comment
+// @Export drash_v2_tengine_service_from_deno_no_version_comment
 // ... rest
 // ... of
 // ... your

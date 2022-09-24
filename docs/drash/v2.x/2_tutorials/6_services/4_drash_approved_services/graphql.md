@@ -26,13 +26,13 @@ This tutorial only shows you how to set up your Drash application to use
 GraphQL. To learn more about using GraphQL, please refer to the
 [GraphQL documentation](https://graphql.org/).
 
-{{ placeholder: drash_edit_your_deps_file_to_include_the_service }}
+{{ placeholder: drash_v2_edit_your_deps_file_to_include_the_service }}
 
 ```typescript
 // File: deps.ts
 
-// @Export drash_from_deno_no_version_comment
-// @Export graphql_service_from_deno_no_version_comment
+// @Export drash_v2_from_deno_no_version_comment
+// @Export drash_v2_graphql_service_from_deno_no_version_comment
 // ... rest
 // ... of
 // ... your
