@@ -35,10 +35,9 @@ function in the example code blocks with the function your framework uses.
    // Replace `<VERSION>` with the latest version of Rhum v2.x. The latest
    // version can be found at https://github.com/drashland/rhum/releases/latest
    import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
-   import {
-     assertEquals,
-     assertThrows,
-   } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
+   // Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+   // latest version can be found at https://deno.land/std
+   import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
    // Create the class to be mocked
    class MyClass {

@@ -122,6 +122,14 @@ export function formatLabel(label) {
       from: /Websocket/g,
       to: "WebSocket",
     },
+    {
+      from: /Add Rhum as a Dependency Node/g,
+      to: "Add Rhum as a Dependency (Node)",
+    },
+    {
+      from: /Add Rhum as a Dependency Deno/g,
+      to: "Add Rhum as a Dependency (Deno)",
+    },
   ];
 
   let formattedLabel;

@@ -43,7 +43,9 @@ Creating a class spy can be done as follows:
 
 ```typescript
 // @Tab Deno
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the class that will be spied on
 class SomeClass {
@@ -167,7 +169,9 @@ once. This is done by calling `.toBeCalled()` without passing in a number arg.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the class that will be spied on
 class MyClass {
@@ -376,7 +380,9 @@ called 3 times.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the class that will be spied on
 class MyClass {
@@ -601,7 +607,9 @@ following:
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create that class that will be spied on
 class MyClass {
@@ -905,7 +913,9 @@ args.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the class to be spied on
 class MyClass {

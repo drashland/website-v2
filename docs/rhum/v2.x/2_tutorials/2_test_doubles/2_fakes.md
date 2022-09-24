@@ -38,7 +38,12 @@ follows:
 
 ```typescript
 // @Tab Deno
-import { assertEquals, Fake } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Fake } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
 // Create the class that will become the Fake. Notice it does not have
 // constructor arguments.
@@ -125,7 +130,12 @@ Creating a fake of an object with constructor arguments can be done as follows:
 
 ```typescript
 // @Tab Deno
-import { assertEquals, Fake } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Fake } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
 // Create the class that will become the Fake. Notice it requires constructor
 // arguments.
@@ -352,7 +362,12 @@ return.
 
 ```typescript
 // @Tab Deno
-import { assertEquals, Fake } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Fake } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
 // Create the class that will use the Fake
 class Service {
@@ -942,7 +957,12 @@ gets to the error and just want to throw the error immediately.
 
 ```typescript
 // @Tab Deno
-import { assertEquals, Fake } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Fake } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
 class Service {
   #repository: Repository;

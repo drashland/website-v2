@@ -22,7 +22,12 @@ Creating a dummy can be done as follows:
 
 ```typescript
 // @Tab Deno
-import { assertEquals, Dummy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Dummy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
 class SomeClass {}
 
@@ -31,7 +36,7 @@ const dummy = Dummy(SomeClass);
 Deno.test("Dummy", async (t) => {
   await t.step("Dummy() creates a dummy", async (t) => {
     const dummy = Dummy(SomeClass);
-    assertEquals(Object.getPrototypeOf(dummy), true);
+    assertEquals(Object.getPrototypeOf(dummy), SomeClass);
   });
 });
 
@@ -44,7 +49,7 @@ class SomeClass {}
 describe("Dummy", () => {
   test("Dummy() creates a dummy", () => {
     const dummy = Dummy(SomeClass);
-    expect(Object.getPrototypeOf(dummy)).toBe(true);
+    expect(Object.getPrototypeOf(dummy)).toBe(SomeClass);
   });
 });
 
@@ -57,7 +62,7 @@ class SomeClass {}
 describe("Dummy", () => {
   test("Dummy() creates a dummy", () => {
     const dummy = Dummy(SomeClass);
-    expect(Object.getPrototypeOf(dummy)).toBe(true);
+    expect(Object.getPrototypeOf(dummy)).toBe(SomeClass);
   });
 });
 
@@ -70,7 +75,7 @@ class SomeClass {}
 describe("Dummy", () => {
   test("Dummy() creates a dummy", () => {
     const dummy = Dummy(SomeClass);
-    expect(Object.getPrototypeOf(dummy)).toBe(true);
+    expect(Object.getPrototypeOf(dummy)).toBe(SomeClass);
   });
 });
 ```
@@ -90,7 +95,12 @@ Dummies make this task trivial. See how below:
 
 ```typescript
 // @Tab Deno
-import { assertEquals, Dummy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Dummy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
 // This is the class we want to test
 class Resource {

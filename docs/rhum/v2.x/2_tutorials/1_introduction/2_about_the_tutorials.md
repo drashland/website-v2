@@ -29,15 +29,26 @@ to match your testing framework's syntax.
 Most tutorials will contain example code blocks with tabs. These tabs will be
 labeled as follows:
 
-- Deno: Used to show how to use Rhum in Deno
-- Node - TypeScript (ESM): Used to show how to use Rhum with TypeScript in
-  [JavaScript module syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-  (e.g., using `import` statements and `ts-node`).
-- Node - JavaScript (ESM): Used to show how to use Rhum with JavaScript in
-  [JavaScript module syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
-  (e.g., using `import` statements).
-- Node - CommonJS: Used to show how to use Rhum with JavaScript using `require`
-  statements.
+- Deno
+  - Used to show how to use Rhum in Deno
+- Node - TypeScript (ESM)
+  - Used to show how to use Rhum with TypeScript using `import` and `export`
+    statements
+  - This tab will assume you are using `ts-node` or something else that allows
+    you to run TypeScript modules
+  - See
+    [JavaScript module syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+    for more information on JavaScript modules and the use of `import` and
+    `export` statements
+- Node - JavaScript (ESM)
+  - Used to show how to use Rhum with JavaScript using `import` and `export`
+    statements
+  - See
+    [JavaScript module syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+    for more information on JavaScript modules and the use of `import` and
+    `export` statements
+- Node - CommonJS
+  - Used to show how to use Rhum with JavaScript using `require` statements.
 
 An example of a tutorial seen below:
 
@@ -47,7 +58,7 @@ An example of a tutorial seen below:
    // @Tab Deno
    // my_test.ts
 
-   import { Fake } from "./deps.ts";
+   import { Fake } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
    // ... rest of code
 

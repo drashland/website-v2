@@ -76,12 +76,9 @@ export default function Page(props) {
     // The first element is an empty string so take it out
     breadcrumbs.shift();
 
-    let title = formatLabel(titleCase(breadcrumbs[breadcrumbs.length - 1]));
-    title = title
-      .replace("Tutorials Node", "Tutorials (Node)")
-      .replace("Tutorials Deno", "Tutorials (Deno)");
+    const title = formatLabel(titleCase(breadcrumbs[breadcrumbs.length - 1]));
 
-    return `Drash Land - ${topBarModuleName} - ${title}`;
+    return `Drash Land / ${topBarModuleName} / ${title}`;
   }
 
   return (

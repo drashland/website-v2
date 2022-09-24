@@ -44,7 +44,9 @@ Creating an object method spy can be done as follows:
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the class that contains the method the will be spied on
 class SomeClass {
@@ -185,7 +187,9 @@ arg.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 class MyClass {
   public doSomething() {
@@ -402,7 +406,9 @@ called 3 times.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the class that will be spied on
 class MyClass {
@@ -626,7 +632,9 @@ the given args: `"hello", true, ["world"]`.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the class containing the method to be spied on
 class MyClass {
@@ -942,7 +950,9 @@ args.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the class containing the method to be spied on
 class MyClass {

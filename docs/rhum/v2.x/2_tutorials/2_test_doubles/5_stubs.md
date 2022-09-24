@@ -28,6 +28,10 @@ page.
 
 ```typescript
 // @Tab Deno
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Stub } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+
 class MyClass {
   public some_property = "hello";
 }
@@ -120,6 +124,10 @@ page.
 
 ```typescript
 // @Tab Deno
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Stub } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+
 class MyClass {
   public someMethod(): string {
     return "This is the original value.";
@@ -226,6 +234,10 @@ Below is how you can stub a property with a given value.
 
 ```typescript
 // @Tab Deno
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Stub } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+
 class MyClass {
   public some_property = "hello";
 }
@@ -315,6 +327,10 @@ Below is how you can stub a method with a given value.
 
 ```typescript
 // @Tab Deno
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Stub } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+
 class MyClass {
   public someMethod(): string {
     return "This is the original value.";

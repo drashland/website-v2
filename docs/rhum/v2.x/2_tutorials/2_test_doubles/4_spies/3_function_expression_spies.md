@@ -48,7 +48,9 @@ Creating a function expression spy can be done as follows:
 
 ```typescript
 // @Tab Deno
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the function expression that will be spied on
 const someFunc = () => {
@@ -156,7 +158,9 @@ once. This is done by calling `.toBeCalled()` without passing in a number arg.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the function expression to be spied on
 const someFunc = () => {
@@ -389,7 +393,9 @@ times.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the function expression to be spied on
 const someFunc = () => {
@@ -629,7 +635,9 @@ given args: `"hello", true, ["world"]`.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the function expression to be spied on
 const someFunc = (arg1: string, arg2: boolean, arg3: string[]) => {
@@ -957,7 +965,9 @@ args.
 // @Tab Deno
 // some_test.ts
 
-import { Spy } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Spy } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 // Create the function expression to be spied on
 const someFunc = (arg1?: string) => {

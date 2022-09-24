@@ -41,7 +41,9 @@ follows:
 
 ```typescript
 // @Tab Deno
-import { Mock } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 class SomeClassWithoutConstructor {}
 
@@ -113,7 +115,9 @@ Creating a mock of an object with constructor arguments can be done as follows:
 
 ```typescript
 // @Tab Deno
-import { Mock } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 class SomeClassWithConstructor {
   public name: string;
@@ -319,7 +323,9 @@ it to return.
 
 ```typescript
 // @Tab Deno
-import { Mock } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 class Service {
   #repository: Repository;
@@ -857,7 +863,9 @@ gets to the error and just want to throw the error immediately.
 
 ```typescript
 // @Tab Deno
-import { Mock } from "./deps.ts";
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
 
 class Service {
   #repository: Repository;
@@ -1334,6 +1342,10 @@ You can verify that methods were called a certain number of times using the
 
 ```typescript
 // @Tab Deno
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+
 class ObjectThatHasNestedCalls {
   public hello(): void {
     return;
@@ -1541,6 +1553,10 @@ an error.
 
 ```typescript
 // @Tab Deno
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+
 class ObjectThatHasNestedCalls {
   public hello(): void {
     return;
@@ -1697,6 +1713,10 @@ error by putting in a different number of calls for `hello()`.
 
 ```typescript
 // @Tab Deno
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+
 class ObjectThatHasNestedCalls {
   public hello(): void {
     return;
