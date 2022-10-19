@@ -7,8 +7,8 @@
   - [Without Constructor Arguments](#without-constructor-arguments)
   - [With Constructor Arguments](#with-constructor-arguments)
 - [Taking Shortcuts](#taking-shortcuts)
-  - [.method(...).willReturn(...)](#taking-a-shortcut-method-willreturn)
-  - [.method(...).willThrow(...)](#taking-a-shortcut-method-willthrow)
+  - [.method(...).willReturn(...)](#method-willreturn)
+  - [.method(...).willThrow(...)](#method-willthrow)
 
 ## Before You Get Started
 
