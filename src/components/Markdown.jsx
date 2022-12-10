@@ -162,9 +162,11 @@ export const PreExtended = function ({ className, children }) {
     return children;
   }
 
-  return <pre className={className}>
+  return (
+    <pre className={className}>
       {renderCodeBlocks()}
-  </pre>;
+    </pre>
+  );
 };
 
 /**
