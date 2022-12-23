@@ -23,9 +23,9 @@ Per Martin Fowler, based on (Gerard Meszaros):
 > they got all the calls they were expecting.
 
 Unlike fakes, mocks are pre-programmed with expectations and verify calls they
-expect to receive. Mocks do not have verification logic. Furthermore, mocks are
-used to verify behavior. If you want to verify state, then you should use a
-[Mock](/rhum/v2.x/tutorials/test-doubles/mocks).
+expect to receive (fakes do not have verification logic). Furthermore, mocks are
+used to verify behavior and not state. If you want to verify state, then you
+should use a [Fake](/rhum/v2.x/tutorials/test-doubles/fakes).
 
 In this tutorial, you will learn how to create mocks:
 
