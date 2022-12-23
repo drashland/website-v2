@@ -24,7 +24,7 @@ const ACCEPTED_CODE_TAB_NAMES = [
 const Code = styled.code`
   font-size: .85rem;
   background: ${({ theme }) => theme.markdown.code.backgroundColor};
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.layout.borderRadius};
   color: ${({ theme }) => theme.markdown.code.color};
   font-weight: 500;
   padding: .25rem .5rem;
@@ -34,7 +34,7 @@ const Code = styled.code`
 
 const Tab = styled.button`
   font-family: 'Menlo', Helvetica, Arial, sans-serif;
-  font-size: .85rem;
+  font-size: .7rem;
   cursor: pointer;
   padding: 1rem;
   background: ${({ activeTab, name }) =>

@@ -45,7 +45,7 @@ const Main = styled.div`
 
 const MakeBetter = styled.div`
   background-color: ${({ theme }) => theme.layout.makeBetter.background};
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.layout.borderRadius};
   padding: 2rem;
   transition-duration: 0.25s;
   transition-property: background;

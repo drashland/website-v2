@@ -50,7 +50,7 @@ const VersionsSelectorContainer = styled.div`
 `;
 
 const VersionsSelectorInnerContainer = styled.div`
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.versionSelector.borderRadius};
   border: 1px solid #dfdfdf;
   background: #ffffff;
   width: 100%;

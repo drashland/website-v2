@@ -20,6 +20,8 @@ jobs:
         uses: denoland/setup-deno@v1
 
       - name: Lint
-        run: deno lint --ignore=node_modules,.next,public
+        # Ignore `src/services` because `deno fmt` adds commas and `deno lint`
+        # complains. Classic.
+        run: deno lint --ignore=node_modules,.next,public,src/services/
       - name: Fmt Check
         run: deno fmt --check --ignore=node_modules,.next,public

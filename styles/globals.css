@@ -213,3 +213,7 @@ pre pre code {
 .code-blocks code {
   padding: 1rem !important;
 }
+
+.bold {
+  font-weight: bold;
+}

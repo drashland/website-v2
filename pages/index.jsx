@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import LayoutTopBar from "../src/components/LayoutTopBar";
 import LoadingScreen from "../src/components/LoadingScreen";
+import { common as theme } from "../styles/theme.js";
 
 const MAINTAINERS = [
   {
@@ -153,7 +154,7 @@ const CardsContainer = styled.div`
 const Card = styled.div`
   cursor: pointer;
   background: #ffffff;
-  border-radius: .5rem;
+  border-radius: ${theme.layout.borderRadius};
   padding: 1.5rem;
   color: #333333;
   display: flex;
@@ -201,7 +202,7 @@ const Button = styled.a`
   background: #000000;
   color: #ffffff;
   padding: 1rem 2rem;
-  border-radius: 3rem;
+  border-radius: ${theme.button.borderRadius};
   font-weight: bold;
   font-size: .8rem;
   letter-spacing: .1rem;
@@ -240,7 +241,7 @@ const TagsContainer = styled.div`
 
 const Tag = styled.div`
   background: #000000;
-  border-radius: 1rem;
+  border-radius: ${theme.tag.borderRadius};
   color: #ffffff;
   font-size: .75rem;
   padding: .15rem .9rem;
