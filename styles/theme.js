@@ -1,7 +1,10 @@
 /**
  * Common styles that both light theme and dark theme use go here.
  */
-const common = {
+export const common = {
+  button: {
+    borderRadius: "3rem",
+  },
   module: {
     logo: {
       size: "100px",
@@ -11,6 +14,24 @@ const common = {
     icon: {
       height: "13px",
     },
+  },
+  layout: {
+    borderRadius: ".25rem",
+    marginBottom: "1.25rem",
+  },
+  markdown: {
+    pre: {
+      borderRadius: ".25rem",
+    },
+  },
+  note: {
+    borderColor: "#b8dcf1",
+  },
+  tag: {
+    borderRadius: ".25rem",
+  },
+  versionSelector: {
+    borderRadius: ".25rem",
   },
 };
 
@@ -27,6 +48,7 @@ export const lightTheme = {
     color: "#333333",
   },
   markdown: {
+    ...common.markdown,
     heading2: {
       borderTopColor: "#f4f4f4",
     },
@@ -36,6 +58,7 @@ export const lightTheme = {
     },
   },
   layout: {
+    ...common.layout,
     background: "#ffffff",
     horizontalRule: {
       background: "#f4f4f4",
@@ -76,6 +99,7 @@ export const darkTheme = {
     color: "#efefef",
   },
   layout: {
+    ...common.layout,
     background: "#363b44",
     color: "#efefef",
     horizontalRule: {
@@ -92,6 +116,7 @@ export const darkTheme = {
     },
   },
   markdown: {
+    ...common.markdown,
     heading2: {
       borderTopColor: "#494f58",
     },

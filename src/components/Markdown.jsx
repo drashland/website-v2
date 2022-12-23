@@ -9,8 +9,6 @@ import styled from "styled-components";
 import CodeExtended from "./markdown/CodeExtended";
 import { PLACEHOLDER_REPLACEMENTS } from "../services/content_replacer_service";
 
-const MARGIN_BOTTOM = "margin-bottom: 1.25rem !important;";
-
 const flatten = (text, child) => {
   return typeof child === "string"
     ? text + child
@@ -22,6 +20,28 @@ const LinkIcon = styled(Link)`
   height: 25px;
   transition-duration: 0.15s;
   transition-property: opacity;
+`;
+
+const Note = styled.div`
+  border-radius: ${({ theme }) => theme.layout.borderRadius};
+  background: #e0f0f9;
+  border: ${({ theme }) => `1px solid ${theme.note.borderColor}`};
+  color: #36789d;
+  padding: 1.25rem 1.25rem 1.25rem 2.25rem;
+  margin-bottom: ${({ theme }) => theme.layout.marginBottom};
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    position: absolute;
+    content: "";
+    width: 1rem;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: ${({ theme }) => theme.note.borderColor};
+  }
 `;
 
 export const Blockquote = styled.blockquote`
@@ -97,7 +117,7 @@ export const Heading1 = styled(Heading(1))`
     font-size: 3rem;
     font-weight: bold;
     line-height: 1.2;
-    ${MARGIN_BOTTOM};
+    margin-bottom: ${({ theme }) => theme.layout.marginBottom};
     transition-duration: 0.25s;
     transition-property: color;
   }
@@ -113,7 +133,7 @@ export const Heading2 = styled(Heading(2))`
     font-weight: bold;
     line-height: 1.2;
     padding-top: 2rem;
-    ${MARGIN_BOTTOM};
+    margin-bottom: ${({ theme }) => theme.layout.marginBottom};
     transition-duration: 0.25s;
     transition-property: border-top, color;
   }
@@ -127,7 +147,7 @@ export const Heading3 = styled(Heading(3))`
     font-weight: bold;
     line-height: 1.2;
     padding-top: 1.5rem;
-    ${MARGIN_BOTTOM};
+    margin-bottom: ${({ theme }) => theme.layout.marginBottom};
     transition-duration: 0.25s;
     transition-property: color;
   }
@@ -139,7 +159,7 @@ export const Heading4 = styled(Heading(4))`
     color: ${({ theme }) => theme.layout.text.color};
     font-size: 1.3rem;
     font-weight: bold;
-    ${MARGIN_BOTTOM};
+    margin-bottom: ${({ theme }) => theme.layout.marginBottom};
     transition-duration: 0.25s;
     transition-property: color;
   }
@@ -202,35 +222,57 @@ const ParagraphExtended = ({ className, children: text }) => {
     });
   });
 
+  let note = null;
+  text.forEach((line) => {
+    if (typeof line === "string" && line.includes("{{ note_since: ")) {
+      const version = line.replace(/\{\{.+note_since: +|\}\}/g, "");
+      note = (
+        <Note>
+          <span className="bold">Note:</span> This feature was introduced in
+          {" "}
+          {version}. Please make sure you are using {version}{" "}
+          (or higher) before proceeding with this tutorial.
+        </Note>
+      );
+    }
+  });
+
+  if (note) {
+    return note;
+  }
+
   // If the paragraph includes placeholders, then we need to make sure we do not
   // wrap the replaced placeholder in a <p> tag. Otherwise we will end up with
   // nested <p> tags and that will throw a React error in the console. It's not
   // problematic per se, but annoying af.
-  return paragraphContainsPlaceholder
-    ? text
-    : <p className={className}>{text}</p>;
+  if (paragraphContainsPlaceholder) {
+    return text;
+  }
+
+  return <p className={className}>{text}</p>;
 };
 
 export const Paragraph = styled(ParagraphExtended)`
-  ${MARGIN_BOTTOM};
+  margin-bottom: ${({ theme }) => theme.layout.marginBottom};
   transition-duration: 0.25s;
   transition-property: color;
 `;
 
 export const Pre = styled(PreExtended)`
   background: #2f343c !important;
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.markdown.pre.borderRadius};
   overflow: hidden;
-  ${MARGIN_BOTTOM};
+  margin-bottom: ${({ theme }) => theme.layout.marginBottom};
 
   &[class*=language-] {
-    ${MARGIN_BOTTOM};
+    margin-bottom: ${({ theme }) => theme.layout.marginBottom};
   }
 
   pre {
     background: #2f343c !important;
-    border-radius: 1rem;
+    border-radius: ${({ theme }) => theme.markdown.pre.borderRadius};
     margin-bottom: 0 !important;
+    max-height: 500px;
 
     &[class*=language-] {
       margin-bottom: 0 !important;
@@ -238,7 +280,7 @@ export const Pre = styled(PreExtended)`
   }
 
   code {
-    font-size: .85rem;
+    font-size: .8rem;
     background-color: transparent;
     padding: 0;
     color: inherit;
@@ -248,7 +290,7 @@ export const Pre = styled(PreExtended)`
 export const Code = styled(CodeExtended)`
   font-size: .85rem;
   background: ${({ theme }) => theme.markdown.code.backgroundColor};
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.markdown.code.borderRadius};
   color: ${({ theme }) => theme.markdown.code.color};
   font-weight: 500;
   padding: .25rem .5rem;
@@ -259,13 +301,13 @@ export const Code = styled(CodeExtended)`
 export const OrderedList = styled.ol`
   margin-left: 0;
   padding-left: 2.5rem;
-  ${MARGIN_BOTTOM};
+  margin-bottom: ${({ theme }) => theme.layout.marginBottom};
 `;
 
 export const UnorderedList = styled.ul`
   margin-left: 0;
   padding-left: 2.5rem;
-  ${MARGIN_BOTTOM};
+  margin-bottom: ${({ theme }) => theme.layout.marginBottom};
 `;
 
 export const Image = styled.img`
