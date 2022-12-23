@@ -8,6 +8,8 @@
   - [With Constructor Arguments](#with-constructor-arguments)
 - [Taking Shortcuts](#taking-shortcuts)
   - [.method(...).willReturn(...)](#method-willreturn)
+    - [Returning a Value Using a Static Value](#returning-a-value-using-a-static-value)
+    - [Returning a Value Using a Callback](#returning-a-value-using-a-callback)
   - [.method(...).willThrow(...)](#method-willthrow)
 
 ## Before You Get Started
@@ -24,10 +26,12 @@ used to verify behavior (e.g., verifying that a call was made). If you want to
 verify calls made during a test or verify behavior in general, then you should
 use a [Mock](/rhum/v2.x/tutorials/test-doubles/mocks).
 
-In this tutorial, you will learn how to create fakes:
+In this tutorial, you will learn how to create fakes as well as cause them to do
+the following:
 
-- One fake will return some value.
-- One fake will throw an error.
+- Shortcut a method to return a static value.
+- Shortcut a method to return a value using a callback.
+- Shortcut a method to throw an error.
 
 ## Creating a Fake
 
@@ -354,11 +358,57 @@ staying in line with definitions.
 
 ### .method(...).willReturn(...)
 
-Just like mocks, you can cause a fake to have one of its methods immediately
-return a value by calling `.method(...).willReturn(...)`. This is called "taking
-a shortcut" in the context of fakes and is useful if you do not care how the
-method gets the value and just want it to return the value you want it to
-return.
+Just like mocks, you can cause a fake's method to return a value by calling
+`.method(...).willReturn(...)`. This is called "taking a shortcut" in the
+context of fakes. This is useful if you want to control what a method returns.
+There are two approaches to making a fake's method return a value:
+
+1. If you want the method to return whatever value you give it immediatley, then
+   read
+   [Returning a Value Using a Static Value](#returning-a-value-using-a-static-value)
+   below. This approach looks like:
+   ```typescript
+   // Shortened for brevity
+   fake
+     .method("doSomething")
+     .willReturn("sup");
+
+   fake.doSomething(); // => "sup"
+   ```
+2. If you want the method to evaluate any arguments passed to it before it
+   returns a value, then read
+   [Returning a Value Using a Callback](#returning-a-value-using-a-callback)
+   below. This approach looks like:
+   ```typescript
+   // Shortened for brevity
+   fake
+     .method("doSomething")
+     .willReturn((someParam?: string | undefined) => {
+       if (someParam == "one") {
+         return "sup";
+       }
+
+       if (someParam == "two") {
+         return "sup sup";
+       }
+
+       if (someParam == "three") {
+         return "sup sup sup";
+       }
+
+       return "???";
+     });
+
+   fake.doSomething("one"); // => "sup"
+   fake.doSomething("two"); // => "sup sup"
+   fake.doSomething("three"); // => "sup sup sup"
+   fake.doSomething(); // => "???"
+   ```
+
+#### Returning a Value Using a Static Value
+
+Use this approach if you want the method to return whatever value you give it
+immediatley.
 
 ```typescript
 // @Tab Deno
@@ -450,7 +500,7 @@ Deno.test("Fake", async (t) => {
 
     await t.step("returns shortcut value", () => {
       const shortcutValue = serviceWithShortcut.getUsers();
-      assertEquals(shortcutValue, { name: "someone else" });
+      assertEquals(shortcutValue, [{ name: "someone else" }]);
     });
 
     await t.step("anotha_one_called WAS NOT called", async () => {
@@ -944,6 +994,499 @@ describe("Fake", () => {
         true,
       );
     });
+  });
+});
+```
+
+#### Returning a Value Using a Callback
+
+{{ note_since: v2.2.0 }}
+
+Use this approach if you want the method to evaluate any arguments passed to it
+before it returns a value. This approach requires passing a callback into
+`.willReturn(...)`.
+
+```typescript
+// @Tab Deno
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Fake } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
+
+// Create the service that will use the object that has its method taking a shortcut
+class SenderService {
+  #configs: Configs; // This object will be taking a shortcut
+
+  public constructor(configs: Configs) {
+    this.#configs = configs;
+  }
+
+  public send(): string {
+    const host = this.#configs.get<string>("host", "localhost");
+    const port = this.#configs.get<number>("port", 5000);
+
+    if (host == null) {
+      throw new Error("Could not find host!");
+    }
+
+    if (port === 3000) {
+      throw new Error("Sending messages to port 3000 is not allowed!");
+    }
+
+    return `Message sent to ${host}:${port}!`;
+  }
+}
+
+// Create the class that will have its method take a shortcut
+class Configs {
+  #map = new Map<string, unknown>();
+
+  public get<T>(key: string, defaultValue: T): T {
+    return this.#map.get(key) as T ?? defaultValue;
+  }
+}
+
+// The below test suite will test that `Configs.get()` will take shortcuts and
+// provide values based on the arguments passed to it
+
+Deno.test("Fake", async (t) => {
+  await t.step("can take a shortcut", async (t) => {
+    const fakeConfigs = Fake(Configs)
+      .create();
+
+    // Use the real service that uses the fake `Configs` under the hood. We
+    // cannot control the real service, but we can control the fake `Configs`
+    // and have it return a value based on the arguments that the real service
+    // passes to it from `SenderService.send()`.
+    const realService = new SenderService(fakeConfigs);
+
+    // When `SenderService.send()` is called, it calls `Configs.get(...)`. We
+    // want to control `Configs.get(...)` by returning values based on the
+    // argments it receives so we can test the behavior of `Sender.send()`.
+    fakeConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `Configs.get(...)` was modified to allow `Sender.send()` to not throw an
+    // error, therefore, we expect/get the successful message below.
+    assertEquals(realService.send(), "Message sent to my.local:7000!");
+
+    // Now we change the behavior of `Config.get()` to make `Sender.send()`
+    // throw its "Could not find host!" error.
+    fakeConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return null; // This should make `Sender.send()` throw an error
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `host == null` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      assertEquals(error.message, "Could not find host!");
+    }
+
+    // For the last assertion, we try to get `Sender.send()` to throw its
+    // "Sending messages to port 3000 is not allowed!" error.
+    fakeConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 3000; // This should make `Sender.send()` throw an error
+        }
+
+        return defaultValue;
+      });
+
+    // `port == 3000` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      assertEquals(
+        error.message,
+        "Sending messages to port 3000 is not allowed!",
+      );
+    }
+  });
+});
+
+// @Tab Node - TypeScript (ESM)
+import { Fake } from "@drashland/rhum";
+
+// Create the service that will use the object that has its method taking a shortcut
+class SenderService {
+  #configs: Configs; // This object will be taking a shortcut
+
+  public constructor(configs: Configs) {
+    this.#configs = configs;
+  }
+
+  public send(): string {
+    const host = this.#configs.get<string>("host", "localhost");
+    const port = this.#configs.get<number>("port", 5000);
+
+    if (host == null) {
+      throw new Error("Could not find host!");
+    }
+
+    if (port === 3000) {
+      throw new Error("Sending messages to port 3000 is not allowed!");
+    }
+
+    return `Message sent to ${host}:${port}!`;
+  }
+}
+
+// Create the class that will have its method take a shortcut
+class Configs {
+  #map = new Map<string, unknown>();
+
+  public get<T>(key: string, defaultValue: T): T {
+    return this.#map.get(key) as T ?? defaultValue;
+  }
+}
+
+// The below test suite will test that `Configs.get()` will take shortcuts and
+// provide values based on the arguments passed to it
+
+describe("Fake", () => {
+  test("can take a shortcut", () => {
+    const fakeConfigs = Fake(Configs)
+      .create();
+
+    // Use the real service that uses the fake `Configs` under the hood. We
+    // cannot control the real service, but we can control the fake `Configs`
+    // and have it return a value based on the arguments that the real service
+    // passes to it from `SenderService.send()`.
+    const realService = new SenderService(fakeConfigs);
+
+    // When `SenderService.send()` is called, it calls `Configs.get(...)`. We
+    // want to control `Configs.get(...)` by returning values based on the
+    // argments it receives so we can test the behavior of `Sender.send()`.
+    fakeConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `Configs.get(...)` was modified to allow `Sender.send()` to not throw an
+    // error, therefore, we expect/get the successful message below.
+    expect(realService.send()).toBe("Message sent to my.local:7000!");
+
+    // Now we change the behavior of `Config.get()` to make `Sender.send()`
+    // throw its "Could not find host!" error.
+    fakeConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return null; // This should make `Sender.send()` throw an error
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `host == null` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message).toBe("Could not find host!");
+    }
+
+    // For the last assertion, we try to get `Sender.send()` to throw its
+    // "Sending messages to port 3000 is not allowed!" error.
+    fakeConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 3000; // This should make `Sender.send()` throw an error
+        }
+
+        return defaultValue;
+      });
+
+    // `port == 3000` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message)
+        .toBe("Sending messages to port 3000 is not allowed!");
+    }
+  });
+});
+
+// @Tab Node - JavaScript (ESM)
+import { Fake } from "@drashland/rhum";
+
+// Create the service that will use the object that has its method taking a shortcut
+class SenderService {
+  constructor(configs) {
+    this.configs = configs;
+  }
+
+  send() {
+    const host = this.configs.get("host", "localhost");
+    const port = this.configs.get("port", 5000);
+
+    if (host == null) {
+      throw new Error("Could not find host!");
+    }
+
+    if (port === 3000) {
+      throw new Error("Sending messages to port 3000 is not allowed!");
+    }
+
+    return `Message sent to ${host}:${port}!`;
+  }
+}
+
+// Create the class that will have its method take a shortcut
+class Configs {
+  map = new Map();
+
+  get(key, defaultValue) {
+    return this.map.get(key) ? this.map.get(key) : defaultValue;
+  }
+}
+
+// The below test suite will test that `Configs.get()` will take shortcuts and
+// provide values based on the arguments passed to it
+
+describe("Fake", () => {
+  test("can take a shortcut", () => {
+    const fakeConfigs = Fake(Configs)
+      .create();
+
+    // Use the real service that uses the fake `Configs` under the hood. We
+    // cannot control the real service, but we can control the fake `Configs`
+    // and have it return a value based on the arguments that the real service
+    // passes to it from `SenderService.send()`.
+    const realService = new SenderService(fakeConfigs);
+
+    // When `SenderService.send()` is called, it calls `Configs.get(...)`. We
+    // want to control `Configs.get(...)` by returning values based on the
+    // argments it receives so we can test the behavior of `Sender.send()`.
+    fakeConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `Configs.get(...)` was modified to allow `Sender.send()` to not throw an
+    // error, therefore, we expect/get the successful message below.
+    expect(realService.send()).toBe("Message sent to my.local:7000!");
+
+    // Now we change the behavior of `Config.get()` to make `Sender.send()`
+    // throw its "Could not find host!" error.
+    fakeConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return null; // This should make `Sender.send()` throw an error
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `host == null` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message).toBe("Could not find host!");
+    }
+
+    // For the last assertion, we try to get `Sender.send()` to throw its
+    // "Sending messages to port 3000 is not allowed!" error.
+    fakeConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 3000; // This should make `Sender.send()` throw an error
+        }
+
+        return defaultValue;
+      });
+
+    // `port == 3000` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message)
+        .toBe("Sending messages to port 3000 is not allowed!");
+    }
+  });
+});
+
+// @Tab Node - CommonJS
+const { Fake } = require("@drashland/rhum");
+
+// Create the service that will use the object that has its method taking a shortcut
+class SenderService {
+  constructor(configs) {
+    this.configs = configs;
+  }
+
+  send() {
+    const host = this.configs.get("host", "localhost");
+    const port = this.configs.get("port", 5000);
+
+    if (host == null) {
+      throw new Error("Could not find host!");
+    }
+
+    if (port === 3000) {
+      throw new Error("Sending messages to port 3000 is not allowed!");
+    }
+
+    return `Message sent to ${host}:${port}!`;
+  }
+}
+
+// Create the class that will have its method take a shortcut
+class Configs {
+  map = new Map();
+
+  get(key, defaultValue) {
+    return this.map.get(key) ? this.map.get(key) : defaultValue;
+  }
+}
+
+// The below test suite will test that `Configs.get()` will take shortcuts and
+// provide values based on the arguments passed to it
+
+describe("Fake", () => {
+  test("can take a shortcut", () => {
+    const fakeConfigs = Fake(Configs)
+      .create();
+
+    // Use the real service that uses the fake `Configs` under the hood. We
+    // cannot control the real service, but we can control the fake `Configs`
+    // and have it return a value based on the arguments that the real service
+    // passes to it from `SenderService.send()`.
+    const realService = new SenderService(fakeConfigs);
+
+    // When `SenderService.send()` is called, it calls `Configs.get(...)`. We
+    // want to control `Configs.get(...)` by returning values based on the
+    // argments it receives so we can test the behavior of `Sender.send()`.
+    fakeConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `Configs.get(...)` was modified to allow `Sender.send()` to not throw an
+    // error, therefore, we expect/get the successful message below.
+    expect(realService.send()).toBe("Message sent to my.local:7000!");
+
+    // Now we change the behavior of `Config.get()` to make `Sender.send()`
+    // throw its "Could not find host!" error.
+    fakeConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return null; // This should make `Sender.send()` throw an error
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `host == null` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message).toBe("Could not find host!");
+    }
+
+    // For the last assertion, we try to get `Sender.send()` to throw its
+    // "Sending messages to port 3000 is not allowed!" error.
+    fakeConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 3000; // This should make `Sender.send()` throw an error
+        }
+
+        return defaultValue;
+      });
+
+    // `port == 3000` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message)
+        .toBe("Sending messages to port 3000 is not allowed!");
+    }
   });
 });
 ```
