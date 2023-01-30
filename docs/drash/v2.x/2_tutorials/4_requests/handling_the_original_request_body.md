@@ -1,7 +1,6 @@
 # Handling the Original Request Body
 
-Handling the original request body was introduced in v2.7.0. Please make sure
-you are using v2.7.0 (or higher) before proceeding with this tutorial.
+{{ note_since: v2.7.0 }}
 
 ## Table of Contents
 

@@ -224,16 +224,40 @@ const ParagraphExtended = ({ className, children: text }) => {
 
   let note = null;
   text.forEach((line) => {
-    if (typeof line === "string" && line.includes("{{ note_since: ")) {
-      const version = line.replace(/\{\{.+note_since: +|\}\}/g, "");
-      note = (
-        <Note>
-          <span className="bold">Note:</span> This feature was introduced in
-          {" "}
-          {version}. Please make sure you are using {version}{" "}
-          (or higher) before proceeding with this tutorial.
-        </Note>
+    if (typeof line === "string" && line.includes("{{ note_since")) {
+      const version = line.replace(
+        /\{\{.+(note_since|note_since_simple)+: +|\}\}/g,
+        "",
       );
+
+      if (line.includes("{{ note_since: ")) {
+        note = (
+          <Note>
+            <span className="bold">Note:</span> This feature was introduced in
+            {" "}
+            {version}. Please make sure you are using {version}{" "}
+            (or higher) before proceeding to use the following tutorial/code.
+          </Note>
+        );
+      } else if (line.includes("{{ note_since_simple: ")) {
+        note = (
+          <Note>
+            <span className="bold">Note:</span> This feature was introduced in
+            {" "}
+            {version}. Please make sure you are using {version}{" "}
+            (or higher) for this feature.
+          </Note>
+        );
+      } else {
+        note = (
+          <Note>
+            <span className="bold">Note:</span> This feature was introduced in
+            {" "}
+            {version}. Please make sure you are using {version}{" "}
+            (or higher) for this feature.
+          </Note>
+        );
+      }
     }
   });
 

@@ -14,6 +14,7 @@ use each.
   - [cert_file?: string](#cert-file-string)
   - [error_handler?: new (...args: any[]) => IErrorHandler](#error-handler-new-args-any-ierrorhandler)
   - [key_file?: string](#key-file-string)
+  - [request.read_body?: boolean](#request-read-body-boolean)
   - [services?: Drash.Service[]](#services-drash-service)
 
 ## Required
@@ -214,6 +215,34 @@ is set to `https`, then `cert_file` and `key_file` are required.
     port: 1447,
     protocol: "https",
     resources: [ ... ]
+  });
+  ```
+
+### request?.read_body?: boolean
+
+{{ note_since: v2.8.0 }}
+
+- This config is useful if you want your server to stop reading request bodies
+  automatically, which is the default behavior.
+- **Warning**: If this config is set to `false`, then you cannot use the below
+  methods. Reason being the automatic request body code will not run and, as a
+  result, the property that the below methods rely on to retrieve param values
+  will be `undefined`. You will have to create your own implementation of the
+  below methods if this config is set to `false`.
+  - `request.bodyParam()`
+  - `request.bodyAll()`
+- Example Usage
+
+  ```typescript
+  // @Import drash_from_deno
+
+  const server = new Drash.Server({
+    hostname: "localhost",
+    port: 1447,
+    resources: [ ... ],
+    request: {
+      read_body: false, // Request bodies will not be read
+    }
   });
   ```
 
