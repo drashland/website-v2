@@ -17,7 +17,7 @@ function in the example code blocks with the function your framework uses.
 
    - [Deno](https://deno.land/)
    - [Node](https://nodejs.org/en/download/) (Rhum is compatible with Node v14,
-     v16, v17, and v18)
+     v16, and v18)
 
 2. Create your project directory.
 

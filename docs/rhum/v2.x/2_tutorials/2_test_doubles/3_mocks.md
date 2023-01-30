@@ -8,6 +8,8 @@
   - [With Constructor Arguments](#with-constructor-arguments)
 - [Pre-programming Methods](#pre-programming-methods)
   - [.method(...).willReturn(...)](#method-willreturn)
+    - [Returning a Value Using a Static Value](#returning-a-value-using-a-static-value)
+    - [Returning a Value Using a Callback](#returning-a-value-using-a-callback)
   - [.method(...).willThrow(...)](#method-willthrow)
 - [Verifying Calls](#verifying-calls)
   - [Using .calls](#using-calls)
@@ -27,10 +29,12 @@ expect to receive (fakes do not have verification logic). Furthermore, mocks are
 used to verify behavior and not state. If you want to verify state, then you
 should use a [Fake](/rhum/v2.x/tutorials/test-doubles/fakes).
 
-In this tutorial, you will learn how to create mocks:
+In this tutorial, you will learn how to create mocks as well as cause them to do
+the following:
 
-- One mock will return some value.
-- One mock will throw an error.
+- Pre-program a method to return a static value.
+- Pre-program a method to return a value using a callback.
+- Pre-program a method to throw an error.
 
 ## Creating a Mock
 
@@ -44,12 +48,27 @@ follows:
 // Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
 // can be found at https://github.com/drashland/rhum/releases/latest
 import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
 class SomeClassWithoutConstructor {}
 
 const mockWithoutConstructor = Mock(SomeClassWithoutConstructor).create();
 
-console.log(mockWithoutConstructor instanceof SomeClassWithoutConstructor); // true
+// Make assertions below. The Mock should be an instance of the original class.
+
+Deno.test("Mock", async (t) => {
+  await t.step(
+    "creates a mock without constructor args",
+    async (t) => {
+      assertEquals(
+        mockWithoutConstructor instanceof SomeClassWithoutConstructor,
+        true,
+      );
+    },
+  );
+});
 
 // @Tab Node - TypeScript (ESM)
 import { Mock } from "@drashland/rhum";
@@ -118,7 +137,12 @@ Creating a mock of an object with constructor arguments can be done as follows:
 // Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
 // can be found at https://github.com/drashland/rhum/releases/latest
 import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
+// Create the class that will become the Mock. Notice it requires constructor
+// arguments.
 class SomeClassWithConstructor {
   public name: string;
   public type: "dog" | "cat";
@@ -135,6 +159,7 @@ class SomeClassWithConstructor {
   }
 }
 
+// Create the Mock
 const mockWithConstructor = Mock(SomeClassWithConstructor)
   .withConstructorArgs(
     "Missy",
@@ -143,11 +168,29 @@ const mockWithConstructor = Mock(SomeClassWithConstructor)
   )
   .create();
 
-console.log(mockWithConstructor instanceof SomeClassWithConstructor); // true
-console.log(mockWithConstructor.name === "Missy"); // true
-console.log(mockWithConstructor.type === "dog"); // true
-console.log(mockWithConstructor.colors.includes("brown")); // true
-console.log(mockWithConstructor.colors.includes("white")); // true
+// Make assertions below. The Mock should be an instance or the original class
+// and should have all properties (used in the constructor) set.
+
+Deno.test("Mock", async (t) => {
+  await t.step("creates a mock constructor args", async (t) => {
+    assertEquals(
+      mockWithConstructor instanceof SomeClassWithConstructor,
+      true,
+    );
+  });
+
+  await t.step("name property was set", async (t) => {
+    assertEquals(mockWithConstructor.name, "Missy");
+  });
+
+  await t.step("type property was set", async (t) => {
+    assertEquals(mockWithConstructor.type, "dog");
+  });
+
+  await t.step("colors property was set", async (t) => {
+    assertEquals(mockWithConstructor.colors, ["brown", "white"]);
+  });
+});
 
 // @Tab Node - TypeScript (ESM)
 import { Mock } from "@drashland/rhum";
@@ -315,18 +358,68 @@ While this method is the same one that is used in mocks, we state
 
 ### .method(...).willReturn(...)
 
-Just like fakes, you can cause a mock to have one of its methods immediately
-return a value by calling `.method(...).willReturn(...)`. This is called
-"pre-programming a method" in the context of mocks and is useful if you do not
-care how the method gets the value and just want it to return the value you want
-it to return.
+Just like fakes, you can cause a mock's method to return a value by calling
+`.method(...).willReturn(...)`. This is called "pre-programming a method" in the
+context of mocks. This is useful if you want to control what a method returns.
+There are two approaches to making a mock's method return a value:
+
+1. If you want the method to return whatever value you give it immediatley, then
+   read
+   [Returning a Value Using a Static Value](#returning-a-value-using-a-static-value)
+   below. This approach looks like:
+   ```typescript
+   // Shortened for brevity
+   mock
+     .method("doSomething")
+     .willReturn("sup");
+
+   mock.doSomething(); // => "sup"
+   ```
+2. If you want the method to evaluate any arguments passed to it before it
+   returns a value, then read
+   [Returning a Value Using a Callback](#returning-a-value-using-a-callback)
+   below. This approach looks like:
+   ```typescript
+   // Shortened for brevity
+   mock
+     .method("doSomething")
+     .willReturn((someParam?: string | undefined) => {
+       if (someParam == "one") {
+         return "sup";
+       }
+
+       if (someParam == "two") {
+         return "sup sup";
+       }
+
+       if (someParam == "three") {
+         return "sup sup sup";
+       }
+
+       return "???";
+     });
+
+   mock.doSomething("one"); // => "sup"
+   mock.doSomething("two"); // => "sup sup"
+   mock.doSomething("three"); // => "sup sup sup"
+   mock.doSomething(); // => "???"
+   ```
+
+#### Returning a Value Using a Static Value
+
+Use this approach if you want the method to return whatever value you give it
+immediatley.
 
 ```typescript
 // @Tab Deno
 // Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
 // can be found at https://github.com/drashland/rhum/releases/latest
 import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
 
+// Create the class that will use the Mock
 class Service {
   #repository: Repository;
 
@@ -345,6 +438,7 @@ class Service {
   }
 }
 
+// Create the class that will become the Mock
 class Repository {
   public anotha_one_called = false;
   public do_something_called = false;
@@ -380,39 +474,89 @@ class Repository {
   }
 }
 
-// Assert that a mock can pre-program a method call in a class
+// The below test suite is split into two parts:
+//
+//   1. Asserting Mocks can pre-program a method call in a class; and
+//   2. Asserting Mocks can call original implementations.
+//
 
-const mockRepositoryDoingShortcut = Mock(Repository).create();
+Deno.test("Mock", async (t) => {
+  await t.step("can pre-program a method", async (t) => {
+    // Create the mock
+    const mockRepositoryDoingShortcut = Mock(Repository).create();
 
-mockRepositoryDoingShortcut
-  .method("findAllUsers")
-  .willReturn([{ name: "someone else" }]);
+    // Make the Mock return a different value for `findAllUsers()`
+    mockRepositoryDoingShortcut
+      .method("findAllUsers")
+      .willReturn([{ name: "someone else" }]);
 
-const serviceWithShortcut = new Service(
-  mockRepositoryDoingShortcut,
-);
+    // Create the object that uses the Mock
+    const serviceWithShortcut = new Service(
+      mockRepositoryDoingShortcut,
+    );
 
-const actualShortcutValue = serviceWithShortcut.getUsers();
+    // Make assertions below. They should not call original implementations
+    // since the Mock is set to take shorcuts.
 
-console.log(actualShortcutValue); // [ { name: "someone else" } ]
-console.log(mockRepositoryDoingShortcut.anotha_one_called === false); // true
-console.log(mockRepositoryDoingShortcut.do_something_called === false); // true
-console.log(mockRepositoryDoingShortcut.do_something_else_called === false); // true
+    await t.step("returns shortcut value", () => {
+      const shortcutValue = serviceWithShortcut.getUsers();
+      assertEquals(shortcutValue, { name: "someone else" });
+    });
 
-// Assert that the mock can call original implementations
+    await t.step("anotha_one_called WAS NOT called", async () => {
+      assertEquals(mockRepositoryDoingShortcut.anotha_one_called, false);
+    });
 
-const mockRepositoryNotDoingShortcut = Mock(Repository).create();
+    await t.step("do_something_called WAS NOT called", async () => {
+      assertEquals(mockRepositoryDoingShortcut.do_something_called, false);
+    });
 
-const serviceWithoutShortcut = new Service(
-  mockRepositoryNotDoingShortcut,
-);
+    await t.step("do_something_else_called WAS NOT called", async () => {
+      assertEquals(mockRepositoryDoingShortcut.do_something_else_called, false);
+    });
+  });
 
-const actualOriginal = serviceWithoutShortcut.getUsers();
+  await t.step("can call original implementations", async (t) => {
+    // Create the Mock
+    const mockRepositoryNotDoingShortcut = Mock(Repository).create();
 
-console.log(actualOriginal); // [ { name: "Totoro" }, { name: "Domo-kun" } ]
-console.log(mockRepositoryNotDoingShortcut.anotha_one_called === true); // true
-console.log(mockRepositoryNotDoingShortcut.do_something_called === true); // true
-console.log(mockRepositoryNotDoingShortcut.do_something_else_called === true); // true
+    // Create the object that uses the Mock
+    const serviceWithoutShortcut = new Service(
+      mockRepositoryNotDoingShortcut,
+    );
+
+    // Make assertions below. They should call original implementations since
+    // the Mock is not set to take shorcuts.
+
+    await t.step("returns original value", () => {
+      const originalValue = serviceWithoutShortcut.getUsers();
+
+      assertEquals(originalValue, [
+        {
+          name: "Totoro",
+        },
+        {
+          name: "Domo-kun",
+        },
+      ]);
+    });
+
+    await t.step("anotha_one_called WAS called", () => {
+      assertEquals(mockRepositoryNotDoingShortcut.anotha_one_called, true);
+    });
+
+    await t.step("do_something_called WAS called", () => {
+      assertEquals(mockRepositoryNotDoingShortcut.do_something_called, true);
+    });
+
+    await t.step("do_something_else_called WAS called", () => {
+      assertEquals(
+        mockRepositoryNotDoingShortcut.do_something_else_called,
+        true,
+      );
+    });
+  });
+});
 
 // @Tab Node - TypeScript (ESM)
 import { Mock } from "@drashland/rhum";
@@ -850,6 +994,499 @@ describe("Mock", () => {
         true,
       );
     });
+  });
+});
+```
+
+#### Returning a Value Using a Callback
+
+{{ note_since: v2.2.0 }}
+
+Use this approach if you want the method to evaluate any arguments passed to it
+before it returns a value. This approach requires passing a callback into
+`.willReturn(...)`.
+
+```typescript
+// @Tab Deno
+// Replace `<VERSION>` with the latest version of Rhum v2.x. The latest version
+// can be found at https://github.com/drashland/rhum/releases/latest
+import { Mock } from "https://deno.land/x/rhum@<VERSION>/mod.ts";
+// Replace `<VERSION>` with the latest version of Deno Standard Modules. The
+// latest version can be found at https://deno.land/std
+import { assertEquals } from "https://deno.land/std@<VERSION>/testing/asserts.ts";
+
+// Create the service that will use the object that has its method taking a shortcut
+class SenderService {
+  #configs: Configs; // This object will be taking a shortcut
+
+  public constructor(configs: Configs) {
+    this.#configs = configs;
+  }
+
+  public send(): string {
+    const host = this.#configs.get<string>("host", "localhost");
+    const port = this.#configs.get<number>("port", 5000);
+
+    if (host == null) {
+      throw new Error("Could not find host!");
+    }
+
+    if (port === 3000) {
+      throw new Error("Sending messages to port 3000 is not allowed!");
+    }
+
+    return `Message sent to ${host}:${port}!`;
+  }
+}
+
+// Create the class that will have its method take a shortcut
+class Configs {
+  #map = new Map<string, unknown>();
+
+  public get<T>(key: string, defaultValue: T): T {
+    return this.#map.get(key) as T ?? defaultValue;
+  }
+}
+
+// The below test suite will test that `Configs.get()` will take shortcuts and
+// provide values based on the arguments passed to it
+
+Deno.test("Mock", async (t) => {
+  await t.step("can take a shortcut", async (t) => {
+    const mockConfigs = Mock(Configs)
+      .create();
+
+    // Use the real service that uses the mock `Configs` under the hood. We
+    // cannot control the real service, but we can control the mock `Configs`
+    // and have it return a value based on the arguments that the real service
+    // passes to it from `SenderService.send()`.
+    const realService = new SenderService(mockConfigs);
+
+    // When `SenderService.send()` is called, it calls `Configs.get(...)`. We
+    // want to control `Configs.get(...)` by returning values based on the
+    // argments it receives so we can test the behavior of `Sender.send()`.
+    mockConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `Configs.get(...)` was modified to allow `Sender.send()` to not throw an
+    // error, therefore, we expect/get the successful message below.
+    assertEquals(realService.send(), "Message sent to my.local:7000!");
+
+    // Now we change the behavior of `Config.get()` to make `Sender.send()`
+    // throw its "Could not find host!" error.
+    mockConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return null; // This should make `Sender.send()` throw an error
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `host == null` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      assertEquals(error.message, "Could not find host!");
+    }
+
+    // For the last assertion, we try to get `Sender.send()` to throw its
+    // "Sending messages to port 3000 is not allowed!" error.
+    mockConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 3000; // This should make `Sender.send()` throw an error
+        }
+
+        return defaultValue;
+      });
+
+    // `port == 3000` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      assertEquals(
+        error.message,
+        "Sending messages to port 3000 is not allowed!",
+      );
+    }
+  });
+});
+
+// @Tab Node - TypeScript (ESM)
+import { Mock } from "@drashland/rhum";
+
+// Create the service that will use the object that has its method taking a shortcut
+class SenderService {
+  #configs: Configs; // This object will be taking a shortcut
+
+  public constructor(configs: Configs) {
+    this.#configs = configs;
+  }
+
+  public send(): string {
+    const host = this.#configs.get<string>("host", "localhost");
+    const port = this.#configs.get<number>("port", 5000);
+
+    if (host == null) {
+      throw new Error("Could not find host!");
+    }
+
+    if (port === 3000) {
+      throw new Error("Sending messages to port 3000 is not allowed!");
+    }
+
+    return `Message sent to ${host}:${port}!`;
+  }
+}
+
+// Create the class that will have its method take a shortcut
+class Configs {
+  #map = new Map<string, unknown>();
+
+  public get<T>(key: string, defaultValue: T): T {
+    return this.#map.get(key) as T ?? defaultValue;
+  }
+}
+
+// The below test suite will test that `Configs.get()` will take shortcuts and
+// provide values based on the arguments passed to it
+
+describe("Mock", () => {
+  test("can take a shortcut", () => {
+    const mockConfigs = Mock(Configs)
+      .create();
+
+    // Use the real service that uses the mock `Configs` under the hood. We
+    // cannot control the real service, but we can control the mock `Configs`
+    // and have it return a value based on the arguments that the real service
+    // passes to it from `SenderService.send()`.
+    const realService = new SenderService(mockConfigs);
+
+    // When `SenderService.send()` is called, it calls `Configs.get(...)`. We
+    // want to control `Configs.get(...)` by returning values based on the
+    // argments it receives so we can test the behavior of `Sender.send()`.
+    mockConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `Configs.get(...)` was modified to allow `Sender.send()` to not throw an
+    // error, therefore, we expect/get the successful message below.
+    expect(realService.send()).toBe("Message sent to my.local:7000!");
+
+    // Now we change the behavior of `Config.get()` to make `Sender.send()`
+    // throw its "Could not find host!" error.
+    mockConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return null; // This should make `Sender.send()` throw an error
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `host == null` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message).toBe("Could not find host!");
+    }
+
+    // For the last assertion, we try to get `Sender.send()` to throw its
+    // "Sending messages to port 3000 is not allowed!" error.
+    mockConfigs
+      .method("get")
+      .willReturn((key: string, defaultValue: number | string) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 3000; // This should make `Sender.send()` throw an error
+        }
+
+        return defaultValue;
+      });
+
+    // `port == 3000` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message)
+        .toBe("Sending messages to port 3000 is not allowed!");
+    }
+  });
+});
+
+// @Tab Node - JavaScript (ESM)
+import { Mock } from "@drashland/rhum";
+
+// Create the service that will use the object that has its method taking a shortcut
+class SenderService {
+  constructor(configs) {
+    this.configs = configs;
+  }
+
+  send() {
+    const host = this.configs.get("host", "localhost");
+    const port = this.configs.get("port", 5000);
+
+    if (host == null) {
+      throw new Error("Could not find host!");
+    }
+
+    if (port === 3000) {
+      throw new Error("Sending messages to port 3000 is not allowed!");
+    }
+
+    return `Message sent to ${host}:${port}!`;
+  }
+}
+
+// Create the class that will have its method take a shortcut
+class Configs {
+  map = new Map();
+
+  get(key, defaultValue) {
+    return this.map.get(key) ? this.map.get(key) : defaultValue;
+  }
+}
+
+// The below test suite will test that `Configs.get()` will take shortcuts and
+// provide values based on the arguments passed to it
+
+describe("Mock", () => {
+  test("can take a shortcut", () => {
+    const mockConfigs = Mock(Configs)
+      .create();
+
+    // Use the real service that uses the mock `Configs` under the hood. We
+    // cannot control the real service, but we can control the mock `Configs`
+    // and have it return a value based on the arguments that the real service
+    // passes to it from `SenderService.send()`.
+    const realService = new SenderService(mockConfigs);
+
+    // When `SenderService.send()` is called, it calls `Configs.get(...)`. We
+    // want to control `Configs.get(...)` by returning values based on the
+    // argments it receives so we can test the behavior of `Sender.send()`.
+    mockConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `Configs.get(...)` was modified to allow `Sender.send()` to not throw an
+    // error, therefore, we expect/get the successful message below.
+    expect(realService.send()).toBe("Message sent to my.local:7000!");
+
+    // Now we change the behavior of `Config.get()` to make `Sender.send()`
+    // throw its "Could not find host!" error.
+    mockConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return null; // This should make `Sender.send()` throw an error
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `host == null` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message).toBe("Could not find host!");
+    }
+
+    // For the last assertion, we try to get `Sender.send()` to throw its
+    // "Sending messages to port 3000 is not allowed!" error.
+    mockConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 3000; // This should make `Sender.send()` throw an error
+        }
+
+        return defaultValue;
+      });
+
+    // `port == 3000` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message)
+        .toBe("Sending messages to port 3000 is not allowed!");
+    }
+  });
+});
+
+// @Tab Node - CommonJS
+const { Mock } = require("@drashland/rhum");
+
+// Create the service that will use the object that has its method taking a shortcut
+class SenderService {
+  constructor(configs) {
+    this.configs = configs;
+  }
+
+  send() {
+    const host = this.configs.get("host", "localhost");
+    const port = this.configs.get("port", 5000);
+
+    if (host == null) {
+      throw new Error("Could not find host!");
+    }
+
+    if (port === 3000) {
+      throw new Error("Sending messages to port 3000 is not allowed!");
+    }
+
+    return `Message sent to ${host}:${port}!`;
+  }
+}
+
+// Create the class that will have its method take a shortcut
+class Configs {
+  map = new Map();
+
+  get(key, defaultValue) {
+    return this.map.get(key) ? this.map.get(key) : defaultValue;
+  }
+}
+
+// The below test suite will test that `Configs.get()` will take shortcuts and
+// provide values based on the arguments passed to it
+
+describe("Mock", () => {
+  test("can take a shortcut", () => {
+    const mockConfigs = Mock(Configs)
+      .create();
+
+    // Use the real service that uses the mock `Configs` under the hood. We
+    // cannot control the real service, but we can control the mock `Configs`
+    // and have it return a value based on the arguments that the real service
+    // passes to it from `SenderService.send()`.
+    const realService = new SenderService(mockConfigs);
+
+    // When `SenderService.send()` is called, it calls `Configs.get(...)`. We
+    // want to control `Configs.get(...)` by returning values based on the
+    // argments it receives so we can test the behavior of `Sender.send()`.
+    mockConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `Configs.get(...)` was modified to allow `Sender.send()` to not throw an
+    // error, therefore, we expect/get the successful message below.
+    expect(realService.send()).toBe("Message sent to my.local:7000!");
+
+    // Now we change the behavior of `Config.get()` to make `Sender.send()`
+    // throw its "Could not find host!" error.
+    mockConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return null; // This should make `Sender.send()` throw an error
+        }
+
+        if (key === "port") {
+          return 7000;
+        }
+
+        return defaultValue;
+      });
+
+    // `host == null` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message).toBe("Could not find host!");
+    }
+
+    // For the last assertion, we try to get `Sender.send()` to throw its
+    // "Sending messages to port 3000 is not allowed!" error.
+    mockConfigs
+      .method("get")
+      .willReturn((key, defaultValue) => {
+        if (key === "host") {
+          return "my.local";
+        }
+
+        if (key === "port") {
+          return 3000; // This should make `Sender.send()` throw an error
+        }
+
+        return defaultValue;
+      });
+
+    // `port == 3000` so we should expect the below error
+    try {
+      realService.send();
+    } catch (error) {
+      expect(error.message)
+        .toBe("Sending messages to port 3000 is not allowed!");
+    }
   });
 });
 ```
