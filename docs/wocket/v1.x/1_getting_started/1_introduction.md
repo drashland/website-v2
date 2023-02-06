@@ -61,7 +61,7 @@ Learn more about Wocket [here](about-wocket).
 - Zero third-party dependencies outside of Deno Standard Modules
 - Extensively documented
 - Whisper to clients from the server
-- Broadcast too all but one client
+- Broadcast to all but one client
 - Send to all clients
 - Create channels
 - Full generic support for channel listeners
