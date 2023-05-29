@@ -148,7 +148,7 @@ is set to `https`, then `cert_file` and `key_file` are required.
   // @Import drash_from_deno
 
   class MyErrorHandler extends Drash.ErrorHandler {
-    public catch(error: Error, _request: Drash.Request, response: Drash.Response) {
+    public catch(error: Error, _request: Request, response: Drash.Response) {
       // Default to 500
       let code = 500;
       let message = "Server failed to process the request. Please try again later.";
