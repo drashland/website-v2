@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import LayoutTopBar from "../src/components/LayoutTopBar";
-import LoadingScreen from "../src/components/LoadingScreen";
-import { common as theme } from "../styles/theme.js";
+import LayoutTopBar from "@/src/components/LayoutTopBar";
+import LoadingScreen from "@/src/components/LoadingScreen";
+import { common as theme } from "@/styles/theme";
 
 const MAINTAINERS = [
   {
@@ -120,8 +120,8 @@ const Main = styled.div`
 `;
 
 const Section = styled.div`
-  background: ${({ background }) => background ? background : "#ffffff"};
-  color: ${({ color }) => color ? color : "#333333"};
+  background: ${({ $background }) => $background ? $background : "#ffffff"};
+  color: ${({ $color }) => $color ? $color : "#333333"};
   display: flex;
   padding: 4rem 2rem;
   justify-content: center;
@@ -330,7 +330,7 @@ export default function Home() {
             </div>
           </InnerContainer>
         </Section>
-        <Section background="#2f343c" color="#ffffff">
+        <Section $background="#2f343c" $color="#ffffff">
           <InnerContainer>
             <SectionTitle>Our Software</SectionTitle>
             <CardsContainer>
@@ -525,9 +525,9 @@ export default function Home() {
             </MaintainersContainer>
           </InnerContainer>
         </Section>
-        <Section background="#2f343c" color="#ffffff">
+        <Section $background="#2f343c" $color="#ffffff">
           <InnerContainer>
-            <Copyright>&copy; 2019 - 2022 Drash Land</Copyright>
+            <Copyright>&copy; 2019 - 2023 Drash Land</Copyright>
           </InnerContainer>
         </Section>
       </Main>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as fs from "fs";
 import path from "path";
-import Layout from "../src/components/Layout";
+import Layout from "@/src/components/Layout";
 import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
@@ -9,9 +9,9 @@ import {
   convertFilenameToURL,
   formatLabel,
 } from "../src/services/string_service";
-import { publicRuntimeConfig } from "../src/services/config_service";
 import ReactMarkdown from "react-markdown";
-import * as Markdown from "../src/components/Markdown";
+import * as Markdown from "@/src/components/Markdown";
+import { runtimeConfig } from "@/src/config";
 
 /**
  * This constant is used for associating all markdown files with page URIs.
@@ -56,7 +56,8 @@ export default function Page(props) {
   useEffect(() => {
     // If we are redirecting, then we need to do that as soon as possible
     if (redirectUri) {
-      return router.replace(redirectUri);
+      router.replace(redirectUri);
+      return;
     }
 
     window.document.title = getPageTitle();
@@ -97,12 +98,9 @@ export default function Page(props) {
           h2: Markdown.Heading2,
           h3: Markdown.Heading3,
           h4: Markdown.Heading4,
-          li: Markdown.ListItem,
           code: Markdown.Code,
           pre: Markdown.Pre,
           p: Markdown.Paragraph,
-          ol: Markdown.OrderedList,
-          ul: Markdown.UnorderedList,
           img: Markdown.Image,
         }}
       >
@@ -129,13 +127,13 @@ export function getStaticProps({ params }) {
   try {
     markdown = fs.readFileSync(markdownFile, "utf-8");
   } catch (error) {
-    if (publicRuntimeConfig.app.env !== "production") {
+    if (runtimeConfig.app.env !== "production") {
       console.log(`\nMarkdown Error\n`, error);
     }
   }
 
   const module = params.path_params[0];
-  const versions = publicRuntimeConfig.versions[module].versions;
+  const versions = runtimeConfig.versions[module].versions;
   let version = params.path_params[1];
 
   if (!version) {
@@ -143,7 +141,7 @@ export function getStaticProps({ params }) {
   }
 
   const editThisPageUrl =
-    `${publicRuntimeConfig.gitHubUrls.website}/edit/main/${markdownFile}`;
+    `${runtimeConfig.gitHubUrls.website}/edit/main/${markdownFile}`;
 
   // Check if we need to redirect the user to the Introduction page. This code
   // exists because users can go to https://drash.land/drash, but that page
@@ -153,7 +151,7 @@ export function getStaticProps({ params }) {
   //
   let redirectUri = null;
   if (params.path_params.length <= 2) {
-    if (publicRuntimeConfig.modules.indexOf(params.path_params[0]) != -1) {
+    if (runtimeConfig.modules.indexOf(params.path_params[0]) != -1) {
       redirectUri = `${module}/${version}/getting-started/introduction`;
     }
   }

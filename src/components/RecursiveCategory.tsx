@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -18,7 +18,7 @@ const Category = styled.div`
     padding: 0 0 1rem 1.25rem;
 
     .category-heading {
-      color: ${({ theme }) => theme.sideBar.categoryHeading.color};
+      color: ${(props) => props.theme.sideBar.categoryHeading.color};
       border: none;
       padding: 0;
       margin-bottom: .5rem;
@@ -28,7 +28,7 @@ const Category = styled.div`
       padding-bottom: 0;
 
       .category-heading {
-        color: ${({ theme }) => theme.sideBar.categoryHeading.color};
+        color: ${(props) => props.theme.sideBar.categoryHeading.color};
         border: none;
         padding-top: 1rem;
         margin: 1rem 0 .5rem 0;
@@ -38,9 +38,9 @@ const Category = styled.div`
 `;
 
 const CategoryHeading = styled.div`
-  color: ${({ theme }) => theme.sideBar.categoryHeading.color};
-  border-bottom: 1px solid ${({ theme }) =>
-  theme.sideBar.categoryHeading.borderBottomColor};
+  color: ${(props) => props.theme.sideBar.categoryHeading.color};
+  border-bottom: 1px solid ${(props) =>
+  props.theme.sideBar.categoryHeading.borderBottomColor};
   font-size: .8rem;
   font-weight: bold;
   letter-spacing: .1rem;
@@ -54,13 +54,13 @@ const CategoryHeading = styled.div`
 const LinkContainer = styled.div`
   display: block;
   a {
-    color: ${({ isActive, theme }) => {
-  return isActive
+    color: ${({ $isActive, theme }) => {
+  return $isActive
     ? theme.sideBar.link.colorActive
     : theme.sideBar.link.colorInactive;
 }};
     border-left: 4px solid;
-    border-color: ${({ isActive }) => (isActive ? "#7dade2" : "transparent")};
+    border-color: ${({ $isActive }) => ($isActive ? "#7dade2" : "transparent")};
     transition-duration: 0.25s;
     transition-property: border, color;
     padding-left: 1rem;
@@ -84,7 +84,7 @@ export default function RecursiveCategory(props) {
     state,
   } = props;
 
-  const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <Category className="category">
@@ -105,7 +105,7 @@ export default function RecursiveCategory(props) {
         return (
           <LinkContainer
             key={`${JSON.stringify(path)}_${index}`}
-            isActive={path.path == router.asPath}
+            $isActive={path.path == pathname}
           >
             {path.is_external && (
               <a
@@ -121,9 +121,9 @@ export default function RecursiveCategory(props) {
                 href={path.path}
                 passHref
               >
-                <a onClick={() => state.setSideBarOpen(false)}>
+                <span onClick={() => state.setSideBarOpen(false)}>
                   {path.label}
-                </a>
+                </span>
               </Link>
             )}
           </LinkContainer>

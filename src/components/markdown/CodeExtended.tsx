@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import styled from "styled-components";
-import { Pre } from "../Markdown";
-import { CODE_BLOCK_COMMENT_REPLACEMENTS } from "../../services/content_replacer_service";
+import { Pre } from "@/src/components/Markdown";
+import { CODE_BLOCK_COMMENT_REPLACEMENTS } from "@/src/string_replacements";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -23,9 +23,9 @@ const ACCEPTED_CODE_TAB_NAMES = [
 
 const Code = styled.code`
   font-size: .85rem;
-  background: ${({ theme }) => theme.markdown.code.backgroundColor};
-  border-radius: ${({ theme }) => theme.layout.borderRadius};
-  color: ${({ theme }) => theme.markdown.code.color};
+  background: ${(props) => props.theme.markdown.code.backgroundColor};
+  border-radius: ${(props) => props.theme.layout.borderRadius};
+  color: ${(props) => props.theme.markdown.code.color};
   font-weight: 500;
   padding: .25rem .5rem;
   transition-duration: 0.25s;
@@ -37,9 +37,9 @@ const Tab = styled.button`
   font-size: .7rem;
   cursor: pointer;
   padding: 1rem;
-  background: ${({ activeTab, name }) =>
-  activeTab === name ? "#2f343c" : "#202328"};
-  color: ${({ activeTab, name }) => activeTab === name ? "#ffffff" : "#5b677e"};
+  background: ${({ $activeTab, name }) =>
+  $activeTab === name ? "#2f343c" : "#202328"};
+  color: ${({ $activeTab, name }) => $activeTab === name ? "#ffffff" : "#5b677e"};
   border-right: 1px solid #444f62;
   margin: 0;
 `;
@@ -198,17 +198,17 @@ export default function CodeExtension({
             const tabName = tab.match(/.+\n/)[0].trim();
             return (
               <Tab
-                activeTab={activeTab}
+                activeTab={$activeTab}
                 key={`tab-name-${tab}`}
                 name={tabName}
                 onClick={() => {
                   // deno-lint-ignore no-window-prefix
                   window.dispatchEvent(
-                    new MessageEvent("changeCodeBlockActiveTab", {
+                    new MessageEvent("changeCodeBlock$activeTab", {
                       data: tabName,
                     }),
                   );
-                  // setActiveTab(tabName)
+                  // set$activeTab(tabName)
                 }}
               >
                 {tabName}

@@ -5,21 +5,28 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "clean": "rm -rf node_modules && rm yarn.lock && yarn",
     "fmt": "deno fmt src/ docs/ pages/ tests/ styles/ README.md",
     "start": "next start"
   },
   "dependencies": {
-    "next": "12.x",
-    "react": "17.x",
-    "react-dom": "17.x",
-    "react-switch": "6.x",
-    "styled-components": "5.x"
+    "next": "13.x",
+    "react": "18.x",
+    "react-dom": "18.x"
   },
   "devDependencies": {
     "@styled-icons/bootstrap": "10.x",
     "@styled-icons/octicons": "10.x",
+    "@types/node": "20.3.3",
+    "@types/react": "^18.2.14",
+    "@types/styled-components": "^5.1.26",
+    "react-is": "16.x",
     "react-markdown": "8.x",
-    "title-case": "3.x"
+    "react-switch": "7.x",
+    "styled-components": "6.x",
+    "title-case": "3.x",
+    "typescript": "5.x"
+  },
+  "resolutions": {
+    "styled-components": "^5"
   }
 }

@@ -1,8 +1,4 @@
-import getConfig from "next/config";
-
-const { publicRuntimeConfig } = getConfig();
-
-export { publicRuntimeConfig };
+import { runtimeConfig } from "@/src/config";
 
 /**
  * For the module being currently viewed, get the API reference URL associated
@@ -14,7 +10,7 @@ export { publicRuntimeConfig };
  * @returns {string} - The API reference URL for the given module.
  */
 export function getApiReferenceUrl(moduleName) {
-  return publicRuntimeConfig.docDenoLandUrls[moduleName.toLowerCase()];
+  return runtimeConfig.docDenoLandUrls[moduleName.toLowerCase()];
 }
 
 /**
@@ -26,7 +22,7 @@ export function getApiReferenceUrl(moduleName) {
  * @returns {string} - The GitHub issue URL.
  */
 export function getGitHubCreateIssueUrl(pageUri) {
-  return `${publicRuntimeConfig.gitHubUrls.website}/issues/new?assignees=&labels=Needs%20Investigation%2C+documentation&template=documentation_page_issue.md&title=Issue%20on%20${pageUri} page`;
+  return `${runtimeConfig.gitHubUrls.website}/issues/new?assignees=&labels=Needs%20Investigation%2C+documentation&template=documentation_page_issue.md&title=Issue%20on%20${pageUri} page`;
 }
 
 /**
@@ -45,7 +41,7 @@ export function getGitHubUrl(moduleName) {
     return "https://github.com/drashland";
   }
 
-  return publicRuntimeConfig.gitHubUrls[moduleName.toLowerCase()];
+  return runtimeConfig.gitHubUrls[moduleName.toLowerCase()];
 }
 
 /**
@@ -57,9 +53,9 @@ export function getGitHubUrl(moduleName) {
  * @returns {string} - The roadmaps URL for the given module.
  */
 export function getRoadmapsUrl(moduleName) {
-  if (!publicRuntimeConfig.roadmapsUrls[moduleName.toLowerCase()]) {
+  if (!runtimeConfig.roadmapsUrls[moduleName.toLowerCase()]) {
     return false;
   }
 
-  return publicRuntimeConfig.roadmapsUrls[moduleName.toLowerCase()];
+  return runtimeConfig.roadmapsUrls[moduleName.toLowerCase()];
 }

@@ -1,24 +1,22 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import styled, { ThemeProvider } from "styled-components";
-import SideBar from "./SideBar";
-import LayoutTopBar from "./LayoutTopBar";
-import Breadcrumbs from "./Breadcrumbs";
-import LoadingScreen from "./LoadingScreen";
-import InnerContainer from "./InnerContainer";
-import { darkTheme, lightTheme } from "../../styles/theme";
-import {
-  getGitHubCreateIssueUrl,
-  publicRuntimeConfig,
-} from "../services/config_service";
+import SideBar from "@/src/components/SideBar";
+import LayoutTopBar from "@/src/components/LayoutTopBar";
+import Breadcrumbs from "@/src/components/Breadcrumbs";
+import LoadingScreen from "@/src/components/LoadingScreen";
+import InnerContainer from "@/src/components/InnerContainer";
+import { darkTheme, lightTheme } from "@/styles/theme";
+import { getGitHubCreateIssueUrl } from "@/src/services/config_service";
+import { runtimeConfig } from "@/src/config";
+import { usePathname } from "next/navigation";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 const Container = styled.div`
-  background: ${({ theme }) => theme.layout.background};
-  color: ${({ theme }) => theme.layout.color};
+  background: ${(props) => props.theme.layout.background};
+  color: ${(props) => props.theme.layout.color};
   width: 100%;
   height: auto;
   min-width: 375px; // iPhone X width
@@ -34,8 +32,10 @@ const Container = styled.div`
   }
 `;
 
-const Main = styled.div`
-  padding-left: ${({ mobileViewport }) => (!mobileViewport ? "420px" : "0")};
+const Main = styled.div<{
+  $mobileViewport?: boolean;
+}>`
+  padding-left: ${(props) => (!props.$mobileViewport ? "420px" : "0")};
   display: flex;
   justify-content: center;
   height: 100%;
@@ -44,8 +44,8 @@ const Main = styled.div`
 `;
 
 const MakeBetter = styled.div`
-  background-color: ${({ theme }) => theme.layout.makeBetter.background};
-  border-radius: ${({ theme }) => theme.layout.borderRadius};
+  background-color: ${(props) => props.theme.layout.makeBetter.background};
+  border-radius: ${(props) => props.theme.layout.borderRadius};
   padding: 2rem;
   transition-duration: 0.25s;
   transition-property: background;
@@ -58,7 +58,7 @@ const MakeBetterHeading = styled.h2`
 `;
 
 export const HorizontalRule = styled.div`
-  background: ${({ theme }) => theme.layout.horizontalRule.background};
+  background: ${(props) => props.theme.layout.horizontalRule.background};
   height: .25rem;
   width: 100%;
   margin-top: 4rem !important;
@@ -76,8 +76,11 @@ const Copyright = styled.div`
   text-align: center;
 `;
 
-const ButtonOpenSideBar = styled.button`
-  display: ${({ show }) => (show ? "block" : "none")};
+const ButtonOpenSideBar = styled.button<{
+  $show?: boolean;
+  $sideBarOpen?: boolean;
+}>`
+  display: ${(props) => (props.$show ? "block" : "none")};
   color: #ffffff;
   position: fixed;
   font-size: .8rem;
@@ -100,14 +103,12 @@ const ButtonOpenSideBar = styled.button`
     clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
     position: absolute;
     height: 15px;
-    top: ${({ sideBarOpen }) => (sideBarOpen ? "25px" : "17px")};
+    top: ${(props) => (props.$sideBarOpen ? "25px" : "17px")};
     width: 25px;
     left: 20px;
     transition-duration: .25s;
     transition-property: transform, top;
-    transform: ${(
-  { sideBarOpen },
-) => (sideBarOpen ? "rotate(-45deg)" : "rotate(0deg)")};
+    transform: ${(props) => (props.$sideBarOpen ? "rotate(-45deg)" : "rotate(0deg)")};
   }
 
   &:after {
@@ -115,27 +116,27 @@ const ButtonOpenSideBar = styled.button`
     background: #ffffff;
     clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
     position: absolute;
-    top: ${({ sideBarOpen }) => (sideBarOpen ? "25px" : "35px")};
+    top: ${({ $sideBarOpen }) => ($sideBarOpen ? "25px" : "35px")};
     height: 15px;
     width: 25px;
     left: 20px;
     transition-duration: .25s;
     transition-property: transform, top;
-    transform: ${(
-  { sideBarOpen },
-) => (sideBarOpen ? "rotate(45deg)" : "rotate(0deg)")};
+    transform: ${(props) => (props.$sideBarOpen ? "rotate(45deg)" : "rotate(0deg)")};
   }
 `;
 
-const ButtonOpenSidebarMiddleBar = styled.div`
+const ButtonOpenSidebarMiddleBar = styled.div<{
+  $sideBarOpen?: boolean
+}>`
   background: #ffffff;
   clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
   position: absolute;
   top: 26px;
   height: 15px;
   width: 25px;
-  left: ${({ sideBarOpen }) => (sideBarOpen ? "50px" : "20px")};
-  opacity: ${({ sideBarOpen }) => (sideBarOpen ? "0" : "1")};
+  left: ${(props) => (props.$sideBarOpen ? "50px" : "20px")};
+  opacity: ${(props) => (props.$sideBarOpen ? "0" : "1")};
   transition-duration: .25s;
   transition-property: opacity, left;
   z-index: 1;
@@ -166,27 +167,27 @@ export default function Layout(props) {
     willRedirect,
   } = props;
 
-  const router = useRouter();
-  const pageUri = router.asPath;
+  const pathname = usePathname();
   const [sideBarOpen, setSideBarOpen] = useState(true);
   const [mobileViewport, setMobileViewport] = useState(null);
   const [darkMode, setDarkMode] = useState(null);
 
   useEffect(() => {
     // Make sure all code blocks are highlighted
-    window.Prism.highlightAll();
+    // @ts-ignore
+    // window.Prism.highlightAll();
 
     // Make sure to set the user's theme mode preference
     const userSettingsDarkMode = window.localStorage.getItem(
-      publicRuntimeConfig.localStorageKeys.darkMode,
+      runtimeConfig.localStorageKeys.darkMode,
     );
     if (!userSettingsDarkMode) {
       window.localStorage.setItem(
-        publicRuntimeConfig.localStorageKeys.darkMode,
+        runtimeConfig.localStorageKeys.darkMode,
         "false",
       );
     }
-    setDarkMode(userSettingsDarkMode && userSettingsDarkMode === "true");
+    setDarkMode(userSettingsDarkMode && userSettingsDarkMode === "true" ? "true" : "false");
 
     // Support mobile views, desktop views, and window resizing
     addEventListener("resize", handleWindowSizeChange);
@@ -237,8 +238,8 @@ export default function Layout(props) {
    * @returns {string[]} - An array of breadcrumbs.
    */
   function getBreadcrumbs() {
-    let breadcrumbs = router.asPath.split("#")[0];
-    breadcrumbs = breadcrumbs.split("/");
+    const parts = pathname.split("#")[0];
+    const breadcrumbs = parts.split("/");
     // The first element is an empty string so take it out
     breadcrumbs.shift();
 
@@ -249,12 +250,21 @@ export default function Layout(props) {
    * Toggle dark mode by setting the state appropriately.
    */
   function toggleDarkMode() {
-    window.localStorage.setItem(
-      publicRuntimeConfig.localStorageKeys.darkMode,
-      !darkMode,
+
+    const userSettingsDarkMode = window.localStorage.getItem(
+      runtimeConfig.localStorageKeys.darkMode,
     );
+
+    const value = userSettingsDarkMode && userSettingsDarkMode === "true" ? "false" : "true"
+
+    window.localStorage.setItem(
+      runtimeConfig.localStorageKeys.darkMode,
+      value
+    );
+
+    // @ts-ignore
     Prism.highlightAll();
-    setDarkMode(!darkMode);
+    setDarkMode(value);
   }
 
   /**
@@ -276,20 +286,20 @@ export default function Layout(props) {
     (darkMode === null) ||
     willRedirect
   ) {
-    return <LoadingScreen theme={darkMode ? darkTheme : lightTheme} />;
+    return <LoadingScreen themeProviderTheme={darkMode === "true" ? darkTheme : lightTheme} />;
   }
 
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+    <ThemeProvider theme={darkMode === "true" ? darkTheme : lightTheme}>
       <Container>
         <ButtonOpenSideBar
-          show={mobileViewport}
-          sideBarOpen={sideBarOpen}
+          $show={mobileViewport}
+          $sideBarOpen={sideBarOpen}
           onClick={() => {
             toggleSideBar();
           }}
         >
-          <ButtonOpenSidebarMiddleBar sideBarOpen={sideBarOpen} />
+          <ButtonOpenSidebarMiddleBar $sideBarOpen={sideBarOpen} />
         </ButtonOpenSideBar>
         <LayoutTopBar
           moduleName={topBarModuleName}
@@ -311,7 +321,7 @@ export default function Layout(props) {
           }}
         />
         <Main
-          mobileViewport={mobileViewport}
+          $mobileViewport={mobileViewport}
         >
           <InnerContainer>
             <Breadcrumbs breadcrumbs={getBreadcrumbs()} />
@@ -326,7 +336,7 @@ export default function Layout(props) {
                 page are not loading, documentation does not make sense, etc.),
                 please let us know by filing an issue{" "}
                 <a
-                  href={getGitHubCreateIssueUrl(pageUri)}
+                  href={getGitHubCreateIssueUrl(pathname)}
                   target="_BLANK"
                   rel="noreferrer"
                 >
@@ -344,7 +354,7 @@ export default function Layout(props) {
               )}
             </MakeBetter>
             <Copyright>
-              &copy; 2019 - 2022 Drash Land
+              &copy; 2019 - 2023 Drash Land
             </Copyright>
           </InnerContainer>
         </Main>

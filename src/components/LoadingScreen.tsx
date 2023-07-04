@@ -1,14 +1,14 @@
 import styled, { ThemeProvider } from "styled-components";
-import InnerContainer from "./InnerContainer";
-import { lightTheme } from "../../styles/theme";
+import InnerContainer from "@/src/components/InnerContainer";
+import { lightTheme } from "@/styles/theme";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 const Container = styled.div`
-  background: ${({ theme }) => theme.layout.background};
-  color: ${({ theme }) => theme.layout.color};
+  background: ${(props) => props.theme.layout.background};
+  color: ${(props) => props.theme.layout.color};
   width: 100%;
   height: auto;
   min-width: 375px; // iPhone X width
@@ -41,11 +41,17 @@ const MiddleMessage = styled.div`
 // FILE MARKER - COMPONENT /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-export default function LoadingScreen(props) {
-  const { message = null, theme = null } = props;
+export default function LoadingScreen({
+  message = null,
+  themeProviderTheme = null,
+}) {
+
+  const theme = themeProviderTheme
+    ? themeProviderTheme
+    : lightTheme;
 
   return (
-    <ThemeProvider theme={theme ? theme : lightTheme}>
+    <ThemeProvider theme={theme}>
       <Container>
         <Main>
           <InnerContainer>
