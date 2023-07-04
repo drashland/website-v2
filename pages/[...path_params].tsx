@@ -46,6 +46,7 @@ type Props = {
   markdown: string;
   moduleVersion: string;
   moduleVersions: string[];
+  pageModifiedTime: string;
   redirectUri: string;
   sideBarCategories: any;
   topBarModuleName: string;
@@ -57,6 +58,7 @@ export default function Page(props: Props) {
     markdown,
     moduleVersion,
     moduleVersions,
+    pageModifiedTime,
     redirectUri,
     sideBarCategories,
     topBarModuleName,
@@ -102,6 +104,7 @@ export default function Page(props: Props) {
       sideBarCategories={sideBarCategories}
       moduleVersion={moduleVersion}
       moduleVersions={moduleVersions}
+      pageModifiedTime={pageModifiedTime}
     >
       <ReactMarkdown
         components={{
@@ -139,6 +142,7 @@ export function getStaticProps({ params }) {
     props: {
       editThisPageUrl: null,
       redirectUri: null,
+      pageModifiedTime: null,
     },
   };
 
@@ -180,6 +184,8 @@ export function getStaticProps({ params }) {
 
   if (markdownFile) {
     try {
+      const stats = fs.statSync(markdownFile);
+      ret.props.pageModifiedTime = stats.mtime.toLocaleString();
       ret.props.markdown = fs.readFileSync(markdownFile, "utf-8");
     } catch (error) {
       if (
