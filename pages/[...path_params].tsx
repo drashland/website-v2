@@ -12,6 +12,7 @@ import {
 import ReactMarkdown from "react-markdown";
 import * as Markdown from "@/src/components/Markdown";
 import { runtimeConfig } from "@/src/config";
+import env from "@/src/env";
 
 /**
  * This constant is used for associating all markdown files with page URIs.
@@ -40,7 +41,17 @@ const FILES = {};
 // FILE MARKER - COMPONENT /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-export default function Page(props) {
+type Props = {
+  editThisPageUrl: string;
+  markdown: string;
+  moduleVersion: string;
+  moduleVersions: string[];
+  redirectUri: string;
+  sideBarCategories: any;
+  topBarModuleName: string;
+};
+
+export default function Page(props: Props) {
   const {
     editThisPageUrl,
     markdown,
@@ -67,7 +78,7 @@ export default function Page(props) {
     const title = formatLabel(titleCase(breadcrumbs[breadcrumbs.length - 1]));
 
     return `Drash Land / ${topBarModuleName} / ${title}`;
-  }, [ router.asPath, topBarModuleName ]);
+  }, [router.asPath, topBarModuleName]);
 
   useEffect(() => {
     // If we are redirecting, then we need to do that as soon as possible
@@ -122,20 +133,18 @@ export default function Page(props) {
 ////////////////////////////////////////////////////////////////////////////////
 
 export function getStaticProps({ params }) {
-  const pageUri = "/" + params.path_params.join("/");
-  const markdownFile = FILES[pageUri];
+  getAllPaths("docs");
 
-  let markdown = null;
-
-  try {
-    markdown = fs.readFileSync(markdownFile, "utf-8");
-  } catch (error) {
-    if (runtimeConfig.app.env !== "production") {
-      console.log(`\nMarkdown Error\n`, error);
-    }
-  }
+  const ret: { props: Partial<Props> } = {
+    props: {
+      editThisPageUrl: null,
+      redirectUri: null,
+    },
+  };
 
   const moduleName = params.path_params[0];
+  ret.props.topBarModuleName = titleCase(moduleName);
+
   const versions = runtimeConfig.versions[moduleName].versions;
   let version = params.path_params[1];
 
@@ -143,8 +152,10 @@ export function getStaticProps({ params }) {
     version = versions[versions.length - 1];
   }
 
-  const editThisPageUrl =
-    `${runtimeConfig.gitHubUrls.website}/edit/main/${markdownFile}`;
+  ret.props.moduleVersion = version;
+  ret.props.moduleVersions = versions;
+
+  ret.props.sideBarCategories = getSideBarCategories(moduleName, version);
 
   // Check if we need to redirect the user to the Introduction page. This code
   // exists because users can go to https://drash.land/drash, but that page
@@ -152,24 +163,35 @@ export function getStaticProps({ params }) {
   //
   //     https://drash.land/{module}/{version}/getting-started/introduction
   //
-  let redirectUri = null;
   if (params.path_params.length <= 2) {
     if (runtimeConfig.modules.indexOf(params.path_params[0]) != -1) {
-      redirectUri = `${module}/${version}/getting-started/introduction`;
+      ret.props.redirectUri =
+        `${moduleName}/${version}/getting-started/introduction`;
     }
   }
 
-  return {
-    props: {
-      editThisPageUrl: markdown ? editThisPageUrl : null,
-      markdown: markdown ? markdown : "",
-      moduleVersion: version,
-      moduleVersions: versions,
-      sideBarCategories: getSideBarCategories(module, version),
-      topBarModuleName: titleCase(moduleName),
-      redirectUri,
-    },
-  };
+  const pageUri = "/" + params.path_params.join("/");
+  const markdownFile = FILES[pageUri];
+
+  ret.props.editThisPageUrl =
+    `${runtimeConfig.gitHubUrls.website}/edit/main/${markdownFile}`;
+
+  ret.props.markdown = null;
+
+  if (markdownFile) {
+    try {
+      ret.props.markdown = fs.readFileSync(markdownFile, "utf-8");
+    } catch (error) {
+      if (
+        (env('app_env', 'production') !== 'production')
+        || (env('app_process', null) !== 'build')
+        ) {
+        console.log(`\nMarkdown Error\n`, error);
+      }
+    }
+  }
+
+  return ret;
 }
 
 export function getStaticPaths() {
@@ -180,32 +202,36 @@ export function getStaticPaths() {
   };
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// FILE MARKER - FUNCTIONS /////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// FILE MARKER - FUNCTIONS /////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
-function getAllPaths(filename, paths = []) {
-  const stats = fs.lstatSync(filename);
+function getAllPaths(fileNameOrPath, paths: string[] = []): string[] {
+  const stats = fs.lstatSync(fileNameOrPath);
 
-  if (filename.match(/DS.+Store/g)) {
+  if (fileNameOrPath.match(/DS.+Store/g)) {
     return;
   }
 
-  const file = convertFilenameToURL(filename);
+  const file = convertFilenameToURL(fileNameOrPath);
 
-  FILES[file] = filename;
+  FILES[file] = fileNameOrPath;
 
   paths.push(file);
 
   if (stats.isDirectory()) {
-    fs.readdirSync(filename).forEach((child) => {
-      getAllPaths(filename + "/" + child, paths);
-    });
+    const nested = fs.readdirSync(fileNameOrPath)
+      .map((child) => {
+        return getAllPaths(fileNameOrPath + "/" + child, paths);
+      });
+
+    paths.concat(...nested);
   }
 
-  return paths.filter((path) => {
-    return path != "/";
-  });
+  return paths
+    .filter((path) => {
+      return path != "/";
+    });
 }
 
 function getDirectoryTree(path, paths = []) {
@@ -242,10 +268,10 @@ function getDirectoryTree(path, paths = []) {
   return paths;
 }
 
-function getSideBarCategories(module, version) {
+function getSideBarCategories(moduleName, version) {
   const tree = getDirectoryTree("docs");
   const moduleVersions = tree[0].paths.filter((path) => {
-    return path.label.toLowerCase() == module;
+    return path.label.toLowerCase() == moduleName;
   })[0];
 
   const moduleVersion = moduleVersions.paths.filter((path) => {

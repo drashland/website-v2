@@ -313,7 +313,12 @@ export default function Home() {
         }}
       />
       <Hero>
-        <Image src="/assets/common/img/logo_drash.svg" width="175" alt="Drash Land" />
+        <Image
+          src="/assets/common/img/logo_drash.svg"
+          width="175"
+          height="175"
+          alt="Drash Land"
+        />
         <Org>Drash Land</Org>
         Develop With Confidence
       </Hero>
@@ -339,7 +344,12 @@ export default function Home() {
             <CardsContainer>
               <Card onClick={() => router.push("/drash")}>
                 <ImageContainer>
-                  <Image src="/logo-drash.svg" alt="logo-drash" />
+                  <Image
+                    src="/logo-drash.svg"
+                    width="100"
+                    height="100"
+                    alt="logo-drash"
+                  />
                 </ImageContainer>
                 <CardTitle>Drash</CardTitle>
                 <CardDescription>A micro HTTP framework</CardDescription>
@@ -349,7 +359,12 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/wocket")}>
                 <ImageContainer>
-                  <Image src="/logo-wocket.svg" alt="logo-wocket" />
+                  <Image
+                    src="/logo-wocket.svg"
+                    width="100"
+                    height="100"
+                    alt="logo-wocket"
+                  />
                 </ImageContainer>
                 <CardTitle>Wocket</CardTitle>
                 <CardDescription>A WebSocket framework</CardDescription>
@@ -359,7 +374,12 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/dmm")}>
                 <ImageContainer>
-                  <Image src="/logo-dmm.svg" alt="logo-dmm" />
+                  <Image
+                    src="/logo-dmm.svg"
+                    width="100"
+                    height="100"
+                    alt="logo-dmm"
+                  />
                 </ImageContainer>
                 <CardTitle>dmm</CardTitle>
                 <CardDescription>A lightweight module manager</CardDescription>
@@ -369,7 +389,12 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/rhum")}>
                 <ImageContainer>
-                  <Image src="/logo-rhum.svg" alt="logo-rhum" />
+                  <Image
+                    src="/logo-rhum.svg"
+                    width="100"
+                    height="100"
+                    alt="logo-rhum"
+                  />
                 </ImageContainer>
                 <CardTitle>Rhum</CardTitle>
                 <CardDescription>A test double library</CardDescription>
@@ -381,7 +406,12 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/sinco")}>
                 <ImageContainer>
-                  <Image src="/logo-sinco.svg" alt="logo-sinco" />
+                  <Image
+                    src="/logo-sinco.svg"
+                    width="100"
+                    height="100"
+                    alt="logo-sinco"
+                  />
                 </ImageContainer>
                 <CardTitle>Sinco</CardTitle>
                 <CardDescription>
@@ -393,7 +423,12 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/line")}>
                 <ImageContainer>
-                  <Image src="/logo-line.svg" alt="logo-line" />
+                  <Image
+                    src="/logo-line.svg"
+                    width="100"
+                    height="100"
+                    alt="logo-line"
+                  />
                 </ImageContainer>
                 <CardTitle>Line</CardTitle>
                 <CardDescription>A command-line framework</CardDescription>
@@ -432,7 +467,12 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/vital")}>
                 <ImageContainer>
-                  <Image src="/logo-vital.svg" alt="logo-vital" />
+                  <Image
+                    src="/logo-vital.svg"
+                    width="100"
+                    height="100"
+                    alt="logo-vital"
+                  />
                 </ImageContainer>
                 <CardTitle>Vital</CardTitle>
                 <CardDescription>

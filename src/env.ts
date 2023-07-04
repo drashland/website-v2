@@ -9,10 +9,16 @@ export default function env<T>(name: string, defaultValue: T): T {
     return;
   }
 
-  const value = process.env[name.toUpperCase()];
+  const uppercasedName = name.toUpperCase();
+
+  const value = process.env[uppercasedName];
+
+  if (!(uppercasedName in process.env)) {
+    return defaultValue;
+  }
 
   if (value === undefined) {
-    return;
+    return value as T;
   }
 
   let ret: unknown;
@@ -20,11 +26,15 @@ export default function env<T>(name: string, defaultValue: T): T {
   switch (typeof defaultValue) {
     case "string":
       ret = value;
+      break;
     case "boolean":
       ret = (value === "true") ? true : false;
+      break;
     case "number":
       ret = +value;
+      break;
     default:
+      ret = value;
       break;
   }
 

@@ -74,7 +74,17 @@ const VersionsSelector = styled.select`
 // FILE MARKER - COMPONENT /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-export default function SideBar(props) {
+type Props = {
+  mobileViewport: boolean;
+  categories: any[];
+  isOpen: boolean;
+  moduleName: string;
+  moduleVersion: string;
+  moduleVersions: string[];
+  state: any;
+};
+
+export default function SideBar(props: Props) {
   const {
     categories,
     isOpen,
@@ -131,7 +141,7 @@ export default function SideBar(props) {
       $isOpen={isOpen}
     >
       <ImageContainer>
-        <Image src={logoName} alt="Logo" />
+        <Image src={logoName} width="100" height="100" alt="Logo" />
       </ImageContainer>
       <VersionsSelectorContainer>
         <VersionsSelectorInnerContainer>
