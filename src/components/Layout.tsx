@@ -272,7 +272,7 @@ export default function Layout(props) {
       value,
     );
 
-    // @ts-ignore
+    // @ts-ignore Don't really care about Prism typing
     Prism.highlightAll();
     setDarkMode(value);
   }

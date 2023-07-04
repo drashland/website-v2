@@ -20,18 +20,10 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/pages/*": [
-        "./pages/*"
-      ],
-      "@/styles/*": [
-        "./styles/*"
-      ],
-      "@/src/*": [
-        "./src/*"
-      ],
-      "@/public/*": [
-        "./public/*"
-      ]
+      "@/pages/*": ["./pages/*"],
+      "@/styles/*": ["./styles/*"],
+      "@/src/*": ["./src/*"],
+      "@/public/*": ["./public/*"]
     },
     "plugins": [
       {
@@ -40,9 +32,10 @@
     ]
   },
   "include": [
+    "index.d.ts",
     "next-env.d.ts",
-    "./src/**/*.ts",
-    "./pages/**/*.tsx",
+    "./src/**/*",
+    "./pages/**/*",
     ".next/types/**/*.ts"
   ],
   "exclude": [

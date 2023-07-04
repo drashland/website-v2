@@ -48,7 +48,7 @@ type Props = {
   moduleVersions: string[];
   pageModifiedTime: string;
   redirectUri: string;
-  sideBarCategories: any;
+  sideBarCategories: Docs.V2.SidebarCategory[];
   topBarModuleName: string;
 };
 
@@ -189,9 +189,9 @@ export function getStaticProps({ params }) {
       ret.props.markdown = fs.readFileSync(markdownFile, "utf-8");
     } catch (error) {
       if (
-        (env('app_env', 'production') !== 'production')
-        || (env('app_process', null) !== 'build')
-        ) {
+        (env("app_env", "production") !== "production") ||
+        (env("app_process", null) !== "build")
+      ) {
         console.log(`\nMarkdown Error\n`, error);
       }
     }
@@ -274,8 +274,12 @@ function getDirectoryTree(path, paths = []) {
   return paths;
 }
 
-function getSideBarCategories(moduleName, version) {
+function getSideBarCategories(
+  moduleName: string,
+  version: string,
+): Docs.V2.SidebarCategory {
   const tree = getDirectoryTree("docs");
+
   const moduleVersions = tree[0].paths.filter((path) => {
     return path.label.toLowerCase() == moduleName;
   })[0];
@@ -287,7 +291,7 @@ function getSideBarCategories(moduleName, version) {
   return moduleVersion.paths;
 }
 
-function getCategoryLabel(title) {
+function getCategoryLabel(title): string {
   const label = titleCase(title).replace(/-/g, " ");
   return formatLabel(label);
 }

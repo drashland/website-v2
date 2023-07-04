@@ -76,12 +76,12 @@ const VersionsSelector = styled.select`
 
 type Props = {
   mobileViewport: boolean;
-  categories: any[];
+  categories: Docs.V2.SidebarCategory[];
   isOpen: boolean;
   moduleName: string;
   moduleVersion: string;
   moduleVersions: string[];
-  state: any;
+  state: Docs.V2.State;
 };
 
 export default function SideBar(props: Props) {
