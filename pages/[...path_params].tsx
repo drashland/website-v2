@@ -94,14 +94,20 @@ export default function Page(props) {
     >
       <ReactMarkdown
         components={{
+          // @ts-ignore Add the typing later
           blockquote: Markdown.Blockquote,
+          // @ts-ignore Add the typing later
           h1: Markdown.Heading1,
+          // @ts-ignore Add the typing later
           h2: Markdown.Heading2,
+          // @ts-ignore Add the typing later
           h3: Markdown.Heading3,
+          // @ts-ignore Add the typing later
           h4: Markdown.Heading4,
           code: Markdown.Code,
           pre: Markdown.Pre,
           p: Markdown.Paragraph,
+          // @ts-ignore Add the typing later
           img: Markdown.Image,
         }}
       >

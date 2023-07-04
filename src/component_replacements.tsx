@@ -58,8 +58,10 @@ export function CreateDepsFileStepText({
 }) {
   return (
     <>
+      {/* @ts-ignore Fix typing later */}
       <Paragraph>
         Create your <Code>deps.ts</Code> file. Replace{" "}
+        {/* @ts-ignore Fix typing later */}
         <Code>&lt;VERSION&gt;</Code> with the latest version of {moduleName}
         {" "}
         {moduleVersion}. The latest version can be found at the{" "}
@@ -94,8 +96,10 @@ export * as Drash from "https://deno.land/x/drash@&lt;VERSION&gt;/mod.ts";`,
 export function DrashCreateDepsFileStepText() {
   return (
     <>
+      {/* @ts-ignore Fix typing later */}
       <Paragraph>
         Create your <Code>deps.ts</Code> file. Replace{" "}
+        {/* @ts-ignore Fix typing later */}
         <Code>&lt;VERSION&gt;</Code>{" "}
         with the latest version of Drash v2.x. The latest version can be found
         at{" "}
@@ -113,6 +117,7 @@ export function DrashCreateDepsFileStepText() {
 export function DrashEditYourDepsFileToIncludeTheService() {
   return (
     <>
+      {/* @ts-ignore Fix typing later */}
       <Paragraph>
         To use this service, edit your <Code>deps.ts</Code>{" "}
         file to include the service. Replace <Code>&lt;VERSION&gt;</Code>{" "}

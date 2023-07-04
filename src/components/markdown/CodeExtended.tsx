@@ -32,7 +32,10 @@ const Code = styled.code`
   transition-property: background, color;
 `;
 
-const Tab = styled.button`
+const Tab = styled.button<{
+  $activeTab: string;
+  $name: string;
+}>`
   font-family: 'Menlo', Helvetica, Arial, sans-serif;
   font-size: .7rem;
   cursor: pointer;
@@ -70,6 +73,7 @@ export default function CodeExtension({
 
   // deno-lint-ignore no-window-prefix
   window.addEventListener("changeCodeBlockActiveTab", (e) => {
+    // @ts-ignore Add typing later
     setActiveTab(e.data);
   });
 
@@ -199,9 +203,9 @@ export default function CodeExtension({
             const tabName = tab.match(/.+\n/)[0].trim();
             return (
               <Tab
-                activeTab={$activeTab}
+                $activeTab={activeTab}
                 key={`tab-name-${tab}`}
-                name={tabName}
+                $name={tabName}
                 onClick={() => {
                   // deno-lint-ignore no-window-prefix
                   window.dispatchEvent(
@@ -228,6 +232,7 @@ export default function CodeExtension({
                   display: activeTab === tabName ? "block" : "none",
                 }}
               >
+                {/* @ts-ignore Add typing later */}
                 <Pre>
                   <code
                     className={getPrismJsClassNameForCodeBlock(tabName)}
@@ -281,7 +286,7 @@ export default function CodeExtension({
     //
     // The logic below parses "//<one space>@Tab<one_space><name of tab>"
     //
-    const tabs = separateCodeIntoTabs(children);
+    const tabs = separateCodeIntoTabs();
 
     // If `tabs` is greater than 0, then the code block has // @Tab sections
     if (tabs.length > 0) {

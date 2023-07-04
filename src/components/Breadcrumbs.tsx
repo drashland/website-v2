@@ -63,7 +63,6 @@ export default function Breadcrumbs(props) {
         return (
           <Breadcrumb
             className={isActive && "active"}
-            index={index}
             key={`${JSON.stringify(breadcrumb)}_${index}`}
           >
             <span className="label">

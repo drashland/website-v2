@@ -95,6 +95,7 @@ const Heading = function (level) {
     if (level != 1) {
       return (
         <div className={props.className}>
+          {/* @ts-ignore Add typing later */}
           <a className="heading-anchor" name={slug} />
           {renderLinkedHeading}
         </div>

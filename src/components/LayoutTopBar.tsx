@@ -86,7 +86,7 @@ const ThemeSwitchIconContainer = styled.div`
 ////////////////////////////////////////////////////////////////////////////////
 
 export default function LayoutTopBar({
-  moduleName,
+  moduleName = null,
   state,
 }) {
   const pathname = usePathname();

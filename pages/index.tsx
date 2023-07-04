@@ -119,7 +119,10 @@ const Main = styled.div`
   color: #333;
 `;
 
-const Section = styled.div`
+const Section = styled.div<{
+  $background?: string;
+  $color?: string;
+}>`
   background: ${({ $background }) => $background ? $background : "#ffffff"};
   color: ${({ $color }) => $color ? $color : "#333333"};
   display: flex;
@@ -304,7 +307,6 @@ export default function Home() {
   return (
     <Container>
       <LayoutTopBar
-        isLandingPage={true}
         state={{
           mobileViewport,
         }}

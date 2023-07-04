@@ -51,7 +51,7 @@ const CategoryHeading = styled.div`
   transition-property: border, color;
 `;
 
-const LinkContainer = styled.div`
+const LinkContainer = styled.div<{ $isActive?: boolean }>`
   display: block;
   a {
     color: ${({ $isActive, theme }) => {
