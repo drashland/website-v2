@@ -73,8 +73,8 @@ export default function Page(props) {
    * @returns {string[]} - An array of breadcrumbs.
    */
   function getPageTitle() {
-    let breadcrumbs = router.asPath.split("#")[0];
-    breadcrumbs = breadcrumbs.split("/");
+    const pathParts = router.asPath.split("#")[0];
+    const breadcrumbs = pathParts.split("/");
     // The first element is an empty string so take it out
     breadcrumbs.shift();
 
