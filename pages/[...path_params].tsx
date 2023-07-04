@@ -63,6 +63,7 @@ export default function Page(props) {
     window.document.title = getPageTitle();
 
     // Make sure all code blocks are highlighted
+    // @ts-ignore This exists. The typing doesn't though. Add it maybe?
     window.Prism.highlightAll();
   }, [redirectUri, router]);
 

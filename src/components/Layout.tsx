@@ -174,8 +174,8 @@ export default function Layout(props) {
 
   useEffect(() => {
     // Make sure all code blocks are highlighted
-    // @ts-ignore
-    // window.Prism.highlightAll();
+    // @ts-ignore This exists. The typing doesn't though. Add it maybe?
+    window.Prism.highlightAll();
 
     // Make sure to set the user's theme mode preference
     const userSettingsDarkMode = window.localStorage.getItem(
