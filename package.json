@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "APP_PROCESS=build && next build",
+    "build": "export APP_PROCESS=build && next build",
     "dev": "export APP_PROCESS=build && next dev",
     "fmt": "deno fmt src/ docs/ pages/ tests/ styles/ README.md",
     "lint": "next lint",

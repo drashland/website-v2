@@ -8,9 +8,10 @@ declare namespace Docs {
     };
 
     type State = {
-      darkMode: string;
-      mobileViewport: boolean,
-      toggleDarkMode: () => void,
+      darkMode?: string;
+      mobileViewport?: boolean;
+      setSideBarOpen?: (value: boolean) => void;
+      toggleDarkMode?: () => void;
     }
   }
 }
