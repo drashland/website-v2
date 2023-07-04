@@ -277,7 +277,7 @@ function getDirectoryTree(path, paths = []) {
 function getSideBarCategories(
   moduleName: string,
   version: string,
-): Docs.V2.SidebarCategory {
+): Docs.V2.SidebarCategory[] {
   const tree = getDirectoryTree("docs");
 
   const moduleVersions = tree[0].paths.filter((path) => {
