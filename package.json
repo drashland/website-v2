@@ -19,6 +19,7 @@
     "@types/node": "20.3.3",
     "@types/react": "^18.2.14",
     "@types/styled-components": "^5.1.26",
+    "eslint": "^8.44.0",
     "react-is": "16.x",
     "react-markdown": "8.x",
     "react-switch": "7.x",
