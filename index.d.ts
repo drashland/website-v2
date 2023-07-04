@@ -12,6 +12,6 @@ declare namespace Docs {
       mobileViewport?: boolean;
       setSideBarOpen?: (value: boolean) => void;
       toggleDarkMode?: () => void;
-    }
+    };
   }
 }
