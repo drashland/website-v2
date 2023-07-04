@@ -60,6 +60,7 @@ export function CreateDepsFileStepText({
     <>
       {/* @ts-ignore Fix typing later */}
       <Paragraph>
+        {/* @ts-ignore Fix typing later */}
         Create your <Code>deps.ts</Code> file. Replace{" "}
         {/* @ts-ignore Fix typing later */}
         <Code>&lt;VERSION&gt;</Code> with the latest version of {moduleName}
@@ -98,6 +99,7 @@ export function DrashCreateDepsFileStepText() {
     <>
       {/* @ts-ignore Fix typing later */}
       <Paragraph>
+        {/* @ts-ignore Fix typing later */}
         Create your <Code>deps.ts</Code> file. Replace{" "}
         {/* @ts-ignore Fix typing later */}
         <Code>&lt;VERSION&gt;</Code>{" "}
@@ -119,7 +121,9 @@ export function DrashEditYourDepsFileToIncludeTheService() {
     <>
       {/* @ts-ignore Fix typing later */}
       <Paragraph>
+        {/* @ts-ignore Fix typing later */}
         To use this service, edit your <Code>deps.ts</Code>{" "}
+        {/* @ts-ignore Fix typing later */}
         file to include the service. Replace <Code>&lt;VERSION&gt;</Code>{" "}
         with the latest version of Drash v2.x. The latest version can be found
         at{" "}

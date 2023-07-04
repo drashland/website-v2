@@ -5,6 +5,7 @@ import {
   getApiReferenceUrl,
   getRoadmapsUrl,
 } from "@/src/services/config_service";
+import Image from "next/image";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -130,7 +131,7 @@ export default function SideBar(props) {
       $isOpen={isOpen}
     >
       <ImageContainer>
-        <img src={logoName} />
+        <Image src={logoName} alt="Logo" />
       </ImageContainer>
       <VersionsSelectorContainer>
         <VersionsSelectorInnerContainer>

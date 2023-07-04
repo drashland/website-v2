@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as fs from "fs";
 import path from "path";
 import Layout from "@/src/components/Layout";
@@ -53,6 +53,22 @@ export default function Page(props) {
 
   const router = useRouter();
 
+  /**
+   * Get the breadcrumbs that go at the top of every page.
+   *
+   * @returns {string[]} - An array of breadcrumbs.
+   */
+  const getPageTitle = useCallback(() => {
+    const pathParts = router.asPath.split("#")[0];
+    const breadcrumbs = pathParts.split("/");
+    // The first element is an empty string so take it out
+    breadcrumbs.shift();
+
+    const title = formatLabel(titleCase(breadcrumbs[breadcrumbs.length - 1]));
+
+    return `Drash Land / ${topBarModuleName} / ${title}`;
+  }, [ router.asPath, topBarModuleName ]);
+
   useEffect(() => {
     // If we are redirecting, then we need to do that as soon as possible
     if (redirectUri) {
@@ -65,23 +81,7 @@ export default function Page(props) {
     // Make sure all code blocks are highlighted
     // @ts-ignore This exists. The typing doesn't though. Add it maybe?
     window.Prism.highlightAll();
-  }, [redirectUri, router]);
-
-  /**
-   * Get the breadcrumbs that go at the top of every page.
-   *
-   * @returns {string[]} - An array of breadcrumbs.
-   */
-  function getPageTitle() {
-    const pathParts = router.asPath.split("#")[0];
-    const breadcrumbs = pathParts.split("/");
-    // The first element is an empty string so take it out
-    breadcrumbs.shift();
-
-    const title = formatLabel(titleCase(breadcrumbs[breadcrumbs.length - 1]));
-
-    return `Drash Land / ${topBarModuleName} / ${title}`;
-  }
+  }, [getPageTitle, redirectUri, router]);
 
   return (
     <Layout
@@ -122,10 +122,6 @@ export default function Page(props) {
 ////////////////////////////////////////////////////////////////////////////////
 
 export function getStaticProps({ params }) {
-  const paths = getAllPaths("docs");
-
-  const moduleName = params.path_params.slice().shift().replace("/", "");
-
   const pageUri = "/" + params.path_params.join("/");
   const markdownFile = FILES[pageUri];
 
@@ -139,8 +135,8 @@ export function getStaticProps({ params }) {
     }
   }
 
-  const module = params.path_params[0];
-  const versions = runtimeConfig.versions[module].versions;
+  const moduleName = params.path_params[0];
+  const versions = runtimeConfig.versions[moduleName].versions;
   let version = params.path_params[1];
 
   if (!version) {

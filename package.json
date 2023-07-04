@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
+    "dev": "next dev",
     "fmt": "deno fmt src/ docs/ pages/ tests/ styles/ README.md",
+    "lint": "next lint",
     "start": "next start"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "@types/react": "^18.2.14",
     "@types/styled-components": "^5.1.26",
     "eslint": "^8.44.0",
+    "eslint-config-next": "13.4.8",
     "react-is": "16.x",
     "react-markdown": "8.x",
     "react-switch": "7.x",

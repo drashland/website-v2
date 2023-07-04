@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import LayoutTopBar from "@/src/components/LayoutTopBar";
 import LoadingScreen from "@/src/components/LoadingScreen";
 import { common as theme } from "@/styles/theme";
+import Image from "next/image";
 
 const MAINTAINERS = [
   {
@@ -312,7 +313,7 @@ export default function Home() {
         }}
       />
       <Hero>
-        <img src="/assets/common/img/logo_drash.svg" width="175" />
+        <Image src="/assets/common/img/logo_drash.svg" width="175" alt="Drash Land" />
         <Org>Drash Land</Org>
         Develop With Confidence
       </Hero>
@@ -338,7 +339,7 @@ export default function Home() {
             <CardsContainer>
               <Card onClick={() => router.push("/drash")}>
                 <ImageContainer>
-                  <img src="/logo-drash.svg" />
+                  <Image src="/logo-drash.svg" alt="logo-drash" />
                 </ImageContainer>
                 <CardTitle>Drash</CardTitle>
                 <CardDescription>A micro HTTP framework</CardDescription>
@@ -348,7 +349,7 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/wocket")}>
                 <ImageContainer>
-                  <img src="/logo-wocket.svg" />
+                  <Image src="/logo-wocket.svg" alt="logo-wocket" />
                 </ImageContainer>
                 <CardTitle>Wocket</CardTitle>
                 <CardDescription>A WebSocket framework</CardDescription>
@@ -358,7 +359,7 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/dmm")}>
                 <ImageContainer>
-                  <img src="/logo-dmm.svg" />
+                  <Image src="/logo-dmm.svg" alt="logo-dmm" />
                 </ImageContainer>
                 <CardTitle>dmm</CardTitle>
                 <CardDescription>A lightweight module manager</CardDescription>
@@ -368,7 +369,7 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/rhum")}>
                 <ImageContainer>
-                  <img src="/logo-rhum.svg" />
+                  <Image src="/logo-rhum.svg" alt="logo-rhum" />
                 </ImageContainer>
                 <CardTitle>Rhum</CardTitle>
                 <CardDescription>A test double library</CardDescription>
@@ -380,7 +381,7 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/sinco")}>
                 <ImageContainer>
-                  <img src="/logo-sinco.svg" />
+                  <Image src="/logo-sinco.svg" alt="logo-sinco" />
                 </ImageContainer>
                 <CardTitle>Sinco</CardTitle>
                 <CardDescription>
@@ -392,7 +393,7 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/line")}>
                 <ImageContainer>
-                  <img src="/logo-line.svg" />
+                  <Image src="/logo-line.svg" alt="logo-line" />
                 </ImageContainer>
                 <CardTitle>Line</CardTitle>
                 <CardDescription>A command-line framework</CardDescription>
@@ -431,7 +432,7 @@ export default function Home() {
               </Card>
               <Card onClick={() => router.push("/vital")}>
                 <ImageContainer>
-                  <img src="/logo-vital.svg" />
+                  <Image src="/logo-vital.svg" alt="logo-vital" />
                 </ImageContainer>
                 <CardTitle>Vital</CardTitle>
                 <CardDescription>
