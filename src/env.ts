@@ -18,14 +18,12 @@ export default function env<T>(name: string, defaultValue: T): T {
   let ret: unknown;
 
   switch (typeof defaultValue) {
-    case 'string':
+    case "string":
       ret = value;
-    case 'boolean':
-      ret = (value === 'true')
-        ? true
-        : false;
-    case 'number':
-        ret = +value;
+    case "boolean":
+      ret = (value === "true") ? true : false;
+    case "number":
+      ret = +value;
     default:
       break;
   }

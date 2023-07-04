@@ -108,7 +108,9 @@ const ButtonOpenSideBar = styled.button<{
     left: 20px;
     transition-duration: .25s;
     transition-property: transform, top;
-    transform: ${(props) => (props.$sideBarOpen ? "rotate(-45deg)" : "rotate(0deg)")};
+    transform: ${(
+  props,
+) => (props.$sideBarOpen ? "rotate(-45deg)" : "rotate(0deg)")};
   }
 
   &:after {
@@ -122,12 +124,14 @@ const ButtonOpenSideBar = styled.button<{
     left: 20px;
     transition-duration: .25s;
     transition-property: transform, top;
-    transform: ${(props) => (props.$sideBarOpen ? "rotate(45deg)" : "rotate(0deg)")};
+    transform: ${(
+  props,
+) => (props.$sideBarOpen ? "rotate(45deg)" : "rotate(0deg)")};
   }
 `;
 
 const ButtonOpenSidebarMiddleBar = styled.div<{
-  $sideBarOpen?: boolean
+  $sideBarOpen?: boolean;
 }>`
   background: #ffffff;
   clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
@@ -187,7 +191,11 @@ export default function Layout(props) {
         "false",
       );
     }
-    setDarkMode(userSettingsDarkMode && userSettingsDarkMode === "true" ? "true" : "false");
+    setDarkMode(
+      userSettingsDarkMode && userSettingsDarkMode === "true"
+        ? "true"
+        : "false",
+    );
 
     // Support mobile views, desktop views, and window resizing
     addEventListener("resize", handleWindowSizeChange);
@@ -250,16 +258,17 @@ export default function Layout(props) {
    * Toggle dark mode by setting the state appropriately.
    */
   function toggleDarkMode() {
-
     const userSettingsDarkMode = window.localStorage.getItem(
       runtimeConfig.localStorageKeys.darkMode,
     );
 
-    const value = userSettingsDarkMode && userSettingsDarkMode === "true" ? "false" : "true"
+    const value = userSettingsDarkMode && userSettingsDarkMode === "true"
+      ? "false"
+      : "true";
 
     window.localStorage.setItem(
       runtimeConfig.localStorageKeys.darkMode,
-      value
+      value,
     );
 
     // @ts-ignore
@@ -286,7 +295,11 @@ export default function Layout(props) {
     (darkMode === null) ||
     willRedirect
   ) {
-    return <LoadingScreen themeProviderTheme={darkMode === "true" ? darkTheme : lightTheme} />;
+    return (
+      <LoadingScreen
+        themeProviderTheme={darkMode === "true" ? darkTheme : lightTheme}
+      />
+    );
   }
 
   return (

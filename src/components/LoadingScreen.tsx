@@ -45,10 +45,7 @@ export default function LoadingScreen({
   message = null,
   themeProviderTheme = null,
 }) {
-
-  const theme = themeProviderTheme
-    ? themeProviderTheme
-    : lightTheme;
+  const theme = themeProviderTheme ? themeProviderTheme : lightTheme;
 
   return (
     <ThemeProvider theme={theme}>

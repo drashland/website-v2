@@ -11,7 +11,7 @@ import Link from "next/link";
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-const Container = styled.div<{ $mobileViewport?: boolean; }>`
+const Container = styled.div<{ $mobileViewport?: boolean }>`
   font-size: ${(props) => (props.$mobileViewport ? ".6rem" : ".8rem")};
   font-weight: bold;
   letter-spacing: .1rem;
@@ -89,9 +89,8 @@ export default function LayoutTopBar({
   moduleName,
   state,
 }) {
-
   const pathname = usePathname();
-  const isRootPath = pathname === '/';
+  const isRootPath = pathname === "/";
 
   const [pageLoaded, setPageLoaded] = useState(false);
 
@@ -120,7 +119,7 @@ export default function LayoutTopBar({
             <span style={{ marginRight: ".25rem" }}>Mode</span>
             <ThemeSwitch
               onChange={state.toggleDarkMode}
-              checked={state.darkMode === 'true'}
+              checked={state.darkMode === "true"}
               onColor="#4e5767"
               offColor="#fce803"
               boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"

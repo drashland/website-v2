@@ -47,7 +47,7 @@ export const runtimeConfig = {
     website: "https://github.com/drashland/website-v2",
     vital: "https://github.com/drashland/vital",
   },
-  roadmapsUrls: { },
+  roadmapsUrls: {},
   versions: {
     drash: {
       versions: [

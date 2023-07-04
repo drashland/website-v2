@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 import RecursiveCategory from "@/src/components/RecursiveCategory";
-import { getApiReferenceUrl, getRoadmapsUrl } from "@/src/services/config_service";
+import {
+  getApiReferenceUrl,
+  getRoadmapsUrl,
+} from "@/src/services/config_service";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
