@@ -6,8 +6,8 @@
 import React, { Fragment } from "react";
 import { Link } from "@styled-icons/bootstrap";
 import styled from "styled-components";
-import CodeExtended from "./markdown/CodeExtended";
-import { PLACEHOLDER_REPLACEMENTS } from "../services/content_replacer_service";
+import CodeExtended from "@/src/components/markdown/CodeExtended";
+import { PLACEHOLDER_REPLACEMENTS } from "@/src/component_replacements";
 
 const flatten = (text, child) => {
   return typeof child === "string"
@@ -16,19 +16,19 @@ const flatten = (text, child) => {
 };
 
 const LinkIcon = styled(Link)`
-  color: ${({ theme }) => theme.headingLinkIcon.color};
+  color: ${(props) => props.theme.headingLinkIcon.color};
   height: 25px;
   transition-duration: 0.15s;
   transition-property: opacity;
 `;
 
 const Note = styled.div`
-  border-radius: ${({ theme }) => theme.layout.borderRadius};
+  border-radius: ${(props) => props.theme.layout.borderRadius};
   background: #e0f0f9;
-  border: ${({ theme }) => `1px solid ${theme.note.borderColor}`};
+  border: ${(props) => `1px solid ${props.theme.note.borderColor}`};
   color: #36789d;
   padding: 1.25rem 1.25rem 1.25rem 2.25rem;
-  margin-bottom: ${({ theme }) => theme.layout.marginBottom};
+  margin-bottom: ${(props) => props.theme.layout.marginBottom};
   position: relative;
   overflow: hidden;
 
@@ -40,7 +40,7 @@ const Note = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-color: ${({ theme }) => theme.note.borderColor};
+    background-color: ${(props) => props.theme.note.borderColor};
   }
 `;
 
@@ -95,6 +95,7 @@ const Heading = function (level) {
     if (level != 1) {
       return (
         <div className={props.className}>
+          {/* @ts-ignore Add typing later */}
           <a className="heading-anchor" name={slug} />
           {renderLinkedHeading}
         </div>
@@ -113,27 +114,27 @@ const Heading = function (level) {
 
 export const Heading1 = styled(Heading(1))`
   h1 {
-    color: ${({ theme }) => theme.layout.text.color};
+    color: ${(props) => props.theme.layout.text.color};
     font-size: 3rem;
     font-weight: bold;
     line-height: 1.2;
-    margin-bottom: ${({ theme }) => theme.layout.marginBottom};
+    margin-bottom: ${(props) => props.theme.layout.marginBottom};
     transition-duration: 0.25s;
     transition-property: color;
   }
 `;
 
 export const Heading2 = styled(Heading(2))`
-  border-top: .25rem solid ${({ theme }) =>
-  theme.markdown.heading2.borderTopColor};
+  border-top: .25rem solid ${(props) =>
+  props.theme.markdown.heading2.borderTopColor};
   margin-top: 2.5rem !important;
   h2 {
-    color: ${({ theme }) => theme.layout.text.color};
+    color: ${(props) => props.theme.layout.text.color};
     font-size: 2rem;
     font-weight: bold;
     line-height: 1.2;
     padding-top: 2rem;
-    margin-bottom: ${({ theme }) => theme.layout.marginBottom};
+    margin-bottom: ${(props) => props.theme.layout.marginBottom};
     transition-duration: 0.25s;
     transition-property: border-top, color;
   }
@@ -142,12 +143,12 @@ export const Heading2 = styled(Heading(2))`
 export const Heading3 = styled(Heading(3))`
   margin-top: 2.5rem !important;
   h3 {
-    color: ${({ theme }) => theme.layout.text.color};
+    color: ${(props) => props.theme.layout.text.color};
     font-size: 1.5rem;
     font-weight: bold;
     line-height: 1.2;
     padding-top: 1.5rem;
-    margin-bottom: ${({ theme }) => theme.layout.marginBottom};
+    margin-bottom: ${(props) => props.theme.layout.marginBottom};
     transition-duration: 0.25s;
     transition-property: color;
   }
@@ -156,16 +157,13 @@ export const Heading3 = styled(Heading(3))`
 export const Heading4 = styled(Heading(4))`
   margin-top: 1.6rem !important;
   h4 {
-    color: ${({ theme }) => theme.layout.text.color};
+    color: ${(props) => props.theme.layout.text.color};
     font-size: 1.3rem;
     font-weight: bold;
-    margin-bottom: ${({ theme }) => theme.layout.marginBottom};
+    margin-bottom: ${(props) => props.theme.layout.marginBottom};
     transition-duration: 0.25s;
     transition-property: color;
   }
-`;
-
-export const ListItem = styled.li`
 `;
 
 export const PreExtended = function ({ className, children }) {
@@ -277,24 +275,24 @@ const ParagraphExtended = ({ className, children: text }) => {
 };
 
 export const Paragraph = styled(ParagraphExtended)`
-  margin-bottom: ${({ theme }) => theme.layout.marginBottom};
+  margin-bottom: ${(props) => props.theme.layout.marginBottom};
   transition-duration: 0.25s;
   transition-property: color;
 `;
 
 export const Pre = styled(PreExtended)`
   background: #2f343c !important;
-  border-radius: ${({ theme }) => theme.markdown.pre.borderRadius};
+  border-radius: ${(props) => props.theme.markdown.pre.borderRadius};
   overflow: hidden;
-  margin-bottom: ${({ theme }) => theme.layout.marginBottom};
+  margin-bottom: ${(props) => props.theme.layout.marginBottom};
 
   &[class*=language-] {
-    margin-bottom: ${({ theme }) => theme.layout.marginBottom};
+    margin-bottom: ${(props) => props.theme.layout.marginBottom};
   }
 
   pre {
     background: #2f343c !important;
-    border-radius: ${({ theme }) => theme.markdown.pre.borderRadius};
+    border-radius: ${(props) => props.theme.markdown.pre.borderRadius};
     margin-bottom: 0 !important;
     max-height: 500px;
 
@@ -313,25 +311,13 @@ export const Pre = styled(PreExtended)`
 
 export const Code = styled(CodeExtended)`
   font-size: .85rem;
-  background: ${({ theme }) => theme.markdown.code.backgroundColor};
-  border-radius: ${({ theme }) => theme.markdown.code.borderRadius};
-  color: ${({ theme }) => theme.markdown.code.color};
+  background: ${(props) => props.theme.markdown.code.backgroundColor};
+  border-radius: ${(props) => props.theme.markdown.code.borderRadius};
+  color: ${(props) => props.theme.markdown.code.color};
   font-weight: 500;
   padding: .25rem .5rem;
   transition-duration: 0.25s;
   transition-property: background, color;
-`;
-
-export const OrderedList = styled.ol`
-  margin-left: 0;
-  padding-left: 2.5rem;
-  margin-bottom: ${({ theme }) => theme.layout.marginBottom};
-`;
-
-export const UnorderedList = styled.ul`
-  margin-left: 0;
-  padding-left: 2.5rem;
-  margin-bottom: ${({ theme }) => theme.layout.marginBottom};
 `;
 
 export const Image = styled.img`

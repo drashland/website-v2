@@ -1,24 +1,31 @@
 import styled from "styled-components";
-import { useRouter } from "next/router";
-import RecursiveCategory from "./RecursiveCategory";
-import { getApiReferenceUrl, getRoadmapsUrl } from "../services/config_service";
+import { useRouter } from "next/navigation";
+import RecursiveCategory from "@/src/components/RecursiveCategory";
+import {
+  getApiReferenceUrl,
+  getRoadmapsUrl,
+} from "@/src/services/config_service";
+import Image from "next/image";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-const Container = styled.div`
-  background: ${({ theme }) => theme.sideBar.background};
+const Container = styled.div<{
+  $mobileViewport?: boolean;
+  $isOpen?: boolean;
+}>`
+  background: ${(props) => props.theme.sideBar.background};
   padding: 4rem 0 4rem 0;
-  min-width: ${({ mobileViewport }) => (mobileViewport ? "100%" : "420px")};
+  min-width: ${(props) => (props.$mobileViewport ? "100%" : "420px")};
   overflow: auto;
   position: fixed;
   height: 100%;
   transition-property: background, left;
   transition-duration: 0.25s;
-  left: ${({ isOpen, mobileViewport }) => {
-  if (mobileViewport) {
-    return isOpen ? "0" : "-200%";
+  left: ${(props) => {
+  if (props.$mobileViewport) {
+    return props.$isOpen ? "0" : "-200%";
   } else {
     return "0";
   }
@@ -37,8 +44,8 @@ const ImageContainer = styled.div`
 
   img {
     position: absolute;
-    height: ${({ theme }) => theme.module.logo.size};
-    width: ${({ theme }) => theme.module.logo.size};
+    height: ${(props) => props.theme.module.logo.size};
+    width: ${(props) => props.theme.module.logo.size};
     z-index: 2;
   }
 `;
@@ -50,7 +57,7 @@ const VersionsSelectorContainer = styled.div`
 `;
 
 const VersionsSelectorInnerContainer = styled.div`
-  border-radius: ${({ theme }) => theme.versionSelector.borderRadius};
+  border-radius: ${(props) => props.theme.versionSelector.borderRadius};
   border: 1px solid #dfdfdf;
   background: #ffffff;
   width: 100%;
@@ -67,7 +74,17 @@ const VersionsSelector = styled.select`
 // FILE MARKER - COMPONENT /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-export default function SideBar(props) {
+type Props = {
+  mobileViewport: boolean;
+  categories: Docs.V2.SidebarCategory[];
+  isOpen: boolean;
+  moduleName: string;
+  moduleVersion: string;
+  moduleVersions: string[];
+  state: Docs.V2.State;
+};
+
+export default function SideBar(props: Props) {
   const {
     categories,
     isOpen,
@@ -120,11 +137,11 @@ export default function SideBar(props) {
 
   return (
     <Container
-      mobileViewport={mobileViewport}
-      isOpen={isOpen}
+      $mobileViewport={mobileViewport}
+      $isOpen={isOpen}
     >
       <ImageContainer>
-        <img src={logoName} />
+        <Image src={logoName} width="100" height="100" alt="Logo" />
       </ImageContainer>
       <VersionsSelectorContainer>
         <VersionsSelectorInnerContainer>

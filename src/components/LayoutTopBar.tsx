@@ -3,16 +3,16 @@ import styled from "styled-components";
 import { MarkGithub } from "@styled-icons/octicons";
 import Switch from "react-switch";
 import { Moon, Sun } from "@styled-icons/bootstrap";
-import { useRouter } from "next/router";
-import { getGitHubUrl } from "../services/config_service";
+import { usePathname } from "next/navigation";
+import { getGitHubUrl } from "@/src/services/config_service";
 import Link from "next/link";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-const Container = styled.div`
-  font-size: ${({ mobileViewport }) => (mobileViewport ? ".6rem" : ".8rem")};
+const Container = styled.div<{ $mobileViewport?: boolean }>`
+  font-size: ${(props) => (props.$mobileViewport ? ".6rem" : ".8rem")};
   font-weight: bold;
   letter-spacing: .1rem;
   text-transform: uppercase;
@@ -56,12 +56,12 @@ const GitHubIcon = styled(MarkGithub)`
 `;
 
 const MoonIcon = styled(Moon)`
-  height: ${({ theme }) => theme.themeSwitch.icon.height};
+  height: ${(props) => props.theme.themeSwitch.icon.height};
 `;
 
 const SunIcon = styled(Sun)`
   color: #333333;
-  height: ${({ theme }) => theme.themeSwitch.icon.height};
+  height: ${(props) => props.theme.themeSwitch.icon.height};
 `;
 
 const ThemeSwitchContainer = styled.label`
@@ -85,13 +85,12 @@ const ThemeSwitchIconContainer = styled.div`
 // FILE MARKER - COMPONENT /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-export default function TopBar(props) {
-  const {
-    moduleName,
-    state,
-  } = props;
-
-  const router = useRouter();
+export default function LayoutTopBar({
+  moduleName = null,
+  state,
+}) {
+  const pathname = usePathname();
+  const isRootPath = pathname === "/";
 
   const [pageLoaded, setPageLoaded] = useState(false);
 
@@ -101,13 +100,13 @@ export default function TopBar(props) {
 
   return (
     <Container
-      mobileViewport={state.mobileViewport}
+      $mobileViewport={state?.mobileViewport || false}
     >
       <Title>
         {moduleName && (
           <>
             <Link href="/">
-              <a>Drash Land</a>
+              <span>Drash Land</span>
             </Link>
             <span className="middot">&middot;</span>
             {moduleName}
@@ -115,12 +114,12 @@ export default function TopBar(props) {
         )}
       </Title>
       <RightSection>
-        {router.asPath !== "/" && (
+        {!isRootPath && (
           <ThemeSwitchContainer>
             <span style={{ marginRight: ".25rem" }}>Mode</span>
             <ThemeSwitch
               onChange={state.toggleDarkMode}
-              checked={state.darkMode}
+              checked={state.darkMode === "true"}
               onColor="#4e5767"
               offColor="#fce803"
               boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"

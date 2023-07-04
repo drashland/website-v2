@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { formatLabel } from "../services/string_service";
+import { formatLabel } from "@/src/services/string_service";
 import { titleCase } from "title-case";
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Breadcrumb = styled.div`
-  color: ${({ theme }) => theme.breadcrumbs.color};
+  color: ${(props) => props.theme.breadcrumbs.color};
   display: inline-block;
 
   .slash {
@@ -63,7 +63,6 @@ export default function Breadcrumbs(props) {
         return (
           <Breadcrumb
             className={isActive && "active"}
-            index={index}
             key={`${JSON.stringify(breadcrumb)}_${index}`}
           >
             <span className="label">
