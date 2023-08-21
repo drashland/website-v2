@@ -128,7 +128,8 @@ export const Heading2 = styled(Heading(2))`
   border-top: .25rem solid ${(props) =>
   props.theme.markdown.heading2.borderTopColor};
   margin-top: 2.5rem !important;
-  h2 {
+  h2,
+  h2.heading-linked {
     color: ${(props) => props.theme.layout.text.color};
     font-size: 2rem;
     font-weight: bold;

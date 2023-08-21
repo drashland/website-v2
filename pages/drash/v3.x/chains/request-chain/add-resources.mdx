@@ -1,0 +1,309 @@
+---
+title: Tutorials - RequestChain - Create Resources
+---
+
+import { Callout, FileTree, Steps, Tabs, Tab } from "nextra/components"
+
+# Create Resources
+
+## Before You Get Started
+
+In this tutorial, we will show you how to create resources and add them to a `RequestChain` application.
+
+<Callout type="info" emoji={null}>
+This tutorial builds on top of [Create the Chain](./create-the-chain)
+</Callout>
+
+### Prerequisites
+
+- Complete the [Create the Chain](./create-the-chain) tutorial
+- Read about `native.ts` and `polyfill.ts` module files in the [Concepts > Framework > Modules](../../concepts/framework#modules) section to better understand how to extend the base resource class for the `RequestChain`
+
+### Objectives
+
+To gain familiarity with:
+
+- extending the `RequestChain` module's `Resource` class; and
+- adding resources to a `RequestChain` application.
+
+### The Base Resource Class
+
+When creating resources for this chain, you ___must___ extend the `Resource` class that is exported by this chain's module file &mdash; the `native.ts` file or `polyfill.ts` file. This `Resource` class is the base resource class for all resources in the chain. You can define your own base resource class, but it ___must___ extend this `Resource` class so the chain knows how to handle your resources properly.
+
+Extending the `Resource` class looks like:
+
+<Tabs items={["Deno (TS ESM)", "Node (TS ESM)", "Node (JS ESM)", "Node (CJS)"]}>
+<Tab>
+```typescript copy
+// First, import all of the RequestChain module members. This comes with a `Resource`
+// class that we can use via `RequestChain.Resource`
+import * as RequestChain from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/native.ts";
+
+// Now we can make a resource by extending `RequestChain.Resource`
+class Accounts extends RequestChain.Resource {
+  // ... code shortened for brevity
+}
+
+// And we can make another resource by doing the same thing as above
+class Orders extends RequestChain.Resource {
+  // ... code shortened for brevity
+}
+```
+</Tab>
+
+<Tab>
+```typescript copy
+// First, import all of the RequestChain module members. This comes with a `Resource`
+// class that we can use via `RequestChain.Resource`
+import * as RequestChain from "@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/native";
+
+// Now we can make a resource by extending `RequestChain.Resource`
+class Accounts extends RequestChain.Resource {
+  // ... code shortened for brevity
+}
+
+// And we can make another resource by doing the same thing as above
+class Orders extends RequestChain.Resource {
+  // ... code shortened for brevity
+}
+```
+</Tab>
+
+<Tab>
+```typescript copy
+// First, import all of the RequestChain module members. This comes with a `Resource`
+// class that we can use via `RequestChain.Resource`
+import * as RequestChain from "@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/native";
+
+// Now we can make a resource by extending `RequestChain.Resource`
+class Accounts extends RequestChain.Resource {
+  // ... code shortened for brevity
+}
+
+// And we can make another resource by doing the same thing as above
+class Orders extends RequestChain.Resource {
+  // ... code shortened for brevity
+}
+```
+</Tab>
+
+<Tab>
+```typescript copy
+// First, import all of the RequestChain module members. This comes with a `Resource`
+// class that we can use via `RequestChain.Resource`
+const RequestChain = require("@drashland/drash@v3.0.0-beta.01/cjs/modules/RequestChain/native");
+
+// Now we can make a resource by extending `RequestChain.Resource`
+class Accounts extends RequestChain.Resource {
+  // ... code shortened for brevity
+}
+
+// And we can make another resource by doing the same thing as above
+class Orders extends RequestChain.Resource {
+  // ... code shortened for brevity
+}
+```
+</Tab>
+</Tabs>
+
+The above code is using the native `RequestChain` module. To use the polyfill `RequestChain` module, you would simply change `native` to `polyfill` in the `import` and `require` statements as shown in the example code below. The code is shortened for brevity.
+
+<Tabs items={["Deno (TS ESM)", "Node (TS ESM)", "Node (JS ESM)", "Node (CJS)"]}>
+<Tab>
+```diff copy
++ import * as RequestChain from ".../esm/modules/RequestChain/polyfill.ts";
+- import * as RequestChain from ".../esm/modules/RequestChain/native.ts";
+```
+</Tab>
+
+<Tab>
+```diff copy
++ import * as RequestChain from ".../esm/modules/RequestChain/polyfill";
+- import * as RequestChain from ".../esm/modules/RequestChain/native";
+```
+</Tab>
+
+<Tab>
+```diff copy
++ import * as RequestChain from ".../esm/modules/RequestChain/polyfill";
+- import * as RequestChain from ".../esm/modules/RequestChain/native";
+```
+</Tab>
+
+<Tab>
+```diff copy
++ const RequestChain = require(".../cjs/modules/RequestChain/polyfill");
+- const RequestChain = require(".../cjs/modules/RequestChain/native");
+```
+</Tab>
+</Tabs>
+
+## Steps
+
+After completing the steps in this section, your project's directory should look like the directory tree below. _Note: We have `.ts` extensions in these directory tree sections by default. If you are using JavaScript, then the extensions would be `.js`._
+
+<FileTree>
+  <FileTree.Folder name="path/to/your/project" defaultOpen>
+    <FileTree.File name="app.ts" />
+  </FileTree.Folder>
+</FileTree>
+
+<Tabs items={["Deno (TS ESM)"]}>
+<Tab>
+<Steps>
+
+### Create More Resources
+
+The code below has two highlighted sections:
+
+1. The first section highlights the code needed to create two resources (`Coffees` and `Teas`).
+1. The second section highlights the code that adds the resources to the chain.
+
+The code that __is not highlighted__ is from the [Create the Chain](./create-the-chain) tutorial.
+
+```typescript showLineNumbers {22-55, 61-62} filename="path/to/project/app.ts" copy
+// Drash imports
+import * as RequestChain from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/native.ts";
+
+// Deno imports
+import { serve } from "https://deno.land/std/http/server.ts";
+
+// Create a simple resource that we can use to verify the application works
+class Home extends RequestChain.Resource {
+  public paths = ["/"];
+
+  public GET(request: Request): Response {
+    const { method, url } = request;
+    const date = new Date();
+
+    return new Response(       // This response will end up in the chain's `.then()` block.
+      `Request received: ` +
+      `${method} ${url}` +
+      `\nWritten at: ${date}`
+    );
+  }
+}
+
+// Create a new resource that sends a Coffees response
+class Coffees extends RequestChain.Resource {
+  public paths = ["/coffees"];
+
+  public GET(request: Request): Response {
+    const { method, url } = request;
+    const date = new Date();
+
+    return new Response(       // This response will end up in the chain's `.then()` block.
+      `Request received: ` +
+      `(!! COFFEES !!) ` +
+      `${method} ${url}` +
+      `\nWritten at: ${date}`
+    );
+  }
+}
+
+// Create a new resource that sends a Teas response
+class Teas extends RequestChain.Resource {
+  public paths = ["/teas"];
+
+  public GET(request: Request): Response {
+    const { method, url } = request;
+    const date = new Date();
+
+    return new Response(       // This response will end up in the chain's `.then()` block.
+      `Request received: ` +
+      `(!! TEAS !!) ` +
+      `${method} ${url}` +
+      `\nWritten at: ${date}`
+    );
+  }
+}
+
+const chain = RequestChain
+  .builder()                    // Get the chain's builder so we can build the chain easily.
+  .resources(
+    Home,                       // Add the `Home` resource to the chain.
+    Coffees,                    // Add the new `Coffees`resource to the chain.
+    Teas,                       // Add the new `Teas` resource to the chain.
+  )
+  .build<Request, Response>();  // Build the chain.
+
+const hostname = "localhost";   // Define the HTTP server's hostname
+const port = 1447;              // Define the HTTP serer's port
+
+const serveHandler = (          // Create the handler that Deno will use.
+  request: Request              // This handler will receive a `Request` object from Deno.
+): Promise<Response> => {       // Deno expects you to return a `Response` object, so the return
+                                // is defined as such. Since this chain's handlers return `Promise`
+                                // objects, the return type is `Promise<Response>`.
+
+  return chain.handle(request)  // Pass the `Request` object to the chain.
+
+    .then((response) => {       // The chain will return the `Response` object from the resource.
+      console.log(response)     // We can log it just for debugging purposes.
+      return response;          // Since Deno expects a `Response` object, we can return it as is.
+    })
+
+    .catch((e: Error) => {      // If the chain throws an error, we need to catch it and handle it.
+      console.log(e);           // This entire `.catch()` block is a simple error handler and is not
+                                // suitable for the real world. To learn more about error handling,
+      return new Response(      // check out the Error Handling pages in the left sidebar.
+        e.message,
+        { status: 500 }
+      );
+    });
+};
+
+console.log(`\nDrash is running at http://${hostname}:${port}`);
+
+await serve(serveHandler, { port });
+```
+</Steps>
+</Tab>
+</Tabs>
+
+## Verification
+
+### Run Your Code
+
+Please refer to your chosen runtime's documentation pages for steps on running the above `app.ts` file (or `app.js` file if you are using JavaScript, not TypeScript).
+
+### Verify Your Code
+
+<Callout type="info" emoji={null}>
+If you see `HTTPError: Not Found` in the terminal where you are running your code, it is most likely from a `favicon.ico` request from your browser.
+</Callout>
+
+1. Once your app is running, you can go to `http://localhost:1447` in your browser.
+
+    You should expect to see something similar to the following which means your `Home` resource is working:
+
+    ```
+    Request received: GET http://localhost:1447/
+    Written at: Sun Aug 20 2023 20:21:51 GMT-0400 (Eastern Daylight Time)
+    ```
+
+1. Check that the `Coffees` resource is working by going to `http://localhost:1447/coffees`.
+
+    You should expect to see something similar to the following which means your `Coffees` resource is working
+
+    ```
+    Request received: (!! COFFEES !!) GET http://localhost:1447/coffees
+    Written at: Sun Aug 20 2023 20:21:54 GMT-0400 (Eastern Daylight Time)
+    ```
+
+1. Check that the `Teas` resource is working by going to `http://localhost:1447/teas`.
+
+    You should expect to see something similar to the following which means your `Teas` resource is working
+
+    ```
+    Request received: (!! TEAS !!) GET http://localhost:1447/teas
+    Written at: Sun Aug 20 2023 20:21:57 GMT-0400 (Eastern Daylight Time)
+    ```
+
+## Next Steps
+
+Feel free to follow our recommendation or navigate the documentation pages at your leisure.
+
+### Our Recommendations
+
+- Learn about [using dynamic paths](../../resources/dynamic-paths) in resources

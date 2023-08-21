@@ -1,0 +1,84 @@
+---
+title: Concepts - Framework
+---
+
+import {
+  FileTree,
+  Callout,
+  Tab,
+  Tabs,
+} from "nextra-theme-docs";
+import { CodeLinkExternal } from "@/src/components/nextra/CodeLinkExternal"
+import { LinkExternalDiscord } from "@/src/components/nextra/LinkExternalDiscord"
+import { LinkExternal } from "@/src/components/nextra/LinkExternal"
+
+# Framework
+
+The entire Drash codebase is composed of different parts:
+
+- Core
+- Standard
+- Modules
+
+Unlike previous versions of Drash where Drash is a Deno HTTP server wrapper under the hood, Drash v3 is an agnostic codebase that can be used to create different types of functionality. For example, the Modules codebase contains a `RequestChain` module which imports Core and Standard code to build the request-resource-response lifecycle used in Drash v1 and v2. Essentially, Drash is a consumer of its own APIs.
+
+## Core
+
+This part of the codebase provides types, interfaces, and abstract classes (with minimal implementation) to help build the Standard and Modules codebases.
+
+To separate concerns, Core does not import code from Standard or Modules.
+
+## Standard
+
+This part of the codebase is similar to Deno's Standard Library and Go's Standard Library, but super slim. Standard code is intended to be used as standalone code and code to help build modules in the Modules codebase (e.g., `RequestChain` module).
+
+To separate concerns, Standard code only imports from Standard and Core. It does not import from Modules.
+
+## Modules
+
+This part of the codebase implements the most functionality for things like processing HTTP requests (e.g., `RequestChain` module). Modules import from Base modules (described below), Standard, and Core.
+
+### Module Types
+
+Modules are categorized into the the types below.
+
+#### Base
+
+Base modules contain code that provide default functionality to other modules. These modules can be classes, builders, functions, etc.
+
+#### Native
+
+Native modules are files in directories with the name `native.ts`. The "native" name means they support all JavaScript native code in their runtime environment (like `URLPattern` in Deno).
+
+We know native code is not supported in all runtimes, so native modules have a polyfill counterpart which is described in more detail below.
+
+#### Polyfill
+
+Polyfill modules are copies of their native counterparts in the same directory with the name `polyfill.ts`. For example, the `RequestChain` module has the following:
+
+<FileTree>
+  <FileTree.Folder name="drash/modules/RequestChain" defaultOpen>
+    <FileTree.File name="native.ts" />
+    <FileTree.File name="polyfill.ts" />
+  </FileTree.Folder>
+</FileTree>
+
+Polyfill modules polyfill any JavaScript native code that is not supported in **all runtimes**. They only exist to allow higher cross-compatibility between runtime environments. For example, if you want to build a `RequestChain` in Node and `URLPattern` is not supported, then you can:
+
+- use the `polyfill.ts` file of `RequestChain`;
+- build your application in Node just like you would if you were using the `native.ts` file of `RequestChain`; and
+- switch to Deno (where `URLPattern` is supported) at a later time.
+
+One benefit of the above approach is you would not need to migrate your `RequestChain` code before switching to Deno. You would only need to change out your HTTP server (from Node to Deno) and use the `native.ts` file of `RequestChain` instead of the `polyfill.ts` file.
+
+## Next Steps
+
+Feel free to follow our recommendation, jump ahead, or navigate the documentation pages at your leisure.
+
+### Our Recommendations
+
+Read about [chains](./chains) and how you can use one to create an application.
+
+### Want to Jump Ahead?
+
+- Start [creating a `RequestChain`](../chains/request-chain/create-the-chain) application

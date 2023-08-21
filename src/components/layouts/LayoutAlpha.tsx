@@ -1,16 +1,16 @@
-import "../styles/globals.css";
-import "../public/prism.css";
-import "../public/prism.js";
 import Head from "next/head";
 
-export default function MyApp({ Component, pageProps }) {
+export default function LayoutAlpha(props) {
+  const { children = [] } = props;
+
   const title = "Drash Land";
-  const moduleName = pageProps.topBarModuleName?.toLowerCase() ?? "drash";
+  const moduleName = props.topBarModuleName?.toLowerCase() ?? "drash";
   const url = `https://drash.land/${module}`;
-  const moduleVersion = pageProps.moduleVersion ?? "";
+  const moduleVersion = props.moduleVersion ?? "";
   const moduleAndVersion = `${module}${
     moduleVersion ? " " + moduleVersion : ""
   }`;
+
   return (
     <>
       <Head>
@@ -41,7 +41,7 @@ export default function MyApp({ Component, pageProps }) {
         <meta name="twitter:url" content={url} />
         <meta property="twitter:url" content={url} />
       </Head>
-      <Component {...pageProps} />
+      {children}
     </>
   );
 }

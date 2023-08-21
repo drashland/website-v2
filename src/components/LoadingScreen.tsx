@@ -1,6 +1,7 @@
 import styled, { ThemeProvider } from "styled-components";
 import InnerContainer from "@/src/components/InnerContainer";
 import { lightTheme } from "@/styles/theme";
+import MiddleMessage from "@/src/components/MiddleMessage";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -23,18 +24,6 @@ const Main = styled.div`
   justify-content: center;
   transition-duration: 0.25s;
   transition-property: padding;
-`;
-
-const MiddleMessage = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: .8rem;
-  font-weight: bold;
-  height: 100%;
-  justify-content: center;
-  letter-spacing: .1rem;
-  text-transform: uppercase;
-  width: 100%;
 `;
 
 ////////////////////////////////////////////////////////////////////////////////

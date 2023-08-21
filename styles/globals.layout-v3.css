@@ -1,0 +1,163 @@
+#__next .layout-v3 {
+  height: 100%;
+}
+
+.layout-v3 .logo.logo-drash {
+  margin: 2rem 0;
+}
+
+.layout-v3 li ul,
+.layout-v3 li ol {
+  margin-top: 0;
+}
+
+.layout-v3 .nextra-filetree button {
+  pointer-events: none;
+}
+
+.layout-v3 .nextra-filetree > div {
+  background: hsl(var(--nextra-primary-hue)100% 39%/.05);
+  width: 100%;
+}
+
+.layout-v3 .tutorials\:chains\:introduction .clusters #lifecycle rect {
+  stroke: rgba(0,0,0,0.1);
+  stroke-width: 2px;
+}
+
+.layout-v3 .tutorials\:chains\:introduction .clusters rect {
+  rx: .5rem;
+  ry: .5rem;
+}
+
+.layout-v3 .tutorials\:chains\:introduction.flowchart-drash-chain .clusters #client,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-drash-chain .nodes .node.red,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-drash-chain .clusters #runtime,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-drash-chain .nodes .node.green
+{
+  display: none;
+}
+
+.layout-v3 .tutorials\:chains\:introduction.flowchart-runtime-drash-chain .clusters #client,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-runtime-drash-chain .nodes .node.red
+{
+  display: none;
+}
+
+.layout-v3 .tutorials\:chains\:introduction .clusters #lifecycle .nodeLabel
+{
+  display: none;
+}
+
+.layout-v3 .tutorials\:chains\:introduction.flowchart-data-runtime-drash-chain .clusters #chain,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-data-runtime-drash-chain .nodes .node.blue
+{
+  display: none;
+}
+
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed .clusters #lifecycle .nodeLabel
+{
+  display: none;
+}
+
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .clusters #client,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .nodes .node.red,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .clusters #runtime,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .nodes .node.green,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .clusters #external,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .nodes .node.ext
+{
+  display: none;
+}
+
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2 .clusters #client,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2 .nodes .node.red,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2 .clusters #external,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2 .nodes .node.ext
+{
+  display: none;
+}
+
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-3 .clusters #external,
+.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-3 .nodes .node.ext
+{
+  display: none;
+}
+
+.layout-v3 .nextra-callout {
+  font-size: .85rem;
+}
+
+/* .layout-v3 .nextra-sidebar-container {
+  border-right: 1px solid rgba(0,0,0,0.1);
+} */
+
+.layout-v3 .nextra-sidebar-container > div > div > div > ul li:first-of-type {
+  margin: 0;
+  padding: 0;
+}
+
+.layout-v3 .nextra-sidebar-container > div > div > div > ul > li > div > div > ul {
+  margin-left: 0;
+}
+
+/* Remove the left border */
+.layout-v3 .nextra-sidebar-container ul:before {
+  display: none;
+}
+
+.layout-v3 .nextra-sidebar-container ul li ul li ul:before {
+  display: initial;
+}
+
+.layout-v3 .nextra-sidebar-container .nextra-scrollbar {
+  padding-bottom: 3rem;
+}
+
+/**
+ * Make the sidebar section title not clickable (so it doesn't collapse)
+ * TODO(crookse) Need to extend nextra code instead of making hacks
+ */
+.layout-v3 .nextra-sidebar-container button:has(span.sidebar-separator-title) {
+  pointer-events: none;
+}
+
+/* Remove the dropdown icon */
+.layout-v3 .nextra-sidebar-container button:has(span.sidebar-separator-title) svg {
+  display: none;
+}
+
+.layout-v3 .tabs-container [role="tabpanel"]{
+  /* padding: 1rem 1rem 0 1rem; */
+  /* border: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 0px solid transparent;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0; */
+}
+
+.layout-v3 [role="tablist"] button {
+  margin-top: 1.5rem;
+  font-size: .9rem;
+  border: 1px solid hsl(var(--nextra-primary-hue)100% 39%/.2);
+  border-bottom: none;
+  background: hsl(var(--nextra-primary-hue)100% 39%/.05);
+}
+
+.layout-v3 [role="tablist"] button:first-of-type {
+  margin-left: 3px;
+}
+
+.layout-v3 span.edgeLabel,
+.layout-v3 span.nodeLabel {
+  font-size: 14px;
+}
+
+.layout-v3 span.edgeLabel {
+  border-radius: 2px;
+  padding: 1px 3px;
+  font-size: 12px;
+}
+
+.layout-v3 .nextra-breadcrumb {
+  margin-bottom: 2rem;
+}

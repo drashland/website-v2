@@ -1,0 +1,219 @@
+---
+title: Glossary
+---
+
+import { Tab, Tabs } from "nextra/components";
+import { SeeAlso } from "@/src/components/SeeAlso";
+import { LinkExternal } from "@/src/components/nextra/LinkExternal";
+
+# Glossary
+
+## Terms
+
+The terms below are used ___in the context of Drash___. We know some terms may be used widely outside of Drash, so we have defined them here to help prevent ambiguity. For example, "runtime" is used in Java Runtime Environment, Red Hat Runtimes, and Node. However, ___in the context of Drash___, runtime refers to JavaScript runtimes: Deno, Node, or Bun.
+
+### Client
+
+Any "thing" that makes a request to your resources:
+
+<SeeAlso items={{
+  "resource": "Resource",
+  "chain": "Chain"
+}}/>
+
+### Chain
+
+See [Concepts > Chains - What Is a Chain?](/drash/v3.x/concepts/chains).
+
+<SeeAlso items={{
+  "handler": "Handler",
+}}/>
+
+### Directory
+
+This is an alias for "folder", but we like to use "directory" instead of "folder" in our instructions.
+
+### Environment
+
+All of the things included to write and/or run your code. For example, this includes the computer you're using to write your code (aka your machine) and the runtime you're using to run your code. It could also include your [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment). Anything you are using write and/or run your code is your environment.
+
+<SeeAlso items={{
+  "machine": "Machine"
+}}/>
+
+### Handler
+
+A class with a `handle(input: Input): Output` method. Handlers are part of a chain. Their job is to process HTTP requests.
+
+They look like the following:
+
+```ts
+// Typically, concrete handler classes extend an abstract handler class. It
+// looks like this:
+
+abstract class AbstractHandler<Input, Output> implements IHandler<Input, Output> {
+  next_handler: IHandler<Input, Output> | null = null;
+
+  abstract handle(input: Input): Output;
+}
+
+// When a concrete handler class is defined, it implements the `handle` method
+// like this:
+
+class BeItKnownThisIsMyHandler extends AbstractHandler<Request, Response> {
+  handle(request: Request): Response {
+    if (request.method === "GET") {
+      return new Response("Got.");
+    }
+
+    return new Response("Not got.");
+  }
+}
+```
+
+
+<SeeAlso items={{
+  "chain": "Chain",
+}}/>
+
+### Inputs
+
+The data passed to each handler in a chain to help it produce an output.
+
+
+<SeeAlso items={{
+  "handler": "Handler",
+  "chain": "Chain",
+  "outputs": "Outputs"
+}}/>
+
+### Local Environment
+
+The machine you're using to build with Drash. This could be the computer you're using right now.
+
+<SeeAlso items={{
+  "machine": "Machine",
+  "environment": "Environment"
+}}/>
+
+### Machine
+
+The computer you're using to build your Drash application.
+
+### Outputs
+
+The data returned from each handler in a chain in response to an input.
+
+
+<SeeAlso items={{
+  "chain": "Chain",
+  "inputs": "Inputs",
+  "handler": "Handler"
+}}/>
+
+### Paths
+
+The paths defined in a resource class' `paths` property. These paths have the same definition as the [`URL.pathname`](https://developer.mozilla.org/en-US/docs/Web/API/URL/pathname) property. For example:
+
+```ts {2-4}
+class MyResource {
+  public paths = [
+    "/teas",
+  ];
+
+  // ...
+  // ... rest of the resource class implementation (code is shortened for brevity)
+  // ...
+}
+```
+
+### Request
+
+This is an alias for <LinkExternal href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages#http_requests">HTTP Request</LinkExternal>.
+
+### Resource
+
+See [Concepts > Resources - What Is a Resource](/drash/v3.x/concepts/resources#what-is-a-resource).
+
+### Runtime
+
+Runtime refers to a JavaScript runtime like Deno, Node, or Bun.
+
+## Acronyms
+
+We try to write these documentation pages briefly and clearly. However, it can get repetitive to write the same words over and over when a well-known acronym exists for them. If you see acronyms, you can find their definitions here.
+
+### CJS
+
+[CommonJS Module](https://nodejs.org/api/modules.html#modules-commonjs-modules)
+
+When this is used in the context of an example code block tab, CJS means the example code below is written in [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) using Drash as a CommonJS Module.
+
+__Example__
+
+<Tabs items={["CJS", "AnotherTab"]}>
+<Tab>
+```ts
+// ... some CJS code block
+```
+</Tab>
+<Tab>
+```ts
+// ... some AnotherTab code block
+```
+</Tab>
+</Tabs>
+
+### ESM
+
+ECMAScript Module
+
+### JS
+
+JavaScript
+
+### JS ESM
+
+These two acronyms are usually applied to example code block tabs. It means, "The example code for this tab is written in JavaScript using Drash as an ECMAScript Module."
+
+__Example__
+
+<Tabs items={["JS ESM", "AnotherTab"]}>
+<Tab>
+```ts
+// ... some JS ESM code block
+```
+</Tab>
+<Tab>
+```ts
+// ... some AnotherTab code block
+```
+</Tab>
+</Tabs>
+
+### TLDR
+
+This is a variant of <LinkExternal href="https://www.merriam-webster.com/dictionary/TL%3BDR">TL;DR</LinkExternal>, but without the semicolon.
+
+### TS
+
+TypeScript
+
+### TS ESM
+
+These two acronyms are usually applied to example code block tabs. It means, "The example code for this tab is written in TypeScript using Drash as an ECMAScript Module."
+
+__Example__
+
+<Tabs items={["TS ESM", "AnotherTab"]}>
+<Tab>
+```ts
+// ... some TS ESM code block
+```
+</Tab>
+<Tab>
+```ts
+// ... some AnotherTab code block
+```
+</Tab>
+</Tabs>

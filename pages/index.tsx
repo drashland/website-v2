@@ -306,7 +306,7 @@ export default function Home() {
   }
 
   return (
-    <Container>
+    <Container className="layout-landing-page">
       <LayoutTopBar
         state={{
           mobileViewport,

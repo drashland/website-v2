@@ -1,0 +1,36 @@
+---
+title: Resources - Group Resources
+---
+
+# Group Resources
+
+Resources can be grouped to share functionality (e.g., services, path prefixes, etc.). To group resources, use the exported `Resource` class from the module you are using and call the `.group()` method. For example:
+
+```ts
+import * as RequestChain from ".../native.ts";
+
+class ResourceA extends RequestChain.Resource { ... }
+class ResourceB extends RequestChain.Resource { ... }
+class ResourceC extends RequestChain.Resource { ... }
+
+const groupedResources = RequestChain.Resource
+  .group(
+    ResourceA,
+    ResourceB,
+    ResourceC
+  )
+  .withPathPrefixes(
+    "/api/v1",
+    "/api/v1.x",
+  )
+  .withMiddleware(
+    SomeMiddlewareA,
+    SomeMiddlewareB,
+  )
+  .build();
+
+const chain = RequestChain
+  .builder()
+  .resources(groupedResources)
+  .build();
+```

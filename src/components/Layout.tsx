@@ -305,7 +305,7 @@ export default function Layout(props) {
 
   return (
     <ThemeProvider theme={darkMode === "true" ? darkTheme : lightTheme}>
-      <Container>
+      <Container className="layout-v2">
         <ButtonOpenSideBar
           $show={mobileViewport}
           $sideBarOpen={sideBarOpen}
