@@ -33,12 +33,12 @@ _Psst... we are assuming you have at least Deno, Node, or Bun installed before u
 // Teach me how to Deno
 
 // Drash imports
-import * as WebAPIChain from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/standard/chains/webapi/mod.ts";
+import * as RequestChain from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/native.ts";
 
 // Deno imports
 import { serve } from "https://deno.land/std/http/server.ts";
 
-class Home extends WebAPIChain.Resource {
+class Home extends RequestChain.Resource {
   public paths = ["/"];
 
   public GET(request: Request): Response {
@@ -46,7 +46,7 @@ class Home extends WebAPIChain.Resource {
   }
 }
 
-const chain = WebAPIChain
+const chain = RequestChain
   .builder()
   .resources(Home)
   .build();
@@ -81,17 +81,19 @@ await serve(serveHandler, { port });
 // Teach me how to Node
 
 // Drash imports
-import * as ContextChain from "@drashland/drash@v3.0.0-beta.01/esm/standard/chains/contextchain/mod";
+import * as RequestChain from "@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/native";
 
 // Node imports
 import { IncomingMessage, ServerResponse, createServer } from "node:http";
 
 type NodeContext = {
+  url: string;
+  method: string;
   request: IncomingMessage;
   response: ServerResponse<IncomingMessage>;
 };
 
-class Home extends ContextChain.Resource {
+class Home extends RequestChain.Resource {
   public paths = ["/"];
 
   public GET(context: NodeContext) {
@@ -100,7 +102,7 @@ class Home extends ContextChain.Resource {
   }
 }
 
-const chain = ContextChain
+const chain = RequestChain
   .builder<NodeContext>()
   .resources(Home)
   .build();
@@ -110,9 +112,10 @@ const port = 1447;
 
 (async() => {
   const server = createServer((request, response) => {
-    request.url = `http://${hostname}:${port}${request.url}`;
 
     const context = {
+      url: `http://${hostname}:${port}${request.url}`,
+      method: request.method,
       request,
       response,
     };
@@ -141,12 +144,12 @@ const port = 1447;
 // Teach me how to Node
 
 // Drash imports
-import * as ContextChain from "@drashland/drash@v3.0.0-beta.01/esm/standard/chains/contextchain/mod";
+import * as RequestChain from "@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/native";
 
 // Node imports
 import { createServer } from "node:http";
 
-class Home extends ContextChain.Resource {
+class Home extends RequestChain.Resource {
   public paths = ["/"];
 
   public GET(context: NodeContext) {
@@ -155,7 +158,7 @@ class Home extends ContextChain.Resource {
   }
 }
 
-const chain = ContextChain
+const chain = RequestChain
   .builder()
   .resources(Home)
   .build();
@@ -165,9 +168,10 @@ const port = 1447;
 
 (async() => {
   const server = createServer((request, response) => {
-    request.url = `${protocol}://${hostname}:${port}${request.url}`;
 
     const context = {
+      url: `http://${hostname}:${port}${request.url}`,
+      method: request.method,
       request,
       response,
     };
@@ -195,12 +199,12 @@ const port = 1447;
 // Teach me how to Node
 
 // Drash imports
-const ContextChain = require("@drashland/drash@v3.0.0-beta.01/esm/standard/chains/contextchain/mod");
+const RequestChain = require("@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/native");
 
 // Node imports
 const { createServer } = require("node:http");
 
-class Home extends ContextChain.Resource {
+class Home extends RequestChain.Resource {
   paths = ["/"];
 
   GET(context: NodeContext) {
@@ -209,7 +213,7 @@ class Home extends ContextChain.Resource {
   }
 }
 
-const chain = ContextChain
+const chain = RequestChain
   .builder()
   .resources(Home)
   .build();
@@ -219,9 +223,10 @@ const port = 1447;
 
 (async() => {
   const server = createServer((request, response) => {
-    request.url = `${protocol}://${hostname}:${port}${request.url}`;
 
     const context = {
+      url: `http://${hostname}:${port}${request.url}`,
+      method: request.method,
       request,
       response,
     };
