@@ -41,8 +41,8 @@ const Tab = styled.button<{
   cursor: pointer;
   padding: 1rem;
   background: ${({ $activeTab, $name }) => {
-    return $activeTab === $name ? "#2f343c" : "#202328"
-  }};
+  return $activeTab === $name ? "#2f343c" : "#202328";
+}};
   color: ${({ $activeTab, $name }) =>
   $activeTab === $name ? "#ffffff" : "#5b677e"};
   border-right: 1px solid #444f62;
