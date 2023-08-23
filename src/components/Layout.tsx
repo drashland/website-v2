@@ -345,11 +345,6 @@ export default function Layout(props) {
               <MakeBetterHeading>
                 Help Improve This Page
               </MakeBetterHeading>
-              {pageModifiedTime && (
-                <p>
-                  This page was last edited: {pageModifiedTime}
-                </p>
-              )}
               <p>
                 If you are having issues with this page (e.g., parts of this
                 page are not loading, documentation does not make sense, etc.),
