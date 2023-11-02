@@ -283,12 +283,6 @@ function Projects() {
               },
             ].map((props) => (
               <Card.Container key={props.title} title={props.title}>
-                {props.logo && (
-                  <img
-                    src={props.logo}
-                    style={{ height: 150 }}
-                  />
-                )}
                 <Card.Description>
                   {props.description}
                 </Card.Description>

@@ -24,7 +24,7 @@ function Container({
   return (
     <div className="tab-group-container nx-border nx-rounded border-slate-200 mt-5 p-5">
       <NextraTabs
-        items={tabs.map((tabTextLines) => <TabButton text={tabTextLines} />)}
+        items={tabs.map((tabTextLines) => <TabButton key={tabTextLines.join("")} text={tabTextLines} />)}
       >
         {children}
       </NextraTabs>
@@ -34,7 +34,9 @@ function Container({
 
 const Panel = NextraTab;
 
-export default {
+const exported = {
   Container,
   Panel,
 };
+
+export default exported;
