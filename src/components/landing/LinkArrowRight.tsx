@@ -13,7 +13,9 @@ export function LinkArrowRight({
     >
       <span className="relative">
         {children}
-        {!external && <span className="ml-2 inline-block rotate-45">&#8599;</span>}
+        {!external && (
+          <span className="ml-2 inline-block rotate-45">&#8599;</span>
+        )}
         {external && (
           <>
             <span className="pl-2">&nbsp;</span>

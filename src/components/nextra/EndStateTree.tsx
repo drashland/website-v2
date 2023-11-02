@@ -10,9 +10,9 @@ export const EndStateTree = ({
   return (
     <div className="step-directory-tree nx-mt-6">
       <p className="nx-mt-6 nx-leading-7 first:nx-mt-0">
-        After completing the steps in this section, your project&apos;s directory
-        should look like the directory tree below (based on the language you
-        are using).
+        After completing the steps in this section, your project&apos;s
+        directory should look like the directory tree below (based on the
+        language you are using).
       </p>
       <Tabs items={["TypeScript", "JavaScript"]}>
         <Tab>
