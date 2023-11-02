@@ -1,133 +1,25 @@
 import { Tabs, Tab } from "nextra/components";
-import QuickstartDenoRequestChain from "./QuickstartDenoRequestChain.mdx";
+import QuickstartRequestChainDeno from "./QuickstartRequestChainDeno.mdx";
+import QuickstartRequestChainNodeCJS from "./QuickstartRequestChainNodeCJS.mdx";
+import QuickstartRequestChainNodeESM from "./QuickstartRequestChainNodeESM.mdx";
+import QuickstartRequestChainNodeTS from "./QuickstartRequestChainNodeTS.mdx";
+import QuickstartRequestChainBunTS from "./QuickstartRequestChainBunTS.mdx";
+import QuickstartRequestChainCloudflareWorkersESM from "./QuickstartRequestChainCloudflareWorkersESM.mdx";
 
-<Tabs
-  items={[
-    "Deno v1.37.x",
-    "Node v18.x",
-    "Bun v1.x",
-  ]}
->
+<Tabs items={[
+  "Deno v1.37.x",
+  "Node v18.x (CJS)",
+  "Node v18.x (JS ESM)",
+  "Node v18.x (TS)",
+  "Cloudflare Workers (JS ESM)",
+  "Bun v1.x (TS)",
+]}>
 
-<Tab>
-<QuickstartDenoRequestChain />
-</Tab>
-
-<Tab>
-
-```javascript showLineNumbers filename="node_cjs.js" copy
-const {
-  Chain,
-  Resource
-} = require("@drashland/drash/lib/cjs/modules/chains/RequestChain/mod.polyfill");
-const { createServer } = require("node:http");
- 
-// Create a resource
-class Home extends Resource {
-  paths = ["/"];
- 
-  GET(context) {
-    console.log(`Received request: ${context.request.url}`);
-    context.response.end(`Hello from Home.GET()! (written at ${new Date()})`);
-  }
-}
- 
-// Build the chain and add the resource
-const chain = Chain
-  .builder()
-  .resources(Home)
-  .build();
- 
-// Define server variables for reuse below
-const hostname = "localhost";
-const port = 1447;
- 
-// Create the server
-const server = createServer((request, response) => {
- 
-  // Create a context object that the resource can use to access to access the
-  // request and response objects.
-  //
-  // The chain requires the `url` and `method` fields, they are are included.
-  const context = {
-    url: `http://${hostname}:${port}${request.url}`,
-    method: request.method,
-    request,
-    response,
-  };
- 
-  // Pass the context object to the chain
-  return chain
-    .handle(context)
-    .catch((error) => {
-      console.log(`Request URL hit an error: ${context.url}:\n`);
-      console.log({ error });
-      response.statusCode = 500;
-      response.statusMessage = "Internal Server Error";
-      response.end("Sorry, but we hit an error!");
-    });
-});
- 
-// Start the server
-server.listen(port, hostname, () => {
-  console.log(`\nDrash running at http://${hostname}:${port}`)
-});
-```
-</Tab>
-
-<Tab>
-
-```javascript showLineNumbers filename="bun.js" copy
-import {
-  Chain,
-  Resource,
-} from "@drashland/drash/lib/esm/modules/chains/RequestChain/mod.polyfill";
-
-// Create a resource
-class Home extends Resource {
-  paths = ["/"];
-
-  GET(request) {
-    console.log(`Received request: ${request.url}`);
-    return new Response(`Hello from Home.GET()! (written at ${new Date()})`);
-  }
-}
-
-// Build the chain and add the resource
-const chain = Chain
-  .builder()
-  .resources(Home)
-  .build();
-
-// Define server variables for reuse below
-const hostname = "localhost";
-const port = 1447;
-
-// Create and start the server
-Bun.serve({
-  port,
-  hostname,
-  fetch(request) {
-    // Pass the request to the chain
-    return chain
-      .handle(request)
-      .catch((error) => {
-        console.log(`Request URL hit an error: ${request.url}:\n`);
-        console.log({ error });
-        return new Response(
-          "Sorry, but we hit an error!",
-          {
-            status: 500,
-            statusText: "Internal Server Error",
-          },
-        );
-      });
-  },
-});
-
-console.log(`\nDrash running at http://${hostname}:${port}`)
-```
-
-</Tab>
+<Tab><QuickstartRequestChainDeno /></Tab>
+<Tab><QuickstartRequestChainNodeCJS /></Tab>
+<Tab><QuickstartRequestChainNodeESM /></Tab>
+<Tab><QuickstartRequestChainNodeTS /></Tab>
+<Tab><QuickstartRequestChainCloudflareWorkersESM /></Tab>
+<Tab><QuickstartRequestChainBunTS /></Tab>
 
 </Tabs>

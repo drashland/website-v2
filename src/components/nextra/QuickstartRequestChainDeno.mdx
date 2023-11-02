@@ -2,21 +2,19 @@
 import {
   Chain,
   Resource,
-} from "https://esm.sh/@drashland/drash/lib/esm/modules/chains/RequestChain/mod.native.js";
+} from "https://esm.sh/@drashland/drash/modules/chains/RequestChain/mod.native.js";
 
-// Or use the npm module specifier
-// Note: This uses the CJS Request Chain. More info about this is at https://drash.land/drash-v3.x/getting-started/known-issues
 // import {
-//     Chain,
-//     Resource,
-// } from "npm:@drashland/drash/lib/cjs/modules/chains/RequestChain/mod.native.js";
+//   Chain,
+//   Resource,
+// } from "npm:@drashland/drash/modules/chains/RequestChain/mod.native.js";
 
 // Create a resource
 class Home extends Resource {
   paths = ["/"];
 
   GET(request: Request) {
-    console.log(`[Home.GET()] Request received: ${request.url}`);
+    console.log(`Received request: ${request.url}`);
     return new Response(
       `Hello from Home.GET()! (written at ${new Date()})`,
     );
@@ -29,8 +27,14 @@ const chain = Chain
   .resources(Home)
   .build();
 
+// Define server variables for reuse below
+const hostname = "localhost";
+const port = 1447;
+
 // Create and start the server
 Deno.serve({
+  hostname,
+  port,
   onListen: ({ hostname, port }) => {
     console.log(`\nDrash running at http://${hostname}:${port}`);
   },
@@ -53,4 +57,5 @@ Deno.serve({
       });
   },
 });
+
 ```

@@ -66,7 +66,7 @@ const config: DocsThemeConfig = {
   ),
   navigation: false,
   project: {
-    link: "https://github.com/drashland/drash",
+    link: "https://github.com/drashland/drash/tree/v3.x-beta",
   },
   darkMode: false,
 };

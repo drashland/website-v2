@@ -12,7 +12,7 @@ export const EndStateTree = ({
       <p className="nx-mt-6 nx-leading-7 first:nx-mt-0">
         After completing the steps in this section, your project's directory
         should look like the directory tree below (based on the language you
-        are).
+        are using).
       </p>
       <Tabs items={["TypeScript", "JavaScript"]}>
         <Tab>

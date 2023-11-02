@@ -309,7 +309,7 @@ Throwing a `501 Not Implemented` error is the default behavior ___for all resour
 
 ### TLDR
 
-All chain modules (in the [Modules](../concepts/framework#modules) part of the codebase) export a `Resource` class. You must extend this class to create your resources. Otherwise, your application might not work as expected.
+All chain modules (in the [Modules](/drash-v3.x/concepts/framework#modules) part of the codebase) export a `Resource` class. You must extend this class to create your resources. Otherwise, your application might not work as expected.
 
 ### Detailed Explanation
 
@@ -476,7 +476,7 @@ Feel free to follow our recommendation, jump ahead, or navigate the documentatio
 
 ### Our Recommendations
 
-- [Create a tiny HTTP application](/drash-v3.x/modules/request-chain/step-by-step-guide) using the Request Chain module
+- [Create a tiny HTTP application](/drash-v3.x/modules/chains/request-chain/step-by-step-guide) using the Request Chain module
 
 
 {/* ## Some Insight on Web Servers
@@ -495,7 +495,7 @@ Very simply put (like _very very very_ simply put and only in the context of the
     // ... do some stuff (code shortened for brevity)
   });
   ```
-- Your content is anything you return from the [resources](./resources) you create. For example, the below code shows a combination of text content being returned from 3 different resources:
+- Your content is anything you return from the [resources](/drash-v3.x/concepts/resources) you create. For example, the below code shows a combination of text content being returned from 3 different resources:
   ```ts
   type Context = { request: Request; response?: Response };
 
