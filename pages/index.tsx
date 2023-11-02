@@ -163,7 +163,7 @@ function Latest() {
               </p>
               <div className="flex flex-col mb-10 items-center justify-center">
                 <LinkArrowRight
-                  href="https://dash.deno.com/playground/drash-v3x-preview-1"
+                  href="https://dash.deno.com/playground/drash-v3x-beta-1"
                   external
                 >
                   <span>Fork on Deno Deploy</span>
