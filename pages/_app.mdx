@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "@/styles/nextra.scss";
 import "@/styles/globals.layout-v3.css";
 import "@/public/prism.css";
 import "@/public/prism.js";
@@ -10,7 +11,9 @@ export default function DrashLand(props) {
   } = Component;
 
   if (getLayout) {
-    return getLayout(<Component {...pageProps} />);
+    return getLayout(
+      <Component {...pageProps} />
+    );
   }
 
   return <Component {...pageProps} />;

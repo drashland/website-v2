@@ -14,10 +14,11 @@
     "nextra": "^2.10.0",
     "nextra-theme-docs": "^2.10.0",
     "react": "18.x",
-    "react-dom": "18.x"
+    "react-dom": "18.x",
+    "react-tooltip": "^5.21.5"
   },
   "devDependencies": {
-    "@headlessui/react": "1.x",
+    "@headlessui/react": "^1.7.17",
     "@styled-icons/bootstrap": "10.x",
     "@styled-icons/octicons": "10.x",
     "@types/node": "20.x",
@@ -30,6 +31,7 @@
     "react-is": "16.x",
     "react-markdown": "8.x",
     "react-switch": "7.x",
+    "sass": "^1.68.0",
     "styled-components": "6.x",
     "tailwindcss": "3.x",
     "title-case": "3.x",

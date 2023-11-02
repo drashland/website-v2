@@ -1,5 +1,5 @@
 ---
-title: Tutorials - ContextChain - About the ContextChain
+head_title: Tutorials - ContextChain - About the ContextChain
 ---
 
 import { Steps, Tab, Tabs, Callout } from "nextra/components";
@@ -137,10 +137,10 @@ We know the `{ request: { method, url } }` data type above does not fit all use 
 To give you a better idea of how the context object can be defined in different runtimes, below are some examples showing the context object's data type in different runtimes.
 
 <Callout emoji={null} type="info">
-Don't worry if you don't understand the code below now. You'll be able to see context objects working in code when you create this chain in the [Steps](./create-the-chain#steps) section on the [Create the Chain](./create-the-chain) page.
+Don't worry if you don't understand the code below now. You'll be able to see context objects working in code when you create this chain in the [Steps](./create-a-chain#steps) section on the [Create a Chain](./create-a-chain) page.
 </Callout>
 
-<Tabs items={["Node v16.x", "Deno v1.35.x"]}>
+<Tabs items={["Node v16.x", "Deno v1.37.x"]}>
 <Tab>
 Node v16.x's HTTP server gives you a request object of type `IncomingMessage` and a response object of type `ServerResponse`. With this information, you could create a context object with the following data type:
 
@@ -152,7 +152,7 @@ type NodeContext = {
 ```
 </Tab>
 <Tab>
-Deno v1.35.x's HTTP server gives you a request object of type [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request), but it doesn't give you a response object. With this information, you could create a context object with the following data type:
+Deno v1.37.x's HTTP server gives you a request object of type [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request), but it doesn't give you a response object. With this information, you could create a context object with the following data type:
 
 ```ts
 type DenoContext = {
@@ -285,6 +285,6 @@ From the `HTTP Server`, you create a `Context` object and pass it to the first h
 
 1. When the `Context` object is returned from the chain, you need to return a `SOMETHING` object back to the `HTTP Server`. The data type of this `SOMETHING` object is determined by the runtime. For example:
 
-    - It would be a `Response` object if we were using Deno v1.35.x since Deno v1.35.x's HTTP server expects a `Response` object to be returned to it
+    - It would be a `Response` object if we were using Deno v1.37.x since Deno v1.37.x's HTTP server expects a `Response` object to be returned to it
 
     - It would be `void` if we were using Node v16.x since Node v16.x's HTTP server only requires that you call `res.end()` and not return anything to it

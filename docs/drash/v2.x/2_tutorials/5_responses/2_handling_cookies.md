@@ -61,7 +61,7 @@ Drash uses Deno Standard Modules for cookie handling.
        return response.text("my_cookie cookie sent!");
      }
 
-     public DELETE(request: Drash.Request, response: Drash.Repsonse): void {
+     public DELETE(request: Drash.Request, response: Drash.Response): void {
        // Set the cookie
        response.setCookie({
          name: "my_cookie",

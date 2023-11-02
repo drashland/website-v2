@@ -1,0 +1,511 @@
+---
+head_title: Modules - Request Chain - Introduction
+---
+
+import { Callout, Steps, Tab, Tabs } from "nextra/components";
+import { Link } from "@/src/components/nextra/Link";
+import { EndStateTree } from "@/src/components/nextra/EndStateTree";
+import { CodeLinkExternal } from "@/src/components/nextra/CodeLinkExternal";
+import { LinkExternal } from "@/src/components/nextra/LinkExternal";
+import QuickstartRequestChain from "@/src/components/nextra/QuickstartRequestChain.mdx"
+
+# Request Chain
+
+## What Is This?
+
+The Request Chain module provides you with code to create HTTP applications. It follows the concepts discussed on the [Concepts > Chains](/drash-v3.x/concepts/chains) page.
+
+<Callout type="info" emoji={null}>
+If you have used previous versions of Drash, you will notice that this chain is essentially Drash v1.x and Drash v2.x, but in a more portable format.
+</Callout>
+
+## Syntax
+
+### Chain + Resource
+
+Creating a Request Chain with a single resource looks like the code below. You will notice the code is almost 100% the same across runtimes. This is a result of Drash being [runtime agnostic](/drash-v3.x/concepts/framework#runtime-agnostic) &mdash; meaning you can use the code in any runtime that can run JavaScript. 
+
+<Tabs items={[
+  "Deno v1.37.x (JS)",
+  "Cloudflare Workers (ESM JS)",
+  "Node v18.x (ESM JS)",
+  "Node v18.x (CJS)",
+  "Bun v0.x (JS)",
+]}>
+<Tab>
+```typescript showLineNumbers {17} filename="deno.ts" copy
+import {
+  Chain,
+  Resource
+} from "npm:@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native";
+
+// Create a resource
+class Home extends Resource {
+  paths = ["/"];
+
+  GET(request: Request) {
+    const body = `Hello from Home.GET()! (written at ${new Date()})`;
+    return new Response(body);
+  }
+}
+
+// Build the chain and add the resource
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+```
+</Tab>
+<Tab>
+```javascript showLineNumbers {17} filename="cloudflare.js" copy
+import {
+  Chain,
+  Resource
+} from "@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native";
+
+// Create a resource
+class Home extends Resource {
+  paths = ["/"];
+
+  GET(request) {
+    const body = `Hello from Home.GET()! (written at ${new Date()})`;
+    return new Response(body);
+  }
+}
+
+// Build the chain and add the resource
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+```
+</Tab>
+<Tab>
+```javascript showLineNumbers {17} filename="node_esm.js" copy
+import {
+  Chain,
+  Resource
+} from "@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native";
+
+// Create a resource
+class Home extends Resource {
+  paths = ["/"];
+
+  GET(context) {
+    const body = `Hello from Home.GET()! (written at ${new Date()})`;
+    context.response.write(body);
+  }
+}
+
+// Build the chain and add the resource
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+```
+</Tab>
+<Tab>
+```javascript showLineNumbers {17} filename="node_cjs.js" copy
+const {
+  Chain,
+  Resource
+} = require("@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native");
+
+// Create a resource
+class Home extends Resource {
+  paths = ["/"];
+
+  GET(context) {
+    const body = `Hello from Home.GET()! (written at ${new Date()})`;
+    context.response.write(body);
+  }
+}
+
+// Build the chain and add the resource
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+```
+</Tab>
+<Tab>
+```javascript showLineNumbers {17} filename="bun.js" copy
+import {
+  Chain,
+  Resource
+} from "@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native";
+
+// Create a resource
+class Home extends Resource {
+  paths = ["/"];
+
+  GET(request) {
+    const body = `Hello from Home.GET()! (written at ${new Date()})`;
+    return new Response(body);
+  }
+}
+
+// Build the chain and add the resource
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+```
+</Tab>
+</Tabs>
+
+__I have a `chain` variable. Now what?__
+
+The highlighted `chain` variable above is what you would use in your chosen runtime's HTTP server to process requests. Specifically, you would call its `.handle()` method (this is the only method it has). Examples of using `chain.handle()` is shown below.
+
+### Chain + Resource + Server
+
+Taking the above code and plugging it into a runtime's HTTP server looks like:
+
+<Tabs items={[
+  "Deno v1.37.x / TS",
+  "Cloudflare Workers / Node v18.x / ESM JS",
+  "Node v18.x (ESM JS)",
+  "Node v18.x (CJS)",
+  "Bun v0.x (JS)",
+]}>
+<Tab>
+```typescript showLineNumbers filename="deno.ts" copy
+import {
+  Chain,
+  Resource
+} from "npm:@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native";
+
+// Create a resource
+class Home extends Resource {
+  paths = ["/"];
+
+  GET(request: Request) {
+    return new Response(`Hello from Home.GET()! (written at ${new Date()})`);
+  }
+}
+
+// Build the chain and add the resource
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+
+// Create and start the server
+Deno.serve({
+  port: 1447,
+  hostname: "localhost",
+  handler: (request: Request) => {
+    // Pass the request to the chain
+    return chain
+      .handle(request)
+      .catch((error) => {
+        console.log({ error });
+        return new Response(
+          "Sorry, but we hit an error!",
+          {
+            status: 500,
+            statusText: "Internal Server Error"
+          }
+        );
+      });
+  },
+});
+```
+</Tab>
+<Tab>
+```javascript showLineNumbers filename="cloudflare.js" copy
+import {
+  Chain,
+  Resource
+} from "@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native";
+
+// Create a resource
+class Home extends Resource {
+  paths = ["/"];
+
+  GET(request) {
+    return new Response(`Hello from Home.GET()! (written at ${new Date()})`);
+  }
+}
+
+// Build the chain and add the resource
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+
+// Export the object with the fetch function that Cloudflare requires
+export default {
+  // This `fetch` function would be written as `async fetch(request)` if you
+  // were using `await`
+  fetch(request) {
+    // Pass the request to the chain
+    return chain
+      .handle(request)
+      .catch((error) => {
+        console.log({ error });
+        return new Response(
+          "Sorry, but we hit an error!",
+          {
+            status: 500,
+            statusText: "Internal Server Error"
+          }
+        );
+      });
+  }
+}
+```
+</Tab>
+<Tab>
+```javascript showLineNumbers filename="node_esm.js" copy
+import {
+  Chain,
+  Resource
+} from "@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native";
+import { createServer } from "node:http";
+
+// Create a resource
+class Home extends Resource {
+  paths = ["/"];
+
+  GET(context) {
+    context.response.write(`Hello from Home.GET()! (written at ${new Date()})`);
+  }
+}
+
+// Build the chain and add the resource
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+
+const hostname = "localhost";
+const port = 1447;
+
+// Create the server
+const server = createServer((request, response) => {
+
+  // Create a context object that the resource can use to access to access the
+  // request and response objects.
+  //
+  // The chain requires the `url` and `method` fields, they are are included.
+  const context = {
+    url: `http://${hostname}:${port}${request.url}`,
+    method: request.method,
+    request,
+    response,
+  };
+
+  // Pass the context object to the chain
+  return chain
+    .handle(context)
+    .catch((error) => {
+      console.log({ error });
+      response.statusCode = 500;
+      response.statusText = "Internal Server Error";
+      response.end("Sorry, but we hit an error!");
+    });
+});
+
+// Start the server
+server.listen(port, hostname, () => {
+  console.log(`\nDrash server listening at http://${hostname}:${port}/`);
+});
+```
+</Tab>
+<Tab>
+```javascript showLineNumbers filename="node_cjs.js" copy
+const {
+  Chain,
+  Resource
+} = require("@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native");
+const { createServer } = require("node:http");
+
+// Create a resource
+class Home extends Resource {
+  paths = ["/"];
+
+  GET(context) {
+    context.response.write(`Hello from Home.GET()! (written at ${new Date()})`);
+  }
+}
+
+// Build the chain and add the resource
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+
+const hostname = "localhost";
+const port = 1447;
+
+// Create the server
+const server = createServer((request, response) => {
+
+  // Create a context object that the resource can use to access to access the
+  // request and response objects.
+  //
+  // The chain requires the `url` and `method` fields, they are are included.
+  const context = {
+    url: `http://${hostname}:${port}${request.url}`,
+    method: request.method,
+    request,
+    response,
+  };
+
+  // Pass the context object to the chain
+  return chain
+    .handle(context)
+    .catch((error) => {
+      console.log({ error });
+      response.statusCode = 500;
+      response.statusText = "Internal Server Error";
+      response.end("Sorry, but we hit an error!");
+    });
+});
+
+// Start the server
+server.listen(port, hostname, () => {
+  console.log(`\nDrash server listening at http://${hostname}:${port}/`);
+});
+```
+</Tab>
+<Tab>
+```javascript showLineNumbers filename="bun.js" copy
+import {
+  Chain,
+  Resource
+} from "@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native";
+
+// Create a resource
+class Home extends Resource {
+  paths = ["/"];
+
+  GET(request) {
+    return new Response(`Hello from Home.GET()! (written at ${new Date()})`);
+  }
+}
+
+// Build the chain and add the resource
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+
+// Create and start the server
+Bun.serve({
+  // This `fetch` function would be written as `async fetch(request)` if you
+  // were using `await`
+  fetch(request) {
+    // Pass the request to the chain
+    return chain
+      .handle(request)
+      .catch((error) => {
+        console.log({ error });
+        return new Response(
+          "Sorry, but we hit an error!",
+          {
+            status: 500,
+            statusText: "Internal Server Error"
+          }
+        );
+      });
+  }
+});
+```
+</Tab>
+</Tabs>
+
+### Promises
+
+This chain uses <LinkExternal href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">`Promise`</LinkExternal> objects under the hood. This means you can use it with the following:
+
+- <CodeLinkExternal href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then">.then()</CodeLinkExternal> (aka `Promise.prototype.then()`)
+- <CodeLinkExternal href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await">await</CodeLinkExternal>
+
+Code is provided below to give you an idea of how you could use `.then()` and `await` with this chain in Deno v1.37.x.
+
+<Tabs items={[
+  "Deno v1.37.x (TS) - Using .then()",
+  "Deno v1.37.x (TS) - Using await"
+]}>
+<Tab>
+```typescript filename="chain_with_then.ts" showLineNumbers {23-30}
+import {
+  Chain
+} from "npm:@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native";
+
+// Create a resource
+class Home extends Resource {
+  public paths = ["/"];
+  public GET(request: Request) {
+    return new Response(`Hello!`);
+  }
+}
+
+// Build the chain
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+
+// The chain in this Deno server uses `.then()`
+Deno.serve({
+    port: 1447,
+    hostname: "localhost",
+    handler: (request: Request) => { // `async` IS NOT needed here because `await` is not used
+      return chain
+        .handle(request)
+        .then((response) => {
+          console.log({ response });
+          return response;
+        });
+    },
+});
+```
+</Tab>
+<Tab>
+```typescript filename="chain_with_await.ts" showLineNumbers {23-30}
+import {
+  Chain
+} from "npm:@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native";
+
+// Create a resource
+class Home extends Resource {
+  public paths = ["/"];
+  public GET(request: Request) {
+    return new Response(`Hello!`);
+  }
+}
+
+// Build the chain
+const chain = Chain
+  .builder()
+  .resources(Home)
+  .build();
+
+// The chain in this Deno server uses `await`
+Deno.serve({
+    port: 1447,
+    hostname: "localhost",
+    handler: async (request: Request) => { // `async` IS needed here so `await` can be used below
+      const response = await chain
+        .handle(request);
+
+      console.log({ response });
+
+      return response;
+    },
+});
+```
+</Tab>
+</Tabs>
+
+## Next Steps
+
+Feel free to follow our recommendation or navigate the documentation pages at your leisure.
+
+### Our Recommendations
+
+- [Create a tiny HTTP application](/drash-v3.x/modules/request-chain/step-by-step-guide) using the Request Chain module

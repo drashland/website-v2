@@ -40,10 +40,11 @@ const Tab = styled.button<{
   font-size: .7rem;
   cursor: pointer;
   padding: 1rem;
-  background: ${({ $activeTab, name }) =>
-  $activeTab === name ? "#2f343c" : "#202328"};
-  color: ${({ $activeTab, name }) =>
-  $activeTab === name ? "#ffffff" : "#5b677e"};
+  background: ${({ $activeTab, $name }) => {
+  return ($activeTab === $name ? "#2f343c" : "#202328");
+}};
+  color: ${({ $activeTab, $name }) =>
+  $activeTab === $name ? "#ffffff" : "#5b677e"};
   border-right: 1px solid #444f62;
   margin: 0;
 `;
@@ -171,7 +172,8 @@ export default function CodeExtension({
    * @returns The code without the tab name.
    */
   function renderCodeBlockWithoutTabName(codeBlock, tabName) {
-    return replaceImportExportComments(codeBlock).replace(tabName, "").trim();
+    return replaceImportExportComments(codeBlock).replace(tabName, "")
+      .trim();
   }
 
   /**
@@ -197,10 +199,15 @@ export default function CodeExtension({
     return (
       <div className="tabbed-code" style={{ overflow: "auto" }}>
         <div
-          style={{ overflow: "auto", display: "flex", background: "#202328" }}
+          style={{
+            overflow: "auto",
+            display: "flex",
+            background: "#202328",
+          }}
         >
           {tabs.map((tab) => {
             const tabName = tab.match(/.+\n/)[0].trim();
+
             return (
               <Tab
                 $activeTab={activeTab}
@@ -209,11 +216,14 @@ export default function CodeExtension({
                 onClick={() => {
                   // deno-lint-ignore no-window-prefix
                   window.dispatchEvent(
-                    new MessageEvent("changeCodeBlock$activeTab", {
-                      data: tabName,
-                    }),
+                    new MessageEvent(
+                      "changeCodeBlock$activeTab",
+                      {
+                        data: tabName,
+                      },
+                    ),
                   );
-                  // set$activeTab(tabName)
+                  setActiveTab(tabName);
                 }}
               >
                 {tabName}
@@ -235,9 +245,14 @@ export default function CodeExtension({
                 {/* @ts-ignore Add typing later */}
                 <Pre>
                   <code
-                    className={getPrismJsClassNameForCodeBlock(tabName)}
+                    className={getPrismJsClassNameForCodeBlock(
+                      tabName,
+                    )}
                   >
-                    {renderCodeBlockWithoutTabName(codeBlock, tabName)}
+                    {renderCodeBlockWithoutTabName(
+                      codeBlock,
+                      tabName,
+                    )}
                   </code>
                 </Pre>
               </div>
@@ -278,7 +293,9 @@ export default function CodeExtension({
     });
   }
 
-  if (children && Array.isArray(children) && typeof children[0] === "string") {
+  if (
+    children && Array.isArray(children) && typeof children[0] === "string"
+  ) {
     // Tabbed code blocks MUST have at least TWO "// @Tab" tags and
     // those tags MUST be in the following format:
     //

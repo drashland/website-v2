@@ -13,7 +13,8 @@ export function convertFilenameToURL(filename) {
     .map((path) => {
       // Remove all prefixed numbers and underscores from each path part. For example, a filename
       // like `1_getting_started.md` would be converted to `getting_started`.
-      return path.replace(/[0-9]+_/, "");
+      const ret = path.replace(/[0-9]+_/, "");
+      return ret;
     })
     .join("/") // Put back the filename with number prefixes removed
     .replace("docs", "/") // The `/docs` part of the filename is not used in the URL

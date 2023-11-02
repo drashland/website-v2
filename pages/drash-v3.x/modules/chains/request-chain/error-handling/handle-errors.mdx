@@ -1,0 +1,316 @@
+import { Callout, Steps, Tab, Tabs } from "nextra/components";
+import { Link } from "@/src/components/nextra/Link";
+import { EndStateTree } from "@/src/components/nextra/EndStateTree";
+import CalloutFaviconError from "@/src/components/nextra/CalloutFaviconError.mdx"
+
+# Throw and Catch Errors
+
+## Before You Get Started
+
+In this tutorial, we will show you how to throw `HTTPError` objects, catch them, and use them to build responses. We will use the Request Chain module to build the application that throws the `HTTPError` object.
+
+### Recommended Reading
+
+- Complete the [Create a Chain](./) tutorial
+- Read the [Introduction](./introduction) page on errors
+
+### Objectives
+
+To gain familiarity with:
+
+- Drash's `HTTPError` class; and
+- catching/throwing errors.
+
+## Instructions
+
+<EndStateTree
+  tree={[
+    "app.ts"
+  ]}
+/>
+
+<Steps>
+
+### Build the Chain
+
+The chain below has a `Home` resource that's accessible at the `/` path. Resources haven't been discussed yet, but we wanted to give you a working chain for the [Verification](#verification) section below. Otherwise, it would only throw `404 Not Found` errors which we feel would not be useful in this tutorial. Creating resources are discussed in part 2 of this tutorial: [Request Chain > Add Resources](./add-resources).
+
+The code comments explain the code in a line-by-line manner. Please read the comments to gain an understanding of how this chain works.
+
+<Tabs items={[
+  "Deno v1.37.x (TS)",
+  "Node v16.x (TS)",
+//  "Node v16.x (JS)",
+//  "Node v16.x (CJS)",
+//  "Cloudflare Workers (TS)",
+//  "Bun v0.x (JS)"
+]}>
+
+<Tab>
+
+```typescript showLineNumbers filename="path/to/your/project/app.ts" copy
+// Deno v1.37.x (TS)
+
+// Drash imports
+import * as RequestChain from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts";
+
+// Deno imports
+import { serve } from "https://deno.land/std/http/server.ts";
+
+// Create a simple resource that we can use to verify the application works
+class Home extends RequestChain.Resource {
+  public paths = ["/"];
+
+  public GET(request: Request): Response {
+    const token = request.headers.get("x-token");
+
+    if (!token) {
+      throw new RequestChain.HTTPError(
+        401,
+        "You shall not pass"
+      );
+    }
+
+    if (token === "throw_non_http_error") {
+      throw new Error("This is not the HTTPError object");
+    }
+
+    return new Response("Hey, you have a token");
+  }
+}
+
+const chain = RequestChain
+  .builder()                    // Get the chain's builder so we can build the chain easily.
+  .resources(
+    Home,                       // Add the `Home` resource to the chain.
+  )
+  .build();                     // Build the chain.
+
+const hostname = "localhost";   // Define the HTTP server's hostname
+const port = 1447;              // Define the HTTP serer's port
+
+const serveHandler = (          // Create the handler that Deno will use.
+  request: Request              // This handler will receive a `Request` object from Deno.
+): Promise<Response> => {       // Deno expects you to return a `Response` object, so the return
+                                // is defined as such. Since this chain's handlers return `Promise`
+                                // objects, the return type is `Promise<Response>`.
+
+  return chain
+    .handle<Response>(request)  // Pass the `Request` object to the chain. The `<Response>` typing
+                                // defines the return type of `.handle()`. In this case, we are
+                                // saying, "This method will return a `Response` object."
+
+    .then((response) => {       // The `Response` object from the resource will be sent here if the
+                                // request contains the `x-token` header.
+      console.log(response)     // We can log it just for debugging purposes.
+      return response;          // Since Deno expects a `Response` object, we can return the
+                                // `Response` object from the resource to Deno as is.
+    })
+      
+    .catch((
+      | e: Error
+      | RequestChain.HTTPError // If the request does not contain the `x-token` header, then the
+    ) => {                     // `RequestChain.HTTPError` will be thrown and caught here.
+
+      if ((e.name === "HTTPError") || (e instanceof RequestChain.HTTPError)) {
+
+        return new Response(   // When catching the `RequestChain.HTTPError` object, we can use its
+          e.message,           // properties to build this response.
+          {
+            status: e.status_code,
+            statusText: e.status_code_description,
+          }
+        );
+
+      }
+
+      return new Response(     // If the error above is not the `RequestChain.HTTPError`, then a
+        "Request failed",      // generic error message can be used.
+        {
+          status: 500,
+          statusText: "Internal Server Error",
+        }
+      );
+    });
+};
+
+console.log(`\nDrash is running at http://${hostname}:${port}`);
+
+await serve(serveHandler, { port });
+```
+
+</Tab>
+
+<Tab>
+
+```typescript showLineNumbers filename="path/to/your/project/app.ts" copy
+// Node v16.x (TS)
+
+// Drash imports
+import * as RequestChain from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts";
+
+// Node imports
+import { IncomingMessage, ServerResponse, createServer } from "node:http";
+
+type NodeContext = {
+  url: string;
+  method: string;
+  request: IncomingMessage;
+  response: ServerResponse<IncomingMessage>;
+};
+
+// Create a simple resource that we can use to verify the application works
+class Home extends RequestChain.Resource {
+  public paths = ["/"];
+
+  public GET(context: NodeContext) {
+    const token = request.getHeaders()["x-token"];
+
+    if (!token) {
+      throw new RequestChain.HTTPError(
+        401,
+        "You shall not pass"
+      );
+    }
+
+    if (token === "throw_non_http_error") {
+      throw new Error("This is not the HTTPError object");
+    }
+
+    context.res.write("Hey, you have a token");
+  }
+}
+
+const chain = RequestChain
+  .builder()                    // Get the chain's builder so we can build the chain easily.
+  .resources(
+    Home,                       // Add the `Home` resource to the chain.
+  )
+  .build();                     // Build the chain.
+
+const hostname = "localhost";   // Define the HTTP server's hostname
+const port = 1447;              // Define the HTTP serer's port
+
+const baseUrl = `http://${hostname}:${port}`
+
+(async () => {                  // Create an immediately invoked function expression (IIFE) that
+                                // will start when this file runs.
+
+  const server = createserver(( // Create the server object that gives you the request and response
+    req,                        // objects you can use to create the `NodeContext` data type object.
+    res                         // Creating this object is done below.
+  ) => {
+
+    const context = {           // Create the `NodeContext` data type object. When this is sent into
+      url: baseUrl + req.url,   // the chain, it will be accessible when it gets to the `Home`
+      method: request.method,   // resource. As a reminder, `url` field must be a full URL (as
+      req,                      // mentioned on the "Concepts > Chains" page.
+
+      res,                      // When this `context` object reaches the `Home` resource, this
+    };                          // `res` field can be used to write the response (as done
+                                // above via `context.res.write()`.
+
+  return chain
+    .handle<void>(context)      // Pass the `context` object to the chain. The `<void>` typing
+                                // defines the return type of `.handle()`. In this case, we are
+                                // saying, "This method does not return anything -- it's void."
+                                // The `Home` resource only accesses the `res` object to write
+                                // a response. Node does not require a value to be returned back, so
+                                // `<void>` is appropriate here. Reason being Node's internals will
+                                // know that the response has been written and that the message is
+                                // considered closed.
+
+    .then(() => {               // The `.handle()` method will resolve if the request contains the
+      console.log(context)      // `x-token` header. For debugging purposes, we can just log the
+                                // context. Since Node does not require anything to be returned, we
+                                // can stop our code at this `console.log` statement and Node will
+                                // handle the `context.res` object under its hood.
+    })
+      
+    .catch((
+      | e: Error
+      | RequestChain.HTTPError // If the request does not contain the `x-token` header, then the
+    ) => {                     // `RequestChain.HTTPError` will be thrown and caught here.
+
+      if ((e.name === "HTTPError") || (e instanceof RequestChain.HTTPError)) {
+
+        return new Response(   // When catching the `RequestChain.HTTPError` object, we can use its
+          e.message,           // properties to build this response.
+          {
+            status: e.status_code,
+            statusText: e.status_code_description,
+          }
+        );
+
+      }
+
+      return new Response(     // If the error above is not the `RequestChain.HTTPError`, then a
+        "Request failed",      // generic error message can be used.
+        {
+          status: 500,
+          statusText: "Internal Server Error",
+        }
+      );
+    });
+  });
+
+  server.listen(                // Start the server (this will run since it is inside this IIFE)
+    port,
+    hostname,
+  () => {
+    console.log(`\nDrash is running at http://${hostname}:${port}`);
+  });
+})();
+```
+
+</Tab>
+
+</Tabs>
+
+</Steps>
+
+## Verification
+
+### Run Your Code
+
+Please refer to your chosen runtime's documentation pages for instructions on running the above `app.ts` file (or `app.js` file if you are using JavaScript).
+
+### Verify Your Code
+
+You will need to verify your code by making a cURL request or similar. The verification instructions below will show the `curl` command.
+
+1. Once your app is running, you can make a request to `http://localhost:1447`.
+
+    You should expect to see something similar to the following which means your `Home` resource is working:
+
+    ```
+    
+    ```
+
+1. Check that the `Coffees` resource is working by going to `http://localhost:1447/coffees`.
+
+    You should expect to see something similar to the following which means your `Coffees` resource is working
+
+    ```
+    Request received: (!! COFFEES !!) GET http://localhost:1447/coffees
+    Written at: Sun Aug 20 2023 20:21:54 GMT-0400 (Eastern Daylight Time)
+    ```
+
+1. Check that the `Teas` resource is working by going to `http://localhost:1447/teas`.
+
+    You should expect to see something similar to the following which means your `Teas` resource is working
+
+    ```
+    Request received: (!! TEAS !!) GET http://localhost:1447/teas
+    Written at: Sun Aug 20 2023 20:21:57 GMT-0400 (Eastern Daylight Time)
+    ```
+
+If the above check passed, then your app is working as expected.
+
+## Next Steps
+
+Feel free to follow our recommendation or navigate the documentation pages at your leisure.
+
+### Our Recommendations
+
+- [Add more resources](./add-resources) to your chain

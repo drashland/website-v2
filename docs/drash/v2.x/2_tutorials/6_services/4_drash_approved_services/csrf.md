@@ -202,7 +202,7 @@ set!
    against that generated token. Since the `f0rg3d` token does not match the
    `CSRFService` generated token, the `403` response is returned.
 
-4. Now, get the the token using `curl` (or similar command) by making a `GET`
+4. Now, get the token using `curl` (or similar command) by making a `GET`
    request to `http://localhost:1447`.
 
    ```shell
