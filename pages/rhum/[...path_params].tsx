@@ -130,7 +130,7 @@ export function getStaticProps({ params }) {
   ret.props.topBarModuleName = titleCase(moduleName);
 
   const versions = runtimeConfig.versions[moduleName].versions;
-  let version = "v2.x";
+  const version = "v2.x";
 
   ret.props.moduleVersion = version;
   ret.props.moduleVersions = versions;
