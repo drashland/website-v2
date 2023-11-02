@@ -68,7 +68,7 @@ The example below shows a resource from the Request Chain module using a "contex
 <Tabs items={["Deno v1.37.x / TS", "Node v18.x / ESM JS"]}>
 <Tab>
 ```typescript
-import { Chain, Resource } from "http://esm.sh/drash/modules/RequestChain/mod.native.ts";
+import { Chain, Resource } from "http://esm.sh/drash/modules/chains/RequestChain/mod.native.ts";
 import { serve } from "https://deno.land/std@.../http/server.ts";
 const port = 1447;
 
@@ -109,7 +109,7 @@ await serve(handler, { port });
 </Tab>
 <Tab>
 ```javascript
-const { Chain, Resource } = require("@drashland/drash/modules/RequestChain/mod.polyfill");
+const { Chain, Resource } = require("@drashland/drash/modules/chains/RequestChain/mod.polyfill");
 const http = require("http");
 const port = 1447;
 
@@ -157,7 +157,7 @@ The example below shows a resource from the Request Chain module using Web APIs 
 <Tabs items={["Deno 1.37.x / TS", "Node v18.x / ESM JS"]}>
 <Tab>
 ```typescript
-import { Chain, Resource } from "http://esm.sh/drash/modules/RequestChain/mod.native.ts";
+import { Chain, Resource } from "http://esm.sh/drash/modules/chains/RequestChain/mod.native.ts";
 import { serve } from "https://deno.land/std@.../http/server.ts";
 const port = 1447;
 
@@ -190,7 +190,7 @@ await serve(handler, { port });
 </Tab>
 <Tab>
 ```javascript
-const { Chain, Resource } = require("@drashland/drash/modules/RequestChain/mod.polyfill");
+const { Chain, Resource } = require("@drashland/drash/modules/chains/RequestChain/mod.polyfill");
 const http = require("http");
 const port = 1447;
 
@@ -324,7 +324,7 @@ When you use a chain, you will extend its `Resource` class to create your resour
 
 ```typescript filename="MyResource.ts"
 // Import path is shortened for brevity
-import { Resource } from "../path/to/modules/RequestChain/mod.native.ts";
+import { Resource } from "../path/to/modules/chains/RequestChain/mod.native.ts";
 
 class MyResource extends RequestChain.Resource {
   public paths = ["/teas"];

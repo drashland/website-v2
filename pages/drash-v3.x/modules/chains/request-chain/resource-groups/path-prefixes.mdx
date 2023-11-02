@@ -1,22 +1,18 @@
 import { Callout, Tabs, Tab } from "nextra/components";
 import { LinkExternal } from "@/src/components/nextra/LinkExternal";
 
-# Middleware
+# Path Prefixes
 
-<Callout type="info" emoji={null}>
-In [v2.x](/drash/v2.x/tutorials/services/basics), we use the term "services" to encapsulate any software used in a Drash application that is not part of Drash's core code. We are changing that definition for v3.x onward. We now use the <LinkExternal href="https://developer.mozilla.org/en-US/docs/Glossary/Middleware">MDN's definition</LinkExternal> to describe middleware.
-</Callout>
+Path prefixes can be added to your group of resources using the following syntax:
 
-## Summary
+<Tabs items={["Deno v1.37.x"]}>
 
-Middleware is software that can run before and after a resource's HTTP method is called. Middleware can be added to resources using a [resource group](./introduction).
-
-The highlighted sections below show how middleware can be added:
+<Tab>
 
 ```typescript showLineNumbers  {12-15}
 // Code is shortened for brevity
 
-import { Chain, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts";
+import { Chain, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.1/modules/chains/RequestChain/mod.native.ts";
  
 const groupedResources = Resource
   .group()            // Get the class' builder for quickly building a group
@@ -25,9 +21,9 @@ const groupedResources = Resource
     ResourceB,
     ResourceC,
   )
-  .middleware(        // Add these middleware classes to each resource
-    SomeMiddlewareA,  // During runtime, SomeMiddlewareA will run first, then ...
-    SomeMiddlewareB,  // ... SomeMiddlewareB will run, then the resource will be called
+  .pathPrefixes(      // Add these path prefixes
+    "/api/v1",
+    "/api/latest",
   )
   .build();           // Build the group
 
@@ -38,266 +34,8 @@ const chain = Chain
   .build();
 ```
 
-## Creating Middleware
-
-### Handling Requests
-
-You can create middleware by extending the Request Chain module's `Middleware` class.
-
-Below is an example of creating a logging middleware that logs GET requests to a resource.
-
-```typescript showLineNumbers
-import { Chain, Middleware, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/modules/RequestChain/mod.native.ts";
-
-// Create the resource
-class MyResource extends Resource {
-    public paths = ["/"];
-
-    public GET(request) {
-        return new Response("Hello!");
-    }
-}
-
-// Create the middleware
-class LogGETRequests extends Middleware {
-  public GET(request) {
-      // Log the request
-      //
-      // A logging library is a better option, but for educational purposes,
-      // a `console.log()` statement will suffice.
-      console.log(`Incoming request: ${request.method} ${request.url}`);
-
-      // Call the resource's GET method. `super` will be `MyResource` when
-      // they are built in their resource group.
-      return super.GET(request);
-  }
-}
-
-const group = Resource
-  .group()
-  .resources(MyResource)      // Add the resource to the group
-
-  .middleware(LogGETRequests) // Add the middleware to the group. During the
-                              // resource group's build process, this
-                              // middleware will end up EXTENDING the
-                              // `MyResource` class -- hence the
-                              // `super.GET()` call in the resource. `super`
-                              // will be `MyResource`, so `super.GET()` will
-                              // call `MyResource.GET()`.
-  .build();
-
-const chain = Chain
-  .builder()
-  .resources(group)          // Chains can take in resources and resource groups
-  .build();
-```
-
-You might notice that the `LogGETRequests` middleware class has a `GET` method defined (just like a resource). The Request Chain module's `Middleware` class extends the same core `Resource` class that the Request Chain module's `Resource` class extends. This means all middleware classes you create will inherit the same HTTP methods that the Request Chain module's `Resource` class inherits. This also means the following:
-
-- If you want your middleware to handle GET requests, then add a `GET` method to your middleware
-- If you want your middleware to handle POST requests, then add a `POST` method to your middleware
-- If you want your middleware to handle PUT requests, then add a `PUT` method to your middleware
-- ... and so on
-
-### Handling All Requests
-
-Middleware classes also have an `ALL` method. This method allows your middleware to run on __all__ requests to your resource(s) &mdash; hence the method name being `ALL`. Taking the above `LogGETRequests` class, making it log on all requests looks like:
-
-```typescript showLineNumbers {14}
-import { Chain, Middleware, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/modules/RequestChain/mod.native.ts";
-
-// Create the resource
-class MyResource extends Resource {
-    public paths = ["/"];
-
-    public GET(request) {
-        return new Response("Hello!");
-    }
-}
-
-// Create the middleware
-class LogGETRequests extends Middleware {
-  public ALL(request) {
-      // Log the request
-      //
-      // A logging library is a better option, but for educational purposes,
-      // a `console.log()` statement will suffice.
-      console.log(`Incoming request: ${request.method} ${request.url}`);
-
-      // Call the resource's GET method. `super` will be `MyResource` when
-      // they are built in their resource group.
-      return super.GET(request);
-  }
-}
-
-const group = Resource
-  .group()
-  .resources(MyResource)      // Add the resource to the group
-
-  .middleware(LogGETRequests) // Add the middleware to the group. During the
-                              // resource group's build process, this
-                              // middleware will end up EXTENDING the
-                              // `MyResource` class -- hence the
-                              // `super.GET()` call in the resource. `super`
-                              // will be `MyResource`, so `super.GET()` will
-                              // call `MyResource.GET()`.
-  .build();
-
-const chain = Chain
-  .builder()
-  .resources(group)          // Chains can take in resources and resource groups
-  .build();
-```
-
-The above code will result in `LogGETRequests` logging every request made to `MyResource`.
-
-## Sorting Middleware
-
-Middleware runs in the order you define them (from top-to-bottom or left-to-right depending on how you write your code). For example:
-
-<Tabs items={["Top-to-bottom", "Left-to-right"]}>
-<Tab>
-```typescript showLineNumbers
-// Code is shortened for brevity
-
-import { Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts";
- 
-const groupedResources = Resource
-  .group()
-  .resources(
-    ResourceA,
-    ResourceB,
-    ResourceC,
-  )
-  .middleware(
-    SomeMiddlewareA, // This runs first
-    SomeMiddlewareB, // This runs second
-    SomeMiddlewareC, // This runs third
-  )
-  .build();
-```
 </Tab>
-<Tab>
-```typescript showLineNumbers
-// Code is shortened for brevity
 
-import { Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts";
- 
-const groupedResources = Resource
-  .group()
-  .resources(
-    ResourceA,
-    ResourceB,
-    ResourceC,
-  )
-  .middleware(SomeMiddlewareA, SomeMiddlewareB, SomeMiddlewareC)
-  //          ^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^
-  //          This runs first  This runs second This runs third
-  .build();
-```
-</Tab>
 </Tabs>
 
-## How It Works
-
-### TLDR
-
-When a resource group is built with resources and middleware, the build process takes all middleware and places them in front of the resources.
-
-### Detailed Explanation
-
-When a resource group is built with resources and middleware, it uses a variant of the <LinkExternal href="https://en.wikipedia.org/wiki/Proxy_pattern">Proxy Pattern</LinkExternal> to place middleware in front of the resources. This allows middleware to run processes before and after a resource's HTTP method is called, or in some cases, prevent a resource from being accessed (e.g., throwing a `401 Unauthorized` response because of a missing auth token).
-
-In the below resource group, the middleware classes in the `.middleware()` call will be placed in front of `ResourceA`, `ResourceB`, and `ResourceC`. When requests are made to the resources, they must go through each middleware before being passed to the resource they are targeting. For example, if we have the code below ...
-
-```typescript showLineNumbers  {12-15}
-// Code is shortened for brevity
-
-import { Chain, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts";
- 
-const groupedResources = Resource
-  .group()            // Get the class' builder for quickly building a group
-  .resources(         // Add these resources
-    ResourceA,
-    ResourceB,
-    ResourceC,
-  )
-  .middleware(        // Add these middleware classes to each resource
-    SomeMiddlewareA,  // During runtime, SomeMiddlewareA will run first, then ...
-    SomeMiddlewareB,  // ... SomeMiddlewareB will run, then the resource will be called
-  )
-  .build();           // Build the group
-
-// Create the chain and add the resource group to it
-const chain = Chain
-  .builder()
-  .resources(groupedResources)
-  .build();
-```
-
-... the request flows for each resource will be:
-
-<div className="tutorials:chains:introduction flowchart-drash-chain">
-```mermaid
-flowchart LR
-  req([Request])
-  h1([SomeMiddlewareA])
-  h2([SomeMiddlewareB])
-  h3([ResourceA])
-
-  subgraph chain[ResourceA Flow]
-    direction LR
-    req --> h1 --> h2 --> h3
-  end
-
-  style chain fill:#4299e1,stroke:#4299e1,stroke-width:2px,color:#ebf8ff;
-
-  classDef blue fill:#ebf8ff,stroke:#4299e1,stroke-width:2px,color:#2b6cb0;
-
-  class req,h1,h2,h3,h4 blue
-```
-</div>
-
-<div className="tutorials:chains:introduction flowchart-drash-chain">
-```mermaid
-flowchart LR
-  req([Request])
-  h1([SomeMiddlewareA])
-  h2([SomeMiddlewareB])
-  h3([ResourceB])
-
-  subgraph chain[ResourceB Flow]
-    direction LR
-    req --> h1 --> h2 --> h3
-  end
-
-  style chain fill:#4299e1,stroke:#4299e1,stroke-width:2px,color:#ebf8ff;
-
-  classDef blue fill:#ebf8ff,stroke:#4299e1,stroke-width:2px,color:#2b6cb0;
-
-  class req,h1,h2,h3,h4 blue
-```
-</div>
-
-<div className="tutorials:chains:introduction flowchart-drash-chain">
-```mermaid
-flowchart LR
-  req([Request])
-  h1([SomeMiddlewareA])
-  h2([SomeMiddlewareB])
-  h3([ResourceC])
-
-  subgraph chain[ResourceC Flow]
-    direction LR
-    req --> h1 --> h2 --> h3
-  end
-
-  style chain fill:#4299e1,stroke:#4299e1,stroke-width:2px,color:#ebf8ff;
-
-  classDef blue fill:#ebf8ff,stroke:#4299e1,stroke-width:2px,color:#2b6cb0;
-
-  class req,h1,h2,h3,h4 blue
-```
-</div>
-
-As you can see above, requests must go through middleware before being passed to the resources.
+The above syntax will add the `/api/v1` path prefix to __all__ paths in `ResourceA`, `ResourceB`, and `ResourceC`.

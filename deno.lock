@@ -1,10 +1,10 @@
 {
   "version": "3",
   "redirects": {
-    "https://esm.sh/@drashland/drash/lib/esm/modules/chains/RequestChain/mod.native.js": "https://esm.sh/@drashland/drash@3.0.0-preview.1/lib/esm/modules/chains/RequestChain/mod.native.js"
+    "https://esm.sh/@drashland/drash/lib/modules/chains/RequestChain/mod.native.js": "https://esm.sh/@drashland/drash@3.0.0-preview.1/lib/modules/chains/RequestChain/mod.native.js"
   },
   "remote": {
-    "https://esm.sh/@drashland/drash@3.0.0-preview.1/lib/esm/modules/chains/RequestChain/mod.native.js": "5d4cd9d82fcf7052ae7c35d9932c3b6c02aaa7f327eb30fdd7a73c12d743958b",
-    "https://esm.sh/v133/@drashland/drash@3.0.0-preview.1/denonext/lib/esm/modules/chains/RequestChain/mod.native.js": "e78383412ad14a0c322d35b956011ea2ba826ec1de68c319f424c510b7147696"
+    "https://esm.sh/@drashland/drash@3.0.0-preview.1/lib/modules/chains/RequestChain/mod.native.js": "5d4cd9d82fcf7052ae7c35d9932c3b6c02aaa7f327eb30fdd7a73c12d743958b",
+    "https://esm.sh/v133/@drashland/drash@3.0.0-preview.1/denonext/lib/modules/chains/RequestChain/mod.native.js": "e78383412ad14a0c322d35b956011ea2ba826ec1de68c319f424c510b7147696"
   }
 }

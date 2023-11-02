@@ -11,7 +11,7 @@ Just like other frameworks, Drash resources have the ability to parse paths like
 Resources are able to specify path params in their paths to allow them to cover multiple endpoints. For example:
 
 ```typescript filename="ResourceWithPathParam.ts"
-import { Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts"
+import { Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.1/modules/chains/RequestChain/mod.native.ts"
 
 class ResourceWithPathParam extends Resource {
 
@@ -45,7 +45,7 @@ To learn more about handling path params, view the [Requests > Path Params](/dra
 Path params can also be optional using a question mark (`?`). This allows a resource to accept a request with a URI that does or does not have the path param. For example:
 
 ```typescript filename="Users.ts"
-import { Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts"
+import { Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.1/modules/chains/RequestChain/mod.native.ts"
 
 class Users extends Resource {
   // id   = required
@@ -108,7 +108,7 @@ GET /users/1/John/54/UK/   ->  GOT | 1 | John | 54 | UK
 Resources are able to specify regular expressions in their paths to allow them to cover multiple endpoints.
 
 ```typescript filename="RegexPathResource.ts"
-import { Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts"
+import { Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.1/modules/chains/RequestChain/mod.native.ts"
 
 class RegexPathResource extends Resource {
   public paths = [

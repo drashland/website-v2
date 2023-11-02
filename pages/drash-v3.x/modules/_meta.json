@@ -1,6 +1,11 @@
 {
-  "base": "Base (WIP)",
-  "builders": "Builders (WIP)",
-  "chains": "Chains",
-  "middleware": "Middleware (WIP)"
+  "base": {
+    "title": "Base",
+    "display": "hidden"
+  },
+  "builders": {
+    "title": "Base",
+    "display": "hidden"
+  },
+  "chains": "Chains"
 }

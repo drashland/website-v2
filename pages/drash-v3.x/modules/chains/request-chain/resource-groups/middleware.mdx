@@ -13,10 +13,14 @@ Middleware is software that can run before and after a resource's HTTP method is
 
 The highlighted sections below show how middleware can be added:
 
+<Tabs items={["Deno v1.37.x"]}>
+
+<Tab>
+
 ```typescript showLineNumbers  {12-15}
 // Code is shortened for brevity
 
-import { Chain, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts";
+import { Chain, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.1/modules/chains/RequestChain/mod.native.ts";
  
 const groupedResources = Resource
   .group()            // Get the class' builder for quickly building a group
@@ -38,6 +42,9 @@ const chain = Chain
   .build();
 ```
 
+</Tab>
+</Tabs>
+
 ## Creating Middleware
 
 ### Handling Requests
@@ -46,8 +53,12 @@ You can create middleware by extending the Request Chain module's `Middleware` c
 
 Below is an example of creating a logging middleware that logs GET requests to a resource.
 
+<Tabs items={["Deno v1.37.x"]}>
+
+<Tab>
+
 ```typescript showLineNumbers
-import { Chain, Middleware, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/modules/RequestChain/mod.native.ts";
+import { Chain, Middleware, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.1/modules/chains/RequestChain/mod.native.ts";
 
 // Create the resource
 class MyResource extends Resource {
@@ -92,6 +103,9 @@ const chain = Chain
   .build();
 ```
 
+</Tab>
+</Tabs>
+
 You might notice that the `LogGETRequests` middleware class has a `GET` method defined (just like a resource). The Request Chain module's `Middleware` class extends the same core `Resource` class that the Request Chain module's `Resource` class extends. This means all middleware classes you create will inherit the same HTTP methods that the Request Chain module's `Resource` class inherits. This also means the following:
 
 - If you want your middleware to handle GET requests, then add a `GET` method to your middleware
@@ -103,8 +117,12 @@ You might notice that the `LogGETRequests` middleware class has a `GET` method d
 
 Middleware classes also have an `ALL` method. This method allows your middleware to run on __all__ requests to your resource(s) &mdash; hence the method name being `ALL`. Taking the above `LogGETRequests` class, making it log on all requests looks like:
 
+<Tabs items={["Deno v1.37.x"]}>
+
+<Tab>
+
 ```typescript showLineNumbers {14}
-import { Chain, Middleware, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/modules/RequestChain/mod.native.ts";
+import { Chain, Middleware, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.1/modules/chains/RequestChain/mod.native.ts";
 
 // Create the resource
 class MyResource extends Resource {
@@ -149,6 +167,9 @@ const chain = Chain
   .build();
 ```
 
+</Tab>
+</Tabs>
+
 The above code will result in `LogGETRequests` logging every request made to `MyResource`.
 
 ## Sorting Middleware
@@ -160,8 +181,6 @@ Middleware runs in the order you define them (from top-to-bottom or left-to-righ
 ```typescript showLineNumbers
 // Code is shortened for brevity
 
-import { Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts";
- 
 const groupedResources = Resource
   .group()
   .resources(
@@ -181,8 +200,6 @@ const groupedResources = Resource
 ```typescript showLineNumbers
 // Code is shortened for brevity
 
-import { Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts";
- 
 const groupedResources = Resource
   .group()
   .resources(
@@ -210,10 +227,14 @@ When a resource group is built with resources and middleware, it uses a variant 
 
 In the below resource group, the middleware classes in the `.middleware()` call will be placed in front of `ResourceA`, `ResourceB`, and `ResourceC`. When requests are made to the resources, they must go through each middleware before being passed to the resource they are targeting. For example, if we have the code below ...
 
+<Tabs items={["Deno v1.37.x"]}>
+
+<Tab>
+
 ```typescript showLineNumbers  {12-15}
 // Code is shortened for brevity
 
-import { Chain, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.01/esm/modules/RequestChain/mod.native.ts";
+import { Chain, Resource } from "https://esm.sh/@drashland/drash@v3.0.0-beta.1/modules/chains/RequestChain/mod.native.ts";
  
 const groupedResources = Resource
   .group()            // Get the class' builder for quickly building a group
@@ -234,6 +255,9 @@ const chain = Chain
   .resources(groupedResources)
   .build();
 ```
+
+</Tab>
+</Tabs>
 
 ... the request flows for each resource will be:
 
