@@ -106,7 +106,7 @@ const chain = Chain
 </Tab>
 </Tabs>
 
-You might notice that the `LogGETRequests` middleware class has a `GET` method defined (just like a resource). The Request Chain module's `Middleware` class extends the same core `Resource` class that the Request Chain module's `Resource` class extends. This means all middleware classes you create will inherit the same HTTP methods that the Request Chain module's `Resource` class inherits. This also means the following:
+You might notice that the `LogGETRequests` middleware class has a `GET` method defined (just like a resource). The Request Chain module's `Middleware` class extends the same core `Resource` class that the Request Chain module's `Resource` class extends. This means __all middleware__ classes you create will inherit the same HTTP methods that the Request Chain module's `Resource` class inherits. This also means the following:
 
 - If you want your middleware to handle GET requests, then add a `GET` method to your middleware
 - If you want your middleware to handle POST requests, then add a `POST` method to your middleware
@@ -219,13 +219,48 @@ const groupedResources = Resource
 
 ### TLDR
 
-When a resource group is built with resources and middleware, the build process takes all middleware and places them in front of the resources.
+When a resource group is built with resources and middleware, the build process takes __all middleware__ and places them around the resources. This allows middleware to run processes before and after a resource's HTTP method is called.
 
 ### Detailed Explanation
 
-When a resource group is built with resources and middleware, it uses a variant of the <LinkExternal href="https://en.wikipedia.org/wiki/Proxy_pattern">Proxy Pattern</LinkExternal> to place middleware in front of the resources. This allows middleware to run processes before and after a resource's HTTP method is called, or in some cases, prevent a resource from being accessed (e.g., throwing a `401 Unauthorized` response because of a missing auth token).
+When a resource group is built with resources and middleware, the build process uses a variant of the <LinkExternal href="https://en.wikipedia.org/wiki/Proxy_pattern">Proxy Pattern</LinkExternal> to place middleware around the resources. This allows middleware to run processes before and after a resource's HTTP method is called like below.
 
-In the below resource group, the middleware classes in the `.middleware()` call will be placed in front of `ResourceA`, `ResourceB`, and `ResourceC`. When requests are made to the resources, they must go through each middleware before being passed to the resource they are targeting. For example, if we have the code below ...
+#### Example
+
+This example shows how middleware can:
+
+- block inbound requests to a resource if the `x-auth-token` header is bad;
+- send requests to a resource; and
+- ensure the response from the resource is tagged with a `x-auth-by` header.
+
+```typescript
+class AuthMiddleware extends Middleware {
+  public ALL(request: Request) {
+
+    const token = request.headers.get("x-auth-token");
+
+    // No token or not verified? Get out.
+    if (!token || !SomeVerificationService.verify(token)) {
+      throw new HTTPError(401, `Denied`);
+    }
+
+    // Otherwise, do your thing man. Proceed.
+    const response = super.GET(request);
+
+    // Alright, before we send the response, let's make sure we tag the response
+    // with some identifier that can be used by outbound/upstream processes.
+    response.headers.set("x-auth-by", "Drash-Auth-v2.3");
+
+    // Cool. Now we can send the response knowing outbound/upstream processes
+    // can identify the request/response as being authorized by Drash-Auth-v2.3.
+    return response;
+  }
+}
+```
+
+#### Data Flow
+
+This example shows how data flows from middleware classes to resource classes. The middleware classes below (in the `.middleware()` call) will be placed around `ResourceA`, `ResourceB`, and `ResourceC`. When requests are made to any of the resources, the requests __must go through each middleware__ before being passed to the resource they are targeting.
 
 <Tabs items={["Deno v1.37.x"]}>
 
@@ -259,7 +294,7 @@ const chain = Chain
 </Tab>
 </Tabs>
 
-... the request flows for each resource will be:
+Taking the above code, the request flows for each resource will be:
 
 <div className="tutorials:chains:introduction flowchart-drash-chain">
 ```mermaid
@@ -324,4 +359,4 @@ flowchart LR
 ```
 </div>
 
-As you can see above, requests must go through middleware before being passed to the resources.
+As you can see above, requests must go through __all middleware__ before being passed to the resources.
