@@ -1,0 +1,19 @@
+{
+"lint": {
+    "rules": {
+        "exclude": [
+        "no-explicit-any"
+        ]
+    },
+    "include": ["./src", "./pages"]
+    },
+    "fmt": {
+        "useTabs": false,
+        "lineWidth": 80,
+        "indentWidth": 2,
+        "semiColons": true,
+        "singleQuote": false,
+        "proseWrap": "preserve",
+        "include": ["./pages", "./src"]
+    }
+}

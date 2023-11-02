@@ -1,0 +1,25 @@
+import { Tabs, Tab } from "nextra/components";
+import QuickstartRequestChainDeno from "./QuickstartRequestChainDeno.mdx";
+import QuickstartRequestChainNodeCJS from "./QuickstartRequestChainNodeCJS.mdx";
+import QuickstartRequestChainNodeESM from "./QuickstartRequestChainNodeESM.mdx";
+import QuickstartRequestChainNodeTS from "./QuickstartRequestChainNodeTS.mdx";
+import QuickstartRequestChainBunTS from "./QuickstartRequestChainBunTS.mdx";
+import QuickstartRequestChainCloudflareWorkersESM from "./QuickstartRequestChainCloudflareWorkersESM.mdx";
+
+<Tabs items={[
+  "Deno v1.37.x",
+  "Node v18.x (CJS)",
+  "Node v18.x (JS ESM)",
+  "Node v18.x (TS)",
+  "Cloudflare Workers (JS ESM)",
+  "Bun v1.x (TS)",
+]}>
+
+<Tab><QuickstartRequestChainDeno /></Tab>
+<Tab><QuickstartRequestChainNodeCJS /></Tab>
+<Tab><QuickstartRequestChainNodeESM /></Tab>
+<Tab><QuickstartRequestChainNodeTS /></Tab>
+<Tab><QuickstartRequestChainCloudflareWorkersESM /></Tab>
+<Tab><QuickstartRequestChainBunTS /></Tab>
+
+</Tabs>

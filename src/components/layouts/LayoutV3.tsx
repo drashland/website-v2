@@ -1,9 +1,6 @@
-import "../../../node_modules/nextra-theme-docs/style.css";
 import type { Folder, NextraThemeLayoutProps } from "nextra";
 import { default as NextraThemeDocsLayout } from "nextra-theme-docs";
 import { Inter as Font } from "next/font/google";
-
-
 
 export const font = Font({ subsets: ["latin"] });
 
@@ -22,7 +19,11 @@ export default function LayoutV3(props: NextraThemeLayoutProps) {
   // // props.pageOpts.pageMap = pageMap;
 
   return (
-    <div className={font.className + " antialiased leading-relaxed layout-v3"} data-layout-id="nextra">
+    <div
+      className={font.className +
+        " antialiased leading-relaxed layout-v3"}
+      data-layout-id="nextra"
+    >
       <NextraThemeDocsLayout {...props} />
     </div>
   );

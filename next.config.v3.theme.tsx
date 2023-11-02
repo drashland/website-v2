@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Cards, DocsThemeConfig, useConfig } from "nextra-theme-docs";
+import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
 import Image from "next/image";
 
 /**
@@ -11,60 +11,64 @@ const config: DocsThemeConfig = {
   },
   docsRepositoryBase: "https://github.com/drash-website-v2",
   footer: {
-    text: <span>Drash Land | Drash | &copy; 2019 - 2023 Drash Land</span>,
+    text: (
+      <div className="flex w-full justify-center">
+        <span className="text-xs uppercase font-semibold">&copy; 2019 - 2023 Drash Land</span>
+      </div>
+    ),
   },
   head: () => {
-
     const { frontMatter, title: titleFromConfig } = useConfig();
 
     let title = "Drash";
 
-    if (notEmptyString(titleFromConfig)) {
+    if (frontMatter && frontMatter.head_title) {
+      title = `${title} - ${frontMatter.head_title}`;
+    } else {
       title = `${title} - ${titleFromConfig}`;
     }
 
-    // if (frontMatter && notEmptyString(frontMatter.title)) {
-    //   title = `${title} - ${frontMatter.title}`;
-    // }
-
-    return (
-      <>
-        <title>{title}</title>
-      </>
-    );
+    return <title>{title}</title>;
   },
   sidebar: {
     defaultMenuCollapseLevel: 3,
-    toggleButton: true,
     titleComponent: (item) => {
       const { title, type } = item;
 
       if (title === "-logo-") {
         return (
           <div className="logo logo-drash flex nx-justify-center w-full">
-            <Image src={"/logo-drash.svg"} width="100" height="100" alt="Logo - Drash"/>
+            <Image
+              src={"/logo-drash.svg"}
+              width="100"
+              height="100"
+              alt="Logo - Drash"
+            />
           </div>
         );
       }
 
       if (type === "separator") {
-        return <span className="sidebar-separator-title nx-text-slate-900 dark:nx-text-slate-100 nx-font-bold">{title}</span>
+        return (
+          <span className="sidebar-separator-title nx-text-slate-900 dark:nx-text-slate-100 nx-font-bold">
+            {title}
+          </span>
+        );
       }
 
-      console.log({ title })
-
       return title;
-    }
+    },
   },
-  logo: "Drash",
+  logo: (
+    <div className="text-[11px] uppercase font-semibold">
+      <span className="nx-text-gray-400">Drash Land</span> · <span className="nx-text-gray-800">Drash</span>
+    </div>
+  ),
   navigation: false,
   project: {
-    link: "https://github.com/drashland/drash",
+    link: "https://github.com/drashland/drash/tree/v3.x-beta",
   },
+  darkMode: false,
 };
-
-function notEmptyString(str: string) {
-  return str && (typeof str === "string") && (str.trim() !== "");
-}
 
 export default config;

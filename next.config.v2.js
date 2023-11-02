@@ -4,41 +4,47 @@ module.exports = {
     styledComponents: true,
   },
   redirects: [
+    // Redirect old Drash v2.x URLs (/drash/v2.x) to new URLs (/drash-v2.x)
+    {
+      source: "/drash/v2.x/:path*",
+      destination: "/drash-v2.x/:path*",
+      permanent: false,
+    },
     // Redirect pages without content to the nearest page with content
     {
       source: "/drash/v2.x",
-      destination: "/drash/v2.x/getting-started/introduction",
+      destination: "/drash-v2.x/getting-started/introduction",
       permanent: false,
     },
     {
       source: "/drash/v2.x/getting-started",
-      destination: "/drash/v2.x/getting-started/introduction",
+      destination: "/drash-v2.x/getting-started/introduction",
       permanent: false,
     },
     {
       source: "/drash/v2.x/tutorials",
       destination:
-        "/drash/v2.x/tutorials/introduction/add-drash-as-a-dependency",
+        "/drash-v2.x/tutorials/introduction/add-drash-as-a-dependency",
       permanent: false,
     },
     {
       source: "/drash/v2.x/tutorials/resources",
-      destination: "/drash/v2.x/tutorials/resources/creating-a-resource",
+      destination: "/drash-v2.x/tutorials/resources/creating-a-resource",
       permanent: false,
     },
     {
       source: "/drash/v2.x/tutorials/requests",
-      destination: "/drash/v2.x/tutorials/requests/handling-json-bodies",
+      destination: "/drash-v2.x/tutorials/requests/handling-json-bodies",
       permanent: false,
     },
     {
       source: "/drash/v2.x/tutorials/responses",
-      destination: "/drash/v2.x/tutorials/responses/setting-the-body",
+      destination: "/drash-v2.x/tutorials/responses/setting-the-body",
       permanent: false,
     },
     {
       source: "/drash/v2.x/tutorials/services",
-      destination: "/drash/v2.x/tutorials/services/introduction",
+      destination: "/drash-v2.x/tutorials/services/introduction",
       permanent: false,
     },
     // Remove the below /drash/v1.x object when its migrated

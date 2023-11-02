@@ -1,7 +1,28 @@
 {
-  "drash": {
-    "title": "Drash",
+  "drash-v3.x": {
+    "title": "v3.x",
+    "type": "page",
     "display": "hidden",
-    "type": "page"
+    "theme": {
+      "breadcrumb": false
+    }
+  },
+  "versions": {
+    "title": "Versions",
+    "type": "menu",
+    "items": {
+      "v3.x": {
+        "title": "v3.x Beta (Latest)",
+        "href": "/drash-v3.x"
+      },
+      "v2.x": {
+        "title": "v2.x",
+        "href": "/drash-v2.x"
+      },
+      "v1.x": {
+        "title": "v1.x",
+        "href": "/drash/v1.x"
+      }
+    }
   }
 }

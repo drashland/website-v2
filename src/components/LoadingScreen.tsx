@@ -11,7 +11,6 @@ const Container = styled.div`
   background: ${(props) => props.theme.layout.background};
   color: ${(props) => props.theme.layout.color};
   width: 100%;
-  height: auto;
   min-width: 375px; // iPhone X width
   transition-duration: 0.25s;
   transition-property: background;
@@ -41,7 +40,9 @@ export default function LoadingScreen({
       <Container>
         <Main>
           <InnerContainer>
-            <MiddleMessage>{message ? message : "Loading..."}</MiddleMessage>
+            <MiddleMessage>
+              {message ? message : "Loading..."}
+            </MiddleMessage>
           </InnerContainer>
         </Main>
       </Container>

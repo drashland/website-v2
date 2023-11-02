@@ -305,7 +305,11 @@ export default function Layout(props) {
 
   return (
     <ThemeProvider theme={darkMode === "true" ? darkTheme : lightTheme}>
-      <Container className="layout-v2">
+      <Container
+        className={`layout-v2 ${
+          (darkMode === "true") ? "layout-v2-dark" : "layout-v2-light"
+        }`}
+      >
         <ButtonOpenSideBar
           $show={mobileViewport}
           $sideBarOpen={sideBarOpen}
@@ -366,7 +370,11 @@ export default function Layout(props) {
               {editThisPageUrl && (
                 <p>
                   Alternatively, you can{" "}
-                  <a href={editThisPageUrl} target="_BLANK" rel="noreferrer">
+                  <a
+                    href={editThisPageUrl}
+                    target="_BLANK"
+                    rel="noreferrer"
+                  >
                     edit this page
                   </a>.
                 </p>

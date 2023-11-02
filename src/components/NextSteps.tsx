@@ -1,5 +1,3 @@
 export default function NextSteps(props) {
-  return (
-    <p></p>
-  );
+  return <p></p>;
 }

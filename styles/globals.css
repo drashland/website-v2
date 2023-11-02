@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 /* Fonts */
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,300;1,900&display=swap');
@@ -63,10 +59,21 @@ body .layout-landing-page {
 */
 
 body .layout-v2 {
-  color: #222222; /* This color makes it easier on the eyes */
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   line-height: 2;
+}
+
+.layout-v2-dark {
+  color: #efefef;
+}
+
+.layout-v2-dark select {
+  color: #222222
+}
+
+.layout-v2-light {
+  color: #222222;
 }
 
 #__next .layout-v2 {
@@ -96,10 +103,15 @@ body .layout-v2 {
 
 .layout-v2 .heading-linked {
   display: flex;
-  color: #333333;
   text-decoration: none;
   align-items: center;
   width: 100%;
+}
+.layout-v2-dark .heading-linked {
+  color: "#efefef";
+}
+.layout-v2-light .heading-linked {
+  color: "#222222";
 }
 
 .layout-v2 .heading-linked .icon-link {

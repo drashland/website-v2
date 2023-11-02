@@ -76,7 +76,10 @@ const Heading = function (level) {
           className="icon-link"
           href={`#` + slug}
         >
-          <LinkIcon key={`link_icon_${slug}_${level}`} className="icon" />
+          <LinkIcon
+            key={`link_icon_${slug}_${level}`}
+            className="icon"
+          />
         </a>,
       );
     }
