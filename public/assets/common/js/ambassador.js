@@ -1,18 +1,16 @@
-
-$(window).on('load', function() {
-  'use strict';
-  $('#loading').addClass('u-hidden');
+$(window).on("load", function () {
+  "use strict";
+  $("#loading").addClass("u-hidden");
 });
 
-
-(function($) {
-  'use strict';
+(function ($) {
+  "use strict";
 
   /*====================================================*/
   /* VARIABLES                                           */
   /*====================================================*/
-  var navBar = $('.navbar'),
-    navbarLinks = $('.navbar .nav-link'),
+  var navBar = $(".navbar"),
+    navbarLinks = $(".navbar .nav-link"),
     window_height = window.innerHeight,
     header_height = navBar.height(),
     fitScreen = window_height - header_height;
@@ -27,7 +25,7 @@ $(window).on('load', function() {
     DEVICE CAROUSEL
   ========================================================================== */
 
-  var $overviewSlide = $('.owl-carousel')
+  var $overviewSlide = $(".owl-carousel");
   if ($overviewSlide.length > 0) {
     $overviewSlide.owlCarousel({
       loop: true,
@@ -36,49 +34,51 @@ $(window).on('load', function() {
       items: 1,
       nav: false,
       dots: true,
-      dotsContainer: '.dots'
-    })
-    $('.owl-dot').on('click', function () {
-      $(this).addClass('active').siblings().removeClass('active');
-      $overviewSlide.trigger('to.owl.carousel', [$(this).index(), 300]);
+      dotsContainer: ".dots",
+    });
+    $(".owl-dot").on("click", function () {
+      $(this).addClass("active").siblings().removeClass("active");
+      $overviewSlide.trigger("to.owl.carousel", [$(this).index(), 300]);
     });
   }
-
 
   /*====================================================*/
   /* STICKY NAVBAR                                      */
   /*====================================================*/
-  $(window).on('scroll', function () {
+  $(window).on("scroll", function () {
     if ($(this).scrollTop() > 200) {
-      $(navBar).addClass('navbar-is-sticky');
+      $(navBar).addClass("navbar-is-sticky");
     } else {
-      $(navBar).removeClass('navbar-is-sticky');
+      $(navBar).removeClass("navbar-is-sticky");
     }
   });
 
-  $('.navbar-toggler').on('click', function (e) {
-    $(this).toggleClass('menu-is-expanded');
+  $(".navbar-toggler").on("click", function (e) {
+    $(this).toggleClass("menu-is-expanded");
   });
 
-  $(document).on('click', '.navbar-collapse.show', function (e) {
-    if ($(e.target).is('a')) {
-      $(this).collapse('hide');
-      $('.navbar-toggler').toggleClass('menu-is-expanded');
+  $(document).on("click", ".navbar-collapse.show", function (e) {
+    if ($(e.target).is("a")) {
+      $(this).collapse("hide");
+      $(".navbar-toggler").toggleClass("menu-is-expanded");
       // $('.Menu-Icon--Circle').css('transform', 'translateX(-50%) translateY(-50%) scale(1)');
     }
   });
 
-/*====================================================*/
+  /*====================================================*/
   /* NAVBAR ON SCROLL EASING                            */
   /*====================================================*/
-  $(navbarLinks).on('click', function(event) {
+  $(navbarLinks).on("click", function (event) {
     var $anchor = $(this);
-    $('html, body').stop().animate({
-      scrollTop: ($($anchor.attr('href')).offset().top - 50)
-    }, 1250, 'easeInOutExpo');
+    $("html, body").stop().animate(
+      {
+        scrollTop: ($($anchor.attr("href")).offset().top - 50),
+      },
+      1250,
+      "easeInOutExpo",
+    );
     event.preventDefault();
   });
-
 
   /*====================================================*/
   /* TOOL TIPS INIT                                   */
@@ -88,39 +88,40 @@ $(window).on('load', function() {
   /*====================================================*/
   /* TABS INIT                                   */
   /*====================================================*/
-  $('.js-tabs a').on('click', function (e) {
+  $(".js-tabs a").on("click", function (e) {
     e.preventDefault();
-    $(this).tab('show');
+    $(this).tab("show");
   });
 
   /*====================================================*/
   /* VIDEO MODALS                                           */
   /*====================================================*/
 
-  $('.js-video-modal-trigger').magnificPopup({
-    type: 'iframe',
+  $(".js-video-modal-trigger").magnificPopup({
+    type: "iframe",
     iframe: {
       patterns: {
         youtube: {
-          index: 'youtube.com/',
-          id: function(url) {
+          index: "youtube.com/",
+          id: function (url) {
             var m = url.match(/[\\?\\&]v=([^\\?\\&]+)/);
             if (!m || !m[1]) return null;
             return m[1];
           },
-          src: '//www.youtube.com/embed/%id%?autoplay=1'
+          src: "//www.youtube.com/embed/%id%?autoplay=1",
         },
         vimeo: {
-          index: 'vimeo.com/',
-          id: function(url) {
-            var m = url.match(/(https?:\/\/)?(www.)?(player.)?vimeo.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/);
+          index: "vimeo.com/",
+          id: function (url) {
+            var m = url.match(
+              /(https?:\/\/)?(www.)?(player.)?vimeo.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/,
+            );
             if (!m || !m[5]) return null;
             return m[5];
           },
-          src: '//player.vimeo.com/video/%id%?autoplay=1'
-        }
-      }
-    }
+          src: "//player.vimeo.com/video/%id%?autoplay=1",
+        },
+      },
+    },
   });
-}) (jQuery);
-
+})(jQuery);

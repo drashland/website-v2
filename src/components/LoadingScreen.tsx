@@ -1,6 +1,7 @@
 import styled, { ThemeProvider } from "styled-components";
 import InnerContainer from "@/src/components/InnerContainer";
 import { lightTheme } from "@/styles/theme";
+import MiddleMessage from "@/src/components/MiddleMessage";
 
 ////////////////////////////////////////////////////////////////////////////////
 // FILE MARKER - STYLED COMPONENTS /////////////////////////////////////////////
@@ -10,7 +11,6 @@ const Container = styled.div`
   background: ${(props) => props.theme.layout.background};
   color: ${(props) => props.theme.layout.color};
   width: 100%;
-  height: auto;
   min-width: 375px; // iPhone X width
   transition-duration: 0.25s;
   transition-property: background;
@@ -23,18 +23,6 @@ const Main = styled.div`
   justify-content: center;
   transition-duration: 0.25s;
   transition-property: padding;
-`;
-
-const MiddleMessage = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: .8rem;
-  font-weight: bold;
-  height: 100%;
-  justify-content: center;
-  letter-spacing: .1rem;
-  text-transform: uppercase;
-  width: 100%;
 `;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +40,9 @@ export default function LoadingScreen({
       <Container>
         <Main>
           <InnerContainer>
-            <MiddleMessage>{message ? message : "Loading..."}</MiddleMessage>
+            <MiddleMessage>
+              {message ? message : "Loading..."}
+            </MiddleMessage>
           </InnerContainer>
         </Main>
       </Container>

@@ -1,0 +1,20 @@
+import "@/styles/globals.css";
+import "@/styles/nextra.scss";
+import "@/styles/globals.layout-v3.css";
+import "@/public/prism.css";
+import "@/public/prism.js";
+
+export default function DrashLand(props) {
+  const { Component, pageProps, router } = props;
+  const {
+    getLayout,
+  } = Component;
+
+  if (getLayout) {
+    return getLayout(
+      <Component {...pageProps} />
+    );
+  }
+
+  return <Component {...pageProps} />;
+}

@@ -16,7 +16,7 @@ Drash servers only register the resources that are specified in their
 `resources` config.
 
 In the example code below, the `HomeResource` class is the only resource that
-will be regisrered by the server.
+will be registered by the server.
 
 ```typescript
 // File: app.ts

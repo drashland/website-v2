@@ -1,40 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import * as fs from "fs";
-import path from "path";
 import Layout from "@/src/components/Layout";
-import styled, { ThemeContext } from "styled-components";
 import { titleCase } from "title-case";
 import { useRouter } from "next/router";
 import {
   convertFilenameToURL,
   formatLabel,
-} from "../src/services/string_service";
+} from "@/src/services/string_service";
 import ReactMarkdown from "react-markdown";
 import * as Markdown from "@/src/components/Markdown";
 import { runtimeConfig } from "@/src/config";
 import env from "@/src/env";
+import LayoutV2 from "@/src/components/layouts/LayoutV2";
 
-/**
- * This constant is used for associating all markdown files with page URIs.
- * For example, the object looks like this:
- *
- *     {
- *       "/some/page/uri": "/docs/some/page/uri.md",
- *       "/some/other-page/uri": "/docs/some/other_page/uri.md",
- *     }
- *
- * The `getStaticProps()` function will use this constant to figure out what
- * Markdown file to display to the user. If the user is on the following page...
- *
- *     https://drash.land/drash/v2.x/getting-started/introduction
- *
- * ... then the `getStaticProps()` function will see that the above page is
- * associated with the following Markdown file ...
- *
- *     /docs/drash/v2.x/1_getting_started/1_introduction.md
- *
- * ... and it will read that file and send it to the client.
- */
 const FILES = {};
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -77,7 +55,9 @@ export default function Page(props: Props) {
     // The first element is an empty string so take it out
     breadcrumbs.shift();
 
-    const title = formatLabel(titleCase(breadcrumbs[breadcrumbs.length - 1]));
+    const title = formatLabel(
+      titleCase(breadcrumbs[breadcrumbs.length - 1]),
+    );
 
     return `Drash Land / ${topBarModuleName} / ${title}`;
   }, [router.asPath, topBarModuleName]);
@@ -136,7 +116,7 @@ export default function Page(props: Props) {
 ////////////////////////////////////////////////////////////////////////////////
 
 export function getStaticProps({ params }) {
-  getAllPaths("docs");
+  getAllPaths("docs/rhum/v2.x");
 
   const ret: { props: Partial<Props> } = {
     props: {
@@ -146,36 +126,19 @@ export function getStaticProps({ params }) {
     },
   };
 
-  const moduleName = params.path_params[0];
+  const moduleName = "rhum";
   ret.props.topBarModuleName = titleCase(moduleName);
 
   const versions = runtimeConfig.versions[moduleName].versions;
-  let version = params.path_params[1];
-
-  if (!version) {
-    version = versions[versions.length - 1];
-  }
+  const version = "v2.x";
 
   ret.props.moduleVersion = version;
   ret.props.moduleVersions = versions;
 
   ret.props.sideBarCategories = getSideBarCategories(moduleName, version);
 
-  // Check if we need to redirect the user to the Introduction page. This code
-  // exists because users can go to https://drash.land/drash, but that page
-  // doesn't actually exist. So, we redirect them to the following URL:
-  //
-  //     https://drash.land/{module}/{version}/getting-started/introduction
-  //
-  if (params.path_params.length <= 2) {
-    if (runtimeConfig.modules.indexOf(params.path_params[0]) != -1) {
-      ret.props.redirectUri =
-        `${moduleName}/${version}/getting-started/introduction`;
-    }
-  }
-
   const pageUri = "/" + params.path_params.join("/");
-  const markdownFile = FILES[pageUri];
+  const markdownFile = FILES["/rhum" + pageUri];
 
   ret.props.editThisPageUrl =
     `${runtimeConfig.gitHubUrls.website}/edit/main/${markdownFile}`;
@@ -201,7 +164,9 @@ export function getStaticProps({ params }) {
 }
 
 export function getStaticPaths() {
-  const paths = getAllPaths("docs");
+  const paths = getAllPaths("docs/rhum/v2.x")
+    .filter((path) => path !== "/rhum/v2.x");
+
   return {
     paths,
     fallback: false,
@@ -212,7 +177,7 @@ export function getStaticPaths() {
 // FILE MARKER - FUNCTIONS /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function getAllPaths(fileNameOrPath, paths: string[] = []): string[] {
+function getAllPaths(fileNameOrPath: string, paths: string[] = []): string[] {
   const stats = fs.lstatSync(fileNameOrPath);
 
   if (fileNameOrPath.match(/DS.+Store/g)) {
@@ -295,3 +260,11 @@ function getCategoryLabel(title): string {
   const label = titleCase(title).replace(/-/g, " ");
   return formatLabel(label);
 }
+
+Page.getLayout = (page) => {
+  return (
+    <LayoutV2>
+      {page}
+    </LayoutV2>
+  );
+};

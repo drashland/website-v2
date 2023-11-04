@@ -103,7 +103,8 @@ export default function SideBar(props: Props) {
     // Some modules dont need/use API reference links
     const modulesExcludedFromAPIRef = ["dmm"];
     if (
-      modulesExcludedFromAPIRef.includes(moduleName.toLowerCase()) === false
+      modulesExcludedFromAPIRef.includes(moduleName.toLowerCase()) ===
+        false
     ) {
       links.push({
         is_external: true,

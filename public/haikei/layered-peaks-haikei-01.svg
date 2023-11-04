@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="visual" preserveAspectRatio="none" viewBox="0 0 900 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <path d="M0 111L137 94L274 81L411 131L549 105L686 81L823 116L960 85L960 0L823 0L686 0L549 0L411 0L274 0L137 0L0 0Z" fill="#92ded7" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0s;" />
+    <path d="M0 97L137 92L274 87L411 70L549 83L686 101L823 66L960 99L960 0L823 0L686 0L549 0L411 0L274 0L137 0L0 0Z" fill="#59a49e" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0s;" />
+    <path d="M0 56L137 86L274 84L411 83L549 51L686 53L823 83L960 53L960 0L823 0L686 0L549 0L411 0L274 0L137 0L0 0Z" fill="#1c6e68" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0s;" />
+    <path d="M0 31L137 49L274 45L411 47L549 53L686 55L823 40L960 39L960 0L823 0L686 0L549 0L411 0L274 0L137 0L0 0Z" fill="#003c37" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0s;" />
+    <path d="M0 24L137 18L274 22L411 17L549 29L686 34L823 15L960 33L960 0L823 0L686 0L549 0L411 0L274 0L137 0L0 0Z" fill="#000000" style="transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0s;" />
+</svg>

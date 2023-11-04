@@ -1,16 +1,16 @@
-import "../styles/globals.css";
-import "../public/prism.css";
-import "../public/prism.js";
 import Head from "next/head";
 
-export default function MyApp({ Component, pageProps }) {
+export default function LayoutV2(props) {
+  const { children = [] } = props;
+
   const title = "Drash Land";
-  const moduleName = pageProps.topBarModuleName?.toLowerCase() ?? "drash";
+  const moduleName = props.topBarModuleName?.toLowerCase() ?? "drash";
   const url = `https://drash.land/${module}`;
-  const moduleVersion = pageProps.moduleVersion ?? "";
+  const moduleVersion = props.moduleVersion ?? "";
   const moduleAndVersion = `${module}${
     moduleVersion ? " " + moduleVersion : ""
   }`;
+
   return (
     <>
       <Head>
@@ -26,7 +26,10 @@ export default function MyApp({ Component, pageProps }) {
           property="og:description"
           content="Drash Land is a collection of modules for the Deno ecosystem"
         />
-        <meta property="og:image" content={"/logo-" + moduleName + ".svg"} />
+        <meta
+          property="og:image"
+          content={"/logo-" + moduleName + ".svg"}
+        />
         <meta name="twitter:card" content="summary_medium_image" />
         <meta name="twitter:domain" content="drash.land" />
         <meta property="twitter:domain" content="drash.land" />
@@ -35,13 +38,16 @@ export default function MyApp({ Component, pageProps }) {
           name="twitter:title"
           content={"Drash Land - " + moduleAndVersion}
         />
-        <meta name="twitter:image" content={"/logo-" + module + ".svg"} />
+        <meta
+          name="twitter:image"
+          content={"/logo-" + module + ".svg"}
+        />
         <meta name="twitter:image:width" content="1200" />
         <meta name="twitter:image:height" content="600" />
         <meta name="twitter:url" content={url} />
         <meta property="twitter:url" content={url} />
       </Head>
-      <Component {...pageProps} />
+      {children}
     </>
   );
 }

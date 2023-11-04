@@ -121,7 +121,9 @@ export default function RecursiveCategory(props) {
                 href={path.path}
                 passHref
               >
-                <span onClick={() => state.setSideBarOpen(false)}>
+                <span
+                  onClick={() => state.setSideBarOpen(false)}
+                >
                   {path.label}
                 </span>
               </Link>
