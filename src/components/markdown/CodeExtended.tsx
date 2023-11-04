@@ -41,7 +41,7 @@ const Tab = styled.button<{
   cursor: pointer;
   padding: 1rem;
   background: ${({ $activeTab, $name }) => {
-  return ($activeTab === $name ? "#2f343c" : "#202328");
+  return $activeTab === $name ? "#2f343c" : "#202328";
 }};
   color: ${({ $activeTab, $name }) =>
   $activeTab === $name ? "#ffffff" : "#5b677e"};
@@ -216,14 +216,10 @@ export default function CodeExtension({
                 onClick={() => {
                   // deno-lint-ignore no-window-prefix
                   window.dispatchEvent(
-                    new MessageEvent(
-                      "changeCodeBlock$activeTab",
-                      {
-                        data: tabName,
-                      },
-                    ),
+                    new MessageEvent("changeCodeBlockActiveTab", {
+                      data: tabName,
+                    }),
                   );
-                  setActiveTab(tabName);
                 }}
               >
                 {tabName}
