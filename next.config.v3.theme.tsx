@@ -9,7 +9,7 @@ const config: DocsThemeConfig = {
   chat: {
     link: "https://discord.gg/UuYKTVMW",
   },
-  docsRepositoryBase: "https://github.com/drash-website-v2",
+  docsRepositoryBase: "https://github.com/drashland/website-v2",
   footer: {
     text: (
       <div className="flex w-full justify-center">
