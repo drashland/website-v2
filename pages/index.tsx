@@ -236,7 +236,7 @@ function Projects() {
                   deno: true,
                 },
                 actions: {
-                  href: "/rhum",
+                  href: "/sinco",
                   text: "Add browser automation to your stack",
                 },
               },
