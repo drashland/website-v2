@@ -39,19 +39,19 @@ In this tutorial, you will:
      const Sinco = await buildFor("chrome");
      const page = await Sinco.goTo("https://drash.land");
      const elem = await page.querySelector(
-       'a[href="https://discord.gg/RFsCSaHRWK"]',
+       'a[href="https://discord.gg/UuYKTVMW"]',
      );
      await elem.click();
      await page.waitForPageChange();
      const location = await page.location();
      await Sinco.done();
-     assertEquals(location, "https://discord.com/invite/RFsCSaHRWK");
+     assertEquals(location, "https://discord.com/invite/UuYKTVMW");
    });
    ```
 
 Here you are going to create your headless browser instance, and navigate to
 `https://drash.land`. Once the page has loaded, you will click an element
-matching the `a[href="https://discord.gg/RFsCSaHRWK"]` selector, which will send
+matching the `a[href="https://discord.gg/UuYKTVMW"]` selector, which will send
 you to a different page.
 
 ## Verification

@@ -400,7 +400,7 @@ function Social() {
         <GitHubIcon />
       </a>
       <a
-        href="https://discord.gg/RFsCSaHRWK"
+        href="https://discord.gg/UuYKTVMW"
         target="_blank"
         rel="noreferrer"
       >

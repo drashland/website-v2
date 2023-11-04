@@ -35,7 +35,7 @@ Learn more about Sinco [here](about-sinco).
        throw e;
      }
      const element = await page.querySelector(
-       'a[href="https://discord.gg/RFsCSaHRWK"]',
+       'a[href="https://discord.gg/UuYKTVMW"]',
      );
      await element.click(); // This element will take the user to Sinco's documentation
      await page.waitForPageChange();
@@ -43,7 +43,7 @@ Learn more about Sinco [here](about-sinco).
      // Once finished, close to clean up any processes
      await Sinco.done();
 
-     assertEquals(location, "https://discord.com/invite/RFsCSaHRWK");
+     assertEquals(location, "https://discord.com/invite/UuYKTVMW");
    });
    ```
 

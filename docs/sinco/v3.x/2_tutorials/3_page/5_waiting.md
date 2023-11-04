@@ -49,13 +49,13 @@ In this tutorial, you will:
      const Sinco = await buildFor("chrome");
      const page = await Sinco.goTo("https://drash.land");
      const element = await page.querySelector(
-       'a[href="https://discord.gg/RFsCSaHRWK"]',
+       'a[href="https://discord.gg/UuYKTVMW"]',
      );
      await element.click();
      await page.waitForPageChange();
      const location = await page.location();
      await Sinco.done();
-     assertEquals(location, "https://discord.com/invite/RFsCSaHRWK");
+     assertEquals(location, "https://discord.com/invite/UuYKTVMW");
    });
    ```
 

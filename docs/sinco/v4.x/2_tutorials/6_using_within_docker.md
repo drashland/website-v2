@@ -105,13 +105,13 @@ container, and execute your test file.
      const { browser: chrome, page: chromePage } = await buildFor("chrome");
      await chromePage.location("https://drash.land");
      const chromePageElem = await chromePage.querySelector(
-       'a[href="https://discord.gg/RFsCSaHRWK"]',
+       'a[href="https://discord.gg/UuYKTVMW"]',
      );
      await chromePageElem.click({
        waitFor: "navigation",
      });
      const chromePageLocation = await chromePage.location();
-     assertEquals(chromePageLocation, "https://discord.com/invite/RFsCSaHRWK");
+     assertEquals(chromePageLocation, "https://discord.com/invite/UuYKTVMW");
      await chrome.close();
    });
    ```

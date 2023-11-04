@@ -46,16 +46,16 @@ In this tutorial, you will:
    Deno.test("My web app works as expected", async () => {
      const Sinco = await buildFor("chrome");
      await Sinco.goTo("https://drash.land");
-     await Sinco.click('a[href="https://discord.gg/RFsCSaHRWK"]');
+     await Sinco.click('a[href="https://discord.gg/UuYKTVMW"]');
      await Sinco.waitForPageChange();
-     await Sinco.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
+     await Sinco.assertUrlIs("https://discord.com/invite/UuYKTVMW");
      await Sinco.done();
    });
    ```
 
 Here you are going to create your headless browser instance, and navigate to
 https://drash.land. Once the page has loaded, you will click an element matching
-the `a[href="https://discord.gg/RFsCSaHRWK"]` selector, which will send you to a
+the `a[href="https://discord.gg/UuYKTVMW"]` selector, which will send you to a
 different page. To assert this, you are going to use `.assertUrlIs()` to assert
 the page you are currently on, has now changed.
 

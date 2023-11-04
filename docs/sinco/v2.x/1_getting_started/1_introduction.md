@@ -29,9 +29,9 @@ Learn more about Sinco [here](about-sinco).
 
      // Do any actions and assertions, in any order
      await Sinco.assertUrlIs("https://drash.land/");
-     await Sinco.click('a[href="https://discord.gg/RFsCSaHRWK"]'); // This element will take the user to Sinco's documentation
+     await Sinco.click('a[href="https://discord.gg/UuYKTVMW"]'); // This element will take the user to Sinco's documentation
      await Sinco.waitForPageChange();
-     await Sinco.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
+     await Sinco.assertUrlIs("https://discord.com/invite/UuYKTVMW");
 
      // Once finished, close to clean up any processes
      await Sinco.done();

@@ -30,5 +30,5 @@ Most tutorials will follow the format below:
   test that your application is working.
 
 If at any time you get confused and the documentation is not helping you, hit us
-up in our [Discord server](https://discord.gg/RFsCSaHRWK) and we will be glad to
+up in our [Discord server](https://discord.gg/UuYKTVMW) and we will be glad to
 provide you with guidance!

@@ -27,7 +27,7 @@ export default function AboutUs() {
           WebSockets? We&apos;ll show you the way. And if you ever get stuck,
           just send us a message in our{" "}
           <a
-            href="https://discord.gg/RFsCSaHRWK"
+            href="https://discord.gg/UuYKTVMW"
             target="_BLANK"
             rel="noreferrer"
           >

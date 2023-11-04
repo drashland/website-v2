@@ -64,7 +64,7 @@ In this tutorial, you will:
 
      // Click an element that will change a pages location
      const discordElem = await page.querySelector(
-       'a[href="https://discord.gg/RFsCSaHRWK"]',
+       'a[href="https://discord.gg/UuYKTVMW"]',
      );
      await discordElem.click({
        waitFor: "navigation",
@@ -77,7 +77,7 @@ In this tutorial, you will:
        page2Location,
        "https://github.com/drashland",
      );
-     assertEquals(page1Location, "https://discord.com/invite/RFsCSaHRWK");
+     assertEquals(page1Location, "https://discord.com/invite/UuYKTVMW");
    });
    ```
 
@@ -85,7 +85,7 @@ Here you are going to create your headless browser instance, and navigate to
 `https://drash.land`. Once the page has loaded, you will click an element
 matching the `a` selector with middle mouse button. This will open a new tab
 with the href and we will then attach to this new tab. We then click an element
-on the first tab matching the `a[href="https://discord.gg/RFsCSaHRWK"]` selector
+on the first tab matching the `a[href="https://discord.gg/UuYKTVMW"]` selector
 and the flag to `waitForNavigation`, which will send your first tab to a
 different page and wait for it to load completely.
 

@@ -116,15 +116,15 @@ container, and execute your test file.
    Deno.test("My web app works as expected", async () => {
      const Chrome = await buildFor("chrome");
      await Chrome.goTo("https://drash.land");
-     await Chrome.click('a[href="https://discord.gg/RFsCSaHRWK"]');
+     await Chrome.click('a[href="https://discord.gg/UuYKTVMW"]');
      await Chrome.waitForPageChange();
-     await Chrome.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
+     await Chrome.assertUrlIs("https://discord.com/invite/UuYKTVMW");
      await Chrome.done();
      const Firefox = await buildFor("chrome");
      await Firefox.goTo("https://drash.land");
-     await Firefox.click('a[href="https://discord.gg/RFsCSaHRWK"]');
+     await Firefox.click('a[href="https://discord.gg/UuYKTVMW"]');
      await Firefox.waitForPageChange();
-     await Firefox.assertUrlIs("https://discord.com/invite/RFsCSaHRWK");
+     await Firefox.assertUrlIs("https://discord.com/invite/UuYKTVMW");
      await Firefox.done();
    });
    ```
