@@ -7,7 +7,7 @@ import Image from "next/image";
  */
 const config: DocsThemeConfig = {
   chat: {
-    link: "https://discord.gg/RhYs6zQJ",
+    link: "https://discord.gg/UuYKTVMW",
   },
   docsRepositoryBase: "https://github.com/drash-website-v2",
   footer: {
