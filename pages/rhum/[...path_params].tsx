@@ -138,7 +138,6 @@ export function getStaticProps({ params }) {
   ret.props.sideBarCategories = getSideBarCategories(moduleName, version);
 
   const pageUri = "/" + params.path_params.join("/");
-  console.log({ pageUri, FILES });
   const markdownFile = FILES["/rhum" + pageUri];
 
   ret.props.editThisPageUrl =
