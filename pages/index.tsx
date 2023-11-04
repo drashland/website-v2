@@ -197,7 +197,7 @@ function Projects() {
                 title: "Drash",
                 // logo: "/logo-drash.svg",
                 description:
-                  "A microframework for building JavaScript HTTP applications. Runtime-agnostic. Strongly typed.",
+                  "A microframework for building JavaScript HTTP applications. Runtime-agnostic. No vendor lock-in. Strongly typed.",
                 compat: {
                   browser: true,
                   bun: true,
