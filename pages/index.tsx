@@ -227,19 +227,19 @@ function Projects() {
                   text: "Stabilize your apps",
                 },
               },
-              {
-                title: "Sinco",
-                // logo: "/logo-sinco.svg",
-                description:
-                  "A browser automation and testing tool. Uses Chrome DevTools Protocol.",
-                compat: {
-                  deno: true,
-                },
-                actions: {
-                  href: "/sinco",
-                  text: "Add browser automation to your stack",
-                },
-              },
+              // {
+              //   title: "Sinco",
+              //   // logo: "/logo-sinco.svg",
+              //   description:
+              //     "A browser automation and testing tool. Uses Chrome DevTools Protocol.",
+              //   compat: {
+              //     deno: true,
+              //   },
+              //   actions: {
+              //     href: "/sinco",
+              //     text: "Add browser automation to your stack",
+              //   },
+              // },
               {
                 title: "Accio",
                 description:
@@ -320,7 +320,7 @@ function Modules() {
       external: true,
     },
     { name: "Rhum", href: "/rhum" },
-    { name: "Sinco", href: "/sinco" },
+    // { name: "Sinco", href: "/sinco" },
     // { name: "Vital", href: "/vital" },
     // { name: "Wocket", href: "/wocket" },
   ];
