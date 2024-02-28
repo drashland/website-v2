@@ -56,7 +56,8 @@ In this tutorial, you will:
        await delay(2000);
        return new Response("Done!");
      }
-     return new Response(`
+     return new Response(
+       `
         <form action="/" method="POST">
             <button type="submit">Click</button>
         </form>
@@ -69,13 +70,19 @@ In this tutorial, you will:
               e.target.textContent = "done";
             })
         </script>
-     `);
+     `,
+       {
+         headers: {
+           "content-type": "text/html",
+         },
+       },
+     );
    });
-
+   
    Deno.test("My web app works as expected", async () => {
      const { browser, page } = await buildFor("chrome");
      await page.location("http://localhost:8000");
-     const elem = await page.querySelector("#button");
+     const elem = await page.querySelector("#second-button");
      page.expectWaitForRequest();
      await elem.click();
      await page.waitForRequest();
