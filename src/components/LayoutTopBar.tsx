@@ -14,7 +14,7 @@ import Link from "next/link";
 const Container = styled.div<{ $mobileViewport?: boolean }>`
   font-size: ${(props) => (props.$mobileViewport ? ".6rem" : ".8rem")};
   font-weight: bold;
-  letter-spacing: .1rem;
+  letter-spacing: 0.1rem;
   text-transform: uppercase;
   display: flex;
   position: fixed;
@@ -39,7 +39,7 @@ const Title = styled.div`
 
   .middot {
     display: inline-block;
-    margin: 0 .75rem;
+    margin: 0 0.75rem;
   }
 `;
 

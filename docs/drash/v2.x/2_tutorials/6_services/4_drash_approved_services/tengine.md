@@ -63,7 +63,10 @@ This tutorial will go over the following:
    <html class="h-full w-full">
      <head>
        <title>Drash + Tengine</title>
-       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+       <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css"
+       >
      </head>
      <body style="background: #f4f4f4">
        <% yield %>
@@ -79,11 +82,10 @@ This tutorial will go over the following:
    ```html
    <ul>
      <% for (let field in user.details) { %>
-       <!-- Do not show the Phone field -->
-       <% if (field !== "Phone") { %>
+     <!-- Do not show the Phone field -->
+     <% if (field !== "Phone") { %>
      <li><% field %>: <% user.details[field] %></li>
-       <% } %>
-     <% } %>
+     <% } %> <% } %>
    </ul>
    ```
 
@@ -94,7 +96,7 @@ This tutorial will go over the following:
    ```html
    <% extends("/layout.html") %>
 
-   <div style="max-width: 640px; margin: 50px auto;">
+   <div style="max-width: 640px; margin: 50px auto">
      <h1 class="text-5xl mb-5"><% user.name %></h1>
      <% include_partial("/user_details.html") %>
    </div>

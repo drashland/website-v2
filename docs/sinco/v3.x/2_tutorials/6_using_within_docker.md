@@ -89,7 +89,7 @@ it will not be from within Docker unless you tell it to.
    ```yml
    # docker-compose.yml
 
-   version: '3'
+   version: "3"
 
    services:
      app:

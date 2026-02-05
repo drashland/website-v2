@@ -23,10 +23,10 @@ If you have used previous versions of Drash, you will notice that this chain is 
 
 ### Chain + Resource
 
-Creating a Request Chain with a single resource looks like the code below. You will notice the code is almost 100% the same across runtimes. This is a result of Drash being [runtime agnostic](/drash-v3.x/concepts/framework#runtime-agnostic) &mdash; meaning you can use the code in any runtime that can run JavaScript. 
+Creating a Request Chain with a single resource looks like the code below. You will notice the code is almost 100% the same across runtimes. This is because Drash is [runtime agnostic](/drash-v3.x/concepts/framework#runtime-agnostic) &mdash; meaning you can use the code in any runtime that can run JavaScript. 
 
 <Tabs items={[
-  "Deno v1.37.x",
+  "Deno v1.46.x",
   "Node v18.x (CJS)",
   "Node v18.x (JS ESM)",
   "Node v18.x (TS)",
@@ -213,11 +213,11 @@ This chain uses <CodeLinkExternal href="https://developer.mozilla.org/en-US/docs
 - <CodeLinkExternal href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then">.then()</CodeLinkExternal> (aka `Promise.prototype.then()`)
 - <CodeLinkExternal href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await">await</CodeLinkExternal>
 
-Code is provided below to give you an idea of how you could use `.then()` and `await` with this chain in Deno v1.37.x.
+Code is provided below to give you an idea of how you could use `.then()` and `await` with this chain in Deno v1.46.x.
 
 <Tabs items={[
-  "Deno v1.37.x (TS) - Using .then()",
-  "Deno v1.37.x (TS) - Using await"
+  "Deno v1.46.x (TS) - Using .then()",
+  "Deno v1.46.x (TS) - Using await"
 ]}>
 <Tab>
 ```typescript filename="chain_with_then.ts" showLineNumbers {23-30}

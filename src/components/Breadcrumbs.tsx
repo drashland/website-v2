@@ -11,7 +11,7 @@ const Container = styled.div`
   margin-bottom: 3rem;
 
   @media screen and (max-width: 768px) {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 `;
 
@@ -25,7 +25,7 @@ const Breadcrumb = styled.div`
   }
   @media screen and (max-width: 768px) {
     .slash {
-      padding: 0 .5rem;
+      padding: 0 0.5rem;
     }
   }
 

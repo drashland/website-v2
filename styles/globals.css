@@ -1,13 +1,15 @@
 /* Fonts */
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,300;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,700;1,300;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
 @font-face {
-  font-family: 'Menlo Regular';
+  font-family: "Menlo Regular";
   font-style: normal;
   font-weight: normal;
-  src: local('Menlo Regular'), url('./Menlo-Regular.woff') format('woff');
+  src:
+    local("Menlo Regular"),
+    url("./Menlo-Regular.woff") format("woff");
 }
 
 /*
@@ -33,7 +35,7 @@ body {
 
 body .layout-landing-page {
   color: #222222; /* This color makes it easier on the eyes */
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1rem;
   line-height: 2;
 }
@@ -59,7 +61,7 @@ body .layout-landing-page {
 */
 
 body .layout-v2 {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1rem;
   line-height: 2;
 }
@@ -69,7 +71,7 @@ body .layout-v2 {
 }
 
 .layout-v2-dark select {
-  color: #222222
+  color: #222222;
 }
 
 .layout-v2-light {
@@ -119,7 +121,7 @@ body .layout-v2 {
 }
 
 .layout-v2 .heading-linked .icon {
-  margin-left: .25rem;
+  margin-left: 0.25rem;
   align-items: center;
   justify-content: center;
   opacity: 0;
@@ -135,14 +137,14 @@ body .layout-v2 {
 }
 
 .layout-v2 code {
-  font-family: 'Menlo Regular', monospace !important;
+  font-family: "Menlo Regular", monospace !important;
 }
 
 .layout-v2 .manual-code {
-  font-size: .85rem;
+  font-size: 0.85rem;
   background-color: #f4f4f4;
-  padding: .25rem;
-  border-radius: .9rem;
+  padding: 0.25rem;
+  border-radius: 0.9rem;
   color: inherit;
 }
 
@@ -182,12 +184,12 @@ body .layout-v2 {
 .layout-v2 .btn-get-started a {
   background: #000000;
   font-weight: bold;
-  font-size: .8rem;
-  letter-spacing: .1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
   text-transform: uppercase;
   color: #ffffff;
   transition-property: color;
-  transition-duration: .15s;
+  transition-duration: 0.15s;
   padding: 1rem 2rem;
   border-radius: 3rem;
 }
@@ -204,12 +206,12 @@ body .layout-v2 {
 .layout-v2 .pagination .btn a {
   background: #000000;
   font-weight: bold;
-  font-size: .8rem;
-  letter-spacing: .1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
   text-transform: uppercase;
   color: #ffffff;
   transition-property: color;
-  transition-duration: .15s;
+  transition-duration: 0.15s;
   padding: 1rem 2rem;
   border-radius: 3rem;
 }
@@ -248,7 +250,7 @@ body .layout-v2 {
   user-select: none;
 }
 
-.layout-v2 pre[class*=language-] {
+.layout-v2 pre[class*="language-"] {
   padding: 0 !important;
   margin: 0.5em 0 !important;
   overflow: auto !important;

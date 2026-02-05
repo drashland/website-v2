@@ -24,7 +24,7 @@ To gain familiarity with:
 You might see example code blocks across this site with an error handling solution like the following highlighted section:
 
 ```typescript showLineNumbers {11-17}
-// Deno v1.37.x (TS)
+// Deno v1.46.x (TS)
 
 // ...
 // ... code is shortened for brevity
@@ -55,7 +55,7 @@ The above error handling solution is simple and this is intentional. Example cod
 - __Using `console.log({ error })` is not standard practice in a production app.__ Typically, you would see the `console.log()` call replaced with a logging library call (like winston) and could be written similar to the following:
 
   ```typescript showLineNumbers {11-18}
-  // Deno v1.37.x (TS)
+  // Deno v1.46.x (TS)
  
   // ...
   // ... code is shortened for brevity
@@ -108,7 +108,7 @@ We believe the above approach will allow you to easily build uniform error respo
 As an example, code is provided below showing how the above approach could be implemented in Deno.
 
 ```typescript showLineNumbers
-// Deno v1.37.x (TS)
+// Deno v1.46.x (TS)
 
 // Drash imports
 import * as RequestChain from "https://esm.sh/@drashland/drash@v3.0.0-beta.1/modules/chains/RequestChain/native.ts";

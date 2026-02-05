@@ -7,10 +7,10 @@ import { usePathname } from "next/navigation";
 ////////////////////////////////////////////////////////////////////////////////
 
 const Category = styled.div`
-  padding: 1rem 2rem .25rem 2rem;
+  padding: 1rem 2rem 0.25rem 2rem;
 
   .category-heading {
-    transition-duration: .25s;
+    transition-duration: 0.25s;
     transition-property: color;
   }
 
@@ -21,7 +21,7 @@ const Category = styled.div`
       color: ${(props) => props.theme.sideBar.categoryHeading.color};
       border: none;
       padding: 0;
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
     }
 
     .category {
@@ -31,7 +31,7 @@ const Category = styled.div`
         color: ${(props) => props.theme.sideBar.categoryHeading.color};
         border: none;
         padding-top: 1rem;
-        margin: 1rem 0 .5rem 0;
+        margin: 1rem 0 0.5rem 0;
       }
     }
   }
@@ -40,14 +40,14 @@ const Category = styled.div`
 const CategoryHeading = styled.div`
   color: ${(props) => props.theme.sideBar.categoryHeading.color};
   border-bottom: 1px solid ${(props) =>
-  props.theme.sideBar.categoryHeading.borderBottomColor};
-  font-size: .8rem;
+    props.theme.sideBar.categoryHeading.borderBottomColor};
+  font-size: 0.8rem;
   font-weight: bold;
-  letter-spacing: .1rem;
+  letter-spacing: 0.1rem;
   margin-bottom: 1rem;
-  padding: 0 0 .1rem 0;
+  padding: 0 0 0.1rem 0;
   text-transform: uppercase;
-  transition-duration: .25s;
+  transition-duration: 0.25s;
   transition-property: border, color;
 `;
 
@@ -55,16 +55,16 @@ const LinkContainer = styled.div<{ $isActive?: boolean }>`
   display: block;
   a {
     color: ${({ $isActive, theme }) => {
-  return $isActive
-    ? theme.sideBar.link.colorActive
-    : theme.sideBar.link.colorInactive;
-}};
+      return $isActive
+        ? theme.sideBar.link.colorActive
+        : theme.sideBar.link.colorInactive;
+    }};
     border-left: 4px solid;
     border-color: ${({ $isActive }) => ($isActive ? "#7dade2" : "transparent")};
     transition-duration: 0.25s;
     transition-property: border, color;
     padding-left: 1rem;
-    margin: .1rem 0;
+    margin: 0.1rem 0;
 
     &:hover {
       color: #7dade2;

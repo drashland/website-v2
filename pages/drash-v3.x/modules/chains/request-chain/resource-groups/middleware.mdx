@@ -13,7 +13,7 @@ Middleware is software that can run before and after a resource's HTTP method is
 
 The highlighted sections below show how middleware can be added:
 
-<Tabs items={["Deno v1.37.x"]}>
+<Tabs items={["Deno v1.46.x"]}>
 
 <Tab>
 
@@ -53,7 +53,7 @@ You can create middleware by extending the Request Chain module's `Middleware` c
 
 Below is an example of creating a logging middleware that logs GET requests to a resource.
 
-<Tabs items={["Deno v1.37.x"]}>
+<Tabs items={["Deno v1.46.x"]}>
 
 <Tab>
 
@@ -117,7 +117,7 @@ You might notice that the `LogGETRequests` middleware class has a `GET` method d
 
 Middleware classes also have an `ALL` method. This method allows your middleware to run on __all__ requests to your resource(s) &mdash; hence the method name being `ALL`. Taking the above `LogGETRequests` class, making it log on all requests looks like:
 
-<Tabs items={["Deno v1.37.x"]}>
+<Tabs items={["Deno v1.46.x"]}>
 
 <Tab>
 
@@ -262,7 +262,7 @@ class AuthMiddleware extends Middleware {
 
 This example shows how data flows from middleware classes to resource classes. The middleware classes below (in the `.middleware()` call) will be placed around `ResourceA`, `ResourceB`, and `ResourceC`. When requests are made to any of the resources, the requests __must go through each middleware__ before being passed to the resource they are targeting.
 
-<Tabs items={["Deno v1.37.x"]}>
+<Tabs items={["Deno v1.46.x"]}>
 
 <Tab>
 

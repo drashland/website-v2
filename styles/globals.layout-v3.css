@@ -28,76 +28,132 @@
 }
 
 .layout-v3 .nextra-filetree > div {
-  background: hsl(var(--nextra-primary-hue)100% 39%/.05);
+  background: hsl(var(--nextra-primary-hue)100% 39%/0.05);
   width: 100%;
 }
 
 .layout-v3 .tutorials\:chains\:introduction .clusters #lifecycle rect {
-  stroke: rgba(0,0,0,0.1);
+  stroke: rgba(0, 0, 0, 0.1);
   stroke-width: 2px;
 }
 
 .layout-v3 .tutorials\:chains\:introduction .clusters rect {
-  rx: .5rem;
-  ry: .5rem;
+  rx: 0.5rem;
+  ry: 0.5rem;
 }
 
-.layout-v3 .tutorials\:chains\:introduction.flowchart-drash-chain .clusters #client,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-drash-chain .nodes .node.red,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-drash-chain .clusters #runtime,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-drash-chain .nodes .node.green
-{
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-drash-chain
+  .clusters
+  #client,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-drash-chain
+  .nodes
+  .node.red,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-drash-chain
+  .clusters
+  #runtime,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-drash-chain
+  .nodes
+  .node.green {
   display: none;
 }
 
-.layout-v3 .tutorials\:chains\:introduction.flowchart-runtime-drash-chain .clusters #client,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-runtime-drash-chain .nodes .node.red
-{
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-runtime-drash-chain
+  .clusters
+  #client,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-runtime-drash-chain
+  .nodes
+  .node.red {
   display: none;
 }
 
-.layout-v3 .tutorials\:chains\:introduction .clusters #lifecycle .nodeLabel
-{
+.layout-v3 .tutorials\:chains\:introduction .clusters #lifecycle .nodeLabel {
   display: none;
 }
 
-.layout-v3 .tutorials\:chains\:introduction.flowchart-data-runtime-drash-chain .clusters #chain,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-data-runtime-drash-chain .nodes .node.blue
-{
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-data-runtime-drash-chain
+  .clusters
+  #chain,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-data-runtime-drash-chain
+  .nodes
+  .node.blue {
   display: none;
 }
 
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed .clusters #lifecycle .nodeLabel
-{
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed
+  .clusters
+  #lifecycle
+  .nodeLabel {
   display: none;
 }
 
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .clusters #client,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .nodes .node.red,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .clusters #runtime,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .nodes .node.green,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .clusters #external,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1 .nodes .node.ext
-{
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1
+  .clusters
+  #client,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1
+  .nodes
+  .node.red,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1
+  .clusters
+  #runtime,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1
+  .nodes
+  .node.green,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1
+  .clusters
+  #external,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-1
+  .nodes
+  .node.ext {
   display: none;
 }
 
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2 .clusters #client,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2 .nodes .node.red,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2 .clusters #external,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2 .nodes .node.ext
-{
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2
+  .clusters
+  #client,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2
+  .nodes
+  .node.red,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2
+  .clusters
+  #external,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-2
+  .nodes
+  .node.ext {
   display: none;
 }
 
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-3 .clusters #external,
-.layout-v3 .tutorials\:chains\:introduction.flowchart-detailed.flowchart-3 .nodes .node.ext
-{
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-3
+  .clusters
+  #external,
+.layout-v3
+  .tutorials\:chains\:introduction.flowchart-detailed.flowchart-3
+  .nodes
+  .node.ext {
   display: none;
 }
 
 .layout-v3 .nextra-callout {
-  font-size: .85rem;
+  font-size: 0.85rem;
 }
 
 /* .layout-v3 .nextra-sidebar-container {
@@ -113,7 +169,16 @@
   padding: 0;
 }
 
-.layout-v3 .nextra-sidebar-container > div > div > div > ul > li > div > div > ul {
+.layout-v3
+  .nextra-sidebar-container
+  > div
+  > div
+  > div
+  > ul
+  > li
+  > div
+  > div
+  > ul {
   margin-left: 0 !important;
   padding-left: 0 !important;
 }
@@ -173,7 +238,9 @@
   margin-left: 4px; /* Leave room for outline */
 }
 
-.layout-v3 [role="tablist"] button[role="tab"][data-headlessui-state="selected"] {
+.layout-v3
+  [role="tablist"]
+  button[role="tab"][data-headlessui-state="selected"] {
   border-bottom-width: 5px;
 }
 
@@ -184,10 +251,10 @@
 
 .layout-v3 .tab-group-container button[role="tab"] {
   margin-top: 2px !important; /* Leave room for border */
-  font-size: .9rem;
-  border: 1px solid hsl(var(--nextra-primary-hue)100% 39%/.2);
+  font-size: 0.9rem;
+  border: 1px solid hsl(var(--nextra-primary-hue)100% 39%/0.2);
   border-bottom: none;
-  background: hsl(var(--nextra-primary-hue)100% 39%/.05);
+  background: hsl(var(--nextra-primary-hue)100% 39%/0.05);
 }
 
 .layout-v3 .tab-group-container button[role="tab"]:focus,
@@ -204,7 +271,9 @@
   margin-right: 0;
 }
 
-.layout-v3 .tab-group-container button[role="tab"][data-headlessui-state="selected"] {
+.layout-v3
+  .tab-group-container
+  button[role="tab"][data-headlessui-state="selected"] {
   /* color: hsl(var(--nextra-primary-hue) 45% 50%/var(--tw-text-opacity)); */
   color: rgb(55, 65, 81);
   font-weight: 700;
@@ -226,7 +295,7 @@
   margin: 0 !important;
   border-width: 1px;
   border-style: solid;
-  border-color: hsl(var(--nextra-primary-hue)100% 39%/.2);
+  border-color: hsl(var(--nextra-primary-hue)100% 39%/0.2);
 }
 
 [id^="headlessui-tabs-tab-"] {

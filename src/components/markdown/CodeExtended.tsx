@@ -22,12 +22,12 @@ const ACCEPTED_CODE_TAB_NAMES = [
 ];
 
 const Code = styled.code`
-  font-size: .85rem;
+  font-size: 0.85rem;
   background: ${(props) => props.theme.markdown.code.backgroundColor};
   border-radius: ${(props) => props.theme.layout.borderRadius};
   color: ${(props) => props.theme.markdown.code.color};
   font-weight: 500;
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
   transition-duration: 0.25s;
   transition-property: background, color;
 `;
@@ -36,15 +36,15 @@ const Tab = styled.button<{
   $activeTab: string;
   $name: string;
 }>`
-  font-family: 'Menlo', Helvetica, Arial, sans-serif;
-  font-size: .7rem;
+  font-family: "Menlo", Helvetica, Arial, sans-serif;
+  font-size: 0.7rem;
   cursor: pointer;
   padding: 1rem;
   background: ${({ $activeTab, $name }) => {
-  return $activeTab === $name ? "#2f343c" : "#202328";
-}};
+    return $activeTab === $name ? "#2f343c" : "#202328";
+  }};
   color: ${({ $activeTab, $name }) =>
-  $activeTab === $name ? "#ffffff" : "#5b677e"};
+    $activeTab === $name ? "#ffffff" : "#5b677e"};
   border-right: 1px solid #444f62;
   margin: 0;
 `;

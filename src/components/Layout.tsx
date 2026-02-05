@@ -59,7 +59,7 @@ const MakeBetterHeading = styled.h2`
 
 export const HorizontalRule = styled.div`
   background: ${(props) => props.theme.layout.horizontalRule.background};
-  height: .25rem;
+  height: 0.25rem;
   width: 100%;
   margin-top: 4rem !important;
   margin-bottom: 4rem;
@@ -70,9 +70,9 @@ export const HorizontalRule = styled.div`
 
 const Copyright = styled.div`
   padding: 6rem 0 4rem 0;
-  font-size: .7rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: .1rem;
+  letter-spacing: 0.1rem;
   text-align: center;
 `;
 
@@ -83,10 +83,10 @@ const ButtonOpenSideBar = styled.button<{
   display: ${(props) => (props.$show ? "block" : "none")};
   color: #ffffff;
   position: fixed;
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: .1rem;
+  letter-spacing: 0.1rem;
   bottom: 2rem;
   right: 2rem;
   background: #000000;
@@ -100,33 +100,33 @@ const ButtonOpenSideBar = styled.button<{
   &:before {
     content: "";
     background: #ffffff;
-    clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
+    clip-path: polygon(100% 35%, 100% 60%, 0% 60%, 0% 35%);
     position: absolute;
     height: 15px;
     top: ${(props) => (props.$sideBarOpen ? "25px" : "17px")};
     width: 25px;
     left: 20px;
-    transition-duration: .25s;
+    transition-duration: 0.25s;
     transition-property: transform, top;
     transform: ${(
-  props,
-) => (props.$sideBarOpen ? "rotate(-45deg)" : "rotate(0deg)")};
+      props,
+    ) => (props.$sideBarOpen ? "rotate(-45deg)" : "rotate(0deg)")};
   }
 
   &:after {
     content: "";
     background: #ffffff;
-    clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
+    clip-path: polygon(100% 35%, 100% 60%, 0% 60%, 0% 35%);
     position: absolute;
     top: ${({ $sideBarOpen }) => ($sideBarOpen ? "25px" : "35px")};
     height: 15px;
     width: 25px;
     left: 20px;
-    transition-duration: .25s;
+    transition-duration: 0.25s;
     transition-property: transform, top;
     transform: ${(
-  props,
-) => (props.$sideBarOpen ? "rotate(45deg)" : "rotate(0deg)")};
+      props,
+    ) => (props.$sideBarOpen ? "rotate(45deg)" : "rotate(0deg)")};
   }
 `;
 
@@ -134,14 +134,14 @@ const ButtonOpenSidebarMiddleBar = styled.div<{
   $sideBarOpen?: boolean;
 }>`
   background: #ffffff;
-  clip-path: polygon(100% 35%,100% 60%,0% 60%,0% 35%);
+  clip-path: polygon(100% 35%, 100% 60%, 0% 60%, 0% 35%);
   position: absolute;
   top: 26px;
   height: 15px;
   width: 25px;
   left: ${(props) => (props.$sideBarOpen ? "50px" : "20px")};
   opacity: ${(props) => (props.$sideBarOpen ? "0" : "1")};
-  transition-duration: .25s;
+  transition-duration: 0.25s;
   transition-property: opacity, left;
   z-index: 1;
 `;

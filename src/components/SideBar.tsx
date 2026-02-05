@@ -24,12 +24,12 @@ const Container = styled.div<{
   transition-property: background, left;
   transition-duration: 0.25s;
   left: ${(props) => {
-  if (props.$mobileViewport) {
-    return props.$isOpen ? "0" : "-200%";
-  } else {
-    return "0";
-  }
-}};
+    if (props.$mobileViewport) {
+      return props.$isOpen ? "0" : "-200%";
+    } else {
+      return "0";
+    }
+  }};
 `;
 
 const ImageContainer = styled.div`
@@ -61,13 +61,13 @@ const VersionsSelectorInnerContainer = styled.div`
   border: 1px solid #dfdfdf;
   background: #ffffff;
   width: 100%;
-  padding: .25rem 1rem;
+  padding: 0.25rem 1rem;
 `;
 
 const VersionsSelector = styled.select`
   background: transparent;
   width: 100%;
-  padding: .5rem .25rem;
+  padding: 0.5rem 0.25rem;
 `;
 
 ////////////////////////////////////////////////////////////////////////////////

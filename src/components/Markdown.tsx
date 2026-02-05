@@ -128,8 +128,8 @@ export const Heading1 = styled(Heading(1))`
 `;
 
 export const Heading2 = styled(Heading(2))`
-  border-top: .25rem solid ${(props) =>
-  props.theme.markdown.heading2.borderTopColor};
+  border-top: 0.25rem solid ${(props) =>
+    props.theme.markdown.heading2.borderTopColor};
   margin-top: 2.5rem !important;
   h2,
   h2.heading-linked {
@@ -290,7 +290,7 @@ export const Pre = styled(PreExtended)`
   overflow: hidden;
   margin-bottom: ${(props) => props.theme.layout.marginBottom};
 
-  &[class*=language-] {
+  &[class*="language-"] {
     margin-bottom: ${(props) => props.theme.layout.marginBottom};
   }
 
@@ -300,13 +300,13 @@ export const Pre = styled(PreExtended)`
     margin-bottom: 0 !important;
     max-height: 500px;
 
-    &[class*=language-] {
+    &[class*="language-"] {
       margin-bottom: 0 !important;
     }
   }
 
   code {
-    font-size: .8rem;
+    font-size: 0.8rem;
     background-color: transparent;
     padding: 0;
     color: inherit;
@@ -314,12 +314,12 @@ export const Pre = styled(PreExtended)`
 `;
 
 export const Code = styled(CodeExtended)`
-  font-size: .85rem;
+  font-size: 0.85rem;
   background: ${(props) => props.theme.markdown.code.backgroundColor};
   border-radius: ${(props) => props.theme.markdown.code.borderRadius};
   color: ${(props) => props.theme.markdown.code.color};
   font-weight: 500;
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
   transition-duration: 0.25s;
   transition-property: background, color;
 `;
