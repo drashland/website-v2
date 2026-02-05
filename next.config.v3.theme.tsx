@@ -13,7 +13,7 @@ const config: DocsThemeConfig = {
   footer: {
     text: (
       <div className="flex w-full justify-center">
-        <span className="text-xs uppercase font-semibold">&copy; 2019 - 2023 Drash Land</span>
+        <span className="text-xs uppercase font-semibold">&copy; 2019 - 2024 Drash Land</span>
       </div>
     ),
   },

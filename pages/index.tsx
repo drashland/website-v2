@@ -24,7 +24,7 @@ export default function Home() {
       <Latest />
       <Projects />
       <div className="p-5 bg-black text-slate-200 font-medium uppercase tracking-tight w-full text-center text-[11px]">
-        <p>&copy; 2019 - 2023 Drash Land</p>
+        <p>&copy; 2019 - 2024 Drash Land</p>
         <div className=" mt-10 mb-10">
           <Social />
         </div>
